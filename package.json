@@ -1,0 +1,14 @@
+{
+  "name": "metamorphosis",
+  "version": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/choochootrain/metamorphosis.git"
+  },
+  "author": "@choochootrain",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/choochootrain/metamorphosis/issues"
+  },
+  "homepage": "https://github.com/choochootrain/metamorphosis"
+}
