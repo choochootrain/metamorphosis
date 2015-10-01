@@ -5,6 +5,8 @@ const OrbitControls = _OrbitControls(THREE);
 import Axes from "util/axes";
 import SkySphere from "util/skysphere";
 
+import Terrain from "procedural/terrain";
+
 export default class Game {
   constructor(container_id, world_size=100) {
     this.WIDTH = window.innerWidth;
@@ -20,9 +22,9 @@ export default class Game {
     this.renderer.setClearColor(0x000000, 1);
 
     this.camera = new THREE.PerspectiveCamera(this.VIEW_ANGLE, this.ASPECT, this.NEAR, this.FAR);
-    this.camera.position.x = 200;
+    this.camera.position.x = 150;
     this.camera.position.y = 100;
-    this.camera.position.z = 200;
+    this.camera.position.z = 150;
 
     this.controls = new OrbitControls(this.camera, this.renderer.domElement);
 
@@ -40,6 +42,9 @@ export default class Game {
     const pointLight = new THREE.PointLight(0xFFFF00, 1, 10000);
     pointLight.position.set(this.world_size/2, 50, -this.world_size/2);
     this.scene.add(pointLight);
+
+    this.scene.add(Terrain.Ground(this.world_size));
+    this.scene.add(Terrain.Water(this.world_size));
 
     this.scene.fog = new THREE.FogExp2(0xEEDDBB, 0.0010);
   }
