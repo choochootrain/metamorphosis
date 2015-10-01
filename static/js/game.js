@@ -1,6 +1,11 @@
-var THREE = require("three");
+import THREE from "three";
+import _OrbitControls from "three-orbit-controls";
+const OrbitControls = _OrbitControls(THREE);
 
-class Game {
+import Axes from "util/axes";
+import SkySphere from "util/skysphere";
+
+export default class Game {
   constructor(options) {
     this.WIDTH = window.innerWidth;
     this.HEIGHT = window.innerHeight;
@@ -18,6 +23,8 @@ class Game {
     this.camera.position.y = 100;
     this.camera.position.z = 200;
 
+    this.controls = new OrbitControls(this.camera, this.renderer.domElement);
+
     this.scene = new THREE.Scene();
     this.scene.add(this.camera);
 
@@ -26,11 +33,8 @@ class Game {
   }
 
   init() {
-    const geometry = new THREE.BoxGeometry(200, 200, 200);
-    const material = new THREE.MeshBasicMaterial({ color: 0x00ff00, wireframe: true });
-
-    this.mesh = new THREE.Mesh(geometry, material);
-    this.scene.add(this.mesh);
+    this.scene.add(SkySphere("/static/assets/img/galaxy_starfield.png"));
+    this.scene.add(Axes(this.WIDTH));
   }
 
   resize() {
@@ -45,10 +49,6 @@ class Game {
   }
 
   render() {
-    this.mesh.rotation.x += 0.01;
-    this.mesh.rotation.y += 0.02;
     this.renderer.render(this.scene, this.camera);
   }
 }
-
-module.exports = Game;

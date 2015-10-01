@@ -1,2 +1,3 @@
 node_modules
-static/assets
+static/assets/index.*
+static/assets/styles.*
