@@ -22,6 +22,6 @@ module.exports = {
     },
 
     resolve: {
-        modulesDirectories: [ "/static/js" ]
+        modulesDirectories: [ "/static/js", "node_modules" ]
     }
 };
