@@ -9,4 +9,8 @@ clean:
 
 .PHONY: server
 server:
-	npm run server
+	python -m SimpleHTTPServer
+
+.PHONY: watch
+watch:
+	npm run watch
