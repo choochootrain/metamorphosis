@@ -19,6 +19,8 @@ export default class Game {
         this.renderer = new THREE.WebGLRenderer({ alpha: true });
         this.renderer.setSize(this.WIDTH, this.HEIGHT);
         this.renderer.setClearColor(0x000000, 1);
+        this.renderer.shadowMap.enabled = true;
+        this.renderer.shadowMap.soft = true;
 
         this.camera = new THREE.PerspectiveCamera(this.VIEW_ANGLE, this.ASPECT, this.NEAR, this.FAR);
         this.camera.position.x = 200;
@@ -38,7 +40,8 @@ export default class Game {
         this.scene.add(SkySphere("/static/images/galaxy_starfield.png", 4 * this.world_size));
         this.scene.add(Axes(this.WIDTH));
 
-        const pointLight = new THREE.PointLight(0xFFFF00, 1, 10000);
+        const pointLight = new THREE.DirectionalLight(0xFFFF00, 1, 10000);
+        pointLight.castShadow = true;
         pointLight.position.set(this.world_size/2, 50, -this.world_size/2);
         this.scene.add(pointLight);
 

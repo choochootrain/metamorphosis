@@ -1,5 +1,4 @@
 import { THREE } from "engine";
-import noise from "procedural/noise";
 import { noise, perlin } from "procedural/noise";
 
 function configToData(world_size, config) {

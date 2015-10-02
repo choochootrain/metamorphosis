@@ -5,15 +5,15 @@ const RADIUS = 20;
 
 export default class Amoeba {
     constructor(world, scene) {
-        var geo = new THREE.SphereGeometry(RADIUS, 20, 20);
-        var mat = new THREE.MeshLambertMaterial({ color: 0xffff00 });
+        var geo = new THREE.SphereGeometry(RADIUS, 4, 4);
+        var mat = new THREE.MeshLambertMaterial({ color: 0xffff00, emissive: 0xaa0033 });
         this.mesh = new THREE.Mesh(geo, mat);
         this.mesh.castShadow = true;
 
         var shape = new CANNON.Sphere(RADIUS);
         this.body = new CANNON.Body({ mass: 5, material: NORMAL });
         this.body.addShape(shape);
-        this.body.position.set(0, 30, 0);
+        this.body.position.set(1, 275, 0);
 
         scene.add(this.mesh);
         world.addBody(this.body);
