@@ -1,4 +1,4 @@
-import { THREE, OrbitControls, CANNON } from "engine";
+import { THREE, OrbitControls, CANNON, KeyboardState } from "engine";
 import { NORMAL } from "materials";
 
 import Axes from "util/axes";
@@ -21,7 +21,7 @@ export default class Game {
         this.world_size = world_size;
 
         this.world = new CANNON.World();
-        this.world.gravity.set(0, -9.82, 0);
+        this.world.gravity.set(0, -2, 0);
 
         this.renderer = new THREE.WebGLRenderer({ alpha: true });
         this.renderer.setSize(this.width, this.height);
@@ -30,12 +30,12 @@ export default class Game {
         this.renderer.shadowMap.soft = true;
 
         this.camera = new THREE.PerspectiveCamera(this.view_angle, this.aspect, this.near, this.far);
-        window.camera = this.camera;
-        this.camera.position.x = 200;
-        this.camera.position.y = 100;
-        this.camera.position.z = 200;
+        this.camera.position.x = 100;
+        this.camera.position.y = 50;
+        this.camera.position.z = 100;
 
         this.controls = new OrbitControls(this.camera, this.renderer.domElement);
+        this.keyboard = new KeyboardState();
 
         this.scene = new THREE.Scene();
 
@@ -53,31 +53,39 @@ export default class Game {
         pointLight.position.set(this.world_size/2, 50, -this.world_size/2);
         this.scene.add(pointLight);
 
-        var ground = Terrain.Ground(this.world_size);
-        var shape = new CANNON.ConvexPolyhedron(ground.geometry.vertices.map((x) => new CANNON.Vec3(x.x, x.y, x.z)),
+        var ground = Terrain.Ground(this.world_size/2);
+        var ground_shape = new CANNON.ConvexPolyhedron(ground.geometry.vertices.map((x) => new CANNON.Vec3(x.x, x.y, x.z)),
                 ground.geometry.faces.map((x) => [x.a, x.b, x.c]));
-        var body = new CANNON.Body({ mass: 0, material: NORMAL });
-        body.addShape(shape);
-        body.quaternion.setFromAxisAngle(new CANNON.Vec3(1, 0, 0), -Math.PI / 2);
-        body.position.set(0, 0, 0);
+        var ground_body = new CANNON.Body({ mass: 0, material: NORMAL });
+        ground_body.addShape(ground_shape);
+        ground_body.quaternion.setFromAxisAngle(new CANNON.Vec3(1, 0, 0), -Math.PI / 2);
+        ground_body.position.set(0, 0, 0);
 
-        ground.position.copy(body.position);
-        ground.quaternion.copy(body.quaternion);
+        ground.position.copy(ground_body.position);
+        ground.quaternion.copy(ground_body.quaternion);
 
         this.scene.add(ground);
-        this.world.addBody(body);
+        this.world.addBody(ground_body);
 
         this.scene.add(Terrain.Water(this.world_size));
         const biome = Biome(this.world_size * 7);
-        biome.position.y = -10;
-        this.scene.add(biome);
 
-        this.amoeba = new Amoeba(this.world, this.scene, 1);
+        var biome_shape = new CANNON.Plane();
+        var biome_body = new CANNON.Body({ mass: 0, material: NORMAL });
+        biome_body.addShape(biome_shape);
+        biome_body.quaternion.setFromAxisAngle(new CANNON.Vec3(1, 0, 0), -Math.PI / 2);
+        biome_body.position.set(0, -10, 0);
+
+        this.scene.add(biome);
+        this.world.addBody(biome_body);
+
+        biome.position.copy(biome_body.position);
+        biome.quaternion.copy(biome_body.quaternion);
+
+        this.amoeba = new Amoeba(this.world, this.scene, 1, 6);
         this.amoeba.body.position.set(1, 25, 0);
 
         this.world.solver.iterations = 10;
-
-        //this.scene.fog = new THREE.FogExp2(0xEEDDBB, 0.0010);
     }
 
     resize() {
@@ -89,12 +97,37 @@ export default class Game {
     }
 
     update() {
-
         // step physics
         this.world.step(1/35);
 
+        const minVelocity = 0.2;
+        const acceleration = 1.25;
+        const maxVelocity = 10;
+        if (this.keyboard.pressed("w")) {
+            this.amoeba.body.velocity.x = Math.min(maxVelocity, this.amoeba.body.velocity.x + minVelocity);
+        }
+
+        if (this.keyboard.pressed("s")) {
+            this.amoeba.body.velocity.x = Math.max(-maxVelocity, this.amoeba.body.velocity.x - minVelocity);
+        }
+
+        if (this.keyboard.pressed("d")) {
+            this.amoeba.body.velocity.z = Math.min(maxVelocity, this.amoeba.body.velocity.z + minVelocity);
+        }
+
+        if (this.keyboard.pressed("a")) {
+            this.amoeba.body.velocity.z = Math.max(-maxVelocity, this.amoeba.body.velocity.z - minVelocity);
+        }
+
+        if (this.amoeba.body.position.y < -50) {
+            this.amoeba.body.position.set(1, 25, 0);
+            this.amoeba.body.velocity.set(0, 0, 0);
+        }
+
         // update based on physics
         this.amoeba.update();
+        this.camera.position.set(this.amoeba.mesh.position.x - 50, this.amoeba.mesh.position.y + 25, this.amoeba.mesh.position.z);
+        this.camera.lookAt(this.amoeba.mesh.position);
     }
 
     render() {
