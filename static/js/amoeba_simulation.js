@@ -48,6 +48,7 @@ export default class AmoebaSimulation {
         Plane(this.world_size, this.world, this.scene);
 
         this.amoeba = new Amoeba(this.world, this.scene);
+        this.amoeba.body.position.set(1, 275, 0);
 
         this.world.solver.iterations = 10;
     }
