@@ -4,9 +4,10 @@ import Axes from "util/axes";
 import SkySphere from "util/skysphere";
 
 import Terrain from "procedural/terrain";
+import Biome from "procedural/biome";
 
 export default class Game {
-    constructor(container_id, world_size=100) {
+    constructor(container_id, world_size=128) {
         this.WIDTH = window.innerWidth;
         this.HEIGHT = window.innerHeight;
         this.VIEW_ANGLE = 45;
@@ -41,8 +42,9 @@ export default class Game {
         pointLight.position.set(this.world_size/2, 50, -this.world_size/2);
         this.scene.add(pointLight);
 
-        this.scene.add(Terrain.Ground(this.world_size));
-        this.scene.add(Terrain.Water(this.world_size));
+        //this.scene.add(Terrain.Ground(this.world_size));
+        //this.scene.add(Terrain.Water(this.world_size));
+        this.scene.add(Biome(this.world_size));
 
         this.scene.fog = new THREE.FogExp2(0xEEDDBB, 0.0010);
     }

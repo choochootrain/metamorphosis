@@ -1,6 +1,5 @@
 import { THREE } from "engine";
 import noise from "procedural/noise";
-noise.seed(Math.random());
 
 function configToGeometry(world_size, config) {
     const size = world_size/config.tile_size;
