@@ -12,7 +12,8 @@ module.exports = {
     output: {
         path: __dirname + "/static/assets",
         pathinfo: true,
-        filename: "index.js"
+        filename: "index.js",
+        publicPath: "/static/assets/"
     },
     module: {
         loaders: [
