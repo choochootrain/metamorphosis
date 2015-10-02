@@ -3,15 +3,15 @@ import '../css/style.css';
 import Game from 'game';
 
 document.addEventListener("DOMContentLoaded", () => {
-  const game = new Game("glcontainer");
+    const game = new Game("glcontainer");
 
-  game.init();
+    game.init();
 
-  const animate = () => {
-    requestAnimationFrame(animate);
-    game.update();
-    game.render();
-  };
+    const animate = () => {
+        requestAnimationFrame(animate);
+        game.update();
+        game.render();
+    };
 
-  animate();
+    animate();
 });
