@@ -1,12 +1,9 @@
-import THREE from "three.js";
-import _OrbitControls from "three-orbit-controls";
+import { THREE, OrbitControls } from "engine";
 
 import Axes from "util/axes";
 import SkySphere from "util/skysphere";
 
 import Terrain from "procedural/terrain";
-
-const OrbitControls = _OrbitControls(THREE);
 
 export default class Game {
     constructor(container_id, world_size=100) {

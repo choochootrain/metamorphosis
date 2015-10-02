@@ -1,4 +1,4 @@
-import THREE from "three.js";
+import { THREE } from "engine";
 import noise from "procedural/noise";
 noise.seed(Math.random());
 

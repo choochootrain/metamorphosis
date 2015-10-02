@@ -12,9 +12,11 @@
   },
   "homepage": "https://github.com/choochootrain/metamorphosis",
   "dependencies": {
+    "cannon": "0.6.2",
     "es6-promise": "3.0.2",
-    "three-orbit-controls": "71.0.0",
     "react": "0.13.3",
+    "stats.js": "1.0.0",
+    "three-orbit-controls": "71.0.0",
     "three.js": "0.72.0"
   },
   "devDependencies": {
