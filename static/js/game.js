@@ -21,9 +21,9 @@ export default class Game {
         this.renderer.setClearColor(0x000000, 1);
 
         this.camera = new THREE.PerspectiveCamera(this.VIEW_ANGLE, this.ASPECT, this.NEAR, this.FAR);
-        this.camera.position.x = 150;
-        this.camera.position.y = 100;
-        this.camera.position.z = 150;
+        this.camera.position.x = 200;
+        this.camera.position.y = 400;
+        this.camera.position.z = 200;
 
         this.controls = new OrbitControls(this.camera, this.renderer.domElement);
 
@@ -42,9 +42,11 @@ export default class Game {
         pointLight.position.set(this.world_size/2, 50, -this.world_size/2);
         this.scene.add(pointLight);
 
-        //this.scene.add(Terrain.Ground(this.world_size));
-        //this.scene.add(Terrain.Water(this.world_size));
-        this.scene.add(Biome(this.world_size));
+        this.scene.add(Terrain.Ground(this.world_size));
+        this.scene.add(Terrain.Water(this.world_size));
+        const biome = Biome(this.world_size * 7);
+        biome.position.y = -10;
+        this.scene.add(biome);
 
         this.scene.fog = new THREE.FogExp2(0xEEDDBB, 0.0010);
     }
