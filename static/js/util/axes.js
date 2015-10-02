@@ -1,4 +1,4 @@
-import THREE from "three";
+import THREE from "three.js";
 
 // adapted from http://soledadpenades.com/articles/three-js-tutorials/drawing-the-coordinate-axes/
 

@@ -1,11 +1,12 @@
-import THREE from "three";
+import THREE from "three.js";
 import _OrbitControls from "three-orbit-controls";
-const OrbitControls = _OrbitControls(THREE);
 
 import Axes from "util/axes";
 import SkySphere from "util/skysphere";
 
 import Terrain from "procedural/terrain";
+
+const OrbitControls = _OrbitControls(THREE);
 
 export default class Game {
     constructor(container_id, world_size=100) {
@@ -36,7 +37,7 @@ export default class Game {
     }
 
     init() {
-        this.scene.add(SkySphere("/static/assets/img/galaxy_starfield.png", 4*this.world_size));
+        this.scene.add(SkySphere("/static/images/galaxy_starfield.png", 4 * this.world_size));
         this.scene.add(Axes(this.WIDTH));
 
         const pointLight = new THREE.PointLight(0xFFFF00, 1, 10000);
@@ -54,7 +55,7 @@ export default class Game {
         this.HEIGHT = window.innerHeight;
         this.renderer.setSize(this.WIDTH, this.HEIGHT);
         this.camera.aspect = this.WIDTH / this.HEIGHT;
-        this.camera.updateProjectionMatrix()
+        this.camera.updateProjectionMatrix();
     }
 
     update() {

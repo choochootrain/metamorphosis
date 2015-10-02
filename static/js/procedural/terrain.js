@@ -1,4 +1,4 @@
-import THREE from "three";
+import THREE from "three.js";
 import noise from "procedural/noise";
 noise.seed(Math.random());
 
@@ -11,7 +11,7 @@ function configToGeometry(world_size, config) {
         for (let j = 0; j < size; j++) {
             var z = 0;
             for (let k = 0; k < config.layers.length; k++) {
-                if (!config.layers[k].enabled) continue;
+                if (!config.layers[k].enabled) { continue; }
 
                 const frequency = config.layers[k].frequency;
                 const post_compute = config.layers[k].post_compute;

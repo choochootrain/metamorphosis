@@ -1,4 +1,4 @@
-import THREE from "three";
+import THREE from "three.js";
 
 export default function(texture, radius=200, segments=32) {
     const geometry = new THREE.SphereGeometry(radius, segments, segments);

@@ -1,0 +1,12 @@
+{
+    "curly": true,
+    "eqeqeq": true,
+    "immed": true,
+    "latedef": false,
+    "trailing": false,
+
+    "browser": true,
+    "devel": true,
+    "esnext": true,
+    "laxbreak": true
+}

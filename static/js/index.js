@@ -1,4 +1,4 @@
-import '../css/style.css';
+import 'index.scss';
 
 import Game from 'game';
 
