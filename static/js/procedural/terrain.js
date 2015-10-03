@@ -149,5 +149,92 @@ export default {
         const mesh = new THREE.Mesh(geometry, water_config.material);
         mesh.rotation.x = -90*Math.PI/180;
         return mesh;
+    },
+    DiamondSquare: function(world_size) {
+        var size = world_size + 1;
+        window.data = new Array(size*size);
+
+        var q = [];
+        q.enqueue = function(x, y, s, iter) {
+            if (x >= 0 && x < size && y >= 0 && y < size && s >= 1 && !data[x + size * y]) {
+                this.push({ x, y, s, iter });
+            }
+        }
+
+        q.enqueue(size >>> 1, size >>> 1, size >>> 1, 0);
+
+        data[0 + size * 0] =                   new THREE.Vector3(0,        0,        0);//size / 2 * (Math.random() - 0.5));
+        data[(size - 1) + size * 0] =          new THREE.Vector3(size - 1, 0,        size/2);//size / 2 * (Math.random() - 0.5));
+        data[0 + size * (size - 1)] =          new THREE.Vector3(0,        size - 1, -size/4);//size / 2 * (Math.random() - 0.5));
+        data[(size - 1) + size * (size - 1)] = new THREE.Vector3(size - 1, size - 1, size/3);//size / 2 * (Math.random() - 0.5));
+
+        while (q.length > 0) {
+            var length = q.length;
+            for (let l = 0; l < length; l++) {
+                var ctx = q.shift();
+                var x = ctx.x, y = ctx.y, s = ctx.s, iter = ctx.iter;
+
+                if (iter % 2 == 0) {
+                    var z1 = data[x - s + size * (y - s)].z;
+                    var z2 = data[x + s + size * (y - s)].z;
+                    var z3 = data[x - s + size * (y + s)].z;
+                    var z4 = data[x + s + size * (y + s)].z;
+
+                    var z = (z1 + z2 + z3 + z4) / 4 + 2*s * (Math.random() - 0.5);
+                    data[x + size * y] = new THREE.Vector3(x, y, z);
+
+                    q.enqueue(x - s, y,     s, iter + 1);
+                    q.enqueue(x + s, y,     s, iter + 1);
+                    q.enqueue(x,     y - s, s, iter + 1);
+                    q.enqueue(x,     y + s, s, iter + 1);
+                } else {
+                    var zs = 0;
+                    var zc = 0;
+
+                    if (x - s >= 0)   { zs += data[x - s + size *  y     ].z; zc++ }
+                    if (x + s < size) { zs += data[x + s + size *  y     ].z; zc++ }
+                    if (y - s >= 0)   { zs += data[x     + size * (y - s)].z; zc++ }
+                    if (y + s < size) { zs += data[x     + size * (y + s)].z; zc++ }
+
+                    var z = zs / zc + (s >>> 0) * (Math.random() - 0.5);
+                    data[x + size * y] = new THREE.Vector3(x, y, z);
+
+                    var s2 = s >>> 1;
+                    q.enqueue(x + s2, y + s2, s2, iter + 1);
+                    q.enqueue(x + s2, y - s2, s2, iter + 1);
+                    q.enqueue(x - s2, y + s2, s2, iter + 1);
+                    q.enqueue(x - s2, y - s2, s2, iter + 1);
+                }
+            }
+        }
+
+        const geometry = new THREE.Geometry();
+
+        var c = 0;
+        for (let i = 0; i < size - 1; i++) {
+            for (let j = 0; j < size - 1; j++) {
+                const v1 = data[i +     size *  j];
+                const v2 = data[i + 1 + size *  j];
+                const v3 = data[i +     size * (j + 1)];
+                const v4 = data[i + 1 + size * (j + 1)];
+
+                //TODO dont double push vertices
+                //TODO dont alternate face sides
+                geometry.vertices.push(v1, v2, v3, v4);
+                geometry.faces.push(new THREE.Face3(c, c + 1, c + 2), new THREE.Face3(c + 1, c + 2, c + 3));
+                c = c + 4;
+            }
+        }
+
+        geometry.computeFaceNormals();
+        var material = new THREE.MeshLambertMaterial({
+          color: 0x882244,
+          transparent: false,
+          emissive: 0x002200,
+          side: THREE.DoubleSide
+        });
+        const mesh = new THREE.Mesh(geometry, material);
+        mesh.rotation.x = -90*Math.PI/180;
+        return mesh;
     }
 };
