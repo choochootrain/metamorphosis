@@ -5,13 +5,13 @@ import Axes from "util/axes";
 import SkySphere from "util/skysphere";
 
 import Terrain from "procedural/terrain";
-import Biome from "procedural/biome";
+import { perlin } from "procedural/noise";
 
 import Plane from "util/plane";
 import Amoeba from "amoeba";
 
 export default class Game {
-    constructor(container_id, world_size=64) {
+    constructor(container_id, world_size=32) {
         this.width = window.innerWidth;
         this.height = window.innerHeight;
         this.view_angle = 45;
@@ -19,9 +19,6 @@ export default class Game {
         this.near = 0.1;
         this.far = 10000;
         this.world_size = world_size;
-
-        this.world = new CANNON.World();
-        this.world.gravity.set(0, -2, 0);
 
         this.renderer = new THREE.WebGLRenderer({ alpha: true });
         this.renderer.setSize(this.width, this.height);
@@ -45,47 +42,50 @@ export default class Game {
 
     init() {
         this.scene.add(this.camera);
-        this.scene.add(SkySphere("/static/images/galaxy_starfield.png", 4 * this.world_size));
+        this.scene.add(SkySphere("/static/images/galaxy_starfield.png", 8 * this.world_size));
         this.scene.add(Axes(this.width));
 
-        const pointLight = new THREE.DirectionalLight(0xFFFF00, 0.8, 100);
-        pointLight.castShadow = true;
+        const pointLight = new THREE.PointLight(0xFFFF00, 0.8, 1000);
+        //pointLight.castShadow = true;
         pointLight.position.set(this.world_size/2, 50, -this.world_size/2);
         this.scene.add(pointLight);
 
-        var ground = Terrain.Ground(this.world_size/2);
-        var ground_shape = new CANNON.ConvexPolyhedron(ground.geometry.vertices.map((x) => new CANNON.Vec3(x.x, x.y, x.z)),
-                ground.geometry.faces.map((x) => [x.a, x.b, x.c]));
-        var ground_body = new CANNON.Body({ mass: 0, material: NORMAL });
-        ground_body.addShape(ground_shape);
-        ground_body.quaternion.setFromAxisAngle(new CANNON.Vec3(1, 0, 0), -Math.PI / 2);
-        ground_body.position.set(0, 0, 0);
-
-        ground.position.copy(ground_body.position);
-        ground.quaternion.copy(ground_body.quaternion);
-
+        window.scene = this.scene;
+        var ground = Terrain.DiamondSquare(this.world_size);
+        ground.position.set(-this.world_size / 2, 0, this.world_size / 2);
         this.scene.add(ground);
-        this.world.addBody(ground_body);
 
-        this.scene.add(Terrain.Water(this.world_size));
-        const biome = Biome(this.world_size * 7);
+        function *spiral() {
+            for (let r = 1; r < 5; r++) {
+                for (let i = -r; i <= r; i++) { yield [i, r]; }
+                for (let j = r - 1; j >= -r; j--) { yield [r, j]; }
+                for (let i = r - 1; i >= -r; i--) { yield [i, -r]; }
+                for (let j = -r + 1; j < r; j++) { yield [-r, j]; }
+            }
+        }
 
-        var biome_shape = new CANNON.Plane();
-        var biome_body = new CANNON.Body({ mass: 0, material: NORMAL });
-        biome_body.addShape(biome_shape);
-        biome_body.quaternion.setFromAxisAngle(new CANNON.Vec3(1, 0, 0), -Math.PI / 2);
-        biome_body.position.set(0, -10, 0);
+        var F = 0.1;
+        var generator = spiral();
+        var add = () => {
+            var asdf = generator.next();
+            if (!asdf.done) {
+                var x, y;
+                [x,y] = asdf.value;
 
-        this.scene.add(biome);
-        this.world.addBody(biome_body);
+                var a = perlin( x      / F,  y      / F);
+                var b = perlin((x + 1) / F,  y      / F);
+                var c = perlin( x      / F, (y + 1) / F);
+                var d = perlin((x + 1) / F, (y + 1) / F);
 
-        biome.position.copy(biome_body.position);
-        biome.quaternion.copy(biome_body.quaternion);
+                var ground = Terrain.DiamondSquare(this.world_size, a, b, c, d);
+                ground.position.set(x * this.world_size - this.world_size / 2, 0, y * this.world_size + this.world_size / 2);
+                this.scene.add(ground);
 
-        this.amoeba = new Amoeba(this.world, this.scene, 1, 6);
-        this.amoeba.body.position.set(1, 25, 0);
+                setTimeout(add, 100);
+            }
+        };
 
-        this.world.solver.iterations = 10;
+        setTimeout(add, 100);
     }
 
     resize() {
@@ -97,37 +97,6 @@ export default class Game {
     }
 
     update() {
-        // step physics
-        this.world.step(1/35);
-
-        const minVelocity = 0.2;
-        const acceleration = 1.25;
-        const maxVelocity = 10;
-        if (this.keyboard.pressed("w")) {
-            this.amoeba.body.velocity.x = Math.min(maxVelocity, this.amoeba.body.velocity.x + minVelocity);
-        }
-
-        if (this.keyboard.pressed("s")) {
-            this.amoeba.body.velocity.x = Math.max(-maxVelocity, this.amoeba.body.velocity.x - minVelocity);
-        }
-
-        if (this.keyboard.pressed("d")) {
-            this.amoeba.body.velocity.z = Math.min(maxVelocity, this.amoeba.body.velocity.z + minVelocity);
-        }
-
-        if (this.keyboard.pressed("a")) {
-            this.amoeba.body.velocity.z = Math.max(-maxVelocity, this.amoeba.body.velocity.z - minVelocity);
-        }
-
-        if (this.amoeba.body.position.y < -50) {
-            this.amoeba.body.position.set(1, 25, 0);
-            this.amoeba.body.velocity.set(0, 0, 0);
-        }
-
-        // update based on physics
-        this.amoeba.update();
-        this.camera.position.set(this.amoeba.mesh.position.x - 50, this.amoeba.mesh.position.y + 25, this.amoeba.mesh.position.z);
-        this.camera.lookAt(this.amoeba.mesh.position);
     }
 
     render() {

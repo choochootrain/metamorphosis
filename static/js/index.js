@@ -1,4 +1,5 @@
 import 'index.scss';
+import 'babel-core/polyfill';
 
 import Stats from 'stats.js';
 import Game from 'game';
