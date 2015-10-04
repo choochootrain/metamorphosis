@@ -150,29 +150,42 @@ export default {
         mesh.rotation.x = -90*Math.PI/180;
         return mesh;
     },
-    DiamondSquare: function(world_size) {
+    DiamondSquare: function(world_size, a, b, c, d) {
         var size = world_size + 1;
         window.data = new Array(size*size);
 
+        data[0 + size * 0] =                   new THREE.Vector3(0,        0,        a || size / 2 * (Math.random() - 0.5));
+        data[(size - 1) + size * 0] =          new THREE.Vector3(size - 1, 0,        b || size / 2 * (Math.random() - 0.5));
+        data[0 + size * (size - 1)] =          new THREE.Vector3(0,        size - 1, c || size / 2 * (Math.random() - 0.5));
+        data[(size - 1) + size * (size - 1)] = new THREE.Vector3(size - 1, size - 1, d || size / 2 * (Math.random() - 0.5));
+
         var q = [];
-        q.enqueue = function(x, y, s, iter) {
+        q.enqueue = function(x, y, iter) {
+            //TODO do this efficiently
+            var s = size >>> (1 + (iter >>> 1));
             if (x >= 0 && x < size && y >= 0 && y < size && s >= 1 && !data[x + size * y]) {
-                this.push({ x, y, s, iter });
+                var seen = false;
+                for (var i = 0; i < q.length; i++) {
+                    if (q[i].x === x && q[i].y === y && q[i].iter === iter) {
+                        seen = true;
+                        break;
+                    }
+                }
+
+                if (!seen) {
+                    this.push({ x, y, iter });
+                }
             }
         }
 
-        q.enqueue(size >>> 1, size >>> 1, size >>> 1, 0);
-
-        data[0 + size * 0] =                   new THREE.Vector3(0,        0,        0);//size / 2 * (Math.random() - 0.5));
-        data[(size - 1) + size * 0] =          new THREE.Vector3(size - 1, 0,        size/2);//size / 2 * (Math.random() - 0.5));
-        data[0 + size * (size - 1)] =          new THREE.Vector3(0,        size - 1, -size/4);//size / 2 * (Math.random() - 0.5));
-        data[(size - 1) + size * (size - 1)] = new THREE.Vector3(size - 1, size - 1, size/3);//size / 2 * (Math.random() - 0.5));
+        q.enqueue(size >>> 1, size >>> 1, 0);
 
         while (q.length > 0) {
             var length = q.length;
             for (let l = 0; l < length; l++) {
                 var ctx = q.shift();
-                var x = ctx.x, y = ctx.y, s = ctx.s, iter = ctx.iter;
+                var x = ctx.x, y = ctx.y, iter = ctx.iter;
+                var s = size >>> (1 + (iter >>> 1));
 
                 if (iter % 2 == 0) {
                     var z1 = data[x - s + size * (y - s)].z;
@@ -183,10 +196,10 @@ export default {
                     var z = (z1 + z2 + z3 + z4) / 4 + 2*s * (Math.random() - 0.5);
                     data[x + size * y] = new THREE.Vector3(x, y, z);
 
-                    q.enqueue(x - s, y,     s, iter + 1);
-                    q.enqueue(x + s, y,     s, iter + 1);
-                    q.enqueue(x,     y - s, s, iter + 1);
-                    q.enqueue(x,     y + s, s, iter + 1);
+                    q.enqueue(x - s, y,     iter + 1);
+                    q.enqueue(x + s, y,     iter + 1);
+                    q.enqueue(x,     y - s, iter + 1);
+                    q.enqueue(x,     y + s, iter + 1);
                 } else {
                     var zs = 0;
                     var zc = 0;
@@ -200,10 +213,10 @@ export default {
                     data[x + size * y] = new THREE.Vector3(x, y, z);
 
                     var s2 = s >>> 1;
-                    q.enqueue(x + s2, y + s2, s2, iter + 1);
-                    q.enqueue(x + s2, y - s2, s2, iter + 1);
-                    q.enqueue(x - s2, y + s2, s2, iter + 1);
-                    q.enqueue(x - s2, y - s2, s2, iter + 1);
+                    q.enqueue(x + s2, y + s2, iter + 1);
+                    q.enqueue(x + s2, y - s2, iter + 1);
+                    q.enqueue(x - s2, y + s2, iter + 1);
+                    q.enqueue(x - s2, y - s2, iter + 1);
                 }
             }
         }
