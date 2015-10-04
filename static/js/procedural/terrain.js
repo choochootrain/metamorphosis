@@ -150,20 +150,24 @@ export default {
         mesh.rotation.x = -90*Math.PI/180;
         return mesh;
     },
-    DiamondSquare: function(world_size, a, b, c, d) {
+    DiamondSquare: function(world_size, initializer) {
         var size = world_size + 1;
         window.data = new Array(size*size);
 
-        data[0 + size * 0] =                   new THREE.Vector3(0,        0,        a || size / 2 * (Math.random() - 0.5));
-        data[(size - 1) + size * 0] =          new THREE.Vector3(size - 1, 0,        b || size / 2 * (Math.random() - 0.5));
-        data[0 + size * (size - 1)] =          new THREE.Vector3(0,        size - 1, c || size / 2 * (Math.random() - 0.5));
-        data[(size - 1) + size * (size - 1)] = new THREE.Vector3(size - 1, size - 1, d || size / 2 * (Math.random() - 0.5));
+        if (initializer) {
+            initializer(data, size);
+        } else {
+            data[0 + size * 0] =                   new THREE.Vector3(0,        0,        size / 2 * (Math.random() - 0.5));
+            data[(size - 1) + size * 0] =          new THREE.Vector3(size - 1, 0,        size / 2 * (Math.random() - 0.5));
+            data[0 + size * (size - 1)] =          new THREE.Vector3(0,        size - 1, size / 2 * (Math.random() - 0.5));
+            data[(size - 1) + size * (size - 1)] = new THREE.Vector3(size - 1, size - 1, size / 2 * (Math.random() - 0.5));
+        }
 
         var q = [];
         q.enqueue = function(x, y, iter) {
             //TODO do this efficiently
             var s = size >>> (1 + (iter >>> 1));
-            if (x >= 0 && x < size && y >= 0 && y < size && s >= 1 && !data[x + size * y]) {
+            if (x >= 0 && x < size && y >= 0 && y < size && s >= 1) {
                 var seen = false;
                 for (var i = 0; i < q.length; i++) {
                     if (q[i].x === x && q[i].y === y && q[i].iter === iter) {
@@ -188,29 +192,33 @@ export default {
                 var s = size >>> (1 + (iter >>> 1));
 
                 if (iter % 2 == 0) {
-                    var z1 = data[x - s + size * (y - s)].z;
-                    var z2 = data[x + s + size * (y - s)].z;
-                    var z3 = data[x - s + size * (y + s)].z;
-                    var z4 = data[x + s + size * (y + s)].z;
+                    if (!data[x + size * y]) {
+                        var z1 = data[x - s + size * (y - s)].z;
+                        var z2 = data[x + s + size * (y - s)].z;
+                        var z3 = data[x - s + size * (y + s)].z;
+                        var z4 = data[x + s + size * (y + s)].z;
 
-                    var z = (z1 + z2 + z3 + z4) / 4 + 2*s * (Math.random() - 0.5);
-                    data[x + size * y] = new THREE.Vector3(x, y, z);
+                        var z = (z1 + z2 + z3 + z4) / 4 + 2*s * (Math.random() - 0.5);
+                        data[x + size * y] = new THREE.Vector3(x, y, z);
+                    }
 
                     q.enqueue(x - s, y,     iter + 1);
                     q.enqueue(x + s, y,     iter + 1);
                     q.enqueue(x,     y - s, iter + 1);
                     q.enqueue(x,     y + s, iter + 1);
                 } else {
-                    var zs = 0;
-                    var zc = 0;
+                    if (!data[x + size * y]) {
+                        var zs = 0;
+                        var zc = 0;
 
-                    if (x - s >= 0)   { zs += data[x - s + size *  y     ].z; zc++ }
-                    if (x + s < size) { zs += data[x + s + size *  y     ].z; zc++ }
-                    if (y - s >= 0)   { zs += data[x     + size * (y - s)].z; zc++ }
-                    if (y + s < size) { zs += data[x     + size * (y + s)].z; zc++ }
+                        if (x - s >= 0)   { zs += data[x - s + size *  y     ].z; zc++ }
+                        if (x + s < size) { zs += data[x + s + size *  y     ].z; zc++ }
+                        if (y - s >= 0)   { zs += data[x     + size * (y - s)].z; zc++ }
+                        if (y + s < size) { zs += data[x     + size * (y + s)].z; zc++ }
 
-                    var z = zs / zc + (s >>> 0) * (Math.random() - 0.5);
-                    data[x + size * y] = new THREE.Vector3(x, y, z);
+                        var z = zs / zc + (s >>> 0) * (Math.random() - 0.5);
+                        data[x + size * y] = new THREE.Vector3(x, y, z);
+                    }
 
                     var s2 = s >>> 1;
                     q.enqueue(x + s2, y + s2, iter + 1);
