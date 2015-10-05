@@ -34,7 +34,7 @@
 /******/ 	__webpack_require__.c = installedModules;
 
 /******/ 	// __webpack_public_path__
-/******/ 	__webpack_require__.p = "";
+/******/ 	__webpack_require__.p = "/static/assets/";
 
 /******/ 	// Load entry module and return exports
 /******/ 	return __webpack_require__(0);
@@ -51,24 +51,55 @@
 
 	var _interopRequireDefault = __webpack_require__(/*! babel-runtime/helpers/interop-require-default */ 1)['default'];
 
-	__webpack_require__(/*! ../css/style.css */ 2);
+	__webpack_require__(/*! index.scss */ 2);
 
-	var _game = __webpack_require__(/*! game */ 3);
+	__webpack_require__(/*! babel-core/polyfill */ 3);
+
+	var _statsJs = __webpack_require__(/*! stats.js */ 191);
+
+	var _statsJs2 = _interopRequireDefault(_statsJs);
+
+	var _game = __webpack_require__(/*! game */ 192);
 
 	var _game2 = _interopRequireDefault(_game);
 
+	var _amoeba_simulation = __webpack_require__(/*! amoeba_simulation */ 243);
+
+	var _amoeba_simulation2 = _interopRequireDefault(_amoeba_simulation);
+
 	document.addEventListener("DOMContentLoaded", function () {
-	  var game = new _game2['default']("glcontainer");
+	    var stats = new _statsJs2['default']();
+	    stats.setMode(1);
 
-	  game.init();
+	    stats.domElement.style.position = "absolute";
+	    stats.domElement.style.left = "0px";
+	    stats.domElement.style.top = "0px";
+	    document.body.appendChild(stats.domElement);
 
-	  var animate = function animate() {
-	    requestAnimationFrame(animate);
-	    game.update();
-	    game.render();
-	  };
+	    var game;
+	    switch (window.location.hash) {
+	        case "#simulation":
+	            game = new _amoeba_simulation2['default']("glcontainer");
+	            break;
+	        default:
+	            game = new _game2['default']("glcontainer");
+	            break;
+	    }
 
-	  animate();
+	    game.init();
+
+	    var animate = function animate() {
+	        stats.begin();
+
+	        game.update();
+	        game.render();
+
+	        stats.end();
+
+	        requestAnimationFrame(animate);
+	    };
+
+	    animate();
 	});
 
 /***/ },
@@ -90,15 +121,5837 @@
 
 /***/ },
 /* 2 */
-/*!******************************!*\
-  !*** ./static/css/style.css ***!
-  \******************************/
+/*!********************************!*\
+  !*** ./static/scss/index.scss ***!
+  \********************************/
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
 /* 3 */
+/*!**********************************!*\
+  !*** ./~/babel-core/polyfill.js ***!
+  \**********************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__(/*! ./lib/polyfill */ 4);
+
+
+/***/ },
+/* 4 */
+/*!**************************************!*\
+  !*** ./~/babel-core/lib/polyfill.js ***!
+  \**************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(global) {"use strict";
+
+	__webpack_require__(/*! core-js/shim */ 5);
+
+	__webpack_require__(/*! regenerator/runtime */ 189);
+
+	if (global._babelPolyfill) {
+	  throw new Error("only one instance of babel/polyfill is allowed");
+	}
+	global._babelPolyfill = true;
+	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
+
+/***/ },
+/* 5 */
+/*!****************************************!*\
+  !*** ./~/babel-core/~/core-js/shim.js ***!
+  \****************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	__webpack_require__(/*! ./modules/es5 */ 6);
+	__webpack_require__(/*! ./modules/es6.symbol */ 38);
+	__webpack_require__(/*! ./modules/es6.object.assign */ 44);
+	__webpack_require__(/*! ./modules/es6.object.is */ 46);
+	__webpack_require__(/*! ./modules/es6.object.set-prototype-of */ 48);
+	__webpack_require__(/*! ./modules/es6.object.to-string */ 50);
+	__webpack_require__(/*! ./modules/es6.object.freeze */ 52);
+	__webpack_require__(/*! ./modules/es6.object.seal */ 54);
+	__webpack_require__(/*! ./modules/es6.object.prevent-extensions */ 55);
+	__webpack_require__(/*! ./modules/es6.object.is-frozen */ 56);
+	__webpack_require__(/*! ./modules/es6.object.is-sealed */ 57);
+	__webpack_require__(/*! ./modules/es6.object.is-extensible */ 58);
+	__webpack_require__(/*! ./modules/es6.object.get-own-property-descriptor */ 59);
+	__webpack_require__(/*! ./modules/es6.object.get-prototype-of */ 60);
+	__webpack_require__(/*! ./modules/es6.object.keys */ 61);
+	__webpack_require__(/*! ./modules/es6.object.get-own-property-names */ 62);
+	__webpack_require__(/*! ./modules/es6.function.name */ 63);
+	__webpack_require__(/*! ./modules/es6.function.has-instance */ 64);
+	__webpack_require__(/*! ./modules/es6.number.constructor */ 65);
+	__webpack_require__(/*! ./modules/es6.number.epsilon */ 66);
+	__webpack_require__(/*! ./modules/es6.number.is-finite */ 67);
+	__webpack_require__(/*! ./modules/es6.number.is-integer */ 68);
+	__webpack_require__(/*! ./modules/es6.number.is-nan */ 70);
+	__webpack_require__(/*! ./modules/es6.number.is-safe-integer */ 71);
+	__webpack_require__(/*! ./modules/es6.number.max-safe-integer */ 72);
+	__webpack_require__(/*! ./modules/es6.number.min-safe-integer */ 73);
+	__webpack_require__(/*! ./modules/es6.number.parse-float */ 74);
+	__webpack_require__(/*! ./modules/es6.number.parse-int */ 75);
+	__webpack_require__(/*! ./modules/es6.math.acosh */ 76);
+	__webpack_require__(/*! ./modules/es6.math.asinh */ 78);
+	__webpack_require__(/*! ./modules/es6.math.atanh */ 79);
+	__webpack_require__(/*! ./modules/es6.math.cbrt */ 80);
+	__webpack_require__(/*! ./modules/es6.math.clz32 */ 82);
+	__webpack_require__(/*! ./modules/es6.math.cosh */ 83);
+	__webpack_require__(/*! ./modules/es6.math.expm1 */ 84);
+	__webpack_require__(/*! ./modules/es6.math.fround */ 86);
+	__webpack_require__(/*! ./modules/es6.math.hypot */ 87);
+	__webpack_require__(/*! ./modules/es6.math.imul */ 88);
+	__webpack_require__(/*! ./modules/es6.math.log10 */ 89);
+	__webpack_require__(/*! ./modules/es6.math.log1p */ 90);
+	__webpack_require__(/*! ./modules/es6.math.log2 */ 91);
+	__webpack_require__(/*! ./modules/es6.math.sign */ 92);
+	__webpack_require__(/*! ./modules/es6.math.sinh */ 93);
+	__webpack_require__(/*! ./modules/es6.math.tanh */ 94);
+	__webpack_require__(/*! ./modules/es6.math.trunc */ 95);
+	__webpack_require__(/*! ./modules/es6.string.from-code-point */ 96);
+	__webpack_require__(/*! ./modules/es6.string.raw */ 97);
+	__webpack_require__(/*! ./modules/es6.string.trim */ 98);
+	__webpack_require__(/*! ./modules/es6.string.iterator */ 100);
+	__webpack_require__(/*! ./modules/es6.string.code-point-at */ 105);
+	__webpack_require__(/*! ./modules/es6.string.ends-with */ 106);
+	__webpack_require__(/*! ./modules/es6.string.includes */ 110);
+	__webpack_require__(/*! ./modules/es6.string.repeat */ 111);
+	__webpack_require__(/*! ./modules/es6.string.starts-with */ 113);
+	__webpack_require__(/*! ./modules/es6.array.from */ 114);
+	__webpack_require__(/*! ./modules/es6.array.of */ 119);
+	__webpack_require__(/*! ./modules/es6.array.iterator */ 120);
+	__webpack_require__(/*! ./modules/es6.array.species */ 123);
+	__webpack_require__(/*! ./modules/es6.array.copy-within */ 125);
+	__webpack_require__(/*! ./modules/es6.array.fill */ 127);
+	__webpack_require__(/*! ./modules/es6.array.find */ 129);
+	__webpack_require__(/*! ./modules/es6.array.find-index */ 130);
+	__webpack_require__(/*! ./modules/es6.regexp.constructor */ 131);
+	__webpack_require__(/*! ./modules/es6.regexp.flags */ 133);
+	__webpack_require__(/*! ./modules/es6.regexp.match */ 134);
+	__webpack_require__(/*! ./modules/es6.regexp.replace */ 136);
+	__webpack_require__(/*! ./modules/es6.regexp.search */ 137);
+	__webpack_require__(/*! ./modules/es6.regexp.split */ 138);
+	__webpack_require__(/*! ./modules/es6.promise */ 139);
+	__webpack_require__(/*! ./modules/es6.map */ 145);
+	__webpack_require__(/*! ./modules/es6.set */ 148);
+	__webpack_require__(/*! ./modules/es6.weak-map */ 149);
+	__webpack_require__(/*! ./modules/es6.weak-set */ 151);
+	__webpack_require__(/*! ./modules/es6.reflect.apply */ 152);
+	__webpack_require__(/*! ./modules/es6.reflect.construct */ 153);
+	__webpack_require__(/*! ./modules/es6.reflect.define-property */ 154);
+	__webpack_require__(/*! ./modules/es6.reflect.delete-property */ 155);
+	__webpack_require__(/*! ./modules/es6.reflect.enumerate */ 156);
+	__webpack_require__(/*! ./modules/es6.reflect.get */ 157);
+	__webpack_require__(/*! ./modules/es6.reflect.get-own-property-descriptor */ 158);
+	__webpack_require__(/*! ./modules/es6.reflect.get-prototype-of */ 159);
+	__webpack_require__(/*! ./modules/es6.reflect.has */ 160);
+	__webpack_require__(/*! ./modules/es6.reflect.is-extensible */ 161);
+	__webpack_require__(/*! ./modules/es6.reflect.own-keys */ 162);
+	__webpack_require__(/*! ./modules/es6.reflect.prevent-extensions */ 164);
+	__webpack_require__(/*! ./modules/es6.reflect.set */ 165);
+	__webpack_require__(/*! ./modules/es6.reflect.set-prototype-of */ 166);
+	__webpack_require__(/*! ./modules/es7.array.includes */ 167);
+	__webpack_require__(/*! ./modules/es7.string.at */ 168);
+	__webpack_require__(/*! ./modules/es7.string.pad-left */ 169);
+	__webpack_require__(/*! ./modules/es7.string.pad-right */ 171);
+	__webpack_require__(/*! ./modules/es7.string.trim-left */ 172);
+	__webpack_require__(/*! ./modules/es7.string.trim-right */ 173);
+	__webpack_require__(/*! ./modules/es7.regexp.escape */ 174);
+	__webpack_require__(/*! ./modules/es7.object.get-own-property-descriptors */ 176);
+	__webpack_require__(/*! ./modules/es7.object.values */ 177);
+	__webpack_require__(/*! ./modules/es7.object.entries */ 179);
+	__webpack_require__(/*! ./modules/es7.map.to-json */ 180);
+	__webpack_require__(/*! ./modules/es7.set.to-json */ 182);
+	__webpack_require__(/*! ./modules/js.array.statics */ 183);
+	__webpack_require__(/*! ./modules/web.timers */ 184);
+	__webpack_require__(/*! ./modules/web.immediate */ 187);
+	__webpack_require__(/*! ./modules/web.dom.iterable */ 188);
+	module.exports = __webpack_require__(/*! ./modules/$.core */ 18);
+
+/***/ },
+/* 6 */
+/*!***********************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/es5.js ***!
+  \***********************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	var $                = __webpack_require__(/*! ./$ */ 7)
+	  , SUPPORT_DESC     = __webpack_require__(/*! ./$.support-desc */ 8)
+	  , createDesc       = __webpack_require__(/*! ./$.property-desc */ 10)
+	  , html             = __webpack_require__(/*! ./$.html */ 11)
+	  , cel              = __webpack_require__(/*! ./$.dom-create */ 13)
+	  , has              = __webpack_require__(/*! ./$.has */ 15)
+	  , cof              = __webpack_require__(/*! ./$.cof */ 16)
+	  , $def             = __webpack_require__(/*! ./$.def */ 17)
+	  , invoke           = __webpack_require__(/*! ./$.invoke */ 22)
+	  , arrayMethod      = __webpack_require__(/*! ./$.array-methods */ 23)
+	  , IE_PROTO         = __webpack_require__(/*! ./$.uid */ 21)('__proto__')
+	  , isObject         = __webpack_require__(/*! ./$.is-object */ 14)
+	  , anObject         = __webpack_require__(/*! ./$.an-object */ 34)
+	  , aFunction        = __webpack_require__(/*! ./$.a-function */ 25)
+	  , toObject         = __webpack_require__(/*! ./$.to-object */ 27)
+	  , toIObject        = __webpack_require__(/*! ./$.to-iobject */ 35)
+	  , toInteger        = __webpack_require__(/*! ./$.to-integer */ 30)
+	  , toIndex          = __webpack_require__(/*! ./$.to-index */ 36)
+	  , toLength         = __webpack_require__(/*! ./$.to-length */ 29)
+	  , IObject          = __webpack_require__(/*! ./$.iobject */ 26)
+	  , fails            = __webpack_require__(/*! ./$.fails */ 9)
+	  , ObjectProto      = Object.prototype
+	  , A                = []
+	  , _slice           = A.slice
+	  , _join            = A.join
+	  , defineProperty   = $.setDesc
+	  , getOwnDescriptor = $.getDesc
+	  , defineProperties = $.setDescs
+	  , $indexOf         = __webpack_require__(/*! ./$.array-includes */ 37)(false)
+	  , factories        = {}
+	  , IE8_DOM_DEFINE;
+
+	if(!SUPPORT_DESC){
+	  IE8_DOM_DEFINE = !fails(function(){
+	    return defineProperty(cel('div'), 'a', {get: function(){ return 7; }}).a != 7;
+	  });
+	  $.setDesc = function(O, P, Attributes){
+	    if(IE8_DOM_DEFINE)try {
+	      return defineProperty(O, P, Attributes);
+	    } catch(e){ /* empty */ }
+	    if('get' in Attributes || 'set' in Attributes)throw TypeError('Accessors not supported!');
+	    if('value' in Attributes)anObject(O)[P] = Attributes.value;
+	    return O;
+	  };
+	  $.getDesc = function(O, P){
+	    if(IE8_DOM_DEFINE)try {
+	      return getOwnDescriptor(O, P);
+	    } catch(e){ /* empty */ }
+	    if(has(O, P))return createDesc(!ObjectProto.propertyIsEnumerable.call(O, P), O[P]);
+	  };
+	  $.setDescs = defineProperties = function(O, Properties){
+	    anObject(O);
+	    var keys   = $.getKeys(Properties)
+	      , length = keys.length
+	      , i = 0
+	      , P;
+	    while(length > i)$.setDesc(O, P = keys[i++], Properties[P]);
+	    return O;
+	  };
+	}
+	$def($def.S + $def.F * !SUPPORT_DESC, 'Object', {
+	  // 19.1.2.6 / 15.2.3.3 Object.getOwnPropertyDescriptor(O, P)
+	  getOwnPropertyDescriptor: $.getDesc,
+	  // 19.1.2.4 / 15.2.3.6 Object.defineProperty(O, P, Attributes)
+	  defineProperty: $.setDesc,
+	  // 19.1.2.3 / 15.2.3.7 Object.defineProperties(O, Properties)
+	  defineProperties: defineProperties
+	});
+
+	  // IE 8- don't enum bug keys
+	var keys1 = ('constructor,hasOwnProperty,isPrototypeOf,propertyIsEnumerable,' +
+	            'toLocaleString,toString,valueOf').split(',')
+	  // Additional keys for getOwnPropertyNames
+	  , keys2 = keys1.concat('length', 'prototype')
+	  , keysLen1 = keys1.length;
+
+	// Create object with `null` prototype: use iframe Object with cleared prototype
+	var createDict = function(){
+	  // Thrash, waste and sodomy: IE GC bug
+	  var iframe = cel('iframe')
+	    , i      = keysLen1
+	    , gt     = '>'
+	    , iframeDocument;
+	  iframe.style.display = 'none';
+	  html.appendChild(iframe);
+	  iframe.src = 'javascript:'; // eslint-disable-line no-script-url
+	  // createDict = iframe.contentWindow.Object;
+	  // html.removeChild(iframe);
+	  iframeDocument = iframe.contentWindow.document;
+	  iframeDocument.open();
+	  iframeDocument.write('<script>document.F=Object</script' + gt);
+	  iframeDocument.close();
+	  createDict = iframeDocument.F;
+	  while(i--)delete createDict.prototype[keys1[i]];
+	  return createDict();
+	};
+	var createGetKeys = function(names, length){
+	  return function(object){
+	    var O      = toIObject(object)
+	      , i      = 0
+	      , result = []
+	      , key;
+	    for(key in O)if(key != IE_PROTO)has(O, key) && result.push(key);
+	    // Don't enum bug & hidden keys
+	    while(length > i)if(has(O, key = names[i++])){
+	      ~$indexOf(result, key) || result.push(key);
+	    }
+	    return result;
+	  };
+	};
+	var Empty = function(){};
+	$def($def.S, 'Object', {
+	  // 19.1.2.9 / 15.2.3.2 Object.getPrototypeOf(O)
+	  getPrototypeOf: $.getProto = $.getProto || function(O){
+	    O = toObject(O);
+	    if(has(O, IE_PROTO))return O[IE_PROTO];
+	    if(typeof O.constructor == 'function' && O instanceof O.constructor){
+	      return O.constructor.prototype;
+	    } return O instanceof Object ? ObjectProto : null;
+	  },
+	  // 19.1.2.7 / 15.2.3.4 Object.getOwnPropertyNames(O)
+	  getOwnPropertyNames: $.getNames = $.getNames || createGetKeys(keys2, keys2.length, true),
+	  // 19.1.2.2 / 15.2.3.5 Object.create(O [, Properties])
+	  create: $.create = $.create || function(O, /*?*/Properties){
+	    var result;
+	    if(O !== null){
+	      Empty.prototype = anObject(O);
+	      result = new Empty();
+	      Empty.prototype = null;
+	      // add "__proto__" for Object.getPrototypeOf shim
+	      result[IE_PROTO] = O;
+	    } else result = createDict();
+	    return Properties === undefined ? result : defineProperties(result, Properties);
+	  },
+	  // 19.1.2.14 / 15.2.3.14 Object.keys(O)
+	  keys: $.getKeys = $.getKeys || createGetKeys(keys1, keysLen1, false)
+	});
+
+	var construct = function(F, len, args){
+	  if(!(len in factories)){
+	    for(var n = [], i = 0; i < len; i++)n[i] = 'a[' + i + ']';
+	    factories[len] = Function('F,a', 'return new F(' + n.join(',') + ')');
+	  }
+	  return factories[len](F, args);
+	};
+
+	// 19.2.3.2 / 15.3.4.5 Function.prototype.bind(thisArg, args...)
+	$def($def.P, 'Function', {
+	  bind: function bind(that /*, args... */){
+	    var fn       = aFunction(this)
+	      , partArgs = _slice.call(arguments, 1);
+	    var bound = function(/* args... */){
+	      var args = partArgs.concat(_slice.call(arguments));
+	      return this instanceof bound ? construct(fn, args.length, args) : invoke(fn, args, that);
+	    };
+	    if(isObject(fn.prototype))bound.prototype = fn.prototype;
+	    return bound;
+	  }
+	});
+
+	// fallback for not array-like ES3 strings and DOM objects
+	var buggySlice = fails(function(){
+	  if(html)_slice.call(html);
+	});
+
+	$def($def.P + $def.F * buggySlice, 'Array', {
+	  slice: function(begin, end){
+	    var len   = toLength(this.length)
+	      , klass = cof(this);
+	    end = end === undefined ? len : end;
+	    if(klass == 'Array')return _slice.call(this, begin, end);
+	    var start  = toIndex(begin, len)
+	      , upTo   = toIndex(end, len)
+	      , size   = toLength(upTo - start)
+	      , cloned = Array(size)
+	      , i      = 0;
+	    for(; i < size; i++)cloned[i] = klass == 'String'
+	      ? this.charAt(start + i)
+	      : this[start + i];
+	    return cloned;
+	  }
+	});
+	$def($def.P + $def.F * (IObject != Object), 'Array', {
+	  join: function(){
+	    return _join.apply(IObject(this), arguments);
+	  }
+	});
+
+	// 22.1.2.2 / 15.4.3.2 Array.isArray(arg)
+	$def($def.S, 'Array', {isArray: __webpack_require__(/*! ./$.is-array */ 31)});
+
+	var createArrayReduce = function(isRight){
+	  return function(callbackfn, memo){
+	    aFunction(callbackfn);
+	    var O      = IObject(this)
+	      , length = toLength(O.length)
+	      , index  = isRight ? length - 1 : 0
+	      , i      = isRight ? -1 : 1;
+	    if(arguments.length < 2)for(;;){
+	      if(index in O){
+	        memo = O[index];
+	        index += i;
+	        break;
+	      }
+	      index += i;
+	      if(isRight ? index < 0 : length <= index){
+	        throw TypeError('Reduce of empty array with no initial value');
+	      }
+	    }
+	    for(;isRight ? index >= 0 : length > index; index += i)if(index in O){
+	      memo = callbackfn(memo, O[index], index, this);
+	    }
+	    return memo;
+	  };
+	};
+	var methodize = function($fn){
+	  return function(arg1/*, arg2 = undefined */){
+	    return $fn(this, arg1, arguments[1]);
+	  };
+	};
+	$def($def.P, 'Array', {
+	  // 22.1.3.10 / 15.4.4.18 Array.prototype.forEach(callbackfn [, thisArg])
+	  forEach: $.each = $.each || methodize(arrayMethod(0)),
+	  // 22.1.3.15 / 15.4.4.19 Array.prototype.map(callbackfn [, thisArg])
+	  map: methodize(arrayMethod(1)),
+	  // 22.1.3.7 / 15.4.4.20 Array.prototype.filter(callbackfn [, thisArg])
+	  filter: methodize(arrayMethod(2)),
+	  // 22.1.3.23 / 15.4.4.17 Array.prototype.some(callbackfn [, thisArg])
+	  some: methodize(arrayMethod(3)),
+	  // 22.1.3.5 / 15.4.4.16 Array.prototype.every(callbackfn [, thisArg])
+	  every: methodize(arrayMethod(4)),
+	  // 22.1.3.18 / 15.4.4.21 Array.prototype.reduce(callbackfn [, initialValue])
+	  reduce: createArrayReduce(false),
+	  // 22.1.3.19 / 15.4.4.22 Array.prototype.reduceRight(callbackfn [, initialValue])
+	  reduceRight: createArrayReduce(true),
+	  // 22.1.3.11 / 15.4.4.14 Array.prototype.indexOf(searchElement [, fromIndex])
+	  indexOf: methodize($indexOf),
+	  // 22.1.3.14 / 15.4.4.15 Array.prototype.lastIndexOf(searchElement [, fromIndex])
+	  lastIndexOf: function(el, fromIndex /* = @[*-1] */){
+	    var O      = toIObject(this)
+	      , length = toLength(O.length)
+	      , index  = length - 1;
+	    if(arguments.length > 1)index = Math.min(index, toInteger(fromIndex));
+	    if(index < 0)index = toLength(length + index);
+	    for(;index >= 0; index--)if(index in O)if(O[index] === el)return index;
+	    return -1;
+	  }
+	});
+
+	// 20.3.3.1 / 15.9.4.4 Date.now()
+	$def($def.S, 'Date', {now: function(){ return +new Date; }});
+
+	var lz = function(num){
+	  return num > 9 ? num : '0' + num;
+	};
+
+	// 20.3.4.36 / 15.9.5.43 Date.prototype.toISOString()
+	// PhantomJS and old webkit had a broken Date implementation.
+	var date       = new Date(-5e13 - 1)
+	  , brokenDate = !(date.toISOString && date.toISOString() == '0385-07-25T07:06:39.999Z'
+	      && fails(function(){ new Date(NaN).toISOString(); }));
+	$def($def.P + $def.F * brokenDate, 'Date', {
+	  toISOString: function toISOString(){
+	    if(!isFinite(this))throw RangeError('Invalid time value');
+	    var d = this
+	      , y = d.getUTCFullYear()
+	      , m = d.getUTCMilliseconds()
+	      , s = y < 0 ? '-' : y > 9999 ? '+' : '';
+	    return s + ('00000' + Math.abs(y)).slice(s ? -6 : -4) +
+	      '-' + lz(d.getUTCMonth() + 1) + '-' + lz(d.getUTCDate()) +
+	      'T' + lz(d.getUTCHours()) + ':' + lz(d.getUTCMinutes()) +
+	      ':' + lz(d.getUTCSeconds()) + '.' + (m > 99 ? m : '0' + lz(m)) + 'Z';
+	  }
+	});
+
+/***/ },
+/* 7 */
+/*!*********************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/$.js ***!
+  \*********************************************/
+/***/ function(module, exports) {
+
+	var $Object = Object;
+	module.exports = {
+	  create:     $Object.create,
+	  getProto:   $Object.getPrototypeOf,
+	  isEnum:     {}.propertyIsEnumerable,
+	  getDesc:    $Object.getOwnPropertyDescriptor,
+	  setDesc:    $Object.defineProperty,
+	  setDescs:   $Object.defineProperties,
+	  getKeys:    $Object.keys,
+	  getNames:   $Object.getOwnPropertyNames,
+	  getSymbols: $Object.getOwnPropertySymbols,
+	  each:       [].forEach
+	};
+
+/***/ },
+/* 8 */
+/*!**********************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/$.support-desc.js ***!
+  \**********************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// Thank's IE8 for his funny defineProperty
+	module.exports = !__webpack_require__(/*! ./$.fails */ 9)(function(){
+	  return Object.defineProperty({}, 'a', {get: function(){ return 7; }}).a != 7;
+	});
+
+/***/ },
+/* 9 */
+/*!***************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/$.fails.js ***!
+  \***************************************************/
+/***/ function(module, exports) {
+
+	module.exports = function(exec){
+	  try {
+	    return !!exec();
+	  } catch(e){
+	    return true;
+	  }
+	};
+
+/***/ },
+/* 10 */
+/*!***********************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/$.property-desc.js ***!
+  \***********************************************************/
+/***/ function(module, exports) {
+
+	module.exports = function(bitmap, value){
+	  return {
+	    enumerable  : !(bitmap & 1),
+	    configurable: !(bitmap & 2),
+	    writable    : !(bitmap & 4),
+	    value       : value
+	  };
+	};
+
+/***/ },
+/* 11 */
+/*!**************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/$.html.js ***!
+  \**************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__(/*! ./$.global */ 12).document && document.documentElement;
+
+/***/ },
+/* 12 */
+/*!****************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/$.global.js ***!
+  \****************************************************/
+/***/ function(module, exports) {
+
+	// https://github.com/zloirock/core-js/issues/86#issuecomment-115759028
+	var UNDEFINED = 'undefined';
+	var global = module.exports = typeof window != UNDEFINED && window.Math == Math
+	  ? window : typeof self != UNDEFINED && self.Math == Math ? self : Function('return this')();
+	if(typeof __g == 'number')__g = global; // eslint-disable-line no-undef
+
+/***/ },
+/* 13 */
+/*!********************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/$.dom-create.js ***!
+  \********************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var isObject = __webpack_require__(/*! ./$.is-object */ 14)
+	  , document = __webpack_require__(/*! ./$.global */ 12).document
+	  // in old IE typeof document.createElement is 'object'
+	  , is = isObject(document) && isObject(document.createElement);
+	module.exports = function(it){
+	  return is ? document.createElement(it) : {};
+	};
+
+/***/ },
+/* 14 */
+/*!*******************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/$.is-object.js ***!
+  \*******************************************************/
+/***/ function(module, exports) {
+
+	module.exports = function(it){
+	  return typeof it === 'object' ? it !== null : typeof it === 'function';
+	};
+
+/***/ },
+/* 15 */
+/*!*************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/$.has.js ***!
+  \*************************************************/
+/***/ function(module, exports) {
+
+	var hasOwnProperty = {}.hasOwnProperty;
+	module.exports = function(it, key){
+	  return hasOwnProperty.call(it, key);
+	};
+
+/***/ },
+/* 16 */
+/*!*************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/$.cof.js ***!
+  \*************************************************/
+/***/ function(module, exports) {
+
+	var toString = {}.toString;
+
+	module.exports = function(it){
+	  return toString.call(it).slice(8, -1);
+	};
+
+/***/ },
+/* 17 */
+/*!*************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/$.def.js ***!
+  \*************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var global     = __webpack_require__(/*! ./$.global */ 12)
+	  , core       = __webpack_require__(/*! ./$.core */ 18)
+	  , hide       = __webpack_require__(/*! ./$.hide */ 19)
+	  , $redef     = __webpack_require__(/*! ./$.redef */ 20)
+	  , PROTOTYPE  = 'prototype';
+	var ctx = function(fn, that){
+	  return function(){
+	    return fn.apply(that, arguments);
+	  };
+	};
+	var $def = function(type, name, source){
+	  var key, own, out, exp
+	    , isGlobal = type & $def.G
+	    , isProto  = type & $def.P
+	    , target   = isGlobal ? global : type & $def.S
+	        ? global[name] || (global[name] = {}) : (global[name] || {})[PROTOTYPE]
+	    , exports  = isGlobal ? core : core[name] || (core[name] = {});
+	  if(isGlobal)source = name;
+	  for(key in source){
+	    // contains in native
+	    own = !(type & $def.F) && target && key in target;
+	    // export native or passed
+	    out = (own ? target : source)[key];
+	    // bind timers to global for call from export context
+	    if(type & $def.B && own)exp = ctx(out, global);
+	    else exp = isProto && typeof out == 'function' ? ctx(Function.call, out) : out;
+	    // extend global
+	    if(target && !own)$redef(target, key, out);
+	    // export
+	    if(exports[key] != out)hide(exports, key, exp);
+	    if(isProto)(exports[PROTOTYPE] || (exports[PROTOTYPE] = {}))[key] = out;
+	  }
+	};
+	global.core = core;
+	// type bitmap
+	$def.F = 1;  // forced
+	$def.G = 2;  // global
+	$def.S = 4;  // static
+	$def.P = 8;  // proto
+	$def.B = 16; // bind
+	$def.W = 32; // wrap
+	module.exports = $def;
+
+/***/ },
+/* 18 */
+/*!**************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/$.core.js ***!
+  \**************************************************/
+/***/ function(module, exports) {
+
+	var core = module.exports = {version: '1.2.1'};
+	if(typeof __e == 'number')__e = core; // eslint-disable-line no-undef
+
+/***/ },
+/* 19 */
+/*!**************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/$.hide.js ***!
+  \**************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var $          = __webpack_require__(/*! ./$ */ 7)
+	  , createDesc = __webpack_require__(/*! ./$.property-desc */ 10);
+	module.exports = __webpack_require__(/*! ./$.support-desc */ 8) ? function(object, key, value){
+	  return $.setDesc(object, key, createDesc(1, value));
+	} : function(object, key, value){
+	  object[key] = value;
+	  return object;
+	};
+
+/***/ },
+/* 20 */
+/*!***************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/$.redef.js ***!
+  \***************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// add fake Function#toString
+	// for correct work wrapped methods / constructors with methods like LoDash isNative
+	var global    = __webpack_require__(/*! ./$.global */ 12)
+	  , hide      = __webpack_require__(/*! ./$.hide */ 19)
+	  , SRC       = __webpack_require__(/*! ./$.uid */ 21)('src')
+	  , TO_STRING = 'toString'
+	  , $toString = Function[TO_STRING]
+	  , TPL       = ('' + $toString).split(TO_STRING);
+
+	__webpack_require__(/*! ./$.core */ 18).inspectSource = function(it){
+	  return $toString.call(it);
+	};
+
+	(module.exports = function(O, key, val, safe){
+	  if(typeof val == 'function'){
+	    hide(val, SRC, O[key] ? '' + O[key] : TPL.join(String(key)));
+	    if(!('name' in val))val.name = key;
+	  }
+	  if(O === global){
+	    O[key] = val;
+	  } else {
+	    if(!safe)delete O[key];
+	    hide(O, key, val);
+	  }
+	})(Function.prototype, TO_STRING, function toString(){
+	  return typeof this == 'function' && this[SRC] || $toString.call(this);
+	});
+
+/***/ },
+/* 21 */
+/*!*************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/$.uid.js ***!
+  \*************************************************/
+/***/ function(module, exports) {
+
+	var id = 0
+	  , px = Math.random();
+	module.exports = function(key){
+	  return 'Symbol('.concat(key === undefined ? '' : key, ')_', (++id + px).toString(36));
+	};
+
+/***/ },
+/* 22 */
+/*!****************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/$.invoke.js ***!
+  \****************************************************/
+/***/ function(module, exports) {
+
+	// fast apply, http://jsperf.lnkit.com/fast-apply/5
+	module.exports = function(fn, args, that){
+	  var un = that === undefined;
+	  switch(args.length){
+	    case 0: return un ? fn()
+	                      : fn.call(that);
+	    case 1: return un ? fn(args[0])
+	                      : fn.call(that, args[0]);
+	    case 2: return un ? fn(args[0], args[1])
+	                      : fn.call(that, args[0], args[1]);
+	    case 3: return un ? fn(args[0], args[1], args[2])
+	                      : fn.call(that, args[0], args[1], args[2]);
+	    case 4: return un ? fn(args[0], args[1], args[2], args[3])
+	                      : fn.call(that, args[0], args[1], args[2], args[3]);
+	  } return              fn.apply(that, args);
+	};
+
+/***/ },
+/* 23 */
+/*!***********************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/$.array-methods.js ***!
+  \***********************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// 0 -> Array#forEach
+	// 1 -> Array#map
+	// 2 -> Array#filter
+	// 3 -> Array#some
+	// 4 -> Array#every
+	// 5 -> Array#find
+	// 6 -> Array#findIndex
+	var ctx      = __webpack_require__(/*! ./$.ctx */ 24)
+	  , isObject = __webpack_require__(/*! ./$.is-object */ 14)
+	  , IObject  = __webpack_require__(/*! ./$.iobject */ 26)
+	  , toObject = __webpack_require__(/*! ./$.to-object */ 27)
+	  , toLength = __webpack_require__(/*! ./$.to-length */ 29)
+	  , isArray  = __webpack_require__(/*! ./$.is-array */ 31)
+	  , SPECIES  = __webpack_require__(/*! ./$.wks */ 32)('species');
+	// 9.4.2.3 ArraySpeciesCreate(originalArray, length)
+	var ASC = function(original, length){
+	  var C;
+	  if(isArray(original) && isObject(C = original.constructor)){
+	    C = C[SPECIES];
+	    if(C === null)C = undefined;
+	  } return new(C === undefined ? Array : C)(length);
+	};
+	module.exports = function(TYPE){
+	  var IS_MAP        = TYPE == 1
+	    , IS_FILTER     = TYPE == 2
+	    , IS_SOME       = TYPE == 3
+	    , IS_EVERY      = TYPE == 4
+	    , IS_FIND_INDEX = TYPE == 6
+	    , NO_HOLES      = TYPE == 5 || IS_FIND_INDEX;
+	  return function($this, callbackfn, that){
+	    var O      = toObject($this)
+	      , self   = IObject(O)
+	      , f      = ctx(callbackfn, that, 3)
+	      , length = toLength(self.length)
+	      , index  = 0
+	      , result = IS_MAP ? ASC($this, length) : IS_FILTER ? ASC($this, 0) : undefined
+	      , val, res;
+	    for(;length > index; index++)if(NO_HOLES || index in self){
+	      val = self[index];
+	      res = f(val, index, O);
+	      if(TYPE){
+	        if(IS_MAP)result[index] = res;            // map
+	        else if(res)switch(TYPE){
+	          case 3: return true;                    // some
+	          case 5: return val;                     // find
+	          case 6: return index;                   // findIndex
+	          case 2: result.push(val);               // filter
+	        } else if(IS_EVERY)return false;          // every
+	      }
+	    }
+	    return IS_FIND_INDEX ? -1 : IS_SOME || IS_EVERY ? IS_EVERY : result;
+	  };
+	};
+
+/***/ },
+/* 24 */
+/*!*************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/$.ctx.js ***!
+  \*************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// optional / simple context binding
+	var aFunction = __webpack_require__(/*! ./$.a-function */ 25);
+	module.exports = function(fn, that, length){
+	  aFunction(fn);
+	  if(that === undefined)return fn;
+	  switch(length){
+	    case 1: return function(a){
+	      return fn.call(that, a);
+	    };
+	    case 2: return function(a, b){
+	      return fn.call(that, a, b);
+	    };
+	    case 3: return function(a, b, c){
+	      return fn.call(that, a, b, c);
+	    };
+	  }
+	  return function(/* ...args */){
+	    return fn.apply(that, arguments);
+	  };
+	};
+
+/***/ },
+/* 25 */
+/*!********************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/$.a-function.js ***!
+  \********************************************************/
+/***/ function(module, exports) {
+
+	module.exports = function(it){
+	  if(typeof it != 'function')throw TypeError(it + ' is not a function!');
+	  return it;
+	};
+
+/***/ },
+/* 26 */
+/*!*****************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/$.iobject.js ***!
+  \*****************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// indexed object, fallback for non-array-like ES3 strings
+	var cof = __webpack_require__(/*! ./$.cof */ 16);
+	module.exports = 0 in Object('z') ? Object : function(it){
+	  return cof(it) == 'String' ? it.split('') : Object(it);
+	};
+
+/***/ },
+/* 27 */
+/*!*******************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/$.to-object.js ***!
+  \*******************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// 7.1.13 ToObject(argument)
+	var defined = __webpack_require__(/*! ./$.defined */ 28);
+	module.exports = function(it){
+	  return Object(defined(it));
+	};
+
+/***/ },
+/* 28 */
+/*!*****************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/$.defined.js ***!
+  \*****************************************************/
+/***/ function(module, exports) {
+
+	// 7.2.1 RequireObjectCoercible(argument)
+	module.exports = function(it){
+	  if(it == undefined)throw TypeError("Can't call method on  " + it);
+	  return it;
+	};
+
+/***/ },
+/* 29 */
+/*!*******************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/$.to-length.js ***!
+  \*******************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// 7.1.15 ToLength
+	var toInteger = __webpack_require__(/*! ./$.to-integer */ 30)
+	  , min       = Math.min;
+	module.exports = function(it){
+	  return it > 0 ? min(toInteger(it), 0x1fffffffffffff) : 0; // pow(2, 53) - 1 == 9007199254740991
+	};
+
+/***/ },
+/* 30 */
+/*!********************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/$.to-integer.js ***!
+  \********************************************************/
+/***/ function(module, exports) {
+
+	// 7.1.4 ToInteger
+	var ceil  = Math.ceil
+	  , floor = Math.floor;
+	module.exports = function(it){
+	  return isNaN(it = +it) ? 0 : (it > 0 ? floor : ceil)(it);
+	};
+
+/***/ },
+/* 31 */
+/*!******************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/$.is-array.js ***!
+  \******************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// 7.2.2 IsArray(argument)
+	var cof = __webpack_require__(/*! ./$.cof */ 16);
+	module.exports = Array.isArray || function(arg){
+	  return cof(arg) == 'Array';
+	};
+
+/***/ },
+/* 32 */
+/*!*************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/$.wks.js ***!
+  \*************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var store  = __webpack_require__(/*! ./$.shared */ 33)('wks')
+	  , Symbol = __webpack_require__(/*! ./$.global */ 12).Symbol;
+	module.exports = function(name){
+	  return store[name] || (store[name] =
+	    Symbol && Symbol[name] || (Symbol || __webpack_require__(/*! ./$.uid */ 21))('Symbol.' + name));
+	};
+
+/***/ },
+/* 33 */
+/*!****************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/$.shared.js ***!
+  \****************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var global = __webpack_require__(/*! ./$.global */ 12)
+	  , SHARED = '__core-js_shared__'
+	  , store  = global[SHARED] || (global[SHARED] = {});
+	module.exports = function(key){
+	  return store[key] || (store[key] = {});
+	};
+
+/***/ },
+/* 34 */
+/*!*******************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/$.an-object.js ***!
+  \*******************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var isObject = __webpack_require__(/*! ./$.is-object */ 14);
+	module.exports = function(it){
+	  if(!isObject(it))throw TypeError(it + ' is not an object!');
+	  return it;
+	};
+
+/***/ },
+/* 35 */
+/*!********************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/$.to-iobject.js ***!
+  \********************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// to indexed object, toObject with fallback for non-array-like ES3 strings
+	var IObject = __webpack_require__(/*! ./$.iobject */ 26)
+	  , defined = __webpack_require__(/*! ./$.defined */ 28);
+	module.exports = function(it){
+	  return IObject(defined(it));
+	};
+
+/***/ },
+/* 36 */
+/*!******************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/$.to-index.js ***!
+  \******************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var toInteger = __webpack_require__(/*! ./$.to-integer */ 30)
+	  , max       = Math.max
+	  , min       = Math.min;
+	module.exports = function(index, length){
+	  index = toInteger(index);
+	  return index < 0 ? max(index + length, 0) : min(index, length);
+	};
+
+/***/ },
+/* 37 */
+/*!************************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/$.array-includes.js ***!
+  \************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// false -> Array#indexOf
+	// true  -> Array#includes
+	var toIObject = __webpack_require__(/*! ./$.to-iobject */ 35)
+	  , toLength  = __webpack_require__(/*! ./$.to-length */ 29)
+	  , toIndex   = __webpack_require__(/*! ./$.to-index */ 36);
+	module.exports = function(IS_INCLUDES){
+	  return function($this, el, fromIndex){
+	    var O      = toIObject($this)
+	      , length = toLength(O.length)
+	      , index  = toIndex(fromIndex, length)
+	      , value;
+	    // Array#includes uses SameValueZero equality algorithm
+	    if(IS_INCLUDES && el != el)while(length > index){
+	      value = O[index++];
+	      if(value != value)return true;
+	    // Array#toIndex ignores holes, Array#includes - not
+	    } else for(;length > index; index++)if(IS_INCLUDES || index in O){
+	      if(O[index] === el)return IS_INCLUDES || index;
+	    } return !IS_INCLUDES && -1;
+	  };
+	};
+
+/***/ },
+/* 38 */
+/*!******************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/es6.symbol.js ***!
+  \******************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	// ECMAScript 6 symbols shim
+	var $              = __webpack_require__(/*! ./$ */ 7)
+	  , global         = __webpack_require__(/*! ./$.global */ 12)
+	  , has            = __webpack_require__(/*! ./$.has */ 15)
+	  , SUPPORT_DESC   = __webpack_require__(/*! ./$.support-desc */ 8)
+	  , $def           = __webpack_require__(/*! ./$.def */ 17)
+	  , $redef         = __webpack_require__(/*! ./$.redef */ 20)
+	  , $fails         = __webpack_require__(/*! ./$.fails */ 9)
+	  , shared         = __webpack_require__(/*! ./$.shared */ 33)
+	  , setTag         = __webpack_require__(/*! ./$.tag */ 39)
+	  , uid            = __webpack_require__(/*! ./$.uid */ 21)
+	  , wks            = __webpack_require__(/*! ./$.wks */ 32)
+	  , keyOf          = __webpack_require__(/*! ./$.keyof */ 40)
+	  , $names         = __webpack_require__(/*! ./$.get-names */ 41)
+	  , enumKeys       = __webpack_require__(/*! ./$.enum-keys */ 42)
+	  , isArray        = __webpack_require__(/*! ./$.is-array */ 31)
+	  , isObject       = __webpack_require__(/*! ./$.is-object */ 14)
+	  , anObject       = __webpack_require__(/*! ./$.an-object */ 34)
+	  , toIObject      = __webpack_require__(/*! ./$.to-iobject */ 35)
+	  , createDesc     = __webpack_require__(/*! ./$.property-desc */ 10)
+	  , getDesc        = $.getDesc
+	  , setDesc        = $.setDesc
+	  , _create        = $.create
+	  , getNames       = $names.get
+	  , $Symbol        = global.Symbol
+	  , $JSON          = global.JSON
+	  , _stringify     = $JSON && $JSON.stringify
+	  , setter         = false
+	  , HIDDEN         = wks('_hidden')
+	  , isEnum         = $.isEnum
+	  , SymbolRegistry = shared('symbol-registry')
+	  , AllSymbols     = shared('symbols')
+	  , useNative      = typeof $Symbol == 'function'
+	  , ObjectProto    = Object.prototype;
+
+	// fallback for old Android, https://code.google.com/p/v8/issues/detail?id=687
+	var setSymbolDesc = SUPPORT_DESC && $fails(function(){
+	  return _create(setDesc({}, 'a', {
+	    get: function(){ return setDesc(this, 'a', {value: 7}).a; }
+	  })).a != 7;
+	}) ? function(it, key, D){
+	  var protoDesc = getDesc(ObjectProto, key);
+	  if(protoDesc)delete ObjectProto[key];
+	  setDesc(it, key, D);
+	  if(protoDesc && it !== ObjectProto)setDesc(ObjectProto, key, protoDesc);
+	} : setDesc;
+
+	var wrap = function(tag){
+	  var sym = AllSymbols[tag] = _create($Symbol.prototype);
+	  sym._k = tag;
+	  SUPPORT_DESC && setter && setSymbolDesc(ObjectProto, tag, {
+	    configurable: true,
+	    set: function(value){
+	      if(has(this, HIDDEN) && has(this[HIDDEN], tag))this[HIDDEN][tag] = false;
+	      setSymbolDesc(this, tag, createDesc(1, value));
+	    }
+	  });
+	  return sym;
+	};
+
+	var isSymbol = function(it){
+	  return typeof it == 'symbol';
+	};
+
+	var $defineProperty = function defineProperty(it, key, D){
+	  if(D && has(AllSymbols, key)){
+	    if(!D.enumerable){
+	      if(!has(it, HIDDEN))setDesc(it, HIDDEN, createDesc(1, {}));
+	      it[HIDDEN][key] = true;
+	    } else {
+	      if(has(it, HIDDEN) && it[HIDDEN][key])it[HIDDEN][key] = false;
+	      D = _create(D, {enumerable: createDesc(0, false)});
+	    } return setSymbolDesc(it, key, D);
+	  } return setDesc(it, key, D);
+	};
+	var $defineProperties = function defineProperties(it, P){
+	  anObject(it);
+	  var keys = enumKeys(P = toIObject(P))
+	    , i    = 0
+	    , l = keys.length
+	    , key;
+	  while(l > i)$defineProperty(it, key = keys[i++], P[key]);
+	  return it;
+	};
+	var $create = function create(it, P){
+	  return P === undefined ? _create(it) : $defineProperties(_create(it), P);
+	};
+	var $propertyIsEnumerable = function propertyIsEnumerable(key){
+	  var E = isEnum.call(this, key);
+	  return E || !has(this, key) || !has(AllSymbols, key) || has(this, HIDDEN) && this[HIDDEN][key]
+	    ? E : true;
+	};
+	var $getOwnPropertyDescriptor = function getOwnPropertyDescriptor(it, key){
+	  var D = getDesc(it = toIObject(it), key);
+	  if(D && has(AllSymbols, key) && !(has(it, HIDDEN) && it[HIDDEN][key]))D.enumerable = true;
+	  return D;
+	};
+	var $getOwnPropertyNames = function getOwnPropertyNames(it){
+	  var names  = getNames(toIObject(it))
+	    , result = []
+	    , i      = 0
+	    , key;
+	  while(names.length > i)if(!has(AllSymbols, key = names[i++]) && key != HIDDEN)result.push(key);
+	  return result;
+	};
+	var $getOwnPropertySymbols = function getOwnPropertySymbols(it){
+	  var names  = getNames(toIObject(it))
+	    , result = []
+	    , i      = 0
+	    , key;
+	  while(names.length > i)if(has(AllSymbols, key = names[i++]))result.push(AllSymbols[key]);
+	  return result;
+	};
+	var $stringify = function stringify(it){
+	  var args = [it]
+	    , i    = 1
+	    , replacer, $replacer;
+	  while(arguments.length > i)args.push(arguments[i++]);
+	  replacer = args[1];
+	  if(typeof replacer == 'function')$replacer = replacer;
+	  if($replacer || !isArray(replacer))replacer = function(key, value){
+	    if($replacer)value = $replacer.call(this, key, value);
+	    if(!isSymbol(value))return value;
+	  };
+	  args[1] = replacer;
+	  return _stringify.apply($JSON, args);
+	};
+	var buggyJSON = $fails(function(){
+	  var S = $Symbol();
+	  // MS Edge converts symbol values to JSON as {}
+	  // WebKit converts symbol values to JSON as null
+	  // V8 throws on boxed symbols
+	  return _stringify([S]) != '[null]' || _stringify({a: S}) != '{}' || _stringify(Object(S)) != '{}';
+	});
+
+	// 19.4.1.1 Symbol([description])
+	if(!useNative){
+	  $Symbol = function Symbol(){
+	    if(isSymbol(this))throw TypeError('Symbol is not a constructor');
+	    return wrap(uid(arguments[0]));
+	  };
+	  $redef($Symbol.prototype, 'toString', function toString(){
+	    return this._k;
+	  });
+
+	  isSymbol = function(it){
+	    return it instanceof $Symbol;
+	  };
+
+	  $.create     = $create;
+	  $.isEnum     = $propertyIsEnumerable;
+	  $.getDesc    = $getOwnPropertyDescriptor;
+	  $.setDesc    = $defineProperty;
+	  $.setDescs   = $defineProperties;
+	  $.getNames   = $names.get = $getOwnPropertyNames;
+	  $.getSymbols = $getOwnPropertySymbols;
+
+	  if(SUPPORT_DESC && !__webpack_require__(/*! ./$.library */ 43)){
+	    $redef(ObjectProto, 'propertyIsEnumerable', $propertyIsEnumerable, true);
+	  }
+	}
+
+	var symbolStatics = {
+	  // 19.4.2.1 Symbol.for(key)
+	  'for': function(key){
+	    return has(SymbolRegistry, key += '')
+	      ? SymbolRegistry[key]
+	      : SymbolRegistry[key] = $Symbol(key);
+	  },
+	  // 19.4.2.5 Symbol.keyFor(sym)
+	  keyFor: function keyFor(key){
+	    return keyOf(SymbolRegistry, key);
+	  },
+	  useSetter: function(){ setter = true; },
+	  useSimple: function(){ setter = false; }
+	};
+	// 19.4.2.2 Symbol.hasInstance
+	// 19.4.2.3 Symbol.isConcatSpreadable
+	// 19.4.2.4 Symbol.iterator
+	// 19.4.2.6 Symbol.match
+	// 19.4.2.8 Symbol.replace
+	// 19.4.2.9 Symbol.search
+	// 19.4.2.10 Symbol.species
+	// 19.4.2.11 Symbol.split
+	// 19.4.2.12 Symbol.toPrimitive
+	// 19.4.2.13 Symbol.toStringTag
+	// 19.4.2.14 Symbol.unscopables
+	$.each.call((
+	    'hasInstance,isConcatSpreadable,iterator,match,replace,search,' +
+	    'species,split,toPrimitive,toStringTag,unscopables'
+	  ).split(','), function(it){
+	    var sym = wks(it);
+	    symbolStatics[it] = useNative ? sym : wrap(sym);
+	  }
+	);
+
+	setter = true;
+
+	$def($def.G + $def.W, {Symbol: $Symbol});
+
+	$def($def.S, 'Symbol', symbolStatics);
+
+	$def($def.S + $def.F * !useNative, 'Object', {
+	  // 19.1.2.2 Object.create(O [, Properties])
+	  create: $create,
+	  // 19.1.2.4 Object.defineProperty(O, P, Attributes)
+	  defineProperty: $defineProperty,
+	  // 19.1.2.3 Object.defineProperties(O, Properties)
+	  defineProperties: $defineProperties,
+	  // 19.1.2.6 Object.getOwnPropertyDescriptor(O, P)
+	  getOwnPropertyDescriptor: $getOwnPropertyDescriptor,
+	  // 19.1.2.7 Object.getOwnPropertyNames(O)
+	  getOwnPropertyNames: $getOwnPropertyNames,
+	  // 19.1.2.8 Object.getOwnPropertySymbols(O)
+	  getOwnPropertySymbols: $getOwnPropertySymbols
+	});
+
+	// 24.3.2 JSON.stringify(value [, replacer [, space]])
+	$JSON && $def($def.S + $def.F * (!useNative || buggyJSON), 'JSON', {stringify: $stringify});
+
+	// 19.4.3.5 Symbol.prototype[@@toStringTag]
+	setTag($Symbol, 'Symbol');
+	// 20.2.1.9 Math[@@toStringTag]
+	setTag(Math, 'Math', true);
+	// 24.3.3 JSON[@@toStringTag]
+	setTag(global.JSON, 'JSON', true);
+
+/***/ },
+/* 39 */
+/*!*************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/$.tag.js ***!
+  \*************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var has  = __webpack_require__(/*! ./$.has */ 15)
+	  , hide = __webpack_require__(/*! ./$.hide */ 19)
+	  , TAG  = __webpack_require__(/*! ./$.wks */ 32)('toStringTag');
+
+	module.exports = function(it, tag, stat){
+	  if(it && !has(it = stat ? it : it.prototype, TAG))hide(it, TAG, tag);
+	};
+
+/***/ },
+/* 40 */
+/*!***************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/$.keyof.js ***!
+  \***************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var $         = __webpack_require__(/*! ./$ */ 7)
+	  , toIObject = __webpack_require__(/*! ./$.to-iobject */ 35);
+	module.exports = function(object, el){
+	  var O      = toIObject(object)
+	    , keys   = $.getKeys(O)
+	    , length = keys.length
+	    , index  = 0
+	    , key;
+	  while(length > index)if(O[key = keys[index++]] === el)return key;
+	};
+
+/***/ },
+/* 41 */
+/*!*******************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/$.get-names.js ***!
+  \*******************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// fallback for IE11 buggy Object.getOwnPropertyNames with iframe and window
+	var toString  = {}.toString
+	  , toIObject = __webpack_require__(/*! ./$.to-iobject */ 35)
+	  , getNames  = __webpack_require__(/*! ./$ */ 7).getNames;
+
+	var windowNames = typeof window == 'object' && Object.getOwnPropertyNames
+	  ? Object.getOwnPropertyNames(window) : [];
+
+	var getWindowNames = function(it){
+	  try {
+	    return getNames(it);
+	  } catch(e){
+	    return windowNames.slice();
+	  }
+	};
+
+	module.exports.get = function getOwnPropertyNames(it){
+	  if(windowNames && toString.call(it) == '[object Window]')return getWindowNames(it);
+	  return getNames(toIObject(it));
+	};
+
+/***/ },
+/* 42 */
+/*!*******************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/$.enum-keys.js ***!
+  \*******************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// all enumerable object keys, includes symbols
+	var $ = __webpack_require__(/*! ./$ */ 7);
+	module.exports = function(it){
+	  var keys       = $.getKeys(it)
+	    , getSymbols = $.getSymbols;
+	  if(getSymbols){
+	    var symbols = getSymbols(it)
+	      , isEnum  = $.isEnum
+	      , i       = 0
+	      , key;
+	    while(symbols.length > i)if(isEnum.call(it, key = symbols[i++]))keys.push(key);
+	  }
+	  return keys;
+	};
+
+/***/ },
+/* 43 */
+/*!*****************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/$.library.js ***!
+  \*****************************************************/
+/***/ function(module, exports) {
+
+	module.exports = false;
+
+/***/ },
+/* 44 */
+/*!*************************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/es6.object.assign.js ***!
+  \*************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// 19.1.3.1 Object.assign(target, source)
+	var $def = __webpack_require__(/*! ./$.def */ 17);
+
+	$def($def.S + $def.F, 'Object', {assign: __webpack_require__(/*! ./$.assign */ 45)});
+
+/***/ },
+/* 45 */
+/*!****************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/$.assign.js ***!
+  \****************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// 19.1.2.1 Object.assign(target, source, ...)
+	var toObject = __webpack_require__(/*! ./$.to-object */ 27)
+	  , IObject  = __webpack_require__(/*! ./$.iobject */ 26)
+	  , enumKeys = __webpack_require__(/*! ./$.enum-keys */ 42)
+	  , has      = __webpack_require__(/*! ./$.has */ 15);
+
+	// should work with symbols and should have deterministic property order (V8 bug)
+	module.exports = __webpack_require__(/*! ./$.fails */ 9)(function(){
+	  var a = Object.assign
+	    , A = {}
+	    , B = {}
+	    , S = Symbol()
+	    , K = 'abcdefghijklmnopqrst';
+	  A[S] = 7;
+	  K.split('').forEach(function(k){ B[k] = k; });
+	  return a({}, A)[S] != 7 || Object.keys(a({}, B)).join('') != K;
+	}) ? function assign(target, source){   // eslint-disable-line no-unused-vars
+	  var T = toObject(target)
+	    , l = arguments.length
+	    , i = 1;
+	  while(l > i){
+	    var S      = IObject(arguments[i++])
+	      , keys   = enumKeys(S)
+	      , length = keys.length
+	      , j      = 0
+	      , key;
+	    while(length > j)if(has(S, key = keys[j++]))T[key] = S[key];
+	  }
+	  return T;
+	} : Object.assign;
+
+/***/ },
+/* 46 */
+/*!*********************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/es6.object.is.js ***!
+  \*********************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// 19.1.3.10 Object.is(value1, value2)
+	var $def = __webpack_require__(/*! ./$.def */ 17);
+	$def($def.S, 'Object', {
+	  is: __webpack_require__(/*! ./$.same */ 47)
+	});
+
+/***/ },
+/* 47 */
+/*!**************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/$.same.js ***!
+  \**************************************************/
+/***/ function(module, exports) {
+
+	module.exports = Object.is || function is(x, y){
+	  return x === y ? x !== 0 || 1 / x === 1 / y : x != x && y != y;
+	};
+
+/***/ },
+/* 48 */
+/*!***********************************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/es6.object.set-prototype-of.js ***!
+  \***********************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// 19.1.3.19 Object.setPrototypeOf(O, proto)
+	var $def = __webpack_require__(/*! ./$.def */ 17);
+	$def($def.S, 'Object', {setPrototypeOf: __webpack_require__(/*! ./$.set-proto */ 49).set});
+
+/***/ },
+/* 49 */
+/*!*******************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/$.set-proto.js ***!
+  \*******************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// Works with __proto__ only. Old v8 can't work with null proto objects.
+	/* eslint-disable no-proto */
+	var getDesc  = __webpack_require__(/*! ./$ */ 7).getDesc
+	  , isObject = __webpack_require__(/*! ./$.is-object */ 14)
+	  , anObject = __webpack_require__(/*! ./$.an-object */ 34);
+	var check = function(O, proto){
+	  anObject(O);
+	  if(!isObject(proto) && proto !== null)throw TypeError(proto + ": can't set as prototype!");
+	};
+	module.exports = {
+	  set: Object.setPrototypeOf || ('__proto__' in {} ? // eslint-disable-line no-proto
+	    function(test, buggy, set){
+	      try {
+	        set = __webpack_require__(/*! ./$.ctx */ 24)(Function.call, getDesc(Object.prototype, '__proto__').set, 2);
+	        set(test, []);
+	        buggy = !(test instanceof Array);
+	      } catch(e){ buggy = true; }
+	      return function setPrototypeOf(O, proto){
+	        check(O, proto);
+	        if(buggy)O.__proto__ = proto;
+	        else set(O, proto);
+	        return O;
+	      };
+	    }({}, false) : undefined),
+	  check: check
+	};
+
+/***/ },
+/* 50 */
+/*!****************************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/es6.object.to-string.js ***!
+  \****************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	// 19.1.3.6 Object.prototype.toString()
+	var classof = __webpack_require__(/*! ./$.classof */ 51)
+	  , test    = {};
+	test[__webpack_require__(/*! ./$.wks */ 32)('toStringTag')] = 'z';
+	if(test + '' != '[object z]'){
+	  __webpack_require__(/*! ./$.redef */ 20)(Object.prototype, 'toString', function toString(){
+	    return '[object ' + classof(this) + ']';
+	  }, true);
+	}
+
+/***/ },
+/* 51 */
+/*!*****************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/$.classof.js ***!
+  \*****************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// getting tag from 19.1.3.6 Object.prototype.toString()
+	var cof = __webpack_require__(/*! ./$.cof */ 16)
+	  , TAG = __webpack_require__(/*! ./$.wks */ 32)('toStringTag')
+	  // ES3 wrong here
+	  , ARG = cof(function(){ return arguments; }()) == 'Arguments';
+
+	module.exports = function(it){
+	  var O, T, B;
+	  return it === undefined ? 'Undefined' : it === null ? 'Null'
+	    // @@toStringTag case
+	    : typeof (T = (O = Object(it))[TAG]) == 'string' ? T
+	    // builtinTag case
+	    : ARG ? cof(O)
+	    // ES3 arguments fallback
+	    : (B = cof(O)) == 'Object' && typeof O.callee == 'function' ? 'Arguments' : B;
+	};
+
+/***/ },
+/* 52 */
+/*!*************************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/es6.object.freeze.js ***!
+  \*************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// 19.1.2.5 Object.freeze(O)
+	var isObject = __webpack_require__(/*! ./$.is-object */ 14);
+
+	__webpack_require__(/*! ./$.object-sap */ 53)('freeze', function($freeze){
+	  return function freeze(it){
+	    return $freeze && isObject(it) ? $freeze(it) : it;
+	  };
+	});
+
+/***/ },
+/* 53 */
+/*!********************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/$.object-sap.js ***!
+  \********************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// most Object methods by ES6 should accept primitives
+	module.exports = function(KEY, exec){
+	  var $def = __webpack_require__(/*! ./$.def */ 17)
+	    , fn   = (__webpack_require__(/*! ./$.core */ 18).Object || {})[KEY] || Object[KEY]
+	    , exp  = {};
+	  exp[KEY] = exec(fn);
+	  $def($def.S + $def.F * __webpack_require__(/*! ./$.fails */ 9)(function(){ fn(1); }), 'Object', exp);
+	};
+
+/***/ },
+/* 54 */
+/*!***********************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/es6.object.seal.js ***!
+  \***********************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// 19.1.2.17 Object.seal(O)
+	var isObject = __webpack_require__(/*! ./$.is-object */ 14);
+
+	__webpack_require__(/*! ./$.object-sap */ 53)('seal', function($seal){
+	  return function seal(it){
+	    return $seal && isObject(it) ? $seal(it) : it;
+	  };
+	});
+
+/***/ },
+/* 55 */
+/*!*************************************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/es6.object.prevent-extensions.js ***!
+  \*************************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// 19.1.2.15 Object.preventExtensions(O)
+	var isObject = __webpack_require__(/*! ./$.is-object */ 14);
+
+	__webpack_require__(/*! ./$.object-sap */ 53)('preventExtensions', function($preventExtensions){
+	  return function preventExtensions(it){
+	    return $preventExtensions && isObject(it) ? $preventExtensions(it) : it;
+	  };
+	});
+
+/***/ },
+/* 56 */
+/*!****************************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/es6.object.is-frozen.js ***!
+  \****************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// 19.1.2.12 Object.isFrozen(O)
+	var isObject = __webpack_require__(/*! ./$.is-object */ 14);
+
+	__webpack_require__(/*! ./$.object-sap */ 53)('isFrozen', function($isFrozen){
+	  return function isFrozen(it){
+	    return isObject(it) ? $isFrozen ? $isFrozen(it) : false : true;
+	  };
+	});
+
+/***/ },
+/* 57 */
+/*!****************************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/es6.object.is-sealed.js ***!
+  \****************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// 19.1.2.13 Object.isSealed(O)
+	var isObject = __webpack_require__(/*! ./$.is-object */ 14);
+
+	__webpack_require__(/*! ./$.object-sap */ 53)('isSealed', function($isSealed){
+	  return function isSealed(it){
+	    return isObject(it) ? $isSealed ? $isSealed(it) : false : true;
+	  };
+	});
+
+/***/ },
+/* 58 */
+/*!********************************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/es6.object.is-extensible.js ***!
+  \********************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// 19.1.2.11 Object.isExtensible(O)
+	var isObject = __webpack_require__(/*! ./$.is-object */ 14);
+
+	__webpack_require__(/*! ./$.object-sap */ 53)('isExtensible', function($isExtensible){
+	  return function isExtensible(it){
+	    return isObject(it) ? $isExtensible ? $isExtensible(it) : true : false;
+	  };
+	});
+
+/***/ },
+/* 59 */
+/*!**********************************************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/es6.object.get-own-property-descriptor.js ***!
+  \**********************************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// 19.1.2.6 Object.getOwnPropertyDescriptor(O, P)
+	var toIObject = __webpack_require__(/*! ./$.to-iobject */ 35);
+
+	__webpack_require__(/*! ./$.object-sap */ 53)('getOwnPropertyDescriptor', function($getOwnPropertyDescriptor){
+	  return function getOwnPropertyDescriptor(it, key){
+	    return $getOwnPropertyDescriptor(toIObject(it), key);
+	  };
+	});
+
+/***/ },
+/* 60 */
+/*!***********************************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/es6.object.get-prototype-of.js ***!
+  \***********************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// 19.1.2.9 Object.getPrototypeOf(O)
+	var toObject = __webpack_require__(/*! ./$.to-object */ 27);
+
+	__webpack_require__(/*! ./$.object-sap */ 53)('getPrototypeOf', function($getPrototypeOf){
+	  return function getPrototypeOf(it){
+	    return $getPrototypeOf(toObject(it));
+	  };
+	});
+
+/***/ },
+/* 61 */
+/*!***********************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/es6.object.keys.js ***!
+  \***********************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// 19.1.2.14 Object.keys(O)
+	var toObject = __webpack_require__(/*! ./$.to-object */ 27);
+
+	__webpack_require__(/*! ./$.object-sap */ 53)('keys', function($keys){
+	  return function keys(it){
+	    return $keys(toObject(it));
+	  };
+	});
+
+/***/ },
+/* 62 */
+/*!*****************************************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/es6.object.get-own-property-names.js ***!
+  \*****************************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// 19.1.2.7 Object.getOwnPropertyNames(O)
+	__webpack_require__(/*! ./$.object-sap */ 53)('getOwnPropertyNames', function(){
+	  return __webpack_require__(/*! ./$.get-names */ 41).get;
+	});
+
+/***/ },
+/* 63 */
+/*!*************************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/es6.function.name.js ***!
+  \*************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var setDesc    = __webpack_require__(/*! ./$ */ 7).setDesc
+	  , createDesc = __webpack_require__(/*! ./$.property-desc */ 10)
+	  , has        = __webpack_require__(/*! ./$.has */ 15)
+	  , FProto     = Function.prototype
+	  , nameRE     = /^\s*function ([^ (]*)/
+	  , NAME       = 'name';
+	// 19.2.4.2 name
+	NAME in FProto || __webpack_require__(/*! ./$.support-desc */ 8) && setDesc(FProto, NAME, {
+	  configurable: true,
+	  get: function(){
+	    var match = ('' + this).match(nameRE)
+	      , name  = match ? match[1] : '';
+	    has(this, NAME) || setDesc(this, NAME, createDesc(5, name));
+	    return name;
+	  }
+	});
+
+/***/ },
+/* 64 */
+/*!*********************************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/es6.function.has-instance.js ***!
+  \*********************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	var $             = __webpack_require__(/*! ./$ */ 7)
+	  , isObject      = __webpack_require__(/*! ./$.is-object */ 14)
+	  , HAS_INSTANCE  = __webpack_require__(/*! ./$.wks */ 32)('hasInstance')
+	  , FunctionProto = Function.prototype;
+	// 19.2.3.6 Function.prototype[@@hasInstance](V)
+	if(!(HAS_INSTANCE in FunctionProto))$.setDesc(FunctionProto, HAS_INSTANCE, {value: function(O){
+	  if(typeof this != 'function' || !isObject(O))return false;
+	  if(!isObject(this.prototype))return O instanceof this;
+	  // for environment w/o native `@@hasInstance` logic enough `instanceof`, but add this:
+	  while(O = $.getProto(O))if(this.prototype === O)return true;
+	  return false;
+	}});
+
+/***/ },
+/* 65 */
+/*!******************************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/es6.number.constructor.js ***!
+  \******************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	var $          = __webpack_require__(/*! ./$ */ 7)
+	  , global     = __webpack_require__(/*! ./$.global */ 12)
+	  , has        = __webpack_require__(/*! ./$.has */ 15)
+	  , cof        = __webpack_require__(/*! ./$.cof */ 16)
+	  , isObject   = __webpack_require__(/*! ./$.is-object */ 14)
+	  , fails      = __webpack_require__(/*! ./$.fails */ 9)
+	  , NUMBER     = 'Number'
+	  , $Number    = global[NUMBER]
+	  , Base       = $Number
+	  , proto      = $Number.prototype
+	  // Opera ~12 has broken Object#toString
+	  , BROKEN_COF = cof($.create(proto)) == NUMBER;
+	var toPrimitive = function(it){
+	  var fn, val;
+	  if(typeof (fn = it.valueOf) == 'function' && !isObject(val = fn.call(it)))return val;
+	  if(typeof (fn = it.toString) == 'function' && !isObject(val = fn.call(it)))return val;
+	  throw TypeError("Can't convert object to number");
+	};
+	var toNumber = function(it){
+	  if(isObject(it))it = toPrimitive(it);
+	  if(typeof it == 'string' && it.length > 2 && it.charCodeAt(0) == 48){
+	    var binary = false;
+	    switch(it.charCodeAt(1)){
+	      case 66 : case 98  : binary = true;
+	      case 79 : case 111 : return parseInt(it.slice(2), binary ? 2 : 8);
+	    }
+	  } return +it;
+	};
+	if(!($Number('0o1') && $Number('0b1'))){
+	  $Number = function Number(it){
+	    var that = this;
+	    return that instanceof $Number
+	      // check on 1..constructor(foo) case
+	      && (BROKEN_COF ? fails(function(){ proto.valueOf.call(that); }) : cof(that) != NUMBER)
+	        ? new Base(toNumber(it)) : toNumber(it);
+	  };
+	  $.each.call(__webpack_require__(/*! ./$.support-desc */ 8) ? $.getNames(Base) : (
+	      // ES3:
+	      'MAX_VALUE,MIN_VALUE,NaN,NEGATIVE_INFINITY,POSITIVE_INFINITY,' +
+	      // ES6 (in case, if modules with ES6 Number statics required before):
+	      'EPSILON,isFinite,isInteger,isNaN,isSafeInteger,MAX_SAFE_INTEGER,' +
+	      'MIN_SAFE_INTEGER,parseFloat,parseInt,isInteger'
+	    ).split(','), function(key){
+	      if(has(Base, key) && !has($Number, key)){
+	        $.setDesc($Number, key, $.getDesc(Base, key));
+	      }
+	    }
+	  );
+	  $Number.prototype = proto;
+	  proto.constructor = $Number;
+	  __webpack_require__(/*! ./$.redef */ 20)(global, NUMBER, $Number);
+	}
+
+/***/ },
+/* 66 */
+/*!**************************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/es6.number.epsilon.js ***!
+  \**************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// 20.1.2.1 Number.EPSILON
+	var $def = __webpack_require__(/*! ./$.def */ 17);
+
+	$def($def.S, 'Number', {EPSILON: Math.pow(2, -52)});
+
+/***/ },
+/* 67 */
+/*!****************************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/es6.number.is-finite.js ***!
+  \****************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// 20.1.2.2 Number.isFinite(number)
+	var $def      = __webpack_require__(/*! ./$.def */ 17)
+	  , _isFinite = __webpack_require__(/*! ./$.global */ 12).isFinite;
+
+	$def($def.S, 'Number', {
+	  isFinite: function isFinite(it){
+	    return typeof it == 'number' && _isFinite(it);
+	  }
+	});
+
+/***/ },
+/* 68 */
+/*!*****************************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/es6.number.is-integer.js ***!
+  \*****************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// 20.1.2.3 Number.isInteger(number)
+	var $def = __webpack_require__(/*! ./$.def */ 17);
+
+	$def($def.S, 'Number', {isInteger: __webpack_require__(/*! ./$.is-integer */ 69)});
+
+/***/ },
+/* 69 */
+/*!********************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/$.is-integer.js ***!
+  \********************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// 20.1.2.3 Number.isInteger(number)
+	var isObject = __webpack_require__(/*! ./$.is-object */ 14)
+	  , floor    = Math.floor;
+	module.exports = function isInteger(it){
+	  return !isObject(it) && isFinite(it) && floor(it) === it;
+	};
+
+/***/ },
+/* 70 */
+/*!*************************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/es6.number.is-nan.js ***!
+  \*************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// 20.1.2.4 Number.isNaN(number)
+	var $def = __webpack_require__(/*! ./$.def */ 17);
+
+	$def($def.S, 'Number', {
+	  isNaN: function isNaN(number){
+	    return number != number;
+	  }
+	});
+
+/***/ },
+/* 71 */
+/*!**********************************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/es6.number.is-safe-integer.js ***!
+  \**********************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// 20.1.2.5 Number.isSafeInteger(number)
+	var $def      = __webpack_require__(/*! ./$.def */ 17)
+	  , isInteger = __webpack_require__(/*! ./$.is-integer */ 69)
+	  , abs       = Math.abs;
+
+	$def($def.S, 'Number', {
+	  isSafeInteger: function isSafeInteger(number){
+	    return isInteger(number) && abs(number) <= 0x1fffffffffffff;
+	  }
+	});
+
+/***/ },
+/* 72 */
+/*!***********************************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/es6.number.max-safe-integer.js ***!
+  \***********************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// 20.1.2.6 Number.MAX_SAFE_INTEGER
+	var $def = __webpack_require__(/*! ./$.def */ 17);
+
+	$def($def.S, 'Number', {MAX_SAFE_INTEGER: 0x1fffffffffffff});
+
+/***/ },
+/* 73 */
+/*!***********************************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/es6.number.min-safe-integer.js ***!
+  \***********************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// 20.1.2.10 Number.MIN_SAFE_INTEGER
+	var $def = __webpack_require__(/*! ./$.def */ 17);
+
+	$def($def.S, 'Number', {MIN_SAFE_INTEGER: -0x1fffffffffffff});
+
+/***/ },
+/* 74 */
+/*!******************************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/es6.number.parse-float.js ***!
+  \******************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// 20.1.2.12 Number.parseFloat(string)
+	var $def = __webpack_require__(/*! ./$.def */ 17);
+
+	$def($def.S, 'Number', {parseFloat: parseFloat});
+
+/***/ },
+/* 75 */
+/*!****************************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/es6.number.parse-int.js ***!
+  \****************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// 20.1.2.13 Number.parseInt(string, radix)
+	var $def = __webpack_require__(/*! ./$.def */ 17);
+
+	$def($def.S, 'Number', {parseInt: parseInt});
+
+/***/ },
+/* 76 */
+/*!**********************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/es6.math.acosh.js ***!
+  \**********************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// 20.2.2.3 Math.acosh(x)
+	var $def   = __webpack_require__(/*! ./$.def */ 17)
+	  , log1p  = __webpack_require__(/*! ./$.log1p */ 77)
+	  , sqrt   = Math.sqrt
+	  , $acosh = Math.acosh;
+
+	// V8 bug https://code.google.com/p/v8/issues/detail?id=3509 
+	$def($def.S + $def.F * !($acosh && Math.floor($acosh(Number.MAX_VALUE)) == 710), 'Math', {
+	  acosh: function acosh(x){
+	    return (x = +x) < 1 ? NaN : x > 94906265.62425156
+	      ? Math.log(x) + Math.LN2
+	      : log1p(x - 1 + sqrt(x - 1) * sqrt(x + 1));
+	  }
+	});
+
+/***/ },
+/* 77 */
+/*!***************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/$.log1p.js ***!
+  \***************************************************/
+/***/ function(module, exports) {
+
+	// 20.2.2.20 Math.log1p(x)
+	module.exports = Math.log1p || function log1p(x){
+	  return (x = +x) > -1e-8 && x < 1e-8 ? x - x * x / 2 : Math.log(1 + x);
+	};
+
+/***/ },
+/* 78 */
+/*!**********************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/es6.math.asinh.js ***!
+  \**********************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// 20.2.2.5 Math.asinh(x)
+	var $def = __webpack_require__(/*! ./$.def */ 17);
+
+	function asinh(x){
+	  return !isFinite(x = +x) || x == 0 ? x : x < 0 ? -asinh(-x) : Math.log(x + Math.sqrt(x * x + 1));
+	}
+
+	$def($def.S, 'Math', {asinh: asinh});
+
+/***/ },
+/* 79 */
+/*!**********************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/es6.math.atanh.js ***!
+  \**********************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// 20.2.2.7 Math.atanh(x)
+	var $def = __webpack_require__(/*! ./$.def */ 17);
+
+	$def($def.S, 'Math', {
+	  atanh: function atanh(x){
+	    return (x = +x) == 0 ? x : Math.log((1 + x) / (1 - x)) / 2;
+	  }
+	});
+
+/***/ },
+/* 80 */
+/*!*********************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/es6.math.cbrt.js ***!
+  \*********************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// 20.2.2.9 Math.cbrt(x)
+	var $def = __webpack_require__(/*! ./$.def */ 17)
+	  , sign = __webpack_require__(/*! ./$.sign */ 81);
+
+	$def($def.S, 'Math', {
+	  cbrt: function cbrt(x){
+	    return sign(x = +x) * Math.pow(Math.abs(x), 1 / 3);
+	  }
+	});
+
+/***/ },
+/* 81 */
+/*!**************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/$.sign.js ***!
+  \**************************************************/
+/***/ function(module, exports) {
+
+	// 20.2.2.28 Math.sign(x)
+	module.exports = Math.sign || function sign(x){
+	  return (x = +x) == 0 || x != x ? x : x < 0 ? -1 : 1;
+	};
+
+/***/ },
+/* 82 */
+/*!**********************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/es6.math.clz32.js ***!
+  \**********************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// 20.2.2.11 Math.clz32(x)
+	var $def = __webpack_require__(/*! ./$.def */ 17);
+
+	$def($def.S, 'Math', {
+	  clz32: function clz32(x){
+	    return (x >>>= 0) ? 31 - Math.floor(Math.log(x + 0.5) * Math.LOG2E) : 32;
+	  }
+	});
+
+/***/ },
+/* 83 */
+/*!*********************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/es6.math.cosh.js ***!
+  \*********************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// 20.2.2.12 Math.cosh(x)
+	var $def = __webpack_require__(/*! ./$.def */ 17)
+	  , exp  = Math.exp;
+
+	$def($def.S, 'Math', {
+	  cosh: function cosh(x){
+	    return (exp(x = +x) + exp(-x)) / 2;
+	  }
+	});
+
+/***/ },
+/* 84 */
+/*!**********************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/es6.math.expm1.js ***!
+  \**********************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// 20.2.2.14 Math.expm1(x)
+	var $def = __webpack_require__(/*! ./$.def */ 17);
+
+	$def($def.S, 'Math', {expm1: __webpack_require__(/*! ./$.expm1 */ 85)});
+
+/***/ },
+/* 85 */
+/*!***************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/$.expm1.js ***!
+  \***************************************************/
+/***/ function(module, exports) {
+
+	// 20.2.2.14 Math.expm1(x)
+	module.exports = Math.expm1 || function expm1(x){
+	  return (x = +x) == 0 ? x : x > -1e-6 && x < 1e-6 ? x + x * x / 2 : Math.exp(x) - 1;
+	};
+
+/***/ },
+/* 86 */
+/*!***********************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/es6.math.fround.js ***!
+  \***********************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// 20.2.2.16 Math.fround(x)
+	var $def  = __webpack_require__(/*! ./$.def */ 17)
+	  , sign  = __webpack_require__(/*! ./$.sign */ 81)
+	  , pow   = Math.pow
+	  , EPSILON   = pow(2, -52)
+	  , EPSILON32 = pow(2, -23)
+	  , MAX32     = pow(2, 127) * (2 - EPSILON32)
+	  , MIN32     = pow(2, -126);
+
+	var roundTiesToEven = function(n){
+	  return n + 1 / EPSILON - 1 / EPSILON;
+	};
+
+
+	$def($def.S, 'Math', {
+	  fround: function fround(x){
+	    var $abs  = Math.abs(x)
+	      , $sign = sign(x)
+	      , a, result;
+	    if($abs < MIN32)return $sign * roundTiesToEven($abs / MIN32 / EPSILON32) * MIN32 * EPSILON32;
+	    a = (1 + EPSILON32 / EPSILON) * $abs;
+	    result = a - (a - $abs);
+	    if(result > MAX32 || result != result)return $sign * Infinity;
+	    return $sign * result;
+	  }
+	});
+
+/***/ },
+/* 87 */
+/*!**********************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/es6.math.hypot.js ***!
+  \**********************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// 20.2.2.17 Math.hypot([value1[, value2[, … ]]])
+	var $def = __webpack_require__(/*! ./$.def */ 17)
+	  , abs  = Math.abs;
+
+	$def($def.S, 'Math', {
+	  hypot: function hypot(value1, value2){ // eslint-disable-line no-unused-vars
+	    var sum  = 0
+	      , i    = 0
+	      , len  = arguments.length
+	      , larg = 0
+	      , arg, div;
+	    while(i < len){
+	      arg = abs(arguments[i++]);
+	      if(larg < arg){
+	        div  = larg / arg;
+	        sum  = sum * div * div + 1;
+	        larg = arg;
+	      } else if(arg > 0){
+	        div  = arg / larg;
+	        sum += div * div;
+	      } else sum += arg;
+	    }
+	    return larg === Infinity ? Infinity : larg * Math.sqrt(sum);
+	  }
+	});
+
+/***/ },
+/* 88 */
+/*!*********************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/es6.math.imul.js ***!
+  \*********************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// 20.2.2.18 Math.imul(x, y)
+	var $def = __webpack_require__(/*! ./$.def */ 17);
+
+	// WebKit fails with big numbers
+	$def($def.S + $def.F * __webpack_require__(/*! ./$.fails */ 9)(function(){
+	  return Math.imul(0xffffffff, 5) != -5;
+	}), 'Math', {
+	  imul: function imul(x, y){
+	    var UINT16 = 0xffff
+	      , xn = +x
+	      , yn = +y
+	      , xl = UINT16 & xn
+	      , yl = UINT16 & yn;
+	    return 0 | xl * yl + ((UINT16 & xn >>> 16) * yl + xl * (UINT16 & yn >>> 16) << 16 >>> 0);
+	  }
+	});
+
+/***/ },
+/* 89 */
+/*!**********************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/es6.math.log10.js ***!
+  \**********************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// 20.2.2.21 Math.log10(x)
+	var $def = __webpack_require__(/*! ./$.def */ 17);
+
+	$def($def.S, 'Math', {
+	  log10: function log10(x){
+	    return Math.log(x) / Math.LN10;
+	  }
+	});
+
+/***/ },
+/* 90 */
+/*!**********************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/es6.math.log1p.js ***!
+  \**********************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// 20.2.2.20 Math.log1p(x)
+	var $def = __webpack_require__(/*! ./$.def */ 17);
+
+	$def($def.S, 'Math', {log1p: __webpack_require__(/*! ./$.log1p */ 77)});
+
+/***/ },
+/* 91 */
+/*!*********************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/es6.math.log2.js ***!
+  \*********************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// 20.2.2.22 Math.log2(x)
+	var $def = __webpack_require__(/*! ./$.def */ 17);
+
+	$def($def.S, 'Math', {
+	  log2: function log2(x){
+	    return Math.log(x) / Math.LN2;
+	  }
+	});
+
+/***/ },
+/* 92 */
+/*!*********************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/es6.math.sign.js ***!
+  \*********************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// 20.2.2.28 Math.sign(x)
+	var $def = __webpack_require__(/*! ./$.def */ 17);
+
+	$def($def.S, 'Math', {sign: __webpack_require__(/*! ./$.sign */ 81)});
+
+/***/ },
+/* 93 */
+/*!*********************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/es6.math.sinh.js ***!
+  \*********************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// 20.2.2.30 Math.sinh(x)
+	var $def  = __webpack_require__(/*! ./$.def */ 17)
+	  , expm1 = __webpack_require__(/*! ./$.expm1 */ 85)
+	  , exp   = Math.exp;
+
+	// V8 near Chromium 38 has a problem with very small numbers
+	$def($def.S + $def.F * __webpack_require__(/*! ./$.fails */ 9)(function(){
+	  return !Math.sinh(-2e-17) != -2e-17;
+	}), 'Math', {
+	  sinh: function sinh(x){
+	    return Math.abs(x = +x) < 1
+	      ? (expm1(x) - expm1(-x)) / 2
+	      : (exp(x - 1) - exp(-x - 1)) * (Math.E / 2);
+	  }
+	});
+
+/***/ },
+/* 94 */
+/*!*********************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/es6.math.tanh.js ***!
+  \*********************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// 20.2.2.33 Math.tanh(x)
+	var $def  = __webpack_require__(/*! ./$.def */ 17)
+	  , expm1 = __webpack_require__(/*! ./$.expm1 */ 85)
+	  , exp   = Math.exp;
+
+	$def($def.S, 'Math', {
+	  tanh: function tanh(x){
+	    var a = expm1(x = +x)
+	      , b = expm1(-x);
+	    return a == Infinity ? 1 : b == Infinity ? -1 : (a - b) / (exp(x) + exp(-x));
+	  }
+	});
+
+/***/ },
+/* 95 */
+/*!**********************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/es6.math.trunc.js ***!
+  \**********************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// 20.2.2.34 Math.trunc(x)
+	var $def = __webpack_require__(/*! ./$.def */ 17);
+
+	$def($def.S, 'Math', {
+	  trunc: function trunc(it){
+	    return (it > 0 ? Math.floor : Math.ceil)(it);
+	  }
+	});
+
+/***/ },
+/* 96 */
+/*!**********************************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/es6.string.from-code-point.js ***!
+  \**********************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var $def    = __webpack_require__(/*! ./$.def */ 17)
+	  , toIndex = __webpack_require__(/*! ./$.to-index */ 36)
+	  , fromCharCode = String.fromCharCode
+	  , $fromCodePoint = String.fromCodePoint;
+
+	// length should be 1, old FF problem
+	$def($def.S + $def.F * (!!$fromCodePoint && $fromCodePoint.length != 1), 'String', {
+	  // 21.1.2.2 String.fromCodePoint(...codePoints)
+	  fromCodePoint: function fromCodePoint(x){ // eslint-disable-line no-unused-vars
+	    var res = []
+	      , len = arguments.length
+	      , i   = 0
+	      , code;
+	    while(len > i){
+	      code = +arguments[i++];
+	      if(toIndex(code, 0x10ffff) !== code)throw RangeError(code + ' is not a valid code point');
+	      res.push(code < 0x10000
+	        ? fromCharCode(code)
+	        : fromCharCode(((code -= 0x10000) >> 10) + 0xd800, code % 0x400 + 0xdc00)
+	      );
+	    } return res.join('');
+	  }
+	});
+
+/***/ },
+/* 97 */
+/*!**********************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/es6.string.raw.js ***!
+  \**********************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var $def      = __webpack_require__(/*! ./$.def */ 17)
+	  , toIObject = __webpack_require__(/*! ./$.to-iobject */ 35)
+	  , toLength  = __webpack_require__(/*! ./$.to-length */ 29);
+
+	$def($def.S, 'String', {
+	  // 21.1.2.4 String.raw(callSite, ...substitutions)
+	  raw: function raw(callSite){
+	    var tpl = toIObject(callSite.raw)
+	      , len = toLength(tpl.length)
+	      , sln = arguments.length
+	      , res = []
+	      , i   = 0;
+	    while(len > i){
+	      res.push(String(tpl[i++]));
+	      if(i < sln)res.push(String(arguments[i]));
+	    } return res.join('');
+	  }
+	});
+
+/***/ },
+/* 98 */
+/*!***********************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/es6.string.trim.js ***!
+  \***********************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	// 21.1.3.25 String.prototype.trim()
+	__webpack_require__(/*! ./$.string-trim */ 99)('trim', function($trim){
+	  return function trim(){
+	    return $trim(this, 3);
+	  };
+	});
+
+/***/ },
+/* 99 */
+/*!*********************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/$.string-trim.js ***!
+  \*********************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// 1 -> String#trimLeft
+	// 2 -> String#trimRight
+	// 3 -> String#trim
+	var trim = function(string, TYPE){
+	  string = String(defined(string));
+	  if(TYPE & 1)string = string.replace(ltrim, '');
+	  if(TYPE & 2)string = string.replace(rtrim, '');
+	  return string;
+	};
+
+	var $def    = __webpack_require__(/*! ./$.def */ 17)
+	  , defined = __webpack_require__(/*! ./$.defined */ 28)
+	  , spaces  = '\x09\x0A\x0B\x0C\x0D\x20\xA0\u1680\u180E\u2000\u2001\u2002\u2003' +
+	      '\u2004\u2005\u2006\u2007\u2008\u2009\u200A\u202F\u205F\u3000\u2028\u2029\uFEFF'
+	  , space   = '[' + spaces + ']'
+	  , non     = '\u200b\u0085'
+	  , ltrim   = RegExp('^' + space + space + '*')
+	  , rtrim   = RegExp(space + space + '*$');
+
+	module.exports = function(KEY, exec){
+	  var exp  = {};
+	  exp[KEY] = exec(trim);
+	  $def($def.P + $def.F * __webpack_require__(/*! ./$.fails */ 9)(function(){
+	    return !!spaces[KEY]() || non[KEY]() != non;
+	  }), 'String', exp);
+	};
+
+/***/ },
+/* 100 */
+/*!***************************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/es6.string.iterator.js ***!
+  \***************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	var $at  = __webpack_require__(/*! ./$.string-at */ 101)(true);
+
+	// 21.1.3.27 String.prototype[@@iterator]()
+	__webpack_require__(/*! ./$.iter-define */ 102)(String, 'String', function(iterated){
+	  this._t = String(iterated); // target
+	  this._i = 0;                // next index
+	// 21.1.5.2.1 %StringIteratorPrototype%.next()
+	}, function(){
+	  var O     = this._t
+	    , index = this._i
+	    , point;
+	  if(index >= O.length)return {value: undefined, done: true};
+	  point = $at(O, index);
+	  this._i += point.length;
+	  return {value: point, done: false};
+	});
+
+/***/ },
+/* 101 */
+/*!*******************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/$.string-at.js ***!
+  \*******************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// true  -> String#at
+	// false -> String#codePointAt
+	var toInteger = __webpack_require__(/*! ./$.to-integer */ 30)
+	  , defined   = __webpack_require__(/*! ./$.defined */ 28);
+	module.exports = function(TO_STRING){
+	  return function(that, pos){
+	    var s = String(defined(that))
+	      , i = toInteger(pos)
+	      , l = s.length
+	      , a, b;
+	    if(i < 0 || i >= l)return TO_STRING ? '' : undefined;
+	    a = s.charCodeAt(i);
+	    return a < 0xd800 || a > 0xdbff || i + 1 === l
+	      || (b = s.charCodeAt(i + 1)) < 0xdc00 || b > 0xdfff
+	        ? TO_STRING ? s.charAt(i) : a
+	        : TO_STRING ? s.slice(i, i + 2) : (a - 0xd800 << 10) + (b - 0xdc00) + 0x10000;
+	  };
+	};
+
+/***/ },
+/* 102 */
+/*!*********************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/$.iter-define.js ***!
+  \*********************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	var LIBRARY         = __webpack_require__(/*! ./$.library */ 43)
+	  , $def            = __webpack_require__(/*! ./$.def */ 17)
+	  , $redef          = __webpack_require__(/*! ./$.redef */ 20)
+	  , hide            = __webpack_require__(/*! ./$.hide */ 19)
+	  , has             = __webpack_require__(/*! ./$.has */ 15)
+	  , SYMBOL_ITERATOR = __webpack_require__(/*! ./$.wks */ 32)('iterator')
+	  , Iterators       = __webpack_require__(/*! ./$.iterators */ 103)
+	  , BUGGY           = !([].keys && 'next' in [].keys()) // Safari has buggy iterators w/o `next`
+	  , FF_ITERATOR     = '@@iterator'
+	  , KEYS            = 'keys'
+	  , VALUES          = 'values';
+	var returnThis = function(){ return this; };
+	module.exports = function(Base, NAME, Constructor, next, DEFAULT, IS_SET, FORCE){
+	  __webpack_require__(/*! ./$.iter-create */ 104)(Constructor, NAME, next);
+	  var createMethod = function(kind){
+	    switch(kind){
+	      case KEYS: return function keys(){ return new Constructor(this, kind); };
+	      case VALUES: return function values(){ return new Constructor(this, kind); };
+	    } return function entries(){ return new Constructor(this, kind); };
+	  };
+	  var TAG      = NAME + ' Iterator'
+	    , proto    = Base.prototype
+	    , _native  = proto[SYMBOL_ITERATOR] || proto[FF_ITERATOR] || DEFAULT && proto[DEFAULT]
+	    , _default = _native || createMethod(DEFAULT)
+	    , methods, key;
+	  // Fix native
+	  if(_native){
+	    var IteratorPrototype = __webpack_require__(/*! ./$ */ 7).getProto(_default.call(new Base));
+	    // Set @@toStringTag to native iterators
+	    __webpack_require__(/*! ./$.tag */ 39)(IteratorPrototype, TAG, true);
+	    // FF fix
+	    if(!LIBRARY && has(proto, FF_ITERATOR))hide(IteratorPrototype, SYMBOL_ITERATOR, returnThis);
+	  }
+	  // Define iterator
+	  if(!LIBRARY || FORCE)hide(proto, SYMBOL_ITERATOR, _default);
+	  // Plug for library
+	  Iterators[NAME] = _default;
+	  Iterators[TAG]  = returnThis;
+	  if(DEFAULT){
+	    methods = {
+	      keys:    IS_SET            ? _default : createMethod(KEYS),
+	      values:  DEFAULT == VALUES ? _default : createMethod(VALUES),
+	      entries: DEFAULT != VALUES ? _default : createMethod('entries')
+	    };
+	    if(FORCE)for(key in methods){
+	      if(!(key in proto))$redef(proto, key, methods[key]);
+	    } else $def($def.P + $def.F * BUGGY, NAME, methods);
+	  }
+	};
+
+/***/ },
+/* 103 */
+/*!*******************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/$.iterators.js ***!
+  \*******************************************************/
+/***/ function(module, exports) {
+
+	module.exports = {};
+
+/***/ },
+/* 104 */
+/*!*********************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/$.iter-create.js ***!
+  \*********************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	var $ = __webpack_require__(/*! ./$ */ 7)
+	  , IteratorPrototype = {};
+
+	// 25.1.2.1.1 %IteratorPrototype%[@@iterator]()
+	__webpack_require__(/*! ./$.hide */ 19)(IteratorPrototype, __webpack_require__(/*! ./$.wks */ 32)('iterator'), function(){ return this; });
+
+	module.exports = function(Constructor, NAME, next){
+	  Constructor.prototype = $.create(IteratorPrototype, {next: __webpack_require__(/*! ./$.property-desc */ 10)(1,next)});
+	  __webpack_require__(/*! ./$.tag */ 39)(Constructor, NAME + ' Iterator');
+	};
+
+/***/ },
+/* 105 */
+/*!********************************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/es6.string.code-point-at.js ***!
+  \********************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	var $def = __webpack_require__(/*! ./$.def */ 17)
+	  , $at  = __webpack_require__(/*! ./$.string-at */ 101)(false);
+	$def($def.P, 'String', {
+	  // 21.1.3.3 String.prototype.codePointAt(pos)
+	  codePointAt: function codePointAt(pos){
+	    return $at(this, pos);
+	  }
+	});
+
+/***/ },
+/* 106 */
+/*!****************************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/es6.string.ends-with.js ***!
+  \****************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// 21.1.3.6 String.prototype.endsWith(searchString [, endPosition])
+	'use strict';
+	var $def      = __webpack_require__(/*! ./$.def */ 17)
+	  , toLength  = __webpack_require__(/*! ./$.to-length */ 29)
+	  , context   = __webpack_require__(/*! ./$.string-context */ 107)
+	  , ENDS_WITH = 'endsWith'
+	  , $endsWith = ''[ENDS_WITH];
+
+	$def($def.P + $def.F * __webpack_require__(/*! ./$.fails-is-regexp */ 109)(ENDS_WITH), 'String', {
+	  endsWith: function endsWith(searchString /*, endPosition = @length */){
+	    var that = context(this, searchString, ENDS_WITH)
+	      , endPosition = arguments[1]
+	      , len    = toLength(that.length)
+	      , end    = endPosition === undefined ? len : Math.min(toLength(endPosition), len)
+	      , search = String(searchString);
+	    return $endsWith
+	      ? $endsWith.call(that, search, end)
+	      : that.slice(end - search.length, end) === search;
+	  }
+	});
+
+/***/ },
+/* 107 */
+/*!************************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/$.string-context.js ***!
+  \************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// helper for String#{startsWith, endsWith, includes}
+	var isRegExp = __webpack_require__(/*! ./$.is-regexp */ 108)
+	  , defined  = __webpack_require__(/*! ./$.defined */ 28);
+
+	module.exports = function(that, searchString, NAME){
+	  if(isRegExp(searchString))throw TypeError('String#' + NAME + " doesn't accept regex!");
+	  return String(defined(that));
+	};
+
+/***/ },
+/* 108 */
+/*!*******************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/$.is-regexp.js ***!
+  \*******************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// 7.2.8 IsRegExp(argument)
+	var isObject = __webpack_require__(/*! ./$.is-object */ 14)
+	  , cof      = __webpack_require__(/*! ./$.cof */ 16)
+	  , MATCH    = __webpack_require__(/*! ./$.wks */ 32)('match');
+	module.exports = function(it){
+	  var isRegExp;
+	  return isObject(it) && ((isRegExp = it[MATCH]) !== undefined ? !!isRegExp : cof(it) == 'RegExp');
+	};
+
+/***/ },
+/* 109 */
+/*!*************************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/$.fails-is-regexp.js ***!
+  \*************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = function(KEY){
+	  var re = /./;
+	  try {
+	    '/./'[KEY](re);
+	  } catch(e){
+	    try {
+	      re[__webpack_require__(/*! ./$.wks */ 32)('match')] = false;
+	      return !'/./'[KEY](re);
+	    } catch(e){ /* empty */ }
+	  } return true;
+	};
+
+/***/ },
+/* 110 */
+/*!***************************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/es6.string.includes.js ***!
+  \***************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// 21.1.3.7 String.prototype.includes(searchString, position = 0)
+	'use strict';
+	var $def     = __webpack_require__(/*! ./$.def */ 17)
+	  , context  = __webpack_require__(/*! ./$.string-context */ 107)
+	  , INCLUDES = 'includes';
+
+	$def($def.P + $def.F * __webpack_require__(/*! ./$.fails-is-regexp */ 109)(INCLUDES), 'String', {
+	  includes: function includes(searchString /*, position = 0 */){
+	    return !!~context(this, searchString, INCLUDES).indexOf(searchString, arguments[1]);
+	  }
+	});
+
+/***/ },
+/* 111 */
+/*!*************************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/es6.string.repeat.js ***!
+  \*************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var $def = __webpack_require__(/*! ./$.def */ 17);
+
+	$def($def.P, 'String', {
+	  // 21.1.3.13 String.prototype.repeat(count)
+	  repeat: __webpack_require__(/*! ./$.string-repeat */ 112)
+	});
+
+/***/ },
+/* 112 */
+/*!***********************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/$.string-repeat.js ***!
+  \***********************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	var toInteger = __webpack_require__(/*! ./$.to-integer */ 30)
+	  , defined   = __webpack_require__(/*! ./$.defined */ 28);
+
+	module.exports = function repeat(count){
+	  var str = String(defined(this))
+	    , res = ''
+	    , n   = toInteger(count);
+	  if(n < 0 || n == Infinity)throw RangeError("Count can't be negative");
+	  for(;n > 0; (n >>>= 1) && (str += str))if(n & 1)res += str;
+	  return res;
+	};
+
+/***/ },
+/* 113 */
+/*!******************************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/es6.string.starts-with.js ***!
+  \******************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// 21.1.3.18 String.prototype.startsWith(searchString [, position ])
+	'use strict';
+	var $def        = __webpack_require__(/*! ./$.def */ 17)
+	  , toLength    = __webpack_require__(/*! ./$.to-length */ 29)
+	  , context     = __webpack_require__(/*! ./$.string-context */ 107)
+	  , STARTS_WITH = 'startsWith'
+	  , $startsWith = ''[STARTS_WITH];
+
+	$def($def.P + $def.F * __webpack_require__(/*! ./$.fails-is-regexp */ 109)(STARTS_WITH), 'String', {
+	  startsWith: function startsWith(searchString /*, position = 0 */){
+	    var that   = context(this, searchString, STARTS_WITH)
+	      , index  = toLength(Math.min(arguments[1], that.length))
+	      , search = String(searchString);
+	    return $startsWith
+	      ? $startsWith.call(that, search, index)
+	      : that.slice(index, index + search.length) === search;
+	  }
+	});
+
+/***/ },
+/* 114 */
+/*!**********************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/es6.array.from.js ***!
+  \**********************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	var ctx         = __webpack_require__(/*! ./$.ctx */ 24)
+	  , $def        = __webpack_require__(/*! ./$.def */ 17)
+	  , toObject    = __webpack_require__(/*! ./$.to-object */ 27)
+	  , call        = __webpack_require__(/*! ./$.iter-call */ 115)
+	  , isArrayIter = __webpack_require__(/*! ./$.is-array-iter */ 116)
+	  , toLength    = __webpack_require__(/*! ./$.to-length */ 29)
+	  , getIterFn   = __webpack_require__(/*! ./core.get-iterator-method */ 117);
+	$def($def.S + $def.F * !__webpack_require__(/*! ./$.iter-detect */ 118)(function(iter){ Array.from(iter); }), 'Array', {
+	  // 22.1.2.1 Array.from(arrayLike, mapfn = undefined, thisArg = undefined)
+	  from: function from(arrayLike/*, mapfn = undefined, thisArg = undefined*/){
+	    var O       = toObject(arrayLike)
+	      , C       = typeof this == 'function' ? this : Array
+	      , mapfn   = arguments[1]
+	      , mapping = mapfn !== undefined
+	      , index   = 0
+	      , iterFn  = getIterFn(O)
+	      , length, result, step, iterator;
+	    if(mapping)mapfn = ctx(mapfn, arguments[2], 2);
+	    // if object isn't iterable or it's array with default iterator - use simple case
+	    if(iterFn != undefined && !(C == Array && isArrayIter(iterFn))){
+	      for(iterator = iterFn.call(O), result = new C; !(step = iterator.next()).done; index++){
+	        result[index] = mapping ? call(iterator, mapfn, [step.value, index], true) : step.value;
+	      }
+	    } else {
+	      length = toLength(O.length);
+	      for(result = new C(length); length > index; index++){
+	        result[index] = mapping ? mapfn(O[index], index) : O[index];
+	      }
+	    }
+	    result.length = index;
+	    return result;
+	  }
+	});
+
+
+/***/ },
+/* 115 */
+/*!*******************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/$.iter-call.js ***!
+  \*******************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// call something on iterator step with safe closing on error
+	var anObject = __webpack_require__(/*! ./$.an-object */ 34);
+	module.exports = function(iterator, fn, value, entries){
+	  try {
+	    return entries ? fn(anObject(value)[0], value[1]) : fn(value);
+	  // 7.4.6 IteratorClose(iterator, completion)
+	  } catch(e){
+	    var ret = iterator['return'];
+	    if(ret !== undefined)anObject(ret.call(iterator));
+	    throw e;
+	  }
+	};
+
+/***/ },
+/* 116 */
+/*!***********************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/$.is-array-iter.js ***!
+  \***********************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// check on default Array iterator
+	var Iterators = __webpack_require__(/*! ./$.iterators */ 103)
+	  , ITERATOR  = __webpack_require__(/*! ./$.wks */ 32)('iterator');
+	module.exports = function(it){
+	  return (Iterators.Array || Array.prototype[ITERATOR]) === it;
+	};
+
+/***/ },
+/* 117 */
+/*!********************************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/core.get-iterator-method.js ***!
+  \********************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var classof   = __webpack_require__(/*! ./$.classof */ 51)
+	  , ITERATOR  = __webpack_require__(/*! ./$.wks */ 32)('iterator')
+	  , Iterators = __webpack_require__(/*! ./$.iterators */ 103);
+	module.exports = __webpack_require__(/*! ./$.core */ 18).getIteratorMethod = function(it){
+	  if(it != undefined)return it[ITERATOR] || it['@@iterator'] || Iterators[classof(it)];
+	};
+
+/***/ },
+/* 118 */
+/*!*********************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/$.iter-detect.js ***!
+  \*********************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var SYMBOL_ITERATOR = __webpack_require__(/*! ./$.wks */ 32)('iterator')
+	  , SAFE_CLOSING    = false;
+	try {
+	  var riter = [7][SYMBOL_ITERATOR]();
+	  riter['return'] = function(){ SAFE_CLOSING = true; };
+	  Array.from(riter, function(){ throw 2; });
+	} catch(e){ /* empty */ }
+	module.exports = function(exec){
+	  if(!SAFE_CLOSING)return false;
+	  var safe = false;
+	  try {
+	    var arr  = [7]
+	      , iter = arr[SYMBOL_ITERATOR]();
+	    iter.next = function(){ safe = true; };
+	    arr[SYMBOL_ITERATOR] = function(){ return iter; };
+	    exec(arr);
+	  } catch(e){ /* empty */ }
+	  return safe;
+	};
+
+/***/ },
+/* 119 */
+/*!********************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/es6.array.of.js ***!
+  \********************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	var $def = __webpack_require__(/*! ./$.def */ 17);
+
+	// WebKit Array.of isn't generic
+	$def($def.S + $def.F * __webpack_require__(/*! ./$.fails */ 9)(function(){
+	  function F(){}
+	  return !(Array.of.call(F) instanceof F);
+	}), 'Array', {
+	  // 22.1.2.3 Array.of( ...items)
+	  of: function of(/* ...args */){
+	    var index  = 0
+	      , length = arguments.length
+	      , result = new (typeof this == 'function' ? this : Array)(length);
+	    while(length > index)result[index] = arguments[index++];
+	    result.length = length;
+	    return result;
+	  }
+	});
+
+/***/ },
+/* 120 */
+/*!**************************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/es6.array.iterator.js ***!
+  \**************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	var setUnscope = __webpack_require__(/*! ./$.unscope */ 121)
+	  , step       = __webpack_require__(/*! ./$.iter-step */ 122)
+	  , Iterators  = __webpack_require__(/*! ./$.iterators */ 103)
+	  , toIObject  = __webpack_require__(/*! ./$.to-iobject */ 35);
+
+	// 22.1.3.4 Array.prototype.entries()
+	// 22.1.3.13 Array.prototype.keys()
+	// 22.1.3.29 Array.prototype.values()
+	// 22.1.3.30 Array.prototype[@@iterator]()
+	__webpack_require__(/*! ./$.iter-define */ 102)(Array, 'Array', function(iterated, kind){
+	  this._t = toIObject(iterated); // target
+	  this._i = 0;                   // next index
+	  this._k = kind;                // kind
+	// 22.1.5.2.1 %ArrayIteratorPrototype%.next()
+	}, function(){
+	  var O     = this._t
+	    , kind  = this._k
+	    , index = this._i++;
+	  if(!O || index >= O.length){
+	    this._t = undefined;
+	    return step(1);
+	  }
+	  if(kind == 'keys'  )return step(0, index);
+	  if(kind == 'values')return step(0, O[index]);
+	  return step(0, [index, O[index]]);
+	}, 'values');
+
+	// argumentsList[@@iterator] is %ArrayProto_values% (9.4.4.6, 9.4.4.7)
+	Iterators.Arguments = Iterators.Array;
+
+	setUnscope('keys');
+	setUnscope('values');
+	setUnscope('entries');
+
+/***/ },
+/* 121 */
+/*!*****************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/$.unscope.js ***!
+  \*****************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// 22.1.3.31 Array.prototype[@@unscopables]
+	var UNSCOPABLES = __webpack_require__(/*! ./$.wks */ 32)('unscopables');
+	if([][UNSCOPABLES] == undefined)__webpack_require__(/*! ./$.hide */ 19)(Array.prototype, UNSCOPABLES, {});
+	module.exports = function(key){
+	  [][UNSCOPABLES][key] = true;
+	};
+
+/***/ },
+/* 122 */
+/*!*******************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/$.iter-step.js ***!
+  \*******************************************************/
+/***/ function(module, exports) {
+
+	module.exports = function(done, value){
+	  return {value: value, done: !!done};
+	};
+
+/***/ },
+/* 123 */
+/*!*************************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/es6.array.species.js ***!
+  \*************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	__webpack_require__(/*! ./$.species */ 124)(Array);
+
+/***/ },
+/* 124 */
+/*!*****************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/$.species.js ***!
+  \*****************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	var $       = __webpack_require__(/*! ./$ */ 7)
+	  , SPECIES = __webpack_require__(/*! ./$.wks */ 32)('species');
+	module.exports = function(C){
+	  if(__webpack_require__(/*! ./$.support-desc */ 8) && !(SPECIES in C))$.setDesc(C, SPECIES, {
+	    configurable: true,
+	    get: function(){ return this; }
+	  });
+	};
+
+/***/ },
+/* 125 */
+/*!*****************************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/es6.array.copy-within.js ***!
+  \*****************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// 22.1.3.3 Array.prototype.copyWithin(target, start, end = this.length)
+	'use strict';
+	var $def = __webpack_require__(/*! ./$.def */ 17);
+
+	$def($def.P, 'Array', {copyWithin: __webpack_require__(/*! ./$.array-copy-within */ 126)});
+
+	__webpack_require__(/*! ./$.unscope */ 121)('copyWithin');
+
+/***/ },
+/* 126 */
+/*!***************************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/$.array-copy-within.js ***!
+  \***************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// 22.1.3.3 Array.prototype.copyWithin(target, start, end = this.length)
+	'use strict';
+	var toObject = __webpack_require__(/*! ./$.to-object */ 27)
+	  , toIndex  = __webpack_require__(/*! ./$.to-index */ 36)
+	  , toLength = __webpack_require__(/*! ./$.to-length */ 29);
+
+	module.exports = [].copyWithin || function copyWithin(target/*= 0*/, start/*= 0, end = @length*/){
+	  var O     = toObject(this)
+	    , len   = toLength(O.length)
+	    , to    = toIndex(target, len)
+	    , from  = toIndex(start, len)
+	    , end   = arguments[2]
+	    , count = Math.min((end === undefined ? len : toIndex(end, len)) - from, len - to)
+	    , inc   = 1;
+	  if(from < to && to < from + count){
+	    inc  = -1;
+	    from += count - 1;
+	    to   += count - 1;
+	  }
+	  while(count-- > 0){
+	    if(from in O)O[to] = O[from];
+	    else delete O[to];
+	    to   += inc;
+	    from += inc;
+	  } return O;
+	};
+
+/***/ },
+/* 127 */
+/*!**********************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/es6.array.fill.js ***!
+  \**********************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// 22.1.3.6 Array.prototype.fill(value, start = 0, end = this.length)
+	var $def = __webpack_require__(/*! ./$.def */ 17);
+
+	$def($def.P, 'Array', {fill: __webpack_require__(/*! ./$.array-fill */ 128)});
+
+	__webpack_require__(/*! ./$.unscope */ 121)('fill');
+
+/***/ },
+/* 128 */
+/*!********************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/$.array-fill.js ***!
+  \********************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// 22.1.3.6 Array.prototype.fill(value, start = 0, end = this.length)
+	'use strict';
+	var toObject = __webpack_require__(/*! ./$.to-object */ 27)
+	  , toIndex  = __webpack_require__(/*! ./$.to-index */ 36)
+	  , toLength = __webpack_require__(/*! ./$.to-length */ 29);
+	module.exports = [].fill || function fill(value /*, start = 0, end = @length */){
+	  var O      = toObject(this, true)
+	    , length = toLength(O.length)
+	    , index  = toIndex(arguments[1], length)
+	    , end    = arguments[2]
+	    , endPos = end === undefined ? length : toIndex(end, length);
+	  while(endPos > index)O[index++] = value;
+	  return O;
+	};
+
+/***/ },
+/* 129 */
+/*!**********************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/es6.array.find.js ***!
+  \**********************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	// 22.1.3.8 Array.prototype.find(predicate, thisArg = undefined)
+	var KEY    = 'find'
+	  , $def   = __webpack_require__(/*! ./$.def */ 17)
+	  , forced = true
+	  , $find  = __webpack_require__(/*! ./$.array-methods */ 23)(5);
+	// Shouldn't skip holes
+	if(KEY in [])Array(1)[KEY](function(){ forced = false; });
+	$def($def.P + $def.F * forced, 'Array', {
+	  find: function find(callbackfn/*, that = undefined */){
+	    return $find(this, callbackfn, arguments[1]);
+	  }
+	});
+	__webpack_require__(/*! ./$.unscope */ 121)(KEY);
+
+/***/ },
+/* 130 */
+/*!****************************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/es6.array.find-index.js ***!
+  \****************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	// 22.1.3.9 Array.prototype.findIndex(predicate, thisArg = undefined)
+	var KEY    = 'findIndex'
+	  , $def   = __webpack_require__(/*! ./$.def */ 17)
+	  , forced = true
+	  , $find  = __webpack_require__(/*! ./$.array-methods */ 23)(6);
+	// Shouldn't skip holes
+	if(KEY in [])Array(1)[KEY](function(){ forced = false; });
+	$def($def.P + $def.F * forced, 'Array', {
+	  findIndex: function findIndex(callbackfn/*, that = undefined */){
+	    return $find(this, callbackfn, arguments[1]);
+	  }
+	});
+	__webpack_require__(/*! ./$.unscope */ 121)(KEY);
+
+/***/ },
+/* 131 */
+/*!******************************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/es6.regexp.constructor.js ***!
+  \******************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var $        = __webpack_require__(/*! ./$ */ 7)
+	  , global   = __webpack_require__(/*! ./$.global */ 12)
+	  , isRegExp = __webpack_require__(/*! ./$.is-regexp */ 108)
+	  , $flags   = __webpack_require__(/*! ./$.flags */ 132)
+	  , $RegExp  = global.RegExp
+	  , Base     = $RegExp
+	  , proto    = $RegExp.prototype
+	  , re1      = /a/g
+	  , re2      = /a/g
+	  // "new" creates a new object, old webkit buggy here
+	  , CORRECT_NEW = new $RegExp(re1) !== re1;
+
+	if(__webpack_require__(/*! ./$.support-desc */ 8) && (!CORRECT_NEW || __webpack_require__(/*! ./$.fails */ 9)(function(){
+	  re2[__webpack_require__(/*! ./$.wks */ 32)('match')] = false;
+	  // RegExp constructor can alter flags and IsRegExp works correct with @@match
+	  return $RegExp(re1) != re1 || $RegExp(re2) == re2 || $RegExp(re1, 'i') != '/a/i';
+	}))){
+	  $RegExp = function RegExp(p, f){
+	    var piRE = isRegExp(p)
+	      , fiU  = f === undefined;
+	    return !(this instanceof $RegExp) && piRE && p.constructor === $RegExp && fiU ? p
+	      : CORRECT_NEW
+	        ? new Base(piRE && !fiU ? p.source : p, f)
+	        : Base((piRE = p instanceof $RegExp) ? p.source : p, piRE && fiU ? $flags.call(p) : f);
+	  };
+	  $.each.call($.getNames(Base), function(key){
+	    key in $RegExp || $.setDesc($RegExp, key, {
+	      configurable: true,
+	      get: function(){ return Base[key]; },
+	      set: function(it){ Base[key] = it; }
+	    });
+	  });
+	  proto.constructor = $RegExp;
+	  $RegExp.prototype = proto;
+	  __webpack_require__(/*! ./$.redef */ 20)(global, 'RegExp', $RegExp);
+	}
+
+	__webpack_require__(/*! ./$.species */ 124)($RegExp);
+
+/***/ },
+/* 132 */
+/*!***************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/$.flags.js ***!
+  \***************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	// 21.2.5.3 get RegExp.prototype.flags
+	var anObject = __webpack_require__(/*! ./$.an-object */ 34);
+	module.exports = function(){
+	  var that   = anObject(this)
+	    , result = '';
+	  if(that.global)result += 'g';
+	  if(that.ignoreCase)result += 'i';
+	  if(that.multiline)result += 'm';
+	  if(that.unicode)result += 'u';
+	  if(that.sticky)result += 'y';
+	  return result;
+	};
+
+/***/ },
+/* 133 */
+/*!************************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/es6.regexp.flags.js ***!
+  \************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// 21.2.5.3 get RegExp.prototype.flags()
+	var $ = __webpack_require__(/*! ./$ */ 7);
+	if(__webpack_require__(/*! ./$.support-desc */ 8) && /./g.flags != 'g')$.setDesc(RegExp.prototype, 'flags', {
+	  configurable: true,
+	  get: __webpack_require__(/*! ./$.flags */ 132)
+	});
+
+/***/ },
+/* 134 */
+/*!************************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/es6.regexp.match.js ***!
+  \************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// @@match logic
+	__webpack_require__(/*! ./$.fix-re-wks */ 135)('match', 1, function(defined, MATCH){
+	  // 21.1.3.11 String.prototype.match(regexp)
+	  return function match(regexp){
+	    'use strict';
+	    var O  = defined(this)
+	      , fn = regexp == undefined ? undefined : regexp[MATCH];
+	    return fn !== undefined ? fn.call(regexp, O) : new RegExp(regexp)[MATCH](String(O));
+	  };
+	});
+
+/***/ },
+/* 135 */
+/*!********************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/$.fix-re-wks.js ***!
+  \********************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	module.exports = function(KEY, length, exec){
+	  var defined  = __webpack_require__(/*! ./$.defined */ 28)
+	    , SYMBOL   = __webpack_require__(/*! ./$.wks */ 32)(KEY)
+	    , original = ''[KEY];
+	  if(__webpack_require__(/*! ./$.fails */ 9)(function(){
+	    var O = {};
+	    O[SYMBOL] = function(){ return 7; };
+	    return ''[KEY](O) != 7;
+	  })){
+	    __webpack_require__(/*! ./$.redef */ 20)(String.prototype, KEY, exec(defined, SYMBOL, original));
+	    __webpack_require__(/*! ./$.hide */ 19)(RegExp.prototype, SYMBOL, length == 2
+	      // 21.2.5.8 RegExp.prototype[@@replace](string, replaceValue)
+	      // 21.2.5.11 RegExp.prototype[@@split](string, limit)
+	      ? function(string, arg){ return original.call(string, this, arg); }
+	      // 21.2.5.6 RegExp.prototype[@@match](string)
+	      // 21.2.5.9 RegExp.prototype[@@search](string)
+	      : function(string){ return original.call(string, this); }
+	    );
+	  }
+	};
+
+/***/ },
+/* 136 */
+/*!**************************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/es6.regexp.replace.js ***!
+  \**************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// @@replace logic
+	__webpack_require__(/*! ./$.fix-re-wks */ 135)('replace', 2, function(defined, REPLACE, $replace){
+	  // 21.1.3.14 String.prototype.replace(searchValue, replaceValue)
+	  return function replace(searchValue, replaceValue){
+	    'use strict';
+	    var O  = defined(this)
+	      , fn = searchValue == undefined ? undefined : searchValue[REPLACE];
+	    return fn !== undefined
+	      ? fn.call(searchValue, O, replaceValue)
+	      : $replace.call(String(O), searchValue, replaceValue);
+	  };
+	});
+
+/***/ },
+/* 137 */
+/*!*************************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/es6.regexp.search.js ***!
+  \*************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// @@search logic
+	__webpack_require__(/*! ./$.fix-re-wks */ 135)('search', 1, function(defined, SEARCH){
+	  // 21.1.3.15 String.prototype.search(regexp)
+	  return function search(regexp){
+	    'use strict';
+	    var O  = defined(this)
+	      , fn = regexp == undefined ? undefined : regexp[SEARCH];
+	    return fn !== undefined ? fn.call(regexp, O) : new RegExp(regexp)[SEARCH](String(O));
+	  };
+	});
+
+/***/ },
+/* 138 */
+/*!************************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/es6.regexp.split.js ***!
+  \************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// @@split logic
+	__webpack_require__(/*! ./$.fix-re-wks */ 135)('split', 2, function(defined, SPLIT, $split){
+	  // 21.1.3.17 String.prototype.split(separator, limit)
+	  return function split(separator, limit){
+	    'use strict';
+	    var O  = defined(this)
+	      , fn = separator == undefined ? undefined : separator[SPLIT];
+	    return fn !== undefined
+	      ? fn.call(separator, O, limit)
+	      : $split.call(String(O), separator, limit);
+	  };
+	});
+
+/***/ },
+/* 139 */
+/*!*******************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/es6.promise.js ***!
+  \*******************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	var $          = __webpack_require__(/*! ./$ */ 7)
+	  , LIBRARY    = __webpack_require__(/*! ./$.library */ 43)
+	  , global     = __webpack_require__(/*! ./$.global */ 12)
+	  , ctx        = __webpack_require__(/*! ./$.ctx */ 24)
+	  , classof    = __webpack_require__(/*! ./$.classof */ 51)
+	  , $def       = __webpack_require__(/*! ./$.def */ 17)
+	  , isObject   = __webpack_require__(/*! ./$.is-object */ 14)
+	  , anObject   = __webpack_require__(/*! ./$.an-object */ 34)
+	  , aFunction  = __webpack_require__(/*! ./$.a-function */ 25)
+	  , strictNew  = __webpack_require__(/*! ./$.strict-new */ 140)
+	  , forOf      = __webpack_require__(/*! ./$.for-of */ 141)
+	  , setProto   = __webpack_require__(/*! ./$.set-proto */ 49).set
+	  , same       = __webpack_require__(/*! ./$.same */ 47)
+	  , species    = __webpack_require__(/*! ./$.species */ 124)
+	  , SPECIES    = __webpack_require__(/*! ./$.wks */ 32)('species')
+	  , RECORD     = __webpack_require__(/*! ./$.uid */ 21)('record')
+	  , asap       = __webpack_require__(/*! ./$.microtask */ 142)
+	  , PROMISE    = 'Promise'
+	  , process    = global.process
+	  , isNode     = classof(process) == 'process'
+	  , P          = global[PROMISE]
+	  , Wrapper;
+
+	var testResolve = function(sub){
+	  var test = new P(function(){});
+	  if(sub)test.constructor = Object;
+	  return P.resolve(test) === test;
+	};
+
+	var useNative = function(){
+	  var works = false;
+	  function P2(x){
+	    var self = new P(x);
+	    setProto(self, P2.prototype);
+	    return self;
+	  }
+	  try {
+	    works = P && P.resolve && testResolve();
+	    setProto(P2, P);
+	    P2.prototype = $.create(P.prototype, {constructor: {value: P2}});
+	    // actual Firefox has broken subclass support, test that
+	    if(!(P2.resolve(5).then(function(){}) instanceof P2)){
+	      works = false;
+	    }
+	    // actual V8 bug, https://code.google.com/p/v8/issues/detail?id=4162
+	    if(works && __webpack_require__(/*! ./$.support-desc */ 8)){
+	      var thenableThenGotten = false;
+	      P.resolve($.setDesc({}, 'then', {
+	        get: function(){ thenableThenGotten = true; }
+	      }));
+	      works = thenableThenGotten;
+	    }
+	  } catch(e){ works = false; }
+	  return works;
+	}();
+
+	// helpers
+	var isPromise = function(it){
+	  return isObject(it) && (useNative ? classof(it) == 'Promise' : RECORD in it);
+	};
+	var sameConstructor = function(a, b){
+	  // library wrapper special case
+	  if(LIBRARY && a === P && b === Wrapper)return true;
+	  return same(a, b);
+	};
+	var getConstructor = function(C){
+	  var S = anObject(C)[SPECIES];
+	  return S != undefined ? S : C;
+	};
+	var isThenable = function(it){
+	  var then;
+	  return isObject(it) && typeof (then = it.then) == 'function' ? then : false;
+	};
+	var notify = function(record, isReject){
+	  if(record.n)return;
+	  record.n = true;
+	  var chain = record.c;
+	  asap(function(){
+	    var value = record.v
+	      , ok    = record.s == 1
+	      , i     = 0;
+	    var run = function(react){
+	      var cb = ok ? react.ok : react.fail
+	        , ret, then;
+	      try {
+	        if(cb){
+	          if(!ok)record.h = true;
+	          ret = cb === true ? value : cb(value);
+	          if(ret === react.P){
+	            react.rej(TypeError('Promise-chain cycle'));
+	          } else if(then = isThenable(ret)){
+	            then.call(ret, react.res, react.rej);
+	          } else react.res(ret);
+	        } else react.rej(value);
+	      } catch(err){
+	        react.rej(err);
+	      }
+	    };
+	    while(chain.length > i)run(chain[i++]); // variable length - can't use forEach
+	    chain.length = 0;
+	    record.n = false;
+	    if(isReject)setTimeout(function(){
+	      var promise = record.p
+	        , handler, console;
+	      if(isUnhandled(promise)){
+	        if(isNode){
+	          process.emit('unhandledRejection', value, promise);
+	        } else if(handler = global.onunhandledrejection){
+	          handler({promise: promise, reason: value});
+	        } else if((console = global.console) && console.error){
+	          console.error('Unhandled promise rejection', value);
+	        }
+	      } record.a = undefined;
+	    }, 1);
+	  });
+	};
+	var isUnhandled = function(promise){
+	  var record = promise[RECORD]
+	    , chain  = record.a || record.c
+	    , i      = 0
+	    , react;
+	  if(record.h)return false;
+	  while(chain.length > i){
+	    react = chain[i++];
+	    if(react.fail || !isUnhandled(react.P))return false;
+	  } return true;
+	};
+	var $reject = function(value){
+	  var record = this;
+	  if(record.d)return;
+	  record.d = true;
+	  record = record.r || record; // unwrap
+	  record.v = value;
+	  record.s = 2;
+	  record.a = record.c.slice();
+	  notify(record, true);
+	};
+	var $resolve = function(value){
+	  var record = this
+	    , then;
+	  if(record.d)return;
+	  record.d = true;
+	  record = record.r || record; // unwrap
+	  try {
+	    if(then = isThenable(value)){
+	      asap(function(){
+	        var wrapper = {r: record, d: false}; // wrap
+	        try {
+	          then.call(value, ctx($resolve, wrapper, 1), ctx($reject, wrapper, 1));
+	        } catch(e){
+	          $reject.call(wrapper, e);
+	        }
+	      });
+	    } else {
+	      record.v = value;
+	      record.s = 1;
+	      notify(record, false);
+	    }
+	  } catch(e){
+	    $reject.call({r: record, d: false}, e); // wrap
+	  }
+	};
+
+	// constructor polyfill
+	if(!useNative){
+	  // 25.4.3.1 Promise(executor)
+	  P = function Promise(executor){
+	    aFunction(executor);
+	    var record = {
+	      p: strictNew(this, P, PROMISE),         // <- promise
+	      c: [],                                  // <- awaiting reactions
+	      a: undefined,                           // <- checked in isUnhandled reactions
+	      s: 0,                                   // <- state
+	      d: false,                               // <- done
+	      v: undefined,                           // <- value
+	      h: false,                               // <- handled rejection
+	      n: false                                // <- notify
+	    };
+	    this[RECORD] = record;
+	    try {
+	      executor(ctx($resolve, record, 1), ctx($reject, record, 1));
+	    } catch(err){
+	      $reject.call(record, err);
+	    }
+	  };
+	  __webpack_require__(/*! ./$.mix */ 144)(P.prototype, {
+	    // 25.4.5.3 Promise.prototype.then(onFulfilled, onRejected)
+	    then: function then(onFulfilled, onRejected){
+	      var S = anObject(anObject(this).constructor)[SPECIES];
+	      var react = {
+	        ok:   typeof onFulfilled == 'function' ? onFulfilled : true,
+	        fail: typeof onRejected == 'function'  ? onRejected  : false
+	      };
+	      var promise = react.P = new (S != undefined ? S : P)(function(res, rej){
+	        react.res = res;
+	        react.rej = rej;
+	      });
+	      aFunction(react.res);
+	      aFunction(react.rej);
+	      var record = this[RECORD];
+	      record.c.push(react);
+	      if(record.a)record.a.push(react);
+	      if(record.s)notify(record, false);
+	      return promise;
+	    },
+	    // 25.4.5.1 Promise.prototype.catch(onRejected)
+	    'catch': function(onRejected){
+	      return this.then(undefined, onRejected);
+	    }
+	  });
+	}
+
+	// export
+	$def($def.G + $def.W + $def.F * !useNative, {Promise: P});
+	__webpack_require__(/*! ./$.tag */ 39)(P, PROMISE);
+	species(P);
+	species(Wrapper = __webpack_require__(/*! ./$.core */ 18)[PROMISE]);
+
+	// statics
+	$def($def.S + $def.F * !useNative, PROMISE, {
+	  // 25.4.4.5 Promise.reject(r)
+	  reject: function reject(r){
+	    return new this(function(res, rej){ rej(r); });
+	  }
+	});
+	$def($def.S + $def.F * (!useNative || testResolve(true)), PROMISE, {
+	  // 25.4.4.6 Promise.resolve(x)
+	  resolve: function resolve(x){
+	    return isPromise(x) && sameConstructor(x.constructor, this)
+	      ? x : new this(function(res){ res(x); });
+	  }
+	});
+	$def($def.S + $def.F * !(useNative && __webpack_require__(/*! ./$.iter-detect */ 118)(function(iter){
+	  P.all(iter)['catch'](function(){});
+	})), PROMISE, {
+	  // 25.4.4.1 Promise.all(iterable)
+	  all: function all(iterable){
+	    var C      = getConstructor(this)
+	      , values = [];
+	    return new C(function(res, rej){
+	      forOf(iterable, false, values.push, values);
+	      var remaining = values.length
+	        , results   = Array(remaining);
+	      if(remaining)$.each.call(values, function(promise, index){
+	        C.resolve(promise).then(function(value){
+	          results[index] = value;
+	          --remaining || res(results);
+	        }, rej);
+	      });
+	      else res(results);
+	    });
+	  },
+	  // 25.4.4.4 Promise.race(iterable)
+	  race: function race(iterable){
+	    var C = getConstructor(this);
+	    return new C(function(res, rej){
+	      forOf(iterable, false, function(promise){
+	        C.resolve(promise).then(res, rej);
+	      });
+	    });
+	  }
+	});
+
+/***/ },
+/* 140 */
+/*!********************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/$.strict-new.js ***!
+  \********************************************************/
+/***/ function(module, exports) {
+
+	module.exports = function(it, Constructor, name){
+	  if(!(it instanceof Constructor))throw TypeError(name + ": use the 'new' operator!");
+	  return it;
+	};
+
+/***/ },
+/* 141 */
+/*!****************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/$.for-of.js ***!
+  \****************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var ctx         = __webpack_require__(/*! ./$.ctx */ 24)
+	  , call        = __webpack_require__(/*! ./$.iter-call */ 115)
+	  , isArrayIter = __webpack_require__(/*! ./$.is-array-iter */ 116)
+	  , anObject    = __webpack_require__(/*! ./$.an-object */ 34)
+	  , toLength    = __webpack_require__(/*! ./$.to-length */ 29)
+	  , getIterFn   = __webpack_require__(/*! ./core.get-iterator-method */ 117);
+	module.exports = function(iterable, entries, fn, that){
+	  var iterFn = getIterFn(iterable)
+	    , f      = ctx(fn, that, entries ? 2 : 1)
+	    , index  = 0
+	    , length, step, iterator;
+	  if(typeof iterFn != 'function')throw TypeError(iterable + ' is not iterable!');
+	  // fast case for arrays with default iterator
+	  if(isArrayIter(iterFn))for(length = toLength(iterable.length); length > index; index++){
+	    entries ? f(anObject(step = iterable[index])[0], step[1]) : f(iterable[index]);
+	  } else for(iterator = iterFn.call(iterable); !(step = iterator.next()).done; ){
+	    call(iterator, f, step.value, entries);
+	  }
+	};
+
+/***/ },
+/* 142 */
+/*!*******************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/$.microtask.js ***!
+  \*******************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var global    = __webpack_require__(/*! ./$.global */ 12)
+	  , macrotask = __webpack_require__(/*! ./$.task */ 143).set
+	  , Observer  = global.MutationObserver || global.WebKitMutationObserver
+	  , process   = global.process
+	  , isNode    = __webpack_require__(/*! ./$.cof */ 16)(process) == 'process'
+	  , head, last, notify;
+
+	var flush = function(){
+	  var parent, domain;
+	  if(isNode && (parent = process.domain)){
+	    process.domain = null;
+	    parent.exit();
+	  }
+	  while(head){
+	    domain = head.domain;
+	    if(domain)domain.enter();
+	    head.fn.call(); // <- currently we use it only for Promise - try / catch not required
+	    if(domain)domain.exit();
+	    head = head.next;
+	  } last = undefined;
+	  if(parent)parent.enter();
+	}
+
+	// Node.js
+	if(isNode){
+	  notify = function(){
+	    process.nextTick(flush);
+	  };
+	// browsers with MutationObserver
+	} else if(Observer){
+	  var toggle = 1
+	    , node   = document.createTextNode('');
+	  new Observer(flush).observe(node, {characterData: true}); // eslint-disable-line no-new
+	  notify = function(){
+	    node.data = toggle = -toggle;
+	  };
+	// for other environments - macrotask based on:
+	// - setImmediate
+	// - MessageChannel
+	// - window.postMessag
+	// - onreadystatechange
+	// - setTimeout
+	} else {
+	  notify = function(){
+	    // strange IE + webpack dev server bug - use .call(global)
+	    macrotask.call(global, flush);
+	  };
+	}
+
+	module.exports = function asap(fn){
+	  var task = {fn: fn, next: undefined, domain: isNode && process.domain};
+	  if(last)last.next = task;
+	  if(!head){
+	    head = task;
+	    notify();
+	  } last = task;
+	};
+
+/***/ },
+/* 143 */
+/*!**************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/$.task.js ***!
+  \**************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	var ctx                = __webpack_require__(/*! ./$.ctx */ 24)
+	  , invoke             = __webpack_require__(/*! ./$.invoke */ 22)
+	  , html               = __webpack_require__(/*! ./$.html */ 11)
+	  , cel                = __webpack_require__(/*! ./$.dom-create */ 13)
+	  , global             = __webpack_require__(/*! ./$.global */ 12)
+	  , process            = global.process
+	  , setTask            = global.setImmediate
+	  , clearTask          = global.clearImmediate
+	  , MessageChannel     = global.MessageChannel
+	  , counter            = 0
+	  , queue              = {}
+	  , ONREADYSTATECHANGE = 'onreadystatechange'
+	  , defer, channel, port;
+	var run = function(){
+	  var id = +this;
+	  if(queue.hasOwnProperty(id)){
+	    var fn = queue[id];
+	    delete queue[id];
+	    fn();
+	  }
+	};
+	var listner = function(event){
+	  run.call(event.data);
+	};
+	// Node.js 0.9+ & IE10+ has setImmediate, otherwise:
+	if(!setTask || !clearTask){
+	  setTask = function setImmediate(fn){
+	    var args = [], i = 1;
+	    while(arguments.length > i)args.push(arguments[i++]);
+	    queue[++counter] = function(){
+	      invoke(typeof fn == 'function' ? fn : Function(fn), args);
+	    };
+	    defer(counter);
+	    return counter;
+	  };
+	  clearTask = function clearImmediate(id){
+	    delete queue[id];
+	  };
+	  // Node.js 0.8-
+	  if(__webpack_require__(/*! ./$.cof */ 16)(process) == 'process'){
+	    defer = function(id){
+	      process.nextTick(ctx(run, id, 1));
+	    };
+	  // Browsers with MessageChannel, includes WebWorkers
+	  } else if(MessageChannel){
+	    channel = new MessageChannel;
+	    port    = channel.port2;
+	    channel.port1.onmessage = listner;
+	    defer = ctx(port.postMessage, port, 1);
+	  // Browsers with postMessage, skip WebWorkers
+	  // IE8 has postMessage, but it's sync & typeof its postMessage is 'object'
+	  } else if(global.addEventListener && typeof postMessage == 'function' && !global.importScripts){
+	    defer = function(id){
+	      global.postMessage(id + '', '*');
+	    };
+	    global.addEventListener('message', listner, false);
+	  // IE8-
+	  } else if(ONREADYSTATECHANGE in cel('script')){
+	    defer = function(id){
+	      html.appendChild(cel('script'))[ONREADYSTATECHANGE] = function(){
+	        html.removeChild(this);
+	        run.call(id);
+	      };
+	    };
+	  // Rest old browsers
+	  } else {
+	    defer = function(id){
+	      setTimeout(ctx(run, id, 1), 0);
+	    };
+	  }
+	}
+	module.exports = {
+	  set:   setTask,
+	  clear: clearTask
+	};
+
+/***/ },
+/* 144 */
+/*!*************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/$.mix.js ***!
+  \*************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var $redef = __webpack_require__(/*! ./$.redef */ 20);
+	module.exports = function(target, src){
+	  for(var key in src)$redef(target, key, src[key]);
+	  return target;
+	};
+
+/***/ },
+/* 145 */
+/*!***************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/es6.map.js ***!
+  \***************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	var strong = __webpack_require__(/*! ./$.collection-strong */ 146);
+
+	// 23.1 Map Objects
+	__webpack_require__(/*! ./$.collection */ 147)('Map', function(get){
+	  return function Map(){ return get(this, arguments[0]); };
+	}, {
+	  // 23.1.3.6 Map.prototype.get(key)
+	  get: function get(key){
+	    var entry = strong.getEntry(this, key);
+	    return entry && entry.v;
+	  },
+	  // 23.1.3.9 Map.prototype.set(key, value)
+	  set: function set(key, value){
+	    return strong.def(this, key === 0 ? 0 : key, value);
+	  }
+	}, strong, true);
+
+/***/ },
+/* 146 */
+/*!***************************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/$.collection-strong.js ***!
+  \***************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	var $            = __webpack_require__(/*! ./$ */ 7)
+	  , hide         = __webpack_require__(/*! ./$.hide */ 19)
+	  , ctx          = __webpack_require__(/*! ./$.ctx */ 24)
+	  , species      = __webpack_require__(/*! ./$.species */ 124)
+	  , strictNew    = __webpack_require__(/*! ./$.strict-new */ 140)
+	  , defined      = __webpack_require__(/*! ./$.defined */ 28)
+	  , forOf        = __webpack_require__(/*! ./$.for-of */ 141)
+	  , step         = __webpack_require__(/*! ./$.iter-step */ 122)
+	  , ID           = __webpack_require__(/*! ./$.uid */ 21)('id')
+	  , $has         = __webpack_require__(/*! ./$.has */ 15)
+	  , isObject     = __webpack_require__(/*! ./$.is-object */ 14)
+	  , isExtensible = Object.isExtensible || isObject
+	  , SUPPORT_DESC = __webpack_require__(/*! ./$.support-desc */ 8)
+	  , SIZE         = SUPPORT_DESC ? '_s' : 'size'
+	  , id           = 0;
+
+	var fastKey = function(it, create){
+	  // return primitive with prefix
+	  if(!isObject(it))return typeof it == 'symbol' ? it : (typeof it == 'string' ? 'S' : 'P') + it;
+	  if(!$has(it, ID)){
+	    // can't set id to frozen object
+	    if(!isExtensible(it))return 'F';
+	    // not necessary to add id
+	    if(!create)return 'E';
+	    // add missing object id
+	    hide(it, ID, ++id);
+	  // return object id with prefix
+	  } return 'O' + it[ID];
+	};
+
+	var getEntry = function(that, key){
+	  // fast case
+	  var index = fastKey(key), entry;
+	  if(index !== 'F')return that._i[index];
+	  // frozen object case
+	  for(entry = that._f; entry; entry = entry.n){
+	    if(entry.k == key)return entry;
+	  }
+	};
+
+	module.exports = {
+	  getConstructor: function(wrapper, NAME, IS_MAP, ADDER){
+	    var C = wrapper(function(that, iterable){
+	      strictNew(that, C, NAME);
+	      that._i = $.create(null); // index
+	      that._f = undefined;      // first entry
+	      that._l = undefined;      // last entry
+	      that[SIZE] = 0;           // size
+	      if(iterable != undefined)forOf(iterable, IS_MAP, that[ADDER], that);
+	    });
+	    __webpack_require__(/*! ./$.mix */ 144)(C.prototype, {
+	      // 23.1.3.1 Map.prototype.clear()
+	      // 23.2.3.2 Set.prototype.clear()
+	      clear: function clear(){
+	        for(var that = this, data = that._i, entry = that._f; entry; entry = entry.n){
+	          entry.r = true;
+	          if(entry.p)entry.p = entry.p.n = undefined;
+	          delete data[entry.i];
+	        }
+	        that._f = that._l = undefined;
+	        that[SIZE] = 0;
+	      },
+	      // 23.1.3.3 Map.prototype.delete(key)
+	      // 23.2.3.4 Set.prototype.delete(value)
+	      'delete': function(key){
+	        var that  = this
+	          , entry = getEntry(that, key);
+	        if(entry){
+	          var next = entry.n
+	            , prev = entry.p;
+	          delete that._i[entry.i];
+	          entry.r = true;
+	          if(prev)prev.n = next;
+	          if(next)next.p = prev;
+	          if(that._f == entry)that._f = next;
+	          if(that._l == entry)that._l = prev;
+	          that[SIZE]--;
+	        } return !!entry;
+	      },
+	      // 23.2.3.6 Set.prototype.forEach(callbackfn, thisArg = undefined)
+	      // 23.1.3.5 Map.prototype.forEach(callbackfn, thisArg = undefined)
+	      forEach: function forEach(callbackfn /*, that = undefined */){
+	        var f = ctx(callbackfn, arguments[1], 3)
+	          , entry;
+	        while(entry = entry ? entry.n : this._f){
+	          f(entry.v, entry.k, this);
+	          // revert to the last existing entry
+	          while(entry && entry.r)entry = entry.p;
+	        }
+	      },
+	      // 23.1.3.7 Map.prototype.has(key)
+	      // 23.2.3.7 Set.prototype.has(value)
+	      has: function has(key){
+	        return !!getEntry(this, key);
+	      }
+	    });
+	    if(SUPPORT_DESC)$.setDesc(C.prototype, 'size', {
+	      get: function(){
+	        return defined(this[SIZE]);
+	      }
+	    });
+	    return C;
+	  },
+	  def: function(that, key, value){
+	    var entry = getEntry(that, key)
+	      , prev, index;
+	    // change existing entry
+	    if(entry){
+	      entry.v = value;
+	    // create new entry
+	    } else {
+	      that._l = entry = {
+	        i: index = fastKey(key, true), // <- index
+	        k: key,                        // <- key
+	        v: value,                      // <- value
+	        p: prev = that._l,             // <- previous entry
+	        n: undefined,                  // <- next entry
+	        r: false                       // <- removed
+	      };
+	      if(!that._f)that._f = entry;
+	      if(prev)prev.n = entry;
+	      that[SIZE]++;
+	      // add to index
+	      if(index !== 'F')that._i[index] = entry;
+	    } return that;
+	  },
+	  getEntry: getEntry,
+	  setStrong: function(C, NAME, IS_MAP){
+	    // add .keys, .values, .entries, [@@iterator]
+	    // 23.1.3.4, 23.1.3.8, 23.1.3.11, 23.1.3.12, 23.2.3.5, 23.2.3.8, 23.2.3.10, 23.2.3.11
+	    __webpack_require__(/*! ./$.iter-define */ 102)(C, NAME, function(iterated, kind){
+	      this._t = iterated;  // target
+	      this._k = kind;      // kind
+	      this._l = undefined; // previous
+	    }, function(){
+	      var that  = this
+	        , kind  = that._k
+	        , entry = that._l;
+	      // revert to the last existing entry
+	      while(entry && entry.r)entry = entry.p;
+	      // get next entry
+	      if(!that._t || !(that._l = entry = entry ? entry.n : that._t._f)){
+	        // or finish the iteration
+	        that._t = undefined;
+	        return step(1);
+	      }
+	      // return step by kind
+	      if(kind == 'keys'  )return step(0, entry.k);
+	      if(kind == 'values')return step(0, entry.v);
+	      return step(0, [entry.k, entry.v]);
+	    }, IS_MAP ? 'entries' : 'values' , !IS_MAP, true);
+
+	    // add [@@species], 23.1.2.2, 23.2.2.2
+	    species(C);
+	    species(__webpack_require__(/*! ./$.core */ 18)[NAME]); // for wrapper
+	  }
+	};
+
+/***/ },
+/* 147 */
+/*!********************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/$.collection.js ***!
+  \********************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	var global     = __webpack_require__(/*! ./$.global */ 12)
+	  , $def       = __webpack_require__(/*! ./$.def */ 17)
+	  , forOf      = __webpack_require__(/*! ./$.for-of */ 141)
+	  , strictNew  = __webpack_require__(/*! ./$.strict-new */ 140);
+
+	module.exports = function(NAME, wrapper, methods, common, IS_MAP, IS_WEAK){
+	  var Base  = global[NAME]
+	    , C     = Base
+	    , ADDER = IS_MAP ? 'set' : 'add'
+	    , proto = C && C.prototype
+	    , O     = {};
+	  var fixMethod = function(KEY){
+	    var fn = proto[KEY];
+	    __webpack_require__(/*! ./$.redef */ 20)(proto, KEY,
+	      KEY == 'delete' ? function(a){ return fn.call(this, a === 0 ? 0 : a); }
+	      : KEY == 'has' ? function has(a){ return fn.call(this, a === 0 ? 0 : a); }
+	      : KEY == 'get' ? function get(a){ return fn.call(this, a === 0 ? 0 : a); }
+	      : KEY == 'add' ? function add(a){ fn.call(this, a === 0 ? 0 : a); return this; }
+	      : function set(a, b){ fn.call(this, a === 0 ? 0 : a, b); return this; }
+	    );
+	  };
+	  if(typeof C != 'function' || !(IS_WEAK || proto.forEach && !__webpack_require__(/*! ./$.fails */ 9)(function(){
+	    new C().entries().next();
+	  }))){
+	    // create collection constructor
+	    C = common.getConstructor(wrapper, NAME, IS_MAP, ADDER);
+	    __webpack_require__(/*! ./$.mix */ 144)(C.prototype, methods);
+	  } else {
+	    var inst  = new C
+	      , chain = inst[ADDER](IS_WEAK ? {} : -0, 1)
+	      , buggyZero;
+	    // wrap for init collections from iterable
+	    if(!__webpack_require__(/*! ./$.iter-detect */ 118)(function(iter){ new C(iter); })){ // eslint-disable-line no-new
+	      C = wrapper(function(target, iterable){
+	        strictNew(target, C, NAME);
+	        var that = new Base;
+	        if(iterable != undefined)forOf(iterable, IS_MAP, that[ADDER], that);
+	        return that;
+	      });
+	      C.prototype = proto;
+	      proto.constructor = C;
+	    }
+	    IS_WEAK || inst.forEach(function(val, key){
+	      buggyZero = 1 / key === -Infinity;
+	    });
+	    // fix converting -0 key to +0
+	    if(buggyZero){
+	      fixMethod('delete');
+	      fixMethod('has');
+	      IS_MAP && fixMethod('get');
+	    }
+	    // + fix .add & .set for chaining
+	    if(buggyZero || chain !== inst)fixMethod(ADDER);
+	    // weak collections should not contains .clear method
+	    if(IS_WEAK && proto.clear)delete proto.clear;
+	  }
+
+	  __webpack_require__(/*! ./$.tag */ 39)(C, NAME);
+
+	  O[NAME] = C;
+	  $def($def.G + $def.W + $def.F * (C != Base), O);
+
+	  if(!IS_WEAK)common.setStrong(C, NAME, IS_MAP);
+
+	  return C;
+	};
+
+/***/ },
+/* 148 */
+/*!***************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/es6.set.js ***!
+  \***************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	var strong = __webpack_require__(/*! ./$.collection-strong */ 146);
+
+	// 23.2 Set Objects
+	__webpack_require__(/*! ./$.collection */ 147)('Set', function(get){
+	  return function Set(){ return get(this, arguments[0]); };
+	}, {
+	  // 23.2.3.1 Set.prototype.add(value)
+	  add: function add(value){
+	    return strong.def(this, value = value === 0 ? 0 : value, value);
+	  }
+	}, strong);
+
+/***/ },
+/* 149 */
+/*!********************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/es6.weak-map.js ***!
+  \********************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	var $            = __webpack_require__(/*! ./$ */ 7)
+	  , weak         = __webpack_require__(/*! ./$.collection-weak */ 150)
+	  , isObject     = __webpack_require__(/*! ./$.is-object */ 14)
+	  , has          = __webpack_require__(/*! ./$.has */ 15)
+	  , frozenStore  = weak.frozenStore
+	  , WEAK         = weak.WEAK
+	  , isExtensible = Object.isExtensible || isObject
+	  , tmp          = {};
+
+	// 23.3 WeakMap Objects
+	var $WeakMap = __webpack_require__(/*! ./$.collection */ 147)('WeakMap', function(get){
+	  return function WeakMap(){ return get(this, arguments[0]); };
+	}, {
+	  // 23.3.3.3 WeakMap.prototype.get(key)
+	  get: function get(key){
+	    if(isObject(key)){
+	      if(!isExtensible(key))return frozenStore(this).get(key);
+	      if(has(key, WEAK))return key[WEAK][this._i];
+	    }
+	  },
+	  // 23.3.3.5 WeakMap.prototype.set(key, value)
+	  set: function set(key, value){
+	    return weak.def(this, key, value);
+	  }
+	}, weak, true, true);
+
+	// IE11 WeakMap frozen keys fix
+	if(new $WeakMap().set((Object.freeze || Object)(tmp), 7).get(tmp) != 7){
+	  $.each.call(['delete', 'has', 'get', 'set'], function(key){
+	    var proto  = $WeakMap.prototype
+	      , method = proto[key];
+	    __webpack_require__(/*! ./$.redef */ 20)(proto, key, function(a, b){
+	      // store frozen objects on leaky map
+	      if(isObject(a) && !isExtensible(a)){
+	        var result = frozenStore(this)[key](a, b);
+	        return key == 'set' ? this : result;
+	      // store all the rest on native weakmap
+	      } return method.call(this, a, b);
+	    });
+	  });
+	}
+
+/***/ },
+/* 150 */
+/*!*************************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/$.collection-weak.js ***!
+  \*************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	var hide         = __webpack_require__(/*! ./$.hide */ 19)
+	  , anObject     = __webpack_require__(/*! ./$.an-object */ 34)
+	  , strictNew    = __webpack_require__(/*! ./$.strict-new */ 140)
+	  , forOf        = __webpack_require__(/*! ./$.for-of */ 141)
+	  , method       = __webpack_require__(/*! ./$.array-methods */ 23)
+	  , WEAK         = __webpack_require__(/*! ./$.uid */ 21)('weak')
+	  , isObject     = __webpack_require__(/*! ./$.is-object */ 14)
+	  , $has         = __webpack_require__(/*! ./$.has */ 15)
+	  , isExtensible = Object.isExtensible || isObject
+	  , find         = method(5)
+	  , findIndex    = method(6)
+	  , id           = 0;
+
+	// fallback for frozen keys
+	var frozenStore = function(that){
+	  return that._l || (that._l = new FrozenStore);
+	};
+	var FrozenStore = function(){
+	  this.a = [];
+	};
+	var findFrozen = function(store, key){
+	  return find(store.a, function(it){
+	    return it[0] === key;
+	  });
+	};
+	FrozenStore.prototype = {
+	  get: function(key){
+	    var entry = findFrozen(this, key);
+	    if(entry)return entry[1];
+	  },
+	  has: function(key){
+	    return !!findFrozen(this, key);
+	  },
+	  set: function(key, value){
+	    var entry = findFrozen(this, key);
+	    if(entry)entry[1] = value;
+	    else this.a.push([key, value]);
+	  },
+	  'delete': function(key){
+	    var index = findIndex(this.a, function(it){
+	      return it[0] === key;
+	    });
+	    if(~index)this.a.splice(index, 1);
+	    return !!~index;
+	  }
+	};
+
+	module.exports = {
+	  getConstructor: function(wrapper, NAME, IS_MAP, ADDER){
+	    var C = wrapper(function(that, iterable){
+	      strictNew(that, C, NAME);
+	      that._i = id++;      // collection id
+	      that._l = undefined; // leak store for frozen objects
+	      if(iterable != undefined)forOf(iterable, IS_MAP, that[ADDER], that);
+	    });
+	    __webpack_require__(/*! ./$.mix */ 144)(C.prototype, {
+	      // 23.3.3.2 WeakMap.prototype.delete(key)
+	      // 23.4.3.3 WeakSet.prototype.delete(value)
+	      'delete': function(key){
+	        if(!isObject(key))return false;
+	        if(!isExtensible(key))return frozenStore(this)['delete'](key);
+	        return $has(key, WEAK) && $has(key[WEAK], this._i) && delete key[WEAK][this._i];
+	      },
+	      // 23.3.3.4 WeakMap.prototype.has(key)
+	      // 23.4.3.4 WeakSet.prototype.has(value)
+	      has: function has(key){
+	        if(!isObject(key))return false;
+	        if(!isExtensible(key))return frozenStore(this).has(key);
+	        return $has(key, WEAK) && $has(key[WEAK], this._i);
+	      }
+	    });
+	    return C;
+	  },
+	  def: function(that, key, value){
+	    if(!isExtensible(anObject(key))){
+	      frozenStore(that).set(key, value);
+	    } else {
+	      $has(key, WEAK) || hide(key, WEAK, {});
+	      key[WEAK][that._i] = value;
+	    } return that;
+	  },
+	  frozenStore: frozenStore,
+	  WEAK: WEAK
+	};
+
+/***/ },
+/* 151 */
+/*!********************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/es6.weak-set.js ***!
+  \********************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	var weak = __webpack_require__(/*! ./$.collection-weak */ 150);
+
+	// 23.4 WeakSet Objects
+	__webpack_require__(/*! ./$.collection */ 147)('WeakSet', function(get){
+	  return function WeakSet(){ return get(this, arguments[0]); };
+	}, {
+	  // 23.4.3.1 WeakSet.prototype.add(value)
+	  add: function add(value){
+	    return weak.def(this, value, true);
+	  }
+	}, weak, false, true);
+
+/***/ },
+/* 152 */
+/*!*************************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/es6.reflect.apply.js ***!
+  \*************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// 26.1.1 Reflect.apply(target, thisArgument, argumentsList)
+	var $def   = __webpack_require__(/*! ./$.def */ 17)
+	  , _apply = Function.apply;
+
+	$def($def.S, 'Reflect', {
+	  apply: function apply(target, thisArgument, argumentsList){
+	    return _apply.call(target, thisArgument, argumentsList);
+	  }
+	});
+
+/***/ },
+/* 153 */
+/*!*****************************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/es6.reflect.construct.js ***!
+  \*****************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// 26.1.2 Reflect.construct(target, argumentsList [, newTarget])
+	var $         = __webpack_require__(/*! ./$ */ 7)
+	  , $def      = __webpack_require__(/*! ./$.def */ 17)
+	  , aFunction = __webpack_require__(/*! ./$.a-function */ 25)
+	  , anObject  = __webpack_require__(/*! ./$.an-object */ 34)
+	  , isObject  = __webpack_require__(/*! ./$.is-object */ 14)
+	  , bind      = Function.bind || __webpack_require__(/*! ./$.core */ 18).Function.prototype.bind;
+
+	// MS Edge supports only 2 arguments
+	// FF Nightly sets third argument as `new.target`, but does not create `this` from it
+	$def($def.S + $def.F * __webpack_require__(/*! ./$.fails */ 9)(function(){
+	  function F(){}
+	  return !(Reflect.construct(function(){}, [], F) instanceof F);
+	}), 'Reflect', {
+	  construct: function construct(Target, args /*, newTarget*/){
+	    aFunction(Target);
+	    var newTarget = arguments.length < 3 ? Target : aFunction(arguments[2]);
+	    if(Target == newTarget){
+	      // w/o altered newTarget, optimization for 0-4 arguments
+	      if(args != undefined)switch(anObject(args).length){
+	        case 0: return new Target;
+	        case 1: return new Target(args[0]);
+	        case 2: return new Target(args[0], args[1]);
+	        case 3: return new Target(args[0], args[1], args[2]);
+	        case 4: return new Target(args[0], args[1], args[2], args[3]);
+	      }
+	      // w/o altered newTarget, lot of arguments case
+	      var $args = [null];
+	      $args.push.apply($args, args);
+	      return new (bind.apply(Target, $args));
+	    }
+	    // with altered newTarget, not support built-in constructors
+	    var proto    = newTarget.prototype
+	      , instance = $.create(isObject(proto) ? proto : Object.prototype)
+	      , result   = Function.apply.call(Target, instance, args);
+	    return isObject(result) ? result : instance;
+	  }
+	});
+
+/***/ },
+/* 154 */
+/*!***********************************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/es6.reflect.define-property.js ***!
+  \***********************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// 26.1.3 Reflect.defineProperty(target, propertyKey, attributes)
+	var $        = __webpack_require__(/*! ./$ */ 7)
+	  , $def     = __webpack_require__(/*! ./$.def */ 17)
+	  , anObject = __webpack_require__(/*! ./$.an-object */ 34);
+
+	// MS Edge has broken Reflect.defineProperty - throwing instead of returning false
+	$def($def.S + $def.F * __webpack_require__(/*! ./$.fails */ 9)(function(){
+	  Reflect.defineProperty($.setDesc({}, 1, {value: 1}), 1, {value: 2});
+	}), 'Reflect', {
+	  defineProperty: function defineProperty(target, propertyKey, attributes){
+	    anObject(target);
+	    try {
+	      $.setDesc(target, propertyKey, attributes);
+	      return true;
+	    } catch(e){
+	      return false;
+	    }
+	  }
+	});
+
+/***/ },
+/* 155 */
+/*!***********************************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/es6.reflect.delete-property.js ***!
+  \***********************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// 26.1.4 Reflect.deleteProperty(target, propertyKey)
+	var $def     = __webpack_require__(/*! ./$.def */ 17)
+	  , getDesc  = __webpack_require__(/*! ./$ */ 7).getDesc
+	  , anObject = __webpack_require__(/*! ./$.an-object */ 34);
+
+	$def($def.S, 'Reflect', {
+	  deleteProperty: function deleteProperty(target, propertyKey){
+	    var desc = getDesc(anObject(target), propertyKey);
+	    return desc && !desc.configurable ? false : delete target[propertyKey];
+	  }
+	});
+
+/***/ },
+/* 156 */
+/*!*****************************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/es6.reflect.enumerate.js ***!
+  \*****************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	// 26.1.5 Reflect.enumerate(target)
+	var $def     = __webpack_require__(/*! ./$.def */ 17)
+	  , anObject = __webpack_require__(/*! ./$.an-object */ 34);
+	var Enumerate = function(iterated){
+	  this._t = anObject(iterated); // target
+	  this._i = 0;                  // next index
+	  var keys = this._k = []       // keys
+	    , key;
+	  for(key in iterated)keys.push(key);
+	};
+	__webpack_require__(/*! ./$.iter-create */ 104)(Enumerate, 'Object', function(){
+	  var that = this
+	    , keys = that._k
+	    , key;
+	  do {
+	    if(that._i >= keys.length)return {value: undefined, done: true};
+	  } while(!((key = keys[that._i++]) in that._t));
+	  return {value: key, done: false};
+	});
+
+	$def($def.S, 'Reflect', {
+	  enumerate: function enumerate(target){
+	    return new Enumerate(target);
+	  }
+	});
+
+/***/ },
+/* 157 */
+/*!***********************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/es6.reflect.get.js ***!
+  \***********************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// 26.1.6 Reflect.get(target, propertyKey [, receiver])
+	var $        = __webpack_require__(/*! ./$ */ 7)
+	  , has      = __webpack_require__(/*! ./$.has */ 15)
+	  , $def     = __webpack_require__(/*! ./$.def */ 17)
+	  , isObject = __webpack_require__(/*! ./$.is-object */ 14)
+	  , anObject = __webpack_require__(/*! ./$.an-object */ 34);
+
+	function get(target, propertyKey/*, receiver*/){
+	  var receiver = arguments.length < 3 ? target : arguments[2]
+	    , desc, proto;
+	  if(anObject(target) === receiver)return target[propertyKey];
+	  if(desc = $.getDesc(target, propertyKey))return has(desc, 'value')
+	    ? desc.value
+	    : desc.get !== undefined
+	      ? desc.get.call(receiver)
+	      : undefined;
+	  if(isObject(proto = $.getProto(target)))return get(proto, propertyKey, receiver);
+	}
+
+	$def($def.S, 'Reflect', {get: get});
+
+/***/ },
+/* 158 */
+/*!***********************************************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/es6.reflect.get-own-property-descriptor.js ***!
+  \***********************************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// 26.1.7 Reflect.getOwnPropertyDescriptor(target, propertyKey)
+	var $        = __webpack_require__(/*! ./$ */ 7)
+	  , $def     = __webpack_require__(/*! ./$.def */ 17)
+	  , anObject = __webpack_require__(/*! ./$.an-object */ 34);
+
+	$def($def.S, 'Reflect', {
+	  getOwnPropertyDescriptor: function getOwnPropertyDescriptor(target, propertyKey){
+	    return $.getDesc(anObject(target), propertyKey);
+	  }
+	});
+
+/***/ },
+/* 159 */
+/*!************************************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/es6.reflect.get-prototype-of.js ***!
+  \************************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// 26.1.8 Reflect.getPrototypeOf(target)
+	var $def     = __webpack_require__(/*! ./$.def */ 17)
+	  , getProto = __webpack_require__(/*! ./$ */ 7).getProto
+	  , anObject = __webpack_require__(/*! ./$.an-object */ 34);
+
+	$def($def.S, 'Reflect', {
+	  getPrototypeOf: function getPrototypeOf(target){
+	    return getProto(anObject(target));
+	  }
+	});
+
+/***/ },
+/* 160 */
+/*!***********************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/es6.reflect.has.js ***!
+  \***********************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// 26.1.9 Reflect.has(target, propertyKey)
+	var $def = __webpack_require__(/*! ./$.def */ 17);
+
+	$def($def.S, 'Reflect', {
+	  has: function has(target, propertyKey){
+	    return propertyKey in target;
+	  }
+	});
+
+/***/ },
+/* 161 */
+/*!*********************************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/es6.reflect.is-extensible.js ***!
+  \*********************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// 26.1.10 Reflect.isExtensible(target)
+	var $def          = __webpack_require__(/*! ./$.def */ 17)
+	  , anObject      = __webpack_require__(/*! ./$.an-object */ 34)
+	  , $isExtensible = Object.isExtensible;
+
+	$def($def.S, 'Reflect', {
+	  isExtensible: function isExtensible(target){
+	    anObject(target);
+	    return $isExtensible ? $isExtensible(target) : true;
+	  }
+	});
+
+/***/ },
+/* 162 */
+/*!****************************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/es6.reflect.own-keys.js ***!
+  \****************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// 26.1.11 Reflect.ownKeys(target)
+	var $def = __webpack_require__(/*! ./$.def */ 17);
+
+	$def($def.S, 'Reflect', {ownKeys: __webpack_require__(/*! ./$.own-keys */ 163)});
+
+/***/ },
+/* 163 */
+/*!******************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/$.own-keys.js ***!
+  \******************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// all object keys, includes non-enumerable and symbols
+	var $        = __webpack_require__(/*! ./$ */ 7)
+	  , anObject = __webpack_require__(/*! ./$.an-object */ 34)
+	  , Reflect  = __webpack_require__(/*! ./$.global */ 12).Reflect;
+	module.exports = Reflect && Reflect.ownKeys || function ownKeys(it){
+	  var keys       = $.getNames(anObject(it))
+	    , getSymbols = $.getSymbols;
+	  return getSymbols ? keys.concat(getSymbols(it)) : keys;
+	};
+
+/***/ },
+/* 164 */
+/*!**************************************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/es6.reflect.prevent-extensions.js ***!
+  \**************************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// 26.1.12 Reflect.preventExtensions(target)
+	var $def               = __webpack_require__(/*! ./$.def */ 17)
+	  , anObject           = __webpack_require__(/*! ./$.an-object */ 34)
+	  , $preventExtensions = Object.preventExtensions;
+
+	$def($def.S, 'Reflect', {
+	  preventExtensions: function preventExtensions(target){
+	    anObject(target);
+	    try {
+	      if($preventExtensions)$preventExtensions(target);
+	      return true;
+	    } catch(e){
+	      return false;
+	    }
+	  }
+	});
+
+/***/ },
+/* 165 */
+/*!***********************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/es6.reflect.set.js ***!
+  \***********************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// 26.1.13 Reflect.set(target, propertyKey, V [, receiver])
+	var $          = __webpack_require__(/*! ./$ */ 7)
+	  , has        = __webpack_require__(/*! ./$.has */ 15)
+	  , $def       = __webpack_require__(/*! ./$.def */ 17)
+	  , createDesc = __webpack_require__(/*! ./$.property-desc */ 10)
+	  , anObject   = __webpack_require__(/*! ./$.an-object */ 34)
+	  , isObject   = __webpack_require__(/*! ./$.is-object */ 14);
+
+	function set(target, propertyKey, V/*, receiver*/){
+	  var receiver = arguments.length < 4 ? target : arguments[3]
+	    , ownDesc  = $.getDesc(anObject(target), propertyKey)
+	    , existingDescriptor, proto;
+	  if(!ownDesc){
+	    if(isObject(proto = $.getProto(target))){
+	      return set(proto, propertyKey, V, receiver);
+	    }
+	    ownDesc = createDesc(0);
+	  }
+	  if(has(ownDesc, 'value')){
+	    if(ownDesc.writable === false || !isObject(receiver))return false;
+	    existingDescriptor = $.getDesc(receiver, propertyKey) || createDesc(0);
+	    existingDescriptor.value = V;
+	    $.setDesc(receiver, propertyKey, existingDescriptor);
+	    return true;
+	  }
+	  return ownDesc.set === undefined ? false : (ownDesc.set.call(receiver, V), true);
+	}
+
+	$def($def.S, 'Reflect', {set: set});
+
+/***/ },
+/* 166 */
+/*!************************************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/es6.reflect.set-prototype-of.js ***!
+  \************************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// 26.1.14 Reflect.setPrototypeOf(target, proto)
+	var $def     = __webpack_require__(/*! ./$.def */ 17)
+	  , setProto = __webpack_require__(/*! ./$.set-proto */ 49);
+
+	if(setProto)$def($def.S, 'Reflect', {
+	  setPrototypeOf: function setPrototypeOf(target, proto){
+	    setProto.check(target, proto);
+	    try {
+	      setProto.set(target, proto);
+	      return true;
+	    } catch(e){
+	      return false;
+	    }
+	  }
+	});
+
+/***/ },
+/* 167 */
+/*!**************************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/es7.array.includes.js ***!
+  \**************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	var $def      = __webpack_require__(/*! ./$.def */ 17)
+	  , $includes = __webpack_require__(/*! ./$.array-includes */ 37)(true);
+	$def($def.P, 'Array', {
+	  // https://github.com/domenic/Array.prototype.includes
+	  includes: function includes(el /*, fromIndex = 0 */){
+	    return $includes(this, el, arguments[1]);
+	  }
+	});
+	__webpack_require__(/*! ./$.unscope */ 121)('includes');
+
+/***/ },
+/* 168 */
+/*!*********************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/es7.string.at.js ***!
+  \*********************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// https://github.com/mathiasbynens/String.prototype.at
+	'use strict';
+	var $def = __webpack_require__(/*! ./$.def */ 17)
+	  , $at  = __webpack_require__(/*! ./$.string-at */ 101)(true);
+	$def($def.P, 'String', {
+	  at: function at(pos){
+	    return $at(this, pos);
+	  }
+	});
+
+/***/ },
+/* 169 */
+/*!***************************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/es7.string.pad-left.js ***!
+  \***************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	var $def = __webpack_require__(/*! ./$.def */ 17)
+	  , $pad = __webpack_require__(/*! ./$.string-pad */ 170);
+	$def($def.P, 'String', {
+	  padLeft: function padLeft(maxLength /*, fillString = ' ' */){
+	    return $pad(this, maxLength, arguments[1], true);
+	  }
+	});
+
+/***/ },
+/* 170 */
+/*!********************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/$.string-pad.js ***!
+  \********************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// https://github.com/ljharb/proposal-string-pad-left-right
+	var toLength = __webpack_require__(/*! ./$.to-length */ 29)
+	  , repeat   = __webpack_require__(/*! ./$.string-repeat */ 112)
+	  , defined  = __webpack_require__(/*! ./$.defined */ 28);
+
+	module.exports = function(that, maxLength, fillString, left){
+	  var S            = String(defined(that))
+	    , stringLength = S.length
+	    , fillStr      = fillString === undefined ? ' ' : String(fillString)
+	    , intMaxLength = toLength(maxLength);
+	  if(intMaxLength <= stringLength)return S;
+	  if(fillStr == '')fillStr = ' ';
+	  var fillLen = intMaxLength - stringLength
+	    , stringFiller = repeat.call(fillStr, Math.ceil(fillLen / fillStr.length));
+	  if(stringFiller.length > fillLen)stringFiller = stringFiller.slice(0, fillLen);
+	  return left ? stringFiller + S : S + stringFiller;
+	};
+
+/***/ },
+/* 171 */
+/*!****************************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/es7.string.pad-right.js ***!
+  \****************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	var $def = __webpack_require__(/*! ./$.def */ 17)
+	  , $pad = __webpack_require__(/*! ./$.string-pad */ 170);
+	$def($def.P, 'String', {
+	  padRight: function padRight(maxLength /*, fillString = ' ' */){
+	    return $pad(this, maxLength, arguments[1], false);
+	  }
+	});
+
+/***/ },
+/* 172 */
+/*!****************************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/es7.string.trim-left.js ***!
+  \****************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	// https://github.com/sebmarkbage/ecmascript-string-left-right-trim
+	__webpack_require__(/*! ./$.string-trim */ 99)('trimLeft', function($trim){
+	  return function trimLeft(){
+	    return $trim(this, 1);
+	  };
+	});
+
+/***/ },
+/* 173 */
+/*!*****************************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/es7.string.trim-right.js ***!
+  \*****************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	// https://github.com/sebmarkbage/ecmascript-string-left-right-trim
+	__webpack_require__(/*! ./$.string-trim */ 99)('trimRight', function($trim){
+	  return function trimRight(){
+	    return $trim(this, 2);
+	  };
+	});
+
+/***/ },
+/* 174 */
+/*!*************************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/es7.regexp.escape.js ***!
+  \*************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// https://github.com/benjamingr/RexExp.escape
+	var $def = __webpack_require__(/*! ./$.def */ 17)
+	  , $re  = __webpack_require__(/*! ./$.replacer */ 175)(/[\\^$*+?.()|[\]{}]/g, '\\$&');
+	$def($def.S, 'RegExp', {escape: function escape(it){ return $re(it); }});
+
+
+/***/ },
+/* 175 */
+/*!******************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/$.replacer.js ***!
+  \******************************************************/
+/***/ function(module, exports) {
+
+	module.exports = function(regExp, replace){
+	  var replacer = replace === Object(replace) ? function(part){
+	    return replace[part];
+	  } : replace;
+	  return function(it){
+	    return String(it).replace(regExp, replacer);
+	  };
+	};
+
+/***/ },
+/* 176 */
+/*!***********************************************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/es7.object.get-own-property-descriptors.js ***!
+  \***********************************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// https://gist.github.com/WebReflection/9353781
+	var $          = __webpack_require__(/*! ./$ */ 7)
+	  , $def       = __webpack_require__(/*! ./$.def */ 17)
+	  , ownKeys    = __webpack_require__(/*! ./$.own-keys */ 163)
+	  , toIObject  = __webpack_require__(/*! ./$.to-iobject */ 35)
+	  , createDesc = __webpack_require__(/*! ./$.property-desc */ 10);
+
+	$def($def.S, 'Object', {
+	  getOwnPropertyDescriptors: function getOwnPropertyDescriptors(object){
+	    var O       = toIObject(object)
+	      , setDesc = $.setDesc
+	      , getDesc = $.getDesc
+	      , keys    = ownKeys(O)
+	      , result  = {}
+	      , i       = 0
+	      , key, D;
+	    while(keys.length > i){
+	      D = getDesc(O, key = keys[i++]);
+	      if(key in result)setDesc(result, key, createDesc(0, D));
+	      else result[key] = D;
+	    } return result;
+	  }
+	});
+
+/***/ },
+/* 177 */
+/*!*************************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/es7.object.values.js ***!
+  \*************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// http://goo.gl/XkBrjD
+	var $def    = __webpack_require__(/*! ./$.def */ 17)
+	  , $values = __webpack_require__(/*! ./$.object-to-array */ 178)(false);
+
+	$def($def.S, 'Object', {
+	  values: function values(it){
+	    return $values(it);
+	  }
+	});
+
+/***/ },
+/* 178 */
+/*!*************************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/$.object-to-array.js ***!
+  \*************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var $         = __webpack_require__(/*! ./$ */ 7)
+	  , has       = __webpack_require__(/*! ./$.has */ 15)
+	  , toIObject = __webpack_require__(/*! ./$.to-iobject */ 35);
+	module.exports = function(isEntries){
+	  return function(it){
+	    var O      = toIObject(it)
+	      , keys   = $.getKeys(O)
+	      , length = keys.length
+	      , i      = 0
+	      , result = []
+	      , key;
+	    while(length > i)has(O, key = keys[i++]) && result.push(isEntries ? [key, O[key]] : O[key]);
+	    return result;
+	  };
+	};
+
+/***/ },
+/* 179 */
+/*!**************************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/es7.object.entries.js ***!
+  \**************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// http://goo.gl/XkBrjD
+	var $def     = __webpack_require__(/*! ./$.def */ 17)
+	  , $entries = __webpack_require__(/*! ./$.object-to-array */ 178)(true);
+
+	$def($def.S, 'Object', {
+	  entries: function entries(it){
+	    return $entries(it);
+	  }
+	});
+
+/***/ },
+/* 180 */
+/*!***********************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/es7.map.to-json.js ***!
+  \***********************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// https://github.com/DavidBruant/Map-Set.prototype.toJSON
+	var $def  = __webpack_require__(/*! ./$.def */ 17);
+
+	$def($def.P, 'Map', {toJSON: __webpack_require__(/*! ./$.collection-to-json */ 181)('Map')});
+
+/***/ },
+/* 181 */
+/*!****************************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/$.collection-to-json.js ***!
+  \****************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// https://github.com/DavidBruant/Map-Set.prototype.toJSON
+	var forOf   = __webpack_require__(/*! ./$.for-of */ 141)
+	  , classof = __webpack_require__(/*! ./$.classof */ 51);
+	module.exports = function(NAME){
+	  return function toJSON(){
+	    if(classof(this) != NAME)throw TypeError(NAME + "#toJSON isn't generic");
+	    var arr = [];
+	    forOf(this, false, arr.push, arr);
+	    return arr;
+	  };
+	};
+
+/***/ },
+/* 182 */
+/*!***********************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/es7.set.to-json.js ***!
+  \***********************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// https://github.com/DavidBruant/Map-Set.prototype.toJSON
+	var $def  = __webpack_require__(/*! ./$.def */ 17);
+
+	$def($def.P, 'Set', {toJSON: __webpack_require__(/*! ./$.collection-to-json */ 181)('Set')});
+
+/***/ },
+/* 183 */
+/*!************************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/js.array.statics.js ***!
+  \************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// JavaScript 1.6 / Strawman array statics shim
+	var $       = __webpack_require__(/*! ./$ */ 7)
+	  , $def    = __webpack_require__(/*! ./$.def */ 17)
+	  , $Array  = __webpack_require__(/*! ./$.core */ 18).Array || Array
+	  , statics = {};
+	var setStatics = function(keys, length){
+	  $.each.call(keys.split(','), function(key){
+	    if(length == undefined && key in $Array)statics[key] = $Array[key];
+	    else if(key in [])statics[key] = __webpack_require__(/*! ./$.ctx */ 24)(Function.call, [][key], length);
+	  });
+	};
+	setStatics('pop,reverse,shift,keys,values,entries', 1);
+	setStatics('indexOf,every,some,forEach,map,filter,find,findIndex,includes', 3);
+	setStatics('join,slice,concat,push,splice,unshift,sort,lastIndexOf,' +
+	           'reduce,reduceRight,copyWithin,fill');
+	$def($def.S, 'Array', statics);
+
+/***/ },
+/* 184 */
+/*!******************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/web.timers.js ***!
+  \******************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// ie9- setTimeout & setInterval additional parameters fix
+	var global     = __webpack_require__(/*! ./$.global */ 12)
+	  , $def       = __webpack_require__(/*! ./$.def */ 17)
+	  , invoke     = __webpack_require__(/*! ./$.invoke */ 22)
+	  , partial    = __webpack_require__(/*! ./$.partial */ 185)
+	  , navigator  = global.navigator
+	  , MSIE       = !!navigator && /MSIE .\./.test(navigator.userAgent); // <- dirty ie9- check
+	var wrap = function(set){
+	  return MSIE ? function(fn, time /*, ...args */){
+	    return set(invoke(
+	      partial,
+	      [].slice.call(arguments, 2),
+	      typeof fn == 'function' ? fn : Function(fn)
+	    ), time);
+	  } : set;
+	};
+	$def($def.G + $def.B + $def.F * MSIE, {
+	  setTimeout:  wrap(global.setTimeout),
+	  setInterval: wrap(global.setInterval)
+	});
+
+/***/ },
+/* 185 */
+/*!*****************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/$.partial.js ***!
+  \*****************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	var path      = __webpack_require__(/*! ./$.path */ 186)
+	  , invoke    = __webpack_require__(/*! ./$.invoke */ 22)
+	  , aFunction = __webpack_require__(/*! ./$.a-function */ 25);
+	module.exports = function(/* ...pargs */){
+	  var fn     = aFunction(this)
+	    , length = arguments.length
+	    , pargs  = Array(length)
+	    , i      = 0
+	    , _      = path._
+	    , holder = false;
+	  while(length > i)if((pargs[i] = arguments[i++]) === _)holder = true;
+	  return function(/* ...args */){
+	    var that    = this
+	      , _length = arguments.length
+	      , j = 0, k = 0, args;
+	    if(!holder && !_length)return invoke(fn, pargs, that);
+	    args = pargs.slice();
+	    if(holder)for(;length > j; j++)if(args[j] === _)args[j] = arguments[k++];
+	    while(_length > k)args.push(arguments[k++]);
+	    return invoke(fn, args, that);
+	  };
+	};
+
+/***/ },
+/* 186 */
+/*!**************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/$.path.js ***!
+  \**************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__(/*! ./$.global */ 12);
+
+/***/ },
+/* 187 */
+/*!*********************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/web.immediate.js ***!
+  \*********************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var $def  = __webpack_require__(/*! ./$.def */ 17)
+	  , $task = __webpack_require__(/*! ./$.task */ 143);
+	$def($def.G + $def.B, {
+	  setImmediate:   $task.set,
+	  clearImmediate: $task.clear
+	});
+
+/***/ },
+/* 188 */
+/*!************************************************************!*\
+  !*** ./~/babel-core/~/core-js/modules/web.dom.iterable.js ***!
+  \************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	__webpack_require__(/*! ./es6.array.iterator */ 120);
+	var global      = __webpack_require__(/*! ./$.global */ 12)
+	  , hide        = __webpack_require__(/*! ./$.hide */ 19)
+	  , Iterators   = __webpack_require__(/*! ./$.iterators */ 103)
+	  , ITERATOR    = __webpack_require__(/*! ./$.wks */ 32)('iterator')
+	  , NL          = global.NodeList
+	  , HTC         = global.HTMLCollection
+	  , NLProto     = NL && NL.prototype
+	  , HTCProto    = HTC && HTC.prototype
+	  , ArrayValues = Iterators.NodeList = Iterators.HTMLCollection = Iterators.Array;
+	if(NL && !(ITERATOR in NLProto))hide(NLProto, ITERATOR, ArrayValues);
+	if(HTC && !(ITERATOR in HTCProto))hide(HTCProto, ITERATOR, ArrayValues);
+
+/***/ },
+/* 189 */
+/*!***********************************************!*\
+  !*** ./~/babel-core/~/regenerator/runtime.js ***!
+  \***********************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(global, process) {/**
+	 * Copyright (c) 2014, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * https://raw.github.com/facebook/regenerator/master/LICENSE file. An
+	 * additional grant of patent rights can be found in the PATENTS file in
+	 * the same directory.
+	 */
+
+	!(function(global) {
+	  "use strict";
+
+	  var hasOwn = Object.prototype.hasOwnProperty;
+	  var undefined; // More compressible than void 0.
+	  var iteratorSymbol =
+	    typeof Symbol === "function" && Symbol.iterator || "@@iterator";
+
+	  var inModule = typeof module === "object";
+	  var runtime = global.regeneratorRuntime;
+	  if (runtime) {
+	    if (inModule) {
+	      // If regeneratorRuntime is defined globally and we're in a module,
+	      // make the exports object identical to regeneratorRuntime.
+	      module.exports = runtime;
+	    }
+	    // Don't bother evaluating the rest of this file if the runtime was
+	    // already defined globally.
+	    return;
+	  }
+
+	  // Define the runtime globally (as expected by generated code) as either
+	  // module.exports (if we're in a module) or a new, empty object.
+	  runtime = global.regeneratorRuntime = inModule ? module.exports : {};
+
+	  function wrap(innerFn, outerFn, self, tryLocsList) {
+	    // If outerFn provided, then outerFn.prototype instanceof Generator.
+	    var generator = Object.create((outerFn || Generator).prototype);
+
+	    generator._invoke = makeInvokeMethod(
+	      innerFn, self || null,
+	      new Context(tryLocsList || [])
+	    );
+
+	    return generator;
+	  }
+	  runtime.wrap = wrap;
+
+	  // Try/catch helper to minimize deoptimizations. Returns a completion
+	  // record like context.tryEntries[i].completion. This interface could
+	  // have been (and was previously) designed to take a closure to be
+	  // invoked without arguments, but in all the cases we care about we
+	  // already have an existing method we want to call, so there's no need
+	  // to create a new function object. We can even get away with assuming
+	  // the method takes exactly one argument, since that happens to be true
+	  // in every case, so we don't have to touch the arguments object. The
+	  // only additional allocation required is the completion record, which
+	  // has a stable shape and so hopefully should be cheap to allocate.
+	  function tryCatch(fn, obj, arg) {
+	    try {
+	      return { type: "normal", arg: fn.call(obj, arg) };
+	    } catch (err) {
+	      return { type: "throw", arg: err };
+	    }
+	  }
+
+	  var GenStateSuspendedStart = "suspendedStart";
+	  var GenStateSuspendedYield = "suspendedYield";
+	  var GenStateExecuting = "executing";
+	  var GenStateCompleted = "completed";
+
+	  // Returning this object from the innerFn has the same effect as
+	  // breaking out of the dispatch switch statement.
+	  var ContinueSentinel = {};
+
+	  // Dummy constructor functions that we use as the .constructor and
+	  // .constructor.prototype properties for functions that return Generator
+	  // objects. For full spec compliance, you may wish to configure your
+	  // minifier not to mangle the names of these two functions.
+	  function Generator() {}
+	  function GeneratorFunction() {}
+	  function GeneratorFunctionPrototype() {}
+
+	  var Gp = GeneratorFunctionPrototype.prototype = Generator.prototype;
+	  GeneratorFunction.prototype = Gp.constructor = GeneratorFunctionPrototype;
+	  GeneratorFunctionPrototype.constructor = GeneratorFunction;
+	  GeneratorFunction.displayName = "GeneratorFunction";
+
+	  // Helper for defining the .next, .throw, and .return methods of the
+	  // Iterator interface in terms of a single ._invoke method.
+	  function defineIteratorMethods(prototype) {
+	    ["next", "throw", "return"].forEach(function(method) {
+	      prototype[method] = function(arg) {
+	        return this._invoke(method, arg);
+	      };
+	    });
+	  }
+
+	  runtime.isGeneratorFunction = function(genFun) {
+	    var ctor = typeof genFun === "function" && genFun.constructor;
+	    return ctor
+	      ? ctor === GeneratorFunction ||
+	        // For the native GeneratorFunction constructor, the best we can
+	        // do is to check its .name property.
+	        (ctor.displayName || ctor.name) === "GeneratorFunction"
+	      : false;
+	  };
+
+	  runtime.mark = function(genFun) {
+	    genFun.__proto__ = GeneratorFunctionPrototype;
+	    genFun.prototype = Object.create(Gp);
+	    return genFun;
+	  };
+
+	  // Within the body of any async function, `await x` is transformed to
+	  // `yield regeneratorRuntime.awrap(x)`, so that the runtime can test
+	  // `value instanceof AwaitArgument` to determine if the yielded value is
+	  // meant to be awaited. Some may consider the name of this method too
+	  // cutesy, but they are curmudgeons.
+	  runtime.awrap = function(arg) {
+	    return new AwaitArgument(arg);
+	  };
+
+	  function AwaitArgument(arg) {
+	    this.arg = arg;
+	  }
+
+	  function AsyncIterator(generator) {
+	    // This invoke function is written in a style that assumes some
+	    // calling function (or Promise) will handle exceptions.
+	    function invoke(method, arg) {
+	      var result = generator[method](arg);
+	      var value = result.value;
+	      return value instanceof AwaitArgument
+	        ? Promise.resolve(value.arg).then(invokeNext, invokeThrow)
+	        : Promise.resolve(value).then(function(unwrapped) {
+	            // When a yielded Promise is resolved, its final value becomes
+	            // the .value of the Promise<{value,done}> result for the
+	            // current iteration. If the Promise is rejected, however, the
+	            // result for this iteration will be rejected with the same
+	            // reason. Note that rejections of yielded Promises are not
+	            // thrown back into the generator function, as is the case
+	            // when an awaited Promise is rejected. This difference in
+	            // behavior between yield and await is important, because it
+	            // allows the consumer to decide what to do with the yielded
+	            // rejection (swallow it and continue, manually .throw it back
+	            // into the generator, abandon iteration, whatever). With
+	            // await, by contrast, there is no opportunity to examine the
+	            // rejection reason outside the generator function, so the
+	            // only option is to throw it from the await expression, and
+	            // let the generator function handle the exception.
+	            result.value = unwrapped;
+	            return result;
+	          });
+	    }
+
+	    if (typeof process === "object" && process.domain) {
+	      invoke = process.domain.bind(invoke);
+	    }
+
+	    var invokeNext = invoke.bind(generator, "next");
+	    var invokeThrow = invoke.bind(generator, "throw");
+	    var invokeReturn = invoke.bind(generator, "return");
+	    var previousPromise;
+
+	    function enqueue(method, arg) {
+	      var enqueueResult =
+	        // If enqueue has been called before, then we want to wait until
+	        // all previous Promises have been resolved before calling invoke,
+	        // so that results are always delivered in the correct order. If
+	        // enqueue has not been called before, then it is important to
+	        // call invoke immediately, without waiting on a callback to fire,
+	        // so that the async generator function has the opportunity to do
+	        // any necessary setup in a predictable way. This predictability
+	        // is why the Promise constructor synchronously invokes its
+	        // executor callback, and why async functions synchronously
+	        // execute code before the first await. Since we implement simple
+	        // async functions in terms of async generators, it is especially
+	        // important to get this right, even though it requires care.
+	        previousPromise ? previousPromise.then(function() {
+	          return invoke(method, arg);
+	        }) : new Promise(function(resolve) {
+	          resolve(invoke(method, arg));
+	        });
+
+	      // Avoid propagating enqueueResult failures to Promises returned by
+	      // later invocations of the iterator.
+	      previousPromise = enqueueResult["catch"](function(ignored){});
+
+	      return enqueueResult;
+	    }
+
+	    // Define the unified helper method that is used to implement .next,
+	    // .throw, and .return (see defineIteratorMethods).
+	    this._invoke = enqueue;
+	  }
+
+	  defineIteratorMethods(AsyncIterator.prototype);
+
+	  // Note that simple async functions are implemented on top of
+	  // AsyncIterator objects; they just return a Promise for the value of
+	  // the final result produced by the iterator.
+	  runtime.async = function(innerFn, outerFn, self, tryLocsList) {
+	    var iter = new AsyncIterator(
+	      wrap(innerFn, outerFn, self, tryLocsList)
+	    );
+
+	    return runtime.isGeneratorFunction(outerFn)
+	      ? iter // If outerFn is a generator, return the full iterator.
+	      : iter.next().then(function(result) {
+	          return result.done ? result.value : iter.next();
+	        });
+	  };
+
+	  function makeInvokeMethod(innerFn, self, context) {
+	    var state = GenStateSuspendedStart;
+
+	    return function invoke(method, arg) {
+	      if (state === GenStateExecuting) {
+	        throw new Error("Generator is already running");
+	      }
+
+	      if (state === GenStateCompleted) {
+	        if (method === "throw") {
+	          throw arg;
+	        }
+
+	        // Be forgiving, per 25.3.3.3.3 of the spec:
+	        // https://people.mozilla.org/~jorendorff/es6-draft.html#sec-generatorresume
+	        return doneResult();
+	      }
+
+	      while (true) {
+	        var delegate = context.delegate;
+	        if (delegate) {
+	          if (method === "return" ||
+	              (method === "throw" && delegate.iterator[method] === undefined)) {
+	            // A return or throw (when the delegate iterator has no throw
+	            // method) always terminates the yield* loop.
+	            context.delegate = null;
+
+	            // If the delegate iterator has a return method, give it a
+	            // chance to clean up.
+	            var returnMethod = delegate.iterator["return"];
+	            if (returnMethod) {
+	              var record = tryCatch(returnMethod, delegate.iterator, arg);
+	              if (record.type === "throw") {
+	                // If the return method threw an exception, let that
+	                // exception prevail over the original return or throw.
+	                method = "throw";
+	                arg = record.arg;
+	                continue;
+	              }
+	            }
+
+	            if (method === "return") {
+	              // Continue with the outer return, now that the delegate
+	              // iterator has been terminated.
+	              continue;
+	            }
+	          }
+
+	          var record = tryCatch(
+	            delegate.iterator[method],
+	            delegate.iterator,
+	            arg
+	          );
+
+	          if (record.type === "throw") {
+	            context.delegate = null;
+
+	            // Like returning generator.throw(uncaught), but without the
+	            // overhead of an extra function call.
+	            method = "throw";
+	            arg = record.arg;
+	            continue;
+	          }
+
+	          // Delegate generator ran and handled its own exceptions so
+	          // regardless of what the method was, we continue as if it is
+	          // "next" with an undefined arg.
+	          method = "next";
+	          arg = undefined;
+
+	          var info = record.arg;
+	          if (info.done) {
+	            context[delegate.resultName] = info.value;
+	            context.next = delegate.nextLoc;
+	          } else {
+	            state = GenStateSuspendedYield;
+	            return info;
+	          }
+
+	          context.delegate = null;
+	        }
+
+	        if (method === "next") {
+	          if (state === GenStateSuspendedYield) {
+	            context.sent = arg;
+	          } else {
+	            context.sent = undefined;
+	          }
+
+	        } else if (method === "throw") {
+	          if (state === GenStateSuspendedStart) {
+	            state = GenStateCompleted;
+	            throw arg;
+	          }
+
+	          if (context.dispatchException(arg)) {
+	            // If the dispatched exception was caught by a catch block,
+	            // then let that catch block handle the exception normally.
+	            method = "next";
+	            arg = undefined;
+	          }
+
+	        } else if (method === "return") {
+	          context.abrupt("return", arg);
+	        }
+
+	        state = GenStateExecuting;
+
+	        var record = tryCatch(innerFn, self, context);
+	        if (record.type === "normal") {
+	          // If an exception is thrown from innerFn, we leave state ===
+	          // GenStateExecuting and loop back for another invocation.
+	          state = context.done
+	            ? GenStateCompleted
+	            : GenStateSuspendedYield;
+
+	          var info = {
+	            value: record.arg,
+	            done: context.done
+	          };
+
+	          if (record.arg === ContinueSentinel) {
+	            if (context.delegate && method === "next") {
+	              // Deliberately forget the last sent value so that we don't
+	              // accidentally pass it on to the delegate.
+	              arg = undefined;
+	            }
+	          } else {
+	            return info;
+	          }
+
+	        } else if (record.type === "throw") {
+	          state = GenStateCompleted;
+	          // Dispatch the exception by looping back around to the
+	          // context.dispatchException(arg) call above.
+	          method = "throw";
+	          arg = record.arg;
+	        }
+	      }
+	    };
+	  }
+
+	  // Define Generator.prototype.{next,throw,return} in terms of the
+	  // unified ._invoke helper method.
+	  defineIteratorMethods(Gp);
+
+	  Gp[iteratorSymbol] = function() {
+	    return this;
+	  };
+
+	  Gp.toString = function() {
+	    return "[object Generator]";
+	  };
+
+	  function pushTryEntry(locs) {
+	    var entry = { tryLoc: locs[0] };
+
+	    if (1 in locs) {
+	      entry.catchLoc = locs[1];
+	    }
+
+	    if (2 in locs) {
+	      entry.finallyLoc = locs[2];
+	      entry.afterLoc = locs[3];
+	    }
+
+	    this.tryEntries.push(entry);
+	  }
+
+	  function resetTryEntry(entry) {
+	    var record = entry.completion || {};
+	    record.type = "normal";
+	    delete record.arg;
+	    entry.completion = record;
+	  }
+
+	  function Context(tryLocsList) {
+	    // The root entry object (effectively a try statement without a catch
+	    // or a finally block) gives us a place to store values thrown from
+	    // locations where there is no enclosing try statement.
+	    this.tryEntries = [{ tryLoc: "root" }];
+	    tryLocsList.forEach(pushTryEntry, this);
+	    this.reset(true);
+	  }
+
+	  runtime.keys = function(object) {
+	    var keys = [];
+	    for (var key in object) {
+	      keys.push(key);
+	    }
+	    keys.reverse();
+
+	    // Rather than returning an object with a next method, we keep
+	    // things simple and return the next function itself.
+	    return function next() {
+	      while (keys.length) {
+	        var key = keys.pop();
+	        if (key in object) {
+	          next.value = key;
+	          next.done = false;
+	          return next;
+	        }
+	      }
+
+	      // To avoid creating an additional object, we just hang the .value
+	      // and .done properties off the next function object itself. This
+	      // also ensures that the minifier will not anonymize the function.
+	      next.done = true;
+	      return next;
+	    };
+	  };
+
+	  function values(iterable) {
+	    if (iterable) {
+	      var iteratorMethod = iterable[iteratorSymbol];
+	      if (iteratorMethod) {
+	        return iteratorMethod.call(iterable);
+	      }
+
+	      if (typeof iterable.next === "function") {
+	        return iterable;
+	      }
+
+	      if (!isNaN(iterable.length)) {
+	        var i = -1, next = function next() {
+	          while (++i < iterable.length) {
+	            if (hasOwn.call(iterable, i)) {
+	              next.value = iterable[i];
+	              next.done = false;
+	              return next;
+	            }
+	          }
+
+	          next.value = undefined;
+	          next.done = true;
+
+	          return next;
+	        };
+
+	        return next.next = next;
+	      }
+	    }
+
+	    // Return an iterator with no values.
+	    return { next: doneResult };
+	  }
+	  runtime.values = values;
+
+	  function doneResult() {
+	    return { value: undefined, done: true };
+	  }
+
+	  Context.prototype = {
+	    constructor: Context,
+
+	    reset: function(skipTempReset) {
+	      this.prev = 0;
+	      this.next = 0;
+	      this.sent = undefined;
+	      this.done = false;
+	      this.delegate = null;
+
+	      this.tryEntries.forEach(resetTryEntry);
+
+	      if (!skipTempReset) {
+	        for (var name in this) {
+	          // Not sure about the optimal order of these conditions:
+	          if (name.charAt(0) === "t" &&
+	              hasOwn.call(this, name) &&
+	              !isNaN(+name.slice(1))) {
+	            this[name] = undefined;
+	          }
+	        }
+	      }
+	    },
+
+	    stop: function() {
+	      this.done = true;
+
+	      var rootEntry = this.tryEntries[0];
+	      var rootRecord = rootEntry.completion;
+	      if (rootRecord.type === "throw") {
+	        throw rootRecord.arg;
+	      }
+
+	      return this.rval;
+	    },
+
+	    dispatchException: function(exception) {
+	      if (this.done) {
+	        throw exception;
+	      }
+
+	      var context = this;
+	      function handle(loc, caught) {
+	        record.type = "throw";
+	        record.arg = exception;
+	        context.next = loc;
+	        return !!caught;
+	      }
+
+	      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
+	        var entry = this.tryEntries[i];
+	        var record = entry.completion;
+
+	        if (entry.tryLoc === "root") {
+	          // Exception thrown outside of any try block that could handle
+	          // it, so set the completion value of the entire function to
+	          // throw the exception.
+	          return handle("end");
+	        }
+
+	        if (entry.tryLoc <= this.prev) {
+	          var hasCatch = hasOwn.call(entry, "catchLoc");
+	          var hasFinally = hasOwn.call(entry, "finallyLoc");
+
+	          if (hasCatch && hasFinally) {
+	            if (this.prev < entry.catchLoc) {
+	              return handle(entry.catchLoc, true);
+	            } else if (this.prev < entry.finallyLoc) {
+	              return handle(entry.finallyLoc);
+	            }
+
+	          } else if (hasCatch) {
+	            if (this.prev < entry.catchLoc) {
+	              return handle(entry.catchLoc, true);
+	            }
+
+	          } else if (hasFinally) {
+	            if (this.prev < entry.finallyLoc) {
+	              return handle(entry.finallyLoc);
+	            }
+
+	          } else {
+	            throw new Error("try statement without catch or finally");
+	          }
+	        }
+	      }
+	    },
+
+	    abrupt: function(type, arg) {
+	      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
+	        var entry = this.tryEntries[i];
+	        if (entry.tryLoc <= this.prev &&
+	            hasOwn.call(entry, "finallyLoc") &&
+	            this.prev < entry.finallyLoc) {
+	          var finallyEntry = entry;
+	          break;
+	        }
+	      }
+
+	      if (finallyEntry &&
+	          (type === "break" ||
+	           type === "continue") &&
+	          finallyEntry.tryLoc <= arg &&
+	          arg <= finallyEntry.finallyLoc) {
+	        // Ignore the finally entry if control is not jumping to a
+	        // location outside the try/catch block.
+	        finallyEntry = null;
+	      }
+
+	      var record = finallyEntry ? finallyEntry.completion : {};
+	      record.type = type;
+	      record.arg = arg;
+
+	      if (finallyEntry) {
+	        this.next = finallyEntry.finallyLoc;
+	      } else {
+	        this.complete(record);
+	      }
+
+	      return ContinueSentinel;
+	    },
+
+	    complete: function(record, afterLoc) {
+	      if (record.type === "throw") {
+	        throw record.arg;
+	      }
+
+	      if (record.type === "break" ||
+	          record.type === "continue") {
+	        this.next = record.arg;
+	      } else if (record.type === "return") {
+	        this.rval = record.arg;
+	        this.next = "end";
+	      } else if (record.type === "normal" && afterLoc) {
+	        this.next = afterLoc;
+	      }
+	    },
+
+	    finish: function(finallyLoc) {
+	      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
+	        var entry = this.tryEntries[i];
+	        if (entry.finallyLoc === finallyLoc) {
+	          this.complete(entry.completion, entry.afterLoc);
+	          resetTryEntry(entry);
+	          return ContinueSentinel;
+	        }
+	      }
+	    },
+
+	    "catch": function(tryLoc) {
+	      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
+	        var entry = this.tryEntries[i];
+	        if (entry.tryLoc === tryLoc) {
+	          var record = entry.completion;
+	          if (record.type === "throw") {
+	            var thrown = record.arg;
+	            resetTryEntry(entry);
+	          }
+	          return thrown;
+	        }
+	      }
+
+	      // The context.catch method must only be called with a location
+	      // argument that corresponds to a known catch block.
+	      throw new Error("illegal catch attempt");
+	    },
+
+	    delegateYield: function(iterable, resultName, nextLoc) {
+	      this.delegate = {
+	        iterator: values(iterable),
+	        resultName: resultName,
+	        nextLoc: nextLoc
+	      };
+
+	      return ContinueSentinel;
+	    }
+	  };
+	})(
+	  // Among the various tricks for obtaining a reference to the global
+	  // object, this seems to be the most reliable technique that does not
+	  // use indirect eval (which violates Content Security Policy).
+	  typeof global === "object" ? global :
+	  typeof window === "object" ? window :
+	  typeof self === "object" ? self : this
+	);
+
+	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }()), __webpack_require__(/*! (webpack)/~/node-libs-browser/~/process/browser.js */ 190)))
+
+/***/ },
+/* 190 */
+/*!**********************************************************!*\
+  !*** (webpack)/~/node-libs-browser/~/process/browser.js ***!
+  \**********************************************************/
+/***/ function(module, exports) {
+
+	// shim for using process in browser
+
+	var process = module.exports = {};
+	var queue = [];
+	var draining = false;
+	var currentQueue;
+	var queueIndex = -1;
+
+	function cleanUpNextTick() {
+	    draining = false;
+	    if (currentQueue.length) {
+	        queue = currentQueue.concat(queue);
+	    } else {
+	        queueIndex = -1;
+	    }
+	    if (queue.length) {
+	        drainQueue();
+	    }
+	}
+
+	function drainQueue() {
+	    if (draining) {
+	        return;
+	    }
+	    var timeout = setTimeout(cleanUpNextTick);
+	    draining = true;
+
+	    var len = queue.length;
+	    while(len) {
+	        currentQueue = queue;
+	        queue = [];
+	        while (++queueIndex < len) {
+	            if (currentQueue) {
+	                currentQueue[queueIndex].run();
+	            }
+	        }
+	        queueIndex = -1;
+	        len = queue.length;
+	    }
+	    currentQueue = null;
+	    draining = false;
+	    clearTimeout(timeout);
+	}
+
+	process.nextTick = function (fun) {
+	    var args = new Array(arguments.length - 1);
+	    if (arguments.length > 1) {
+	        for (var i = 1; i < arguments.length; i++) {
+	            args[i - 1] = arguments[i];
+	        }
+	    }
+	    queue.push(new Item(fun, args));
+	    if (queue.length === 1 && !draining) {
+	        setTimeout(drainQueue, 0);
+	    }
+	};
+
+	// v8 likes predictible objects
+	function Item(fun, array) {
+	    this.fun = fun;
+	    this.array = array;
+	}
+	Item.prototype.run = function () {
+	    this.fun.apply(null, this.array);
+	};
+	process.title = 'browser';
+	process.browser = true;
+	process.env = {};
+	process.argv = [];
+	process.version = ''; // empty string to avoid regexp issues
+	process.versions = {};
+
+	function noop() {}
+
+	process.on = noop;
+	process.addListener = noop;
+	process.once = noop;
+	process.off = noop;
+	process.removeListener = noop;
+	process.removeAllListeners = noop;
+	process.emit = noop;
+
+	process.binding = function (name) {
+	    throw new Error('process.binding is not supported');
+	};
+
+	process.cwd = function () { return '/' };
+	process.chdir = function (dir) {
+	    throw new Error('process.chdir is not supported');
+	};
+	process.umask = function() { return 0; };
+
+
+/***/ },
+/* 191 */
+/*!*********************************!*\
+  !*** ./~/stats.js/src/Stats.js ***!
+  \*********************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * @author mrdoob / http://mrdoob.com/
+	 */
+
+	var Stats = function () {
+
+		var startTime = Date.now(), prevTime = startTime;
+		var ms = 0, msMin = Infinity, msMax = 0;
+		var fps = 0, fpsMin = Infinity, fpsMax = 0;
+		var frames = 0, mode = 0;
+
+		var container = document.createElement( 'div' );
+		container.id = 'stats';
+		container.addEventListener( 'mousedown', function ( event ) { event.preventDefault(); setMode( ++ mode % 2 ) }, false );
+		container.style.cssText = 'width:80px;opacity:0.9;cursor:pointer';
+
+		var fpsDiv = document.createElement( 'div' );
+		fpsDiv.id = 'fps';
+		fpsDiv.style.cssText = 'padding:0 0 3px 3px;text-align:left;background-color:#002';
+		container.appendChild( fpsDiv );
+
+		var fpsText = document.createElement( 'div' );
+		fpsText.id = 'fpsText';
+		fpsText.style.cssText = 'color:#0ff;font-family:Helvetica,Arial,sans-serif;font-size:9px;font-weight:bold;line-height:15px';
+		fpsText.innerHTML = 'FPS';
+		fpsDiv.appendChild( fpsText );
+
+		var fpsGraph = document.createElement( 'div' );
+		fpsGraph.id = 'fpsGraph';
+		fpsGraph.style.cssText = 'position:relative;width:74px;height:30px;background-color:#0ff';
+		fpsDiv.appendChild( fpsGraph );
+
+		while ( fpsGraph.children.length < 74 ) {
+
+			var bar = document.createElement( 'span' );
+			bar.style.cssText = 'width:1px;height:30px;float:left;background-color:#113';
+			fpsGraph.appendChild( bar );
+
+		}
+
+		var msDiv = document.createElement( 'div' );
+		msDiv.id = 'ms';
+		msDiv.style.cssText = 'padding:0 0 3px 3px;text-align:left;background-color:#020;display:none';
+		container.appendChild( msDiv );
+
+		var msText = document.createElement( 'div' );
+		msText.id = 'msText';
+		msText.style.cssText = 'color:#0f0;font-family:Helvetica,Arial,sans-serif;font-size:9px;font-weight:bold;line-height:15px';
+		msText.innerHTML = 'MS';
+		msDiv.appendChild( msText );
+
+		var msGraph = document.createElement( 'div' );
+		msGraph.id = 'msGraph';
+		msGraph.style.cssText = 'position:relative;width:74px;height:30px;background-color:#0f0';
+		msDiv.appendChild( msGraph );
+
+		while ( msGraph.children.length < 74 ) {
+
+			var bar = document.createElement( 'span' );
+			bar.style.cssText = 'width:1px;height:30px;float:left;background-color:#131';
+			msGraph.appendChild( bar );
+
+		}
+
+		var setMode = function ( value ) {
+
+			mode = value;
+
+			switch ( mode ) {
+
+				case 0:
+					fpsDiv.style.display = 'block';
+					msDiv.style.display = 'none';
+					break;
+				case 1:
+					fpsDiv.style.display = 'none';
+					msDiv.style.display = 'block';
+					break;
+			}
+
+		};
+
+		var updateGraph = function ( dom, value ) {
+
+			var child = dom.appendChild( dom.firstChild );
+			child.style.height = value + 'px';
+
+		};
+
+		return {
+
+			REVISION: 12,
+
+			domElement: container,
+
+			setMode: setMode,
+
+			begin: function () {
+
+				startTime = Date.now();
+
+			},
+
+			end: function () {
+
+				var time = Date.now();
+
+				ms = time - startTime;
+				msMin = Math.min( msMin, ms );
+				msMax = Math.max( msMax, ms );
+
+				msText.textContent = ms + ' MS (' + msMin + '-' + msMax + ')';
+				updateGraph( msGraph, Math.min( 30, 30 - ( ms / 200 ) * 30 ) );
+
+				frames ++;
+
+				if ( time > prevTime + 1000 ) {
+
+					fps = Math.round( ( frames * 1000 ) / ( time - prevTime ) );
+					fpsMin = Math.min( fpsMin, fps );
+					fpsMax = Math.max( fpsMax, fps );
+
+					fpsText.textContent = fps + ' FPS (' + fpsMin + '-' + fpsMax + ')';
+					updateGraph( fpsGraph, Math.min( 30, 30 - ( fps / 100 ) * 30 ) );
+
+					prevTime = time;
+					frames = 0;
+
+				}
+
+				return time;
+
+			},
+
+			update: function () {
+
+				startTime = this.end();
+
+			}
+
+		}
+
+	};
+
+	if ( true ) {
+
+		module.exports = Stats;
+
+	}
+
+/***/ },
+/* 192 */
 /*!***************************!*\
   !*** ./static/js/game.js ***!
   \***************************/
@@ -106,106 +5959,332 @@
 
 	"use strict";
 
-	var _classCallCheck = __webpack_require__(/*! babel-runtime/helpers/class-call-check */ 4)["default"];
+	var _classCallCheck = __webpack_require__(/*! babel-runtime/helpers/class-call-check */ 193)["default"];
 
 	var _interopRequireDefault = __webpack_require__(/*! babel-runtime/helpers/interop-require-default */ 1)["default"];
 
 	exports.__esModule = true;
 
-	var _three = __webpack_require__(/*! three */ 5);
+	var _engine = __webpack_require__(/*! engine */ 194);
 
-	var _three2 = _interopRequireDefault(_three);
+	var _materials = __webpack_require__(/*! materials */ 210);
 
-	var _threeOrbitControls = __webpack_require__(/*! three-orbit-controls */ 6);
+	var _props = __webpack_require__(/*! props */ 211);
 
-	var _threeOrbitControls2 = _interopRequireDefault(_threeOrbitControls);
+	var _utilGui = __webpack_require__(/*! util/gui */ 213);
 
-	var _utilAxes = __webpack_require__(/*! util/axes */ 7);
+	var _constMaterial = __webpack_require__(/*! const/material */ 212);
 
-	var _utilAxes2 = _interopRequireDefault(_utilAxes);
+	var _constMaterial2 = _interopRequireDefault(_constMaterial);
 
-	var _utilSkysphere = __webpack_require__(/*! util/skysphere */ 8);
-
-	var _utilSkysphere2 = _interopRequireDefault(_utilSkysphere);
-
-	var _proceduralTerrain = __webpack_require__(/*! procedural/terrain */ 9);
+	var _proceduralTerrain = __webpack_require__(/*! procedural/terrain */ 220);
 
 	var _proceduralTerrain2 = _interopRequireDefault(_proceduralTerrain);
 
-	var OrbitControls = _threeOrbitControls2["default"](_three2["default"]);
+	var _proceduralNoise = __webpack_require__(/*! procedural/noise */ 221);
+
+	var _proceduralBiome = __webpack_require__(/*! procedural/biome */ 236);
+
+	var _proceduralNebula = __webpack_require__(/*! procedural/nebula */ 237);
+
+	var _utilPlane = __webpack_require__(/*! util/plane */ 241);
+
+	var _utilPlane2 = _interopRequireDefault(_utilPlane);
+
+	var _amoeba = __webpack_require__(/*! amoeba */ 242);
+
+	var _amoeba2 = _interopRequireDefault(_amoeba);
 
 	var Game = (function () {
-	  function Game(container_id) {
-	    var _this = this;
+	    function Game(container_id) {
+	        var _this = this;
 
-	    var world_size = arguments.length <= 1 || arguments[1] === undefined ? 100 : arguments[1];
+	        var worldSize = arguments.length <= 1 || arguments[1] === undefined ? 32 : arguments[1];
 
-	    _classCallCheck(this, Game);
+	        _classCallCheck(this, Game);
 
-	    this.WIDTH = window.innerWidth;
-	    this.HEIGHT = window.innerHeight;
-	    this.VIEW_ANGLE = 45;
-	    this.ASPECT = this.WIDTH / this.HEIGHT;
-	    this.NEAR = 0.1;
-	    this.FAR = 10000;
+	        this.width = window.innerWidth;
+	        this.height = window.innerHeight;
+	        this.view_angle = 45;
+	        this.aspect = this.width / this.height;
+	        this.near = 0.1;
+	        this.far = 1000000;
+	        this.worldSize = worldSize;
 
-	    this.world_size = world_size;
-	    this.renderer = new _three2["default"].WebGLRenderer({ alpha: true });
-	    this.renderer.setSize(this.WIDTH, this.HEIGHT);
-	    this.renderer.setClearColor(0x000000, 1);
+	        this.clock = new _engine.THREE.Clock();
+	        this.renderer = new _engine.THREE.WebGLRenderer({ alpha: true });
+	        this.renderer.setSize(this.width, this.height);
+	        this.renderer.setClearColor(0x000000, 1);
 
-	    this.camera = new _three2["default"].PerspectiveCamera(this.VIEW_ANGLE, this.ASPECT, this.NEAR, this.FAR);
-	    this.camera.position.x = 150;
-	    this.camera.position.y = 100;
-	    this.camera.position.z = 150;
+	        this.camera = new _engine.THREE.PerspectiveCamera(this.view_angle, this.aspect, this.near, this.far);
+	        this.camera.position.y = 5;
+	        this.camera.position.x = -20;
 
-	    this.controls = new OrbitControls(this.camera, this.renderer.domElement);
+	        this.controls = new _engine.OrbitControls(this.camera, this.renderer.domElement);
+	        this.keyboard = new _engine.KeyboardState();
 
-	    this.scene = new _three2["default"].Scene();
-	    this.scene.add(this.camera);
+	        this.scene = new _engine.THREE.Scene();
+	        this.biome = new _proceduralBiome.Biome();
 
-	    document.getElementById(container_id).appendChild(this.renderer.domElement);
-	    window.addEventListener("resize", function () {
-	      return _this.resize();
-	    });
-	  }
+	        document.getElementById(container_id).appendChild(this.renderer.domElement);
+	        window.addEventListener("resize", function () {
+	            return _this.resize();
+	        });
+	    }
 
-	  Game.prototype.init = function init() {
-	    this.scene.add(_utilSkysphere2["default"]("/static/assets/img/galaxy_starfield.png", 4 * this.world_size));
-	    this.scene.add(_utilAxes2["default"](this.WIDTH));
+	    Game.prototype.init = function init() {
+	        var _this2 = this;
 
-	    var pointLight = new _three2["default"].PointLight(0xFFFF00, 1, 10000);
-	    pointLight.position.set(this.world_size / 2, 50, -this.world_size / 2);
-	    this.scene.add(pointLight);
+	        this.gui = new _utilGui.dat.GUI();
 
-	    this.scene.add(_proceduralTerrain2["default"].Ground(this.world_size));
-	    this.scene.add(_proceduralTerrain2["default"].Water(this.world_size));
+	        this.propConfig = {
+	            "starfield": true,
+	            "axes": false,
+	            "grid": false
+	        };
 
-	    this.scene.fog = new _three2["default"].FogExp2(0xEEDDBB, 0.0010);
-	  };
+	        // don't put stars too close to the terrain
+	        this.propConfig._starfield = _props.Starfield(1500, this.worldSize * 64, function (x, y, z, R) {
+	            return Math.abs(y) < _this2.worldSize * 4 && R < _this2.worldSize * 48;
+	        });
+	        this.propConfig._axes = _props.Axes(16 * this.worldSize);
+	        this.propConfig._grid = _props.Grid(16 * this.worldSize, this.worldSize);
 
-	  Game.prototype.resize = function resize() {
-	    this.WIDTH = window.innerWidth;
-	    this.HEIGHT = window.innerHeight;
-	    this.renderer.setSize(this.WIDTH, this.HEIGHT);
-	    this.camera.aspect = this.WIDTH / this.HEIGHT;
-	    this.camera.updateProjectionMatrix();
-	  };
+	        var props = this.gui.addFolder("Props");
+	        props.add(this.propConfig, "starfield").onChange(_utilGui.toggleObject("starfield", this.propConfig, this.scene, this.propConfig.starfield));
+	        props.add(this.propConfig, "axes").onChange(_utilGui.toggleObject("axes", this.propConfig, this.scene, this.propConfig.axes));
+	        props.add(this.propConfig, "grid").onChange(_utilGui.toggleObject("grid", this.propConfig, this.scene, this.propConfig.grid));
 
-	  Game.prototype.update = function update() {};
+	        this.lightConfig = {
+	            "ambientLightColor": 0x222222,
+	            "sunColor": _constMaterial2["default"].SUN.color.getHex(),
+	            "sunX": this.worldSize * 16,
+	            "sunY": this.worldSize * 8,
+	            "sunZ": 0,
+	            "spotLightColor": 0xAA5533,
+	            "spotLightX": 0,
+	            "spotLightY": this.worldSize * 16,
+	            "spotLightZ": 0,
+	            "spotLightHelper": false
+	        };
 
-	  Game.prototype.render = function render() {
-	    this.renderer.render(this.scene, this.camera);
-	  };
+	        var ambientLight = new _engine.THREE.AmbientLight(this.lightConfig.ambientLightColor);
+	        this.scene.add(ambientLight);
 
-	  return Game;
+	        this.nebula = _proceduralNebula.Nebula(256);
+	        this.scene.add(this.nebula);
+
+	        this.sun = _props.Sun(20);
+	        this.sun.position.set(this.lightConfig.sunX, this.lightConfig.sunY, this.lightConfig.sunZ);
+	        this.scene.add(this.sun);
+
+	        var spotLight = new _engine.THREE.SpotLight(0xAA5533);
+	        spotLight.position.set(this.lightConfig.spotLightX, this.lightConfig.spotLightY, this.lightConfig.spotLightZ);
+	        this.scene.add(spotLight);
+
+	        var lights = this.gui.addFolder("Lights");
+	        lights.addColor(this.lightConfig, "ambientLightColor").onChange(function (color) {
+	            return ambientLight.color = new _engine.THREE.Color(color);
+	        });
+	        lights.addColor(this.lightConfig, "sunColor").onChange(function (color) {
+	            _constMaterial2["default"].SUN.color = new _engine.THREE.Color(color);
+	            _this2.sun.color = new _engine.THREE.Color(color);
+	        });
+	        lights.add(this.lightConfig, "sunX").onChange(function (x) {
+	            return _this2.sun.position.x = x;
+	        });
+	        lights.add(this.lightConfig, "sunY").onChange(function (y) {
+	            return _this2.sun.position.y = y;
+	        });
+	        lights.add(this.lightConfig, "sunZ").onChange(function (z) {
+	            return _this2.sun.position.z = z;
+	        });
+	        lights.addColor(this.lightConfig, "spotLightColor").onChange(function (color) {
+	            return spotLight.color = new _engine.THREE.Color(color);
+	        });
+	        lights.add(this.lightConfig, "spotLightX").onChange(function (x) {
+	            return spotLight.position.x = x;
+	        });
+	        lights.add(this.lightConfig, "spotLightY").onChange(function (y) {
+	            return spotLight.position.y = y;
+	        });
+	        lights.add(this.lightConfig, "spotLightZ").onChange(function (z) {
+	            return spotLight.position.z = z;
+	        });
+	        lights.add(this.lightConfig, "spotLightHelper").onChange(function (enabled) {
+	            if (enabled) {
+	                _this2.lightConfig._spotLightHelper = new _engine.THREE.SpotLightHelper(spotLight);
+	                _this2.scene.add(_this2.lightConfig._spotLightHelper);
+	            } else {
+	                _this2.scene.remove(_this2.lightConfig._spotLightHelper);
+	                delete _this2.lightConfig._spotLightHelper;
+	            }
+	        });
+
+	        this.amoeba = new _engine.THREE.Mesh(new _engine.THREE.SphereGeometry(0.1, 8, 8), new _engine.THREE.MeshLambertMaterial({ color: 0xFFFF00, emissive: 0xAA0033 }));
+	        this.amoeba.add(this.camera);
+	        this.amoeba.position.y = this.worldSize * 5;
+	        this.scene.add(this.amoeba);
+
+	        this.terrainConfig = {
+	            "groundColor": _constMaterial2["default"].GROUND.color.getHex(),
+	            "groundEmissive": _constMaterial2["default"].GROUND.emissive.getHex(),
+	            "groundShininess": _constMaterial2["default"].GROUND.shininess,
+	            "waterColor": _constMaterial2["default"].WATER.color.getHex(),
+	            "waterEmissive": _constMaterial2["default"].WATER.emissive.getHex(),
+	            "waterShininess": _constMaterial2["default"].WATER.shininess,
+	            "waterOpacity": _constMaterial2["default"].WATER.opacity,
+	            "lod": "camera",
+	            "visibility": 20,
+	            "fogColor": 0x1E1C19,
+	            "fogDensity": 0.0000
+	        };
+
+	        this.scene.fog = new _engine.THREE.FogExp2(this.terrainConfig.fogColor, this.terrainConfig.fogDensity);
+	        this.terrainConfig.lodTarget = this.camera;
+
+	        var terrain = this.gui.addFolder("Terrain");
+	        terrain.addColor(this.terrainConfig, "groundColor").onChange(function (color) {
+	            return _constMaterial2["default"].GROUND.color = new _engine.THREE.Color(color);
+	        });
+	        terrain.addColor(this.terrainConfig, "groundEmissive").onChange(function (color) {
+	            return _constMaterial2["default"].GROUND.emissive = new _engine.THREE.Color(color);
+	        });
+	        terrain.add(this.terrainConfig, "groundShininess").min(0).max(100).onChange(function (val) {
+	            return _constMaterial2["default"].GROUND.shininess = val;
+	        });
+	        terrain.addColor(this.terrainConfig, "waterColor").onChange(function (color) {
+	            return _constMaterial2["default"].WATER.color = new _engine.THREE.Color(color);
+	        });
+	        terrain.addColor(this.terrainConfig, "waterEmissive").onChange(function (color) {
+	            return _constMaterial2["default"].WATER.emissive = new _engine.THREE.Color(color);
+	        });
+	        terrain.add(this.terrainConfig, "waterShininess").min(0).max(255).onChange(function (val) {
+	            return _constMaterial2["default"].WATER.shininess = val;
+	        });
+	        terrain.add(this.terrainConfig, "waterOpacity", 0, 1).onChange(function (val) {
+	            return _constMaterial2["default"].WATER.opacity = val;
+	        });
+	        terrain.add(this.terrainConfig, "lod").options(["camera", "amoeba"]).onChange(function (val) {
+	            if (val === "camera") {
+	                _this2.terrainConfig.lodTarget = _this2.camera;
+	            } else {
+	                _this2.terrainConfig.lodTarget = _this2.amoeba;
+	            }
+	        });
+	        terrain.add(this.terrainConfig, "visibility").min(1).max(100).step(1);
+	        terrain.addColor(this.terrainConfig, "fogColor").onChange(function (color) {
+	            return _this2.scene.fog.color = new _engine.THREE.Color(color);
+	        });
+	        terrain.add(this.terrainConfig, "fogDensity").min(0).max(0.01).onChange(function (val) {
+	            return _this2.scene.fog.density = val;
+	        });
+	    };
+
+	    Game.prototype.resize = function resize() {
+	        this.width = window.innerWidth;
+	        this.height = window.innerHeight;
+	        this.renderer.setSize(this.width, this.height);
+	        this.camera.aspect = this.width / this.height;
+	        this.camera.updateProjectionMatrix();
+	    };
+
+	    Game.prototype.update = function update() {
+	        var _this3 = this;
+
+	        var delta = this.clock.getDelta();
+	        var timestamp = this.clock.getElapsedTime();
+
+	        if (this.keyboard.pressed("a")) {
+	            this.amoeba.rotation.y += 0.05;
+	        }
+	        if (this.keyboard.pressed("d")) {
+	            this.amoeba.rotation.y -= 0.05;
+	        }
+
+	        var n = new _engine.THREE.Vector3(1, 0, 0).applyEuler(this.amoeba.rotation);
+	        if (this.keyboard.pressed("w")) {
+	            this.amoeba.position.add(n);
+	        }
+	        if (this.keyboard.pressed("s")) {
+	            this.amoeba.position.add(n.negate());
+	        }
+
+	        if (this.keyboard.pressed("e")) {
+	            this.amoeba.position.y += 1;
+	        }
+	        if (this.keyboard.pressed("q")) {
+	            this.amoeba.position.y -= 1;
+	        }
+
+	        this.controls.update(delta);
+	        var chunkX = Math.floor(this.amoeba.position.x / this.worldSize + 0.5);
+	        var chunkY = Math.floor(this.amoeba.position.z / this.worldSize + 0.5);
+	        var visibility = this.terrainConfig.visibility;
+
+	        for (var i = -visibility; i <= visibility; i++) {
+	            for (var j = -visibility; j <= visibility; j++) {
+	                var x = chunkX + i;
+	                var y = chunkY + j;
+	                if (Math.pow(chunkX - x, 2) + Math.pow(chunkY - y, 2) > visibility) continue;
+	                if (!this.biome.get(x, y)) {
+	                    var terrainChunk = _proceduralTerrain2["default"].Ground(this.worldSize, x, y);
+	                    this.scene.add(terrainChunk);
+	                    var waterChunk = _proceduralTerrain2["default"].Water(this.worldSize, x, y);
+	                    this.scene.add(waterChunk);
+	                    this.biome.put(x, y, new _proceduralBiome.BiomeChunk(terrainChunk, waterChunk));
+	                }
+
+	                var chunk = this.biome.get(x, y);
+	                chunk.terrain.update(this.terrainConfig.lodTarget);
+
+	                var size = Math.sqrt(chunk.water.geometry.vertices.length);
+	                var Fanimate = 2.3;
+	                var Pa = 100;
+	                var A = 0.2;
+	                for (var _i = 0; _i < chunk.water.geometry.vertices.length; _i++) {
+	                    var v = chunk.water.geometry.vertices[_i];
+	                    var x0 = this.worldSize * x + v.x;
+	                    var y0 = this.worldSize * y + v.z;
+	                    var Fo = 2 * Math.PI / 3 * (Math.pow(x0 - y0, 2) % 3) + Pa * _proceduralNoise.perlin(x0 / Fanimate, y0 / Fanimate);
+	                    v.y = A * Math.sin(Fanimate * timestamp + Fo);
+	                }
+
+	                chunk.water.geometry.verticesNeedUpdate = true;
+	                chunk.water.geometry.normalsNeedUpdate = true;
+	                chunk.water.geometry.computeFaceNormals();
+	            }
+	        }
+
+	        //TODO move culling logic into biome
+	        //TODO add a universal dispose method
+	        this.biome.cull(function (x, y, chunk) {
+	            if (Math.pow(chunkX - x, 2) + Math.pow(chunkY - y, 2) <= visibility) {
+	                return false;
+	            }
+
+	            _this3.scene.remove(chunk.terrain);
+	            for (var i = 0; i < chunk.terrain.levels.length; i++) {
+	                chunk.terrain.levels[i].object.geometry.dispose();
+	            }
+	            _this3.scene.remove(chunk.water);
+	            chunk.water.geometry.dispose();
+	            return true;
+	        });
+	    };
+
+	    Game.prototype.render = function render() {
+	        this.renderer.render(this.scene, this.camera);
+	    };
+
+	    return Game;
 	})();
 
 	exports["default"] = Game;
 	module.exports = exports["default"];
 
 /***/ },
-/* 4 */
+/* 193 */
 /*!*****************************************************!*\
   !*** ./~/babel-runtime/helpers/class-call-check.js ***!
   \*****************************************************/
@@ -222,13 +6301,51 @@
 	exports.__esModule = true;
 
 /***/ },
-/* 5 */
-/*!**************************!*\
-  !*** ./~/three/three.js ***!
-  \**************************/
+/* 194 */
+/*!*****************************!*\
+  !*** ./static/js/engine.js ***!
+  \*****************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;var self = self || {};// File:src/Three.js
+	"use strict";
+
+	var _interopRequireDefault = __webpack_require__(/*! babel-runtime/helpers/interop-require-default */ 1)["default"];
+
+	exports.__esModule = true;
+
+	var _threeJs = __webpack_require__(/*! three.js */ 195);
+
+	var _threeJs2 = _interopRequireDefault(_threeJs);
+
+	var _cannon = __webpack_require__(/*! cannon */ 196);
+
+	var _cannon2 = _interopRequireDefault(_cannon);
+
+	var _threeOrbitControls = __webpack_require__(/*! three-orbit-controls */ 197);
+
+	var _threeOrbitControls2 = _interopRequireDefault(_threeOrbitControls);
+
+	var _vendorKeyboard_state = __webpack_require__(/*! vendor/keyboard_state */ 198);
+
+	var _vendorKeyboard_state2 = _interopRequireDefault(_vendorKeyboard_state);
+
+	var _utilEcs = __webpack_require__(/*! util/ecs */ 209);
+
+	var _utilEcs2 = _interopRequireDefault(_utilEcs);
+
+	var OrbitControls = _threeOrbitControls2["default"](_threeJs2["default"]);
+
+	exports["default"] = { THREE: _threeJs2["default"], OrbitControls: OrbitControls, CANNON: _cannon2["default"], KeyboardState: _vendorKeyboard_state2["default"], ECS: _utilEcs2["default"] };
+	module.exports = exports["default"];
+
+/***/ },
+/* 195 */
+/*!***********************************!*\
+  !*** ./~/three.js/build/three.js ***!
+  \***********************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;// File:src/Three.js
 
 	/**
 	 * @author mrdoob / http://mrdoob.com/
@@ -8596,6 +14713,7 @@
 			var isRootObject = ( meta === undefined );
 
 			var data = {};
+			var output = { object: data };
 
 			// meta is a hash used to collect geometries, materials.
 			// not providing it implies that this is the root object
@@ -8610,7 +14728,7 @@
 					images: {}
 				};
 
-				data.metadata = {
+				output.metadata = {
 					version: 4.4,
 					type: 'Object',
 					generator: 'Object3D.toJSON'
@@ -8641,8 +14759,6 @@
 
 			}
 
-			var output = {};
-
 			if ( isRootObject ) {
 
 				var geometries = extractFromCache( meta.geometries );
@@ -8656,8 +14772,6 @@
 				if ( images.length > 0 ) output.images = images;
 
 			}
-
-			output.object = data;
 
 			return output;
 
@@ -10953,6 +17067,8 @@
 
 				console.warn( 'THREE.BufferGeometry.addAttribute: Use .setIndex() for index attribute.' );
 				this.setIndex( attribute );
+
+				return;
 
 			}
 
@@ -20663,11 +26779,7 @@
 
 				if ( index !== null ) {
 
-					count = index.count;
-
-				} else if ( position instanceof THREE.InterleavedBufferAttribute ) {
-
-					count = position.data.array.length / 3;
+					count = index.array.length;
 
 				} else {
 
@@ -36199,22 +42311,13704 @@
 	};
 
 
-	// Export the THREE object for **Node.js**, with
-	// backwards-compatibility for the old `require()` API. If we're in
-	// the browser, add `_` as a global object via a string identifier,
-	// for Closure Compiler "advanced" mode.
-	if (true) {
-	  if (typeof module !== 'undefined' && module.exports) {
-	    exports = module.exports = THREE;
-	  }
-	  exports.THREE = THREE;
-	} else {
-	  this['THREE'] = THREE;
+
+/***/ },
+/* 196 */
+/*!**********************************!*\
+  !*** ./~/cannon/build/cannon.js ***!
+  \**********************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var require;var require;/*
+	 * Copyright (c) 2015 cannon.js Authors
+	 *
+	 * Permission is hereby granted, free of charge, to any person
+	 * obtaining a copy of this software and associated documentation
+	 * files (the "Software"), to deal in the Software without
+	 * restriction, including without limitation the rights to use, copy,
+	 * modify, merge, publish, distribute, sublicense, and/or sell copies
+	 * of the Software, and to permit persons to whom the Software is
+	 * furnished to do so, subject to the following conditions:
+	 *
+	 * The above copyright notice and this permission notice shall be
+	 * included in all copies or substantial portions of the Software.
+	 *
+	 * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+	 * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+	 * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+	 * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+	 * LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+	 * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+	 * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+	 */
+
+	!function(e){if(true)module.exports=e();else if("function"==typeof define&&false)define([],e);else{var f;"undefined"!=typeof window?f=window:"undefined"!=typeof global?f=global:"undefined"!=typeof self&&(f=self),f.CANNON=e()}}(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return require(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(_dereq_,module,exports){
+	module.exports={
+	  "name": "cannon",
+	  "version": "0.6.2",
+	  "description": "A lightweight 3D physics engine written in JavaScript.",
+	  "homepage": "https://github.com/schteppe/cannon.js",
+	  "author": "Stefan Hedman <schteppe@gmail.com> (http://steffe.se)",
+	  "keywords": [
+	    "cannon.js",
+	    "cannon",
+	    "physics",
+	    "engine",
+	    "3d"
+	  ],
+	  "main": "./build/cannon.js",
+	  "engines": {
+	    "node": "*"
+	  },
+	  "repository": {
+	    "type": "git",
+	    "url": "https://github.com/schteppe/cannon.js.git"
+	  },
+	  "bugs": {
+	    "url": "https://github.com/schteppe/cannon.js/issues"
+	  },
+	  "licenses": [
+	    {
+	      "type": "MIT"
+	    }
+	  ],
+	  "devDependencies": {
+	    "jshint": "latest",
+	    "uglify-js": "latest",
+	    "nodeunit": "^0.9.0",
+	    "grunt": "~0.4.0",
+	    "grunt-contrib-jshint": "~0.1.1",
+	    "grunt-contrib-nodeunit": "^0.4.1",
+	    "grunt-contrib-concat": "~0.1.3",
+	    "grunt-contrib-uglify": "^0.5.1",
+	    "grunt-browserify": "^2.1.4",
+	    "grunt-contrib-yuidoc": "^0.5.2",
+	    "browserify": "*"
+	  },
+	  "dependencies": {}
+	}
+
+	},{}],2:[function(_dereq_,module,exports){
+	// Export classes
+	module.exports = {
+	    version :                       _dereq_('../package.json').version,
+
+	    AABB :                          _dereq_('./collision/AABB'),
+	    ArrayCollisionMatrix :          _dereq_('./collision/ArrayCollisionMatrix'),
+	    Body :                          _dereq_('./objects/Body'),
+	    Box :                           _dereq_('./shapes/Box'),
+	    Broadphase :                    _dereq_('./collision/Broadphase'),
+	    Constraint :                    _dereq_('./constraints/Constraint'),
+	    ContactEquation :               _dereq_('./equations/ContactEquation'),
+	    Narrowphase :                   _dereq_('./world/Narrowphase'),
+	    ConeTwistConstraint :           _dereq_('./constraints/ConeTwistConstraint'),
+	    ContactMaterial :               _dereq_('./material/ContactMaterial'),
+	    ConvexPolyhedron :              _dereq_('./shapes/ConvexPolyhedron'),
+	    Cylinder :                      _dereq_('./shapes/Cylinder'),
+	    DistanceConstraint :            _dereq_('./constraints/DistanceConstraint'),
+	    Equation :                      _dereq_('./equations/Equation'),
+	    EventTarget :                   _dereq_('./utils/EventTarget'),
+	    FrictionEquation :              _dereq_('./equations/FrictionEquation'),
+	    GSSolver :                      _dereq_('./solver/GSSolver'),
+	    GridBroadphase :                _dereq_('./collision/GridBroadphase'),
+	    Heightfield :                   _dereq_('./shapes/Heightfield'),
+	    HingeConstraint :               _dereq_('./constraints/HingeConstraint'),
+	    LockConstraint :                _dereq_('./constraints/LockConstraint'),
+	    Mat3 :                          _dereq_('./math/Mat3'),
+	    Material :                      _dereq_('./material/Material'),
+	    NaiveBroadphase :               _dereq_('./collision/NaiveBroadphase'),
+	    ObjectCollisionMatrix :         _dereq_('./collision/ObjectCollisionMatrix'),
+	    Pool :                          _dereq_('./utils/Pool'),
+	    Particle :                      _dereq_('./shapes/Particle'),
+	    Plane :                         _dereq_('./shapes/Plane'),
+	    PointToPointConstraint :        _dereq_('./constraints/PointToPointConstraint'),
+	    Quaternion :                    _dereq_('./math/Quaternion'),
+	    Ray :                           _dereq_('./collision/Ray'),
+	    RaycastVehicle :                _dereq_('./objects/RaycastVehicle'),
+	    RaycastResult :                 _dereq_('./collision/RaycastResult'),
+	    RigidVehicle :                  _dereq_('./objects/RigidVehicle'),
+	    RotationalEquation :            _dereq_('./equations/RotationalEquation'),
+	    RotationalMotorEquation :       _dereq_('./equations/RotationalMotorEquation'),
+	    SAPBroadphase :                 _dereq_('./collision/SAPBroadphase'),
+	    SPHSystem :                     _dereq_('./objects/SPHSystem'),
+	    Shape :                         _dereq_('./shapes/Shape'),
+	    Solver :                        _dereq_('./solver/Solver'),
+	    Sphere :                        _dereq_('./shapes/Sphere'),
+	    SplitSolver :                   _dereq_('./solver/SplitSolver'),
+	    Spring :                        _dereq_('./objects/Spring'),
+	    Trimesh :                       _dereq_('./shapes/Trimesh'),
+	    Vec3 :                          _dereq_('./math/Vec3'),
+	    Vec3Pool :                      _dereq_('./utils/Vec3Pool'),
+	    World :                         _dereq_('./world/World'),
+	};
+
+	},{"../package.json":1,"./collision/AABB":3,"./collision/ArrayCollisionMatrix":4,"./collision/Broadphase":5,"./collision/GridBroadphase":6,"./collision/NaiveBroadphase":7,"./collision/ObjectCollisionMatrix":8,"./collision/Ray":9,"./collision/RaycastResult":10,"./collision/SAPBroadphase":11,"./constraints/ConeTwistConstraint":12,"./constraints/Constraint":13,"./constraints/DistanceConstraint":14,"./constraints/HingeConstraint":15,"./constraints/LockConstraint":16,"./constraints/PointToPointConstraint":17,"./equations/ContactEquation":19,"./equations/Equation":20,"./equations/FrictionEquation":21,"./equations/RotationalEquation":22,"./equations/RotationalMotorEquation":23,"./material/ContactMaterial":24,"./material/Material":25,"./math/Mat3":27,"./math/Quaternion":28,"./math/Vec3":30,"./objects/Body":31,"./objects/RaycastVehicle":32,"./objects/RigidVehicle":33,"./objects/SPHSystem":34,"./objects/Spring":35,"./shapes/Box":37,"./shapes/ConvexPolyhedron":38,"./shapes/Cylinder":39,"./shapes/Heightfield":40,"./shapes/Particle":41,"./shapes/Plane":42,"./shapes/Shape":43,"./shapes/Sphere":44,"./shapes/Trimesh":45,"./solver/GSSolver":46,"./solver/Solver":47,"./solver/SplitSolver":48,"./utils/EventTarget":49,"./utils/Pool":51,"./utils/Vec3Pool":54,"./world/Narrowphase":55,"./world/World":56}],3:[function(_dereq_,module,exports){
+	var Vec3 = _dereq_('../math/Vec3');
+	var Utils = _dereq_('../utils/Utils');
+
+	module.exports = AABB;
+
+	/**
+	 * Axis aligned bounding box class.
+	 * @class AABB
+	 * @constructor
+	 * @param {Object} [options]
+	 * @param {Vec3}   [options.upperBound]
+	 * @param {Vec3}   [options.lowerBound]
+	 */
+	function AABB(options){
+	    options = options || {};
+
+	    /**
+	     * The lower bound of the bounding box.
+	     * @property lowerBound
+	     * @type {Vec3}
+	     */
+	    this.lowerBound = new Vec3();
+	    if(options.lowerBound){
+	        this.lowerBound.copy(options.lowerBound);
+	    }
+
+	    /**
+	     * The upper bound of the bounding box.
+	     * @property upperBound
+	     * @type {Vec3}
+	     */
+	    this.upperBound = new Vec3();
+	    if(options.upperBound){
+	        this.upperBound.copy(options.upperBound);
+	    }
+	}
+
+	var tmp = new Vec3();
+
+	/**
+	 * Set the AABB bounds from a set of points.
+	 * @method setFromPoints
+	 * @param {Array} points An array of Vec3's.
+	 * @param {Vec3} position
+	 * @param {Quaternion} quaternion
+	 * @param {number} skinSize
+	 * @return {AABB} The self object
+	 */
+	AABB.prototype.setFromPoints = function(points, position, quaternion, skinSize){
+	    var l = this.lowerBound,
+	        u = this.upperBound,
+	        q = quaternion;
+
+	    // Set to the first point
+	    l.copy(points[0]);
+	    if(q){
+	        q.vmult(l, l);
+	    }
+	    u.copy(l);
+
+	    for(var i = 1; i<points.length; i++){
+	        var p = points[i];
+
+	        if(q){
+	            q.vmult(p, tmp);
+	            p = tmp;
+	        }
+
+	        if(p.x > u.x){ u.x = p.x; }
+	        if(p.x < l.x){ l.x = p.x; }
+	        if(p.y > u.y){ u.y = p.y; }
+	        if(p.y < l.y){ l.y = p.y; }
+	        if(p.z > u.z){ u.z = p.z; }
+	        if(p.z < l.z){ l.z = p.z; }
+	    }
+
+	    // Add offset
+	    if (position) {
+	        position.vadd(l, l);
+	        position.vadd(u, u);
+	    }
+
+	    if(skinSize){
+	        l.x -= skinSize;
+	        l.y -= skinSize;
+	        l.z -= skinSize;
+	        u.x += skinSize;
+	        u.y += skinSize;
+	        u.z += skinSize;
+	    }
+
+	    return this;
+	};
+
+	/**
+	 * Copy bounds from an AABB to this AABB
+	 * @method copy
+	 * @param  {AABB} aabb Source to copy from
+	 * @return {AABB} The this object, for chainability
+	 */
+	AABB.prototype.copy = function(aabb){
+	    this.lowerBound.copy(aabb.lowerBound);
+	    this.upperBound.copy(aabb.upperBound);
+	    return this;
+	};
+
+	/**
+	 * Clone an AABB
+	 * @method clone
+	 */
+	AABB.prototype.clone = function(){
+	    return new AABB().copy(this);
+	};
+
+	/**
+	 * Extend this AABB so that it covers the given AABB too.
+	 * @method extend
+	 * @param  {AABB} aabb
+	 */
+	AABB.prototype.extend = function(aabb){
+	    // Extend lower bound
+	    var l = aabb.lowerBound.x;
+	    if(this.lowerBound.x > l){
+	        this.lowerBound.x = l;
+	    }
+
+	    // Upper
+	    var u = aabb.upperBound.x;
+	    if(this.upperBound.x < u){
+	        this.upperBound.x = u;
+	    }
+
+	    // Extend lower bound
+	    var l = aabb.lowerBound.y;
+	    if(this.lowerBound.y > l){
+	        this.lowerBound.y = l;
+	    }
+
+	    // Upper
+	    var u = aabb.upperBound.y;
+	    if(this.upperBound.y < u){
+	        this.upperBound.y = u;
+	    }
+
+	    // Extend lower bound
+	    var l = aabb.lowerBound.z;
+	    if(this.lowerBound.z > l){
+	        this.lowerBound.z = l;
+	    }
+
+	    // Upper
+	    var u = aabb.upperBound.z;
+	    if(this.upperBound.z < u){
+	        this.upperBound.z = u;
+	    }
+	};
+
+	/**
+	 * Returns true if the given AABB overlaps this AABB.
+	 * @method overlaps
+	 * @param  {AABB} aabb
+	 * @return {Boolean}
+	 */
+	AABB.prototype.overlaps = function(aabb){
+	    var l1 = this.lowerBound,
+	        u1 = this.upperBound,
+	        l2 = aabb.lowerBound,
+	        u2 = aabb.upperBound;
+
+	    //      l2        u2
+	    //      |---------|
+	    // |--------|
+	    // l1       u1
+
+	    return ((l2.x <= u1.x && u1.x <= u2.x) || (l1.x <= u2.x && u2.x <= u1.x)) &&
+	           ((l2.y <= u1.y && u1.y <= u2.y) || (l1.y <= u2.y && u2.y <= u1.y)) &&
+	           ((l2.z <= u1.z && u1.z <= u2.z) || (l1.z <= u2.z && u2.z <= u1.z));
+	};
+
+	/**
+	 * Returns true if the given AABB is fully contained in this AABB.
+	 * @method contains
+	 * @param {AABB} aabb
+	 * @return {Boolean}
+	 */
+	AABB.prototype.contains = function(aabb){
+	    var l1 = this.lowerBound,
+	        u1 = this.upperBound,
+	        l2 = aabb.lowerBound,
+	        u2 = aabb.upperBound;
+
+	    //      l2        u2
+	    //      |---------|
+	    // |---------------|
+	    // l1              u1
+
+	    return (
+	        (l1.x <= l2.x && u1.x >= u2.x) &&
+	        (l1.y <= l2.y && u1.y >= u2.y) &&
+	        (l1.z <= l2.z && u1.z >= u2.z)
+	    );
+	};
+
+	/**
+	 * @method getCorners
+	 * @param {Vec3} a
+	 * @param {Vec3} b
+	 * @param {Vec3} c
+	 * @param {Vec3} d
+	 * @param {Vec3} e
+	 * @param {Vec3} f
+	 * @param {Vec3} g
+	 * @param {Vec3} h
+	 */
+	AABB.prototype.getCorners = function(a, b, c, d, e, f, g, h){
+	    var l = this.lowerBound,
+	        u = this.upperBound;
+
+	    a.copy(l);
+	    b.set( u.x, l.y, l.z );
+	    c.set( u.x, u.y, l.z );
+	    d.set( l.x, u.y, u.z );
+	    e.set( u.x, l.y, l.z );
+	    f.set( l.x, u.y, l.z );
+	    g.set( l.x, l.y, u.z );
+	    h.copy(u);
+	};
+
+	var transformIntoFrame_corners = [
+	    new Vec3(),
+	    new Vec3(),
+	    new Vec3(),
+	    new Vec3(),
+	    new Vec3(),
+	    new Vec3(),
+	    new Vec3(),
+	    new Vec3()
+	];
+
+	/**
+	 * Get the representation of an AABB in another frame.
+	 * @method toLocalFrame
+	 * @param  {Transform} frame
+	 * @param  {AABB} target
+	 * @return {AABB} The "target" AABB object.
+	 */
+	AABB.prototype.toLocalFrame = function(frame, target){
+
+	    var corners = transformIntoFrame_corners;
+	    var a = corners[0];
+	    var b = corners[1];
+	    var c = corners[2];
+	    var d = corners[3];
+	    var e = corners[4];
+	    var f = corners[5];
+	    var g = corners[6];
+	    var h = corners[7];
+
+	    // Get corners in current frame
+	    this.getCorners(a, b, c, d, e, f, g, h);
+
+	    // Transform them to new local frame
+	    for(var i=0; i !== 8; i++){
+	        var corner = corners[i];
+	        frame.pointToLocal(corner, corner);
+	    }
+
+	    return target.setFromPoints(corners);
+	};
+
+	/**
+	 * Get the representation of an AABB in the global frame.
+	 * @method toWorldFrame
+	 * @param  {Transform} frame
+	 * @param  {AABB} target
+	 * @return {AABB} The "target" AABB object.
+	 */
+	AABB.prototype.toWorldFrame = function(frame, target){
+
+	    var corners = transformIntoFrame_corners;
+	    var a = corners[0];
+	    var b = corners[1];
+	    var c = corners[2];
+	    var d = corners[3];
+	    var e = corners[4];
+	    var f = corners[5];
+	    var g = corners[6];
+	    var h = corners[7];
+
+	    // Get corners in current frame
+	    this.getCorners(a, b, c, d, e, f, g, h);
+
+	    // Transform them to new local frame
+	    for(var i=0; i !== 8; i++){
+	        var corner = corners[i];
+	        frame.pointToWorld(corner, corner);
+	    }
+
+	    return target.setFromPoints(corners);
+	};
+
+	},{"../math/Vec3":30,"../utils/Utils":53}],4:[function(_dereq_,module,exports){
+	module.exports = ArrayCollisionMatrix;
+
+	/**
+	 * Collision "matrix". It's actually a triangular-shaped array of whether two bodies are touching this step, for reference next step
+	 * @class ArrayCollisionMatrix
+	 * @constructor
+	 */
+	function ArrayCollisionMatrix() {
+
+	    /**
+	     * The matrix storage
+	     * @property matrix
+	     * @type {Array}
+	     */
+		this.matrix = [];
+	}
+
+	/**
+	 * Get an element
+	 * @method get
+	 * @param  {Number} i
+	 * @param  {Number} j
+	 * @return {Number}
+	 */
+	ArrayCollisionMatrix.prototype.get = function(i, j) {
+		i = i.index;
+		j = j.index;
+	    if (j > i) {
+	        var temp = j;
+	        j = i;
+	        i = temp;
+	    }
+		return this.matrix[(i*(i + 1)>>1) + j-1];
+	};
+
+	/**
+	 * Set an element
+	 * @method set
+	 * @param {Number} i
+	 * @param {Number} j
+	 * @param {Number} value
+	 */
+	ArrayCollisionMatrix.prototype.set = function(i, j, value) {
+		i = i.index;
+		j = j.index;
+	    if (j > i) {
+	        var temp = j;
+	        j = i;
+	        i = temp;
+	    }
+		this.matrix[(i*(i + 1)>>1) + j-1] = value ? 1 : 0;
+	};
+
+	/**
+	 * Sets all elements to zero
+	 * @method reset
+	 */
+	ArrayCollisionMatrix.prototype.reset = function() {
+		for (var i=0, l=this.matrix.length; i!==l; i++) {
+			this.matrix[i]=0;
+		}
+	};
+
+	/**
+	 * Sets the max number of objects
+	 * @method setNumObjects
+	 * @param {Number} n
+	 */
+	ArrayCollisionMatrix.prototype.setNumObjects = function(n) {
+		this.matrix.length = n*(n-1)>>1;
+	};
+
+	},{}],5:[function(_dereq_,module,exports){
+	var Body = _dereq_('../objects/Body');
+	var Vec3 = _dereq_('../math/Vec3');
+	var Quaternion = _dereq_('../math/Quaternion');
+	var Shape = _dereq_('../shapes/Shape');
+	var Plane = _dereq_('../shapes/Plane');
+
+	module.exports = Broadphase;
+
+	/**
+	 * Base class for broadphase implementations
+	 * @class Broadphase
+	 * @constructor
+	 * @author schteppe
+	 */
+	function Broadphase(){
+	    /**
+	    * The world to search for collisions in.
+	    * @property world
+	    * @type {World}
+	    */
+	    this.world = null;
+
+	    /**
+	     * If set to true, the broadphase uses bounding boxes for intersection test, else it uses bounding spheres.
+	     * @property useBoundingBoxes
+	     * @type {Boolean}
+	     */
+	    this.useBoundingBoxes = false;
+
+	    /**
+	     * Set to true if the objects in the world moved.
+	     * @property {Boolean} dirty
+	     */
+	    this.dirty = true;
+	}
+
+	/**
+	 * Get the collision pairs from the world
+	 * @method collisionPairs
+	 * @param {World} world The world to search in
+	 * @param {Array} p1 Empty array to be filled with body objects
+	 * @param {Array} p2 Empty array to be filled with body objects
+	 */
+	Broadphase.prototype.collisionPairs = function(world,p1,p2){
+	    throw new Error("collisionPairs not implemented for this BroadPhase class!");
+	};
+
+	/**
+	 * Check if a body pair needs to be intersection tested at all.
+	 * @method needBroadphaseCollision
+	 * @param {Body} bodyA
+	 * @param {Body} bodyB
+	 * @return {bool}
+	 */
+	var Broadphase_needBroadphaseCollision_STATIC_OR_KINEMATIC = Body.STATIC | Body.KINEMATIC;
+	Broadphase.prototype.needBroadphaseCollision = function(bodyA,bodyB){
+
+	    // Check collision filter masks
+	    if( (bodyA.collisionFilterGroup & bodyB.collisionFilterMask)===0 || (bodyB.collisionFilterGroup & bodyA.collisionFilterMask)===0){
+	        return false;
+	    }
+
+	    // Check types
+	    if(((bodyA.type & Broadphase_needBroadphaseCollision_STATIC_OR_KINEMATIC)!==0 || bodyA.sleepState === Body.SLEEPING) &&
+	       ((bodyB.type & Broadphase_needBroadphaseCollision_STATIC_OR_KINEMATIC)!==0 || bodyB.sleepState === Body.SLEEPING)) {
+	        // Both bodies are static, kinematic or sleeping. Skip.
+	        return false;
+	    }
+
+	    return true;
+	};
+
+	/**
+	 * Check if the bounding volumes of two bodies intersect.
+	 * @method intersectionTest
+	 * @param {Body} bodyA
+	 * @param {Body} bodyB
+	 * @param {array} pairs1
+	 * @param {array} pairs2
+	  */
+	Broadphase.prototype.intersectionTest = function(bodyA, bodyB, pairs1, pairs2){
+	    if(this.useBoundingBoxes){
+	        this.doBoundingBoxBroadphase(bodyA,bodyB,pairs1,pairs2);
+	    } else {
+	        this.doBoundingSphereBroadphase(bodyA,bodyB,pairs1,pairs2);
+	    }
+	};
+
+	/**
+	 * Check if the bounding spheres of two bodies are intersecting.
+	 * @method doBoundingSphereBroadphase
+	 * @param {Body} bodyA
+	 * @param {Body} bodyB
+	 * @param {Array} pairs1 bodyA is appended to this array if intersection
+	 * @param {Array} pairs2 bodyB is appended to this array if intersection
+	 */
+	var Broadphase_collisionPairs_r = new Vec3(), // Temp objects
+	    Broadphase_collisionPairs_normal =  new Vec3(),
+	    Broadphase_collisionPairs_quat =  new Quaternion(),
+	    Broadphase_collisionPairs_relpos  =  new Vec3();
+	Broadphase.prototype.doBoundingSphereBroadphase = function(bodyA,bodyB,pairs1,pairs2){
+	    var r = Broadphase_collisionPairs_r;
+	    bodyB.position.vsub(bodyA.position,r);
+	    var boundingRadiusSum2 = Math.pow(bodyA.boundingRadius + bodyB.boundingRadius, 2);
+	    var norm2 = r.norm2();
+	    if(norm2 < boundingRadiusSum2){
+	        pairs1.push(bodyA);
+	        pairs2.push(bodyB);
+	    }
+	};
+
+	/**
+	 * Check if the bounding boxes of two bodies are intersecting.
+	 * @method doBoundingBoxBroadphase
+	 * @param {Body} bodyA
+	 * @param {Body} bodyB
+	 * @param {Array} pairs1
+	 * @param {Array} pairs2
+	 */
+	Broadphase.prototype.doBoundingBoxBroadphase = function(bodyA,bodyB,pairs1,pairs2){
+	    if(bodyA.aabbNeedsUpdate){
+	        bodyA.computeAABB();
+	    }
+	    if(bodyB.aabbNeedsUpdate){
+	        bodyB.computeAABB();
+	    }
+
+	    // Check AABB / AABB
+	    if(bodyA.aabb.overlaps(bodyB.aabb)){
+	        pairs1.push(bodyA);
+	        pairs2.push(bodyB);
+	    }
+	};
+
+	/**
+	 * Removes duplicate pairs from the pair arrays.
+	 * @method makePairsUnique
+	 * @param {Array} pairs1
+	 * @param {Array} pairs2
+	 */
+	var Broadphase_makePairsUnique_temp = { keys:[] },
+	    Broadphase_makePairsUnique_p1 = [],
+	    Broadphase_makePairsUnique_p2 = [];
+	Broadphase.prototype.makePairsUnique = function(pairs1,pairs2){
+	    var t = Broadphase_makePairsUnique_temp,
+	        p1 = Broadphase_makePairsUnique_p1,
+	        p2 = Broadphase_makePairsUnique_p2,
+	        N = pairs1.length;
+
+	    for(var i=0; i!==N; i++){
+	        p1[i] = pairs1[i];
+	        p2[i] = pairs2[i];
+	    }
+
+	    pairs1.length = 0;
+	    pairs2.length = 0;
+
+	    for(var i=0; i!==N; i++){
+	        var id1 = p1[i].id,
+	            id2 = p2[i].id;
+	        var key = id1 < id2 ? id1+","+id2 :  id2+","+id1;
+	        t[key] = i;
+	        t.keys.push(key);
+	    }
+
+	    for(var i=0; i!==t.keys.length; i++){
+	        var key = t.keys.pop(),
+	            pairIndex = t[key];
+	        pairs1.push(p1[pairIndex]);
+	        pairs2.push(p2[pairIndex]);
+	        delete t[key];
+	    }
+	};
+
+	/**
+	 * To be implemented by subcasses
+	 * @method setWorld
+	 * @param {World} world
+	 */
+	Broadphase.prototype.setWorld = function(world){
+	};
+
+	/**
+	 * Check if the bounding spheres of two bodies overlap.
+	 * @method boundingSphereCheck
+	 * @param {Body} bodyA
+	 * @param {Body} bodyB
+	 * @return {boolean}
+	 */
+	var bsc_dist = new Vec3();
+	Broadphase.boundingSphereCheck = function(bodyA,bodyB){
+	    var dist = bsc_dist;
+	    bodyA.position.vsub(bodyB.position,dist);
+	    return Math.pow(bodyA.shape.boundingSphereRadius + bodyB.shape.boundingSphereRadius,2) > dist.norm2();
+	};
+
+	/**
+	 * Returns all the bodies within the AABB.
+	 * @method aabbQuery
+	 * @param  {World} world
+	 * @param  {AABB} aabb
+	 * @param  {array} result An array to store resulting bodies in.
+	 * @return {array}
+	 */
+	Broadphase.prototype.aabbQuery = function(world, aabb, result){
+	    console.warn('.aabbQuery is not implemented in this Broadphase subclass.');
+	    return [];
+	};
+	},{"../math/Quaternion":28,"../math/Vec3":30,"../objects/Body":31,"../shapes/Plane":42,"../shapes/Shape":43}],6:[function(_dereq_,module,exports){
+	module.exports = GridBroadphase;
+
+	var Broadphase = _dereq_('./Broadphase');
+	var Vec3 = _dereq_('../math/Vec3');
+	var Shape = _dereq_('../shapes/Shape');
+
+	/**
+	 * Axis aligned uniform grid broadphase.
+	 * @class GridBroadphase
+	 * @constructor
+	 * @extends Broadphase
+	 * @todo Needs support for more than just planes and spheres.
+	 * @param {Vec3} aabbMin
+	 * @param {Vec3} aabbMax
+	 * @param {Number} nx Number of boxes along x
+	 * @param {Number} ny Number of boxes along y
+	 * @param {Number} nz Number of boxes along z
+	 */
+	function GridBroadphase(aabbMin,aabbMax,nx,ny,nz){
+	    Broadphase.apply(this);
+	    this.nx = nx || 10;
+	    this.ny = ny || 10;
+	    this.nz = nz || 10;
+	    this.aabbMin = aabbMin || new Vec3(100,100,100);
+	    this.aabbMax = aabbMax || new Vec3(-100,-100,-100);
+		var nbins = this.nx * this.ny * this.nz;
+		if (nbins <= 0) {
+			throw "GridBroadphase: Each dimension's n must be >0";
+		}
+	    this.bins = [];
+		this.binLengths = []; //Rather than continually resizing arrays (thrashing the memory), just record length and allow them to grow
+		this.bins.length = nbins;
+		this.binLengths.length = nbins;
+		for (var i=0;i<nbins;i++) {
+			this.bins[i]=[];
+			this.binLengths[i]=0;
+		}
+	}
+	GridBroadphase.prototype = new Broadphase();
+	GridBroadphase.prototype.constructor = GridBroadphase;
+
+	/**
+	 * Get all the collision pairs in the physics world
+	 * @method collisionPairs
+	 * @param {World} world
+	 * @param {Array} pairs1
+	 * @param {Array} pairs2
+	 */
+	var GridBroadphase_collisionPairs_d = new Vec3();
+	var GridBroadphase_collisionPairs_binPos = new Vec3();
+	GridBroadphase.prototype.collisionPairs = function(world,pairs1,pairs2){
+	    var N = world.numObjects(),
+	        bodies = world.bodies;
+
+	    var max = this.aabbMax,
+	        min = this.aabbMin,
+	        nx = this.nx,
+	        ny = this.ny,
+	        nz = this.nz;
+
+		var xstep = ny*nz;
+		var ystep = nz;
+		var zstep = 1;
+
+	    var xmax = max.x,
+	        ymax = max.y,
+	        zmax = max.z,
+	        xmin = min.x,
+	        ymin = min.y,
+	        zmin = min.z;
+
+	    var xmult = nx / (xmax-xmin),
+	        ymult = ny / (ymax-ymin),
+	        zmult = nz / (zmax-zmin);
+
+	    var binsizeX = (xmax - xmin) / nx,
+	        binsizeY = (ymax - ymin) / ny,
+	        binsizeZ = (zmax - zmin) / nz;
+
+		var binRadius = Math.sqrt(binsizeX*binsizeX + binsizeY*binsizeY + binsizeZ*binsizeZ) * 0.5;
+
+	    var types = Shape.types;
+	    var SPHERE =            types.SPHERE,
+	        PLANE =             types.PLANE,
+	        BOX =               types.BOX,
+	        COMPOUND =          types.COMPOUND,
+	        CONVEXPOLYHEDRON =  types.CONVEXPOLYHEDRON;
+
+	    var bins=this.bins,
+			binLengths=this.binLengths,
+	        Nbins=this.bins.length;
+
+	    // Reset bins
+	    for(var i=0; i!==Nbins; i++){
+	        binLengths[i] = 0;
+	    }
+
+	    var ceil = Math.ceil;
+		var min = Math.min;
+		var max = Math.max;
+
+		function addBoxToBins(x0,y0,z0,x1,y1,z1,bi) {
+			var xoff0 = ((x0 - xmin) * xmult)|0,
+				yoff0 = ((y0 - ymin) * ymult)|0,
+				zoff0 = ((z0 - zmin) * zmult)|0,
+				xoff1 = ceil((x1 - xmin) * xmult),
+				yoff1 = ceil((y1 - ymin) * ymult),
+				zoff1 = ceil((z1 - zmin) * zmult);
+
+			if (xoff0 < 0) { xoff0 = 0; } else if (xoff0 >= nx) { xoff0 = nx - 1; }
+			if (yoff0 < 0) { yoff0 = 0; } else if (yoff0 >= ny) { yoff0 = ny - 1; }
+			if (zoff0 < 0) { zoff0 = 0; } else if (zoff0 >= nz) { zoff0 = nz - 1; }
+			if (xoff1 < 0) { xoff1 = 0; } else if (xoff1 >= nx) { xoff1 = nx - 1; }
+			if (yoff1 < 0) { yoff1 = 0; } else if (yoff1 >= ny) { yoff1 = ny - 1; }
+			if (zoff1 < 0) { zoff1 = 0; } else if (zoff1 >= nz) { zoff1 = nz - 1; }
+
+			xoff0 *= xstep;
+			yoff0 *= ystep;
+			zoff0 *= zstep;
+			xoff1 *= xstep;
+			yoff1 *= ystep;
+			zoff1 *= zstep;
+
+			for (var xoff = xoff0; xoff <= xoff1; xoff += xstep) {
+				for (var yoff = yoff0; yoff <= yoff1; yoff += ystep) {
+					for (var zoff = zoff0; zoff <= zoff1; zoff += zstep) {
+						var idx = xoff+yoff+zoff;
+						bins[idx][binLengths[idx]++] = bi;
+					}
+				}
+			}
+		}
+
+	    // Put all bodies into the bins
+	    for(var i=0; i!==N; i++){
+	        var bi = bodies[i];
+	        var si = bi.shape;
+
+	        switch(si.type){
+	        case SPHERE:
+	            // Put in bin
+	            // check if overlap with other bins
+	            var x = bi.position.x,
+	                y = bi.position.y,
+	                z = bi.position.z;
+	            var r = si.radius;
+
+				addBoxToBins(x-r, y-r, z-r, x+r, y+r, z+r, bi);
+	            break;
+
+	        case PLANE:
+	            if(si.worldNormalNeedsUpdate){
+	                si.computeWorldNormal(bi.quaternion);
+	            }
+	            var planeNormal = si.worldNormal;
+
+				//Relative position from origin of plane object to the first bin
+				//Incremented as we iterate through the bins
+				var xreset = xmin + binsizeX*0.5 - bi.position.x,
+					yreset = ymin + binsizeY*0.5 - bi.position.y,
+					zreset = zmin + binsizeZ*0.5 - bi.position.z;
+
+	            var d = GridBroadphase_collisionPairs_d;
+				d.set(xreset, yreset, zreset);
+
+				for (var xi = 0, xoff = 0; xi !== nx; xi++, xoff += xstep, d.y = yreset, d.x += binsizeX) {
+					for (var yi = 0, yoff = 0; yi !== ny; yi++, yoff += ystep, d.z = zreset, d.y += binsizeY) {
+						for (var zi = 0, zoff = 0; zi !== nz; zi++, zoff += zstep, d.z += binsizeZ) {
+							if (d.dot(planeNormal) < binRadius) {
+								var idx = xoff + yoff + zoff;
+								bins[idx][binLengths[idx]++] = bi;
+							}
+						}
+					}
+				}
+	            break;
+
+	        default:
+				if (bi.aabbNeedsUpdate) {
+					bi.computeAABB();
+				}
+
+				addBoxToBins(
+					bi.aabb.lowerBound.x,
+					bi.aabb.lowerBound.y,
+					bi.aabb.lowerBound.z,
+					bi.aabb.upperBound.x,
+					bi.aabb.upperBound.y,
+					bi.aabb.upperBound.z,
+					bi);
+	            break;
+	        }
+	    }
+
+	    // Check each bin
+	    for(var i=0; i!==Nbins; i++){
+			var binLength = binLengths[i];
+			//Skip bins with no potential collisions
+			if (binLength > 1) {
+				var bin = bins[i];
+
+				// Do N^2 broadphase inside
+				for(var xi=0; xi!==binLength; xi++){
+					var bi = bin[xi];
+					for(var yi=0; yi!==xi; yi++){
+						var bj = bin[yi];
+						if(this.needBroadphaseCollision(bi,bj)){
+							this.intersectionTest(bi,bj,pairs1,pairs2);
+						}
+					}
+				}
+			}
+	    }
+
+	//	for (var zi = 0, zoff=0; zi < nz; zi++, zoff+= zstep) {
+	//		console.log("layer "+zi);
+	//		for (var yi = 0, yoff=0; yi < ny; yi++, yoff += ystep) {
+	//			var row = '';
+	//			for (var xi = 0, xoff=0; xi < nx; xi++, xoff += xstep) {
+	//				var idx = xoff + yoff + zoff;
+	//				row += ' ' + binLengths[idx];
+	//			}
+	//			console.log(row);
+	//		}
+	//	}
+
+	    this.makePairsUnique(pairs1,pairs2);
+	};
+
+	},{"../math/Vec3":30,"../shapes/Shape":43,"./Broadphase":5}],7:[function(_dereq_,module,exports){
+	module.exports = NaiveBroadphase;
+
+	var Broadphase = _dereq_('./Broadphase');
+	var AABB = _dereq_('./AABB');
+
+	/**
+	 * Naive broadphase implementation, used in lack of better ones.
+	 * @class NaiveBroadphase
+	 * @constructor
+	 * @description The naive broadphase looks at all possible pairs without restriction, therefore it has complexity N^2 (which is bad)
+	 * @extends Broadphase
+	 */
+	function NaiveBroadphase(){
+	    Broadphase.apply(this);
+	}
+	NaiveBroadphase.prototype = new Broadphase();
+	NaiveBroadphase.prototype.constructor = NaiveBroadphase;
+
+	/**
+	 * Get all the collision pairs in the physics world
+	 * @method collisionPairs
+	 * @param {World} world
+	 * @param {Array} pairs1
+	 * @param {Array} pairs2
+	 */
+	NaiveBroadphase.prototype.collisionPairs = function(world,pairs1,pairs2){
+	    var bodies = world.bodies,
+	        n = bodies.length,
+	        i,j,bi,bj;
+
+	    // Naive N^2 ftw!
+	    for(i=0; i!==n; i++){
+	        for(j=0; j!==i; j++){
+
+	            bi = bodies[i];
+	            bj = bodies[j];
+
+	            if(!this.needBroadphaseCollision(bi,bj)){
+	                continue;
+	            }
+
+	            this.intersectionTest(bi,bj,pairs1,pairs2);
+	        }
+	    }
+	};
+
+	var tmpAABB = new AABB();
+
+	/**
+	 * Returns all the bodies within an AABB.
+	 * @method aabbQuery
+	 * @param  {World} world
+	 * @param  {AABB} aabb
+	 * @param {array} result An array to store resulting bodies in.
+	 * @return {array}
+	 */
+	NaiveBroadphase.prototype.aabbQuery = function(world, aabb, result){
+	    result = result || [];
+
+	    for(var i = 0; i < world.bodies.length; i++){
+	        var b = world.bodies[i];
+
+	        if(b.aabbNeedsUpdate){
+	            b.computeAABB();
+	        }
+
+	        // Ugly hack until Body gets aabb
+	        if(b.aabb.overlaps(aabb)){
+	            result.push(b);
+	        }
+	    }
+
+	    return result;
+	};
+	},{"./AABB":3,"./Broadphase":5}],8:[function(_dereq_,module,exports){
+	module.exports = ObjectCollisionMatrix;
+
+	/**
+	 * Records what objects are colliding with each other
+	 * @class ObjectCollisionMatrix
+	 * @constructor
+	 */
+	function ObjectCollisionMatrix() {
+
+	    /**
+	     * The matrix storage
+	     * @property matrix
+	     * @type {Object}
+	     */
+		this.matrix = {};
+	}
+
+	/**
+	 * @method get
+	 * @param  {Number} i
+	 * @param  {Number} j
+	 * @return {Number}
+	 */
+	ObjectCollisionMatrix.prototype.get = function(i, j) {
+		i = i.id;
+		j = j.id;
+	    if (j > i) {
+	        var temp = j;
+	        j = i;
+	        i = temp;
+	    }
+		return i+'-'+j in this.matrix;
+	};
+
+	/**
+	 * @method set
+	 * @param  {Number} i
+	 * @param  {Number} j
+	 * @param {Number} value
+	 */
+	ObjectCollisionMatrix.prototype.set = function(i, j, value) {
+		i = i.id;
+		j = j.id;
+	    if (j > i) {
+	        var temp = j;
+	        j = i;
+	        i = temp;
+		}
+		if (value) {
+			this.matrix[i+'-'+j] = true;
+		}
+		else {
+			delete this.matrix[i+'-'+j];
+		}
+	};
+
+	/**
+	 * Empty the matrix
+	 * @method reset
+	 */
+	ObjectCollisionMatrix.prototype.reset = function() {
+		this.matrix = {};
+	};
+
+	/**
+	 * Set max number of objects
+	 * @method setNumObjects
+	 * @param {Number} n
+	 */
+	ObjectCollisionMatrix.prototype.setNumObjects = function(n) {
+	};
+
+	},{}],9:[function(_dereq_,module,exports){
+	module.exports = Ray;
+
+	var Vec3 = _dereq_('../math/Vec3');
+	var Quaternion = _dereq_('../math/Quaternion');
+	var Transform = _dereq_('../math/Transform');
+	var ConvexPolyhedron = _dereq_('../shapes/ConvexPolyhedron');
+	var Box = _dereq_('../shapes/Box');
+	var RaycastResult = _dereq_('../collision/RaycastResult');
+	var Shape = _dereq_('../shapes/Shape');
+	var AABB = _dereq_('../collision/AABB');
+
+	/**
+	 * A line in 3D space that intersects bodies and return points.
+	 * @class Ray
+	 * @constructor
+	 * @param {Vec3} from
+	 * @param {Vec3} to
+	 */
+	function Ray(from, to){
+	    /**
+	     * @property {Vec3} from
+	     */
+	    this.from = from ? from.clone() : new Vec3();
+
+	    /**
+	     * @property {Vec3} to
+	     */
+	    this.to = to ? to.clone() : new Vec3();
+
+	    /**
+	     * @private
+	     * @property {Vec3} _direction
+	     */
+	    this._direction = new Vec3();
+
+	    /**
+	     * The precision of the ray. Used when checking parallelity etc.
+	     * @property {Number} precision
+	     */
+	    this.precision = 0.0001;
+
+	    /**
+	     * Set to true if you want the Ray to take .collisionResponse flags into account on bodies and shapes.
+	     * @property {Boolean} checkCollisionResponse
+	     */
+	    this.checkCollisionResponse = true;
+
+	    /**
+	     * If set to true, the ray skips any hits with normal.dot(rayDirection) < 0.
+	     * @property {Boolean} skipBackfaces
+	     */
+	    this.skipBackfaces = false;
+
+	    /**
+	     * @property {number} collisionFilterMask
+	     * @default -1
+	     */
+	    this.collisionFilterMask = -1;
+
+	    /**
+	     * @property {number} collisionFilterGroup
+	     * @default -1
+	     */
+	    this.collisionFilterGroup = -1;
+
+	    /**
+	     * The intersection mode. Should be Ray.ANY, Ray.ALL or Ray.CLOSEST.
+	     * @property {number} mode
+	     */
+	    this.mode = Ray.ANY;
+
+	    /**
+	     * Current result object.
+	     * @property {RaycastResult} result
+	     */
+	    this.result = new RaycastResult();
+
+	    /**
+	     * Will be set to true during intersectWorld() if the ray hit anything.
+	     * @property {Boolean} hasHit
+	     */
+	    this.hasHit = false;
+
+	    /**
+	     * Current, user-provided result callback. Will be used if mode is Ray.ALL.
+	     * @property {Function} callback
+	     */
+	    this.callback = function(result){};
+	}
+	Ray.prototype.constructor = Ray;
+
+	Ray.CLOSEST = 1;
+	Ray.ANY = 2;
+	Ray.ALL = 4;
+
+	var tmpAABB = new AABB();
+	var tmpArray = [];
+
+	/**
+	 * Do itersection against all bodies in the given World.
+	 * @method intersectWorld
+	 * @param  {World} world
+	 * @param  {object} options
+	 * @return {Boolean} True if the ray hit anything, otherwise false.
+	 */
+	Ray.prototype.intersectWorld = function (world, options) {
+	    this.mode = options.mode || Ray.ANY;
+	    this.result = options.result || new RaycastResult();
+	    this.skipBackfaces = !!options.skipBackfaces;
+	    this.collisionFilterMask = typeof(options.collisionFilterMask) !== 'undefined' ? options.collisionFilterMask : -1;
+	    this.collisionFilterGroup = typeof(options.collisionFilterGroup) !== 'undefined' ? options.collisionFilterGroup : -1;
+	    if(options.from){
+	        this.from.copy(options.from);
+	    }
+	    if(options.to){
+	        this.to.copy(options.to);
+	    }
+	    this.callback = options.callback || function(){};
+	    this.hasHit = false;
+
+	    this.result.reset();
+	    this._updateDirection();
+
+	    this.getAABB(tmpAABB);
+	    tmpArray.length = 0;
+	    world.broadphase.aabbQuery(world, tmpAABB, tmpArray);
+	    this.intersectBodies(tmpArray);
+
+	    return this.hasHit;
+	};
+
+	var v1 = new Vec3(),
+	    v2 = new Vec3();
+
+	/*
+	 * As per "Barycentric Technique" as named here http://www.blackpawn.com/texts/pointinpoly/default.html But without the division
+	 */
+	Ray.pointInTriangle = pointInTriangle;
+	function pointInTriangle(p, a, b, c) {
+	    c.vsub(a,v0);
+	    b.vsub(a,v1);
+	    p.vsub(a,v2);
+
+	    var dot00 = v0.dot( v0 );
+	    var dot01 = v0.dot( v1 );
+	    var dot02 = v0.dot( v2 );
+	    var dot11 = v1.dot( v1 );
+	    var dot12 = v1.dot( v2 );
+
+	    var u,v;
+
+	    return  ( (u = dot11 * dot02 - dot01 * dot12) >= 0 ) &&
+	            ( (v = dot00 * dot12 - dot01 * dot02) >= 0 ) &&
+	            ( u + v < ( dot00 * dot11 - dot01 * dot01 ) );
+	}
+
+	/**
+	 * Shoot a ray at a body, get back information about the hit.
+	 * @method intersectBody
+	 * @private
+	 * @param {Body} body
+	 * @param {RaycastResult} [result] Deprecated - set the result property of the Ray instead.
+	 */
+	var intersectBody_xi = new Vec3();
+	var intersectBody_qi = new Quaternion();
+	Ray.prototype.intersectBody = function (body, result) {
+	    if(result){
+	        this.result = result;
+	        this._updateDirection();
+	    }
+	    var checkCollisionResponse = this.checkCollisionResponse;
+
+	    if(checkCollisionResponse && !body.collisionResponse){
+	        return;
+	    }
+
+	    if((this.collisionFilterGroup & body.collisionFilterMask)===0 || (body.collisionFilterGroup & this.collisionFilterMask)===0){
+	        return;
+	    }
+
+	    var xi = intersectBody_xi;
+	    var qi = intersectBody_qi;
+
+	    for (var i = 0, N = body.shapes.length; i < N; i++) {
+	        var shape = body.shapes[i];
+
+	        if(checkCollisionResponse && !shape.collisionResponse){
+	            continue; // Skip
+	        }
+
+	        body.quaternion.mult(body.shapeOrientations[i], qi);
+	        body.quaternion.vmult(body.shapeOffsets[i], xi);
+	        xi.vadd(body.position, xi);
+
+	        this.intersectShape(
+	            shape,
+	            qi,
+	            xi,
+	            body
+	        );
+
+	        if(this.result._shouldStop){
+	            break;
+	        }
+	    }
+	};
+
+	/**
+	 * @method intersectBodies
+	 * @param {Array} bodies An array of Body objects.
+	 * @param {RaycastResult} [result] Deprecated
+	 */
+	Ray.prototype.intersectBodies = function (bodies, result) {
+	    if(result){
+	        this.result = result;
+	        this._updateDirection();
+	    }
+
+	    for ( var i = 0, l = bodies.length; !this.result._shouldStop && i < l; i ++ ) {
+	        this.intersectBody(bodies[i]);
+	    }
+	};
+
+	/**
+	 * Updates the _direction vector.
+	 * @private
+	 * @method _updateDirection
+	 */
+	Ray.prototype._updateDirection = function(){
+	    this.to.vsub(this.from, this._direction);
+	    this._direction.normalize();
+	};
+
+	/**
+	 * @method intersectShape
+	 * @private
+	 * @param {Shape} shape
+	 * @param {Quaternion} quat
+	 * @param {Vec3} position
+	 * @param {Body} body
+	 */
+	Ray.prototype.intersectShape = function(shape, quat, position, body){
+	    var from = this.from;
+
+
+	    // Checking boundingSphere
+	    var distance = distanceFromIntersection(from, this._direction, position);
+	    if ( distance > shape.boundingSphereRadius ) {
+	        return;
+	    }
+
+	    var intersectMethod = this[shape.type];
+	    if(intersectMethod){
+	        intersectMethod.call(this, shape, quat, position, body);
+	    }
+	};
+
+	var vector = new Vec3();
+	var normal = new Vec3();
+	var intersectPoint = new Vec3();
+
+	var a = new Vec3();
+	var b = new Vec3();
+	var c = new Vec3();
+	var d = new Vec3();
+
+	var tmpRaycastResult = new RaycastResult();
+
+	/**
+	 * @method intersectBox
+	 * @private
+	 * @param  {Shape} shape
+	 * @param  {Quaternion} quat
+	 * @param  {Vec3} position
+	 * @param  {Body} body
+	 */
+	Ray.prototype.intersectBox = function(shape, quat, position, body){
+	    return this.intersectConvex(shape.convexPolyhedronRepresentation, quat, position, body);
+	};
+	Ray.prototype[Shape.types.BOX] = Ray.prototype.intersectBox;
+
+	/**
+	 * @method intersectPlane
+	 * @private
+	 * @param  {Shape} shape
+	 * @param  {Quaternion} quat
+	 * @param  {Vec3} position
+	 * @param  {Body} body
+	 */
+	Ray.prototype.intersectPlane = function(shape, quat, position, body){
+	    var from = this.from;
+	    var to = this.to;
+	    var direction = this._direction;
+
+	    // Get plane normal
+	    var worldNormal = new Vec3(0, 0, 1);
+	    quat.vmult(worldNormal, worldNormal);
+
+	    var len = new Vec3();
+	    from.vsub(position, len);
+	    var planeToFrom = len.dot(worldNormal);
+	    to.vsub(position, len);
+	    var planeToTo = len.dot(worldNormal);
+
+	    if(planeToFrom * planeToTo > 0){
+	        // "from" and "to" are on the same side of the plane... bail out
+	        return;
+	    }
+
+	    if(from.distanceTo(to) < planeToFrom){
+	        return;
+	    }
+
+	    var n_dot_dir = worldNormal.dot(direction);
+
+	    if (Math.abs(n_dot_dir) < this.precision) {
+	        // No intersection
+	        return;
+	    }
+
+	    var planePointToFrom = new Vec3();
+	    var dir_scaled_with_t = new Vec3();
+	    var hitPointWorld = new Vec3();
+
+	    from.vsub(position, planePointToFrom);
+	    var t = -worldNormal.dot(planePointToFrom) / n_dot_dir;
+	    direction.scale(t, dir_scaled_with_t);
+	    from.vadd(dir_scaled_with_t, hitPointWorld);
+
+	    this.reportIntersection(worldNormal, hitPointWorld, shape, body, -1);
+	};
+	Ray.prototype[Shape.types.PLANE] = Ray.prototype.intersectPlane;
+
+	/**
+	 * Get the world AABB of the ray.
+	 * @method getAABB
+	 * @param  {AABB} aabb
+	 */
+	Ray.prototype.getAABB = function(result){
+	    var to = this.to;
+	    var from = this.from;
+	    result.lowerBound.x = Math.min(to.x, from.x);
+	    result.lowerBound.y = Math.min(to.y, from.y);
+	    result.lowerBound.z = Math.min(to.z, from.z);
+	    result.upperBound.x = Math.max(to.x, from.x);
+	    result.upperBound.y = Math.max(to.y, from.y);
+	    result.upperBound.z = Math.max(to.z, from.z);
+	};
+
+	var intersectConvexOptions = {
+	    faceList: [0]
+	};
+
+	/**
+	 * @method intersectHeightfield
+	 * @private
+	 * @param  {Shape} shape
+	 * @param  {Quaternion} quat
+	 * @param  {Vec3} position
+	 * @param  {Body} body
+	 */
+	Ray.prototype.intersectHeightfield = function(shape, quat, position, body){
+	    var data = shape.data,
+	        w = shape.elementSize,
+	        worldPillarOffset = new Vec3();
+
+	    // Convert the ray to local heightfield coordinates
+	    var localRay = new Ray(this.from, this.to);
+	    Transform.pointToLocalFrame(position, quat, localRay.from, localRay.from);
+	    Transform.pointToLocalFrame(position, quat, localRay.to, localRay.to);
+
+	    // Get the index of the data points to test against
+	    var index = [];
+	    var iMinX = null;
+	    var iMinY = null;
+	    var iMaxX = null;
+	    var iMaxY = null;
+
+	    var inside = shape.getIndexOfPosition(localRay.from.x, localRay.from.y, index, false);
+	    if(inside){
+	        iMinX = index[0];
+	        iMinY = index[1];
+	        iMaxX = index[0];
+	        iMaxY = index[1];
+	    }
+	    inside = shape.getIndexOfPosition(localRay.to.x, localRay.to.y, index, false);
+	    if(inside){
+	        if (iMinX === null || index[0] < iMinX) { iMinX = index[0]; }
+	        if (iMaxX === null || index[0] > iMaxX) { iMaxX = index[0]; }
+	        if (iMinY === null || index[1] < iMinY) { iMinY = index[1]; }
+	        if (iMaxY === null || index[1] > iMaxY) { iMaxY = index[1]; }
+	    }
+
+	    if(iMinX === null){
+	        return;
+	    }
+
+	    var minMax = [];
+	    shape.getRectMinMax(iMinX, iMinY, iMaxX, iMaxY, minMax);
+	    var min = minMax[0];
+	    var max = minMax[1];
+
+	    // // Bail out if the ray can't touch the bounding box
+	    // // TODO
+	    // var aabb = new AABB();
+	    // this.getAABB(aabb);
+	    // if(aabb.intersects()){
+	    //     return;
+	    // }
+
+	    for(var i = iMinX; i <= iMaxX; i++){
+	        for(var j = iMinY; j <= iMaxY; j++){
+
+	            if(this.result._shouldStop){
+	                return;
+	            }
+
+	            // Lower triangle
+	            shape.getConvexTrianglePillar(i, j, false);
+	            Transform.pointToWorldFrame(position, quat, shape.pillarOffset, worldPillarOffset);
+	            this.intersectConvex(shape.pillarConvex, quat, worldPillarOffset, body, intersectConvexOptions);
+
+	            if(this.result._shouldStop){
+	                return;
+	            }
+
+	            // Upper triangle
+	            shape.getConvexTrianglePillar(i, j, true);
+	            Transform.pointToWorldFrame(position, quat, shape.pillarOffset, worldPillarOffset);
+	            this.intersectConvex(shape.pillarConvex, quat, worldPillarOffset, body, intersectConvexOptions);
+	        }
+	    }
+	};
+	Ray.prototype[Shape.types.HEIGHTFIELD] = Ray.prototype.intersectHeightfield;
+
+	var Ray_intersectSphere_intersectionPoint = new Vec3();
+	var Ray_intersectSphere_normal = new Vec3();
+
+	/**
+	 * @method intersectSphere
+	 * @private
+	 * @param  {Shape} shape
+	 * @param  {Quaternion} quat
+	 * @param  {Vec3} position
+	 * @param  {Body} body
+	 */
+	Ray.prototype.intersectSphere = function(shape, quat, position, body){
+	    var from = this.from,
+	        to = this.to,
+	        r = shape.radius;
+
+	    var a = Math.pow(to.x - from.x, 2) + Math.pow(to.y - from.y, 2) + Math.pow(to.z - from.z, 2);
+	    var b = 2 * ((to.x - from.x) * (from.x - position.x) + (to.y - from.y) * (from.y - position.y) + (to.z - from.z) * (from.z - position.z));
+	    var c = Math.pow(from.x - position.x, 2) + Math.pow(from.y - position.y, 2) + Math.pow(from.z - position.z, 2) - Math.pow(r, 2);
+
+	    var delta = Math.pow(b, 2) - 4 * a * c;
+
+	    var intersectionPoint = Ray_intersectSphere_intersectionPoint;
+	    var normal = Ray_intersectSphere_normal;
+
+	    if(delta < 0){
+	        // No intersection
+	        return;
+
+	    } else if(delta === 0){
+	        // single intersection point
+	        from.lerp(to, delta, intersectionPoint);
+
+	        intersectionPoint.vsub(position, normal);
+	        normal.normalize();
+
+	        this.reportIntersection(normal, intersectionPoint, shape, body, -1);
+
+	    } else {
+	        var d1 = (- b - Math.sqrt(delta)) / (2 * a);
+	        var d2 = (- b + Math.sqrt(delta)) / (2 * a);
+
+	        if(d1 >= 0 && d1 <= 1){
+	            from.lerp(to, d1, intersectionPoint);
+	            intersectionPoint.vsub(position, normal);
+	            normal.normalize();
+	            this.reportIntersection(normal, intersectionPoint, shape, body, -1);
+	        }
+
+	        if(this.result._shouldStop){
+	            return;
+	        }
+
+	        if(d2 >= 0 && d2 <= 1){
+	            from.lerp(to, d2, intersectionPoint);
+	            intersectionPoint.vsub(position, normal);
+	            normal.normalize();
+	            this.reportIntersection(normal, intersectionPoint, shape, body, -1);
+	        }
+	    }
+	};
+	Ray.prototype[Shape.types.SPHERE] = Ray.prototype.intersectSphere;
+
+
+	var intersectConvex_normal = new Vec3();
+	var intersectConvex_minDistNormal = new Vec3();
+	var intersectConvex_minDistIntersect = new Vec3();
+	var intersectConvex_vector = new Vec3();
+
+	/**
+	 * @method intersectConvex
+	 * @private
+	 * @param  {Shape} shape
+	 * @param  {Quaternion} quat
+	 * @param  {Vec3} position
+	 * @param  {Body} body
+	 * @param {object} [options]
+	 * @param {array} [options.faceList]
+	 */
+	Ray.prototype.intersectConvex = function intersectConvex(
+	    shape,
+	    quat,
+	    position,
+	    body,
+	    options
+	){
+	    var minDistNormal = intersectConvex_minDistNormal;
+	    var normal = intersectConvex_normal;
+	    var vector = intersectConvex_vector;
+	    var minDistIntersect = intersectConvex_minDistIntersect;
+	    var faceList = (options && options.faceList) || null;
+
+	    // Checking faces
+	    var faces = shape.faces,
+	        vertices = shape.vertices,
+	        normals = shape.faceNormals;
+	    var direction = this._direction;
+
+	    var from = this.from;
+	    var to = this.to;
+	    var fromToDistance = from.distanceTo(to);
+
+	    var minDist = -1;
+	    var Nfaces = faceList ? faceList.length : faces.length;
+	    var result = this.result;
+
+	    for (var j = 0; !result._shouldStop && j < Nfaces; j++) {
+	        var fi = faceList ? faceList[j] : j;
+
+	        var face = faces[fi];
+	        var faceNormal = normals[fi];
+	        var q = quat;
+	        var x = position;
+
+	        // determine if ray intersects the plane of the face
+	        // note: this works regardless of the direction of the face normal
+
+	        // Get plane point in world coordinates...
+	        vector.copy(vertices[face[0]]);
+	        q.vmult(vector,vector);
+	        vector.vadd(x,vector);
+
+	        // ...but make it relative to the ray from. We'll fix this later.
+	        vector.vsub(from,vector);
+
+	        // Get plane normal
+	        q.vmult(faceNormal,normal);
+
+	        // If this dot product is negative, we have something interesting
+	        var dot = direction.dot(normal);
+
+	        // Bail out if ray and plane are parallel
+	        if ( Math.abs( dot ) < this.precision ){
+	            continue;
+	        }
+
+	        // calc distance to plane
+	        var scalar = normal.dot(vector) / dot;
+
+	        // if negative distance, then plane is behind ray
+	        if (scalar < 0){
+	            continue;
+	        }
+
+	        // if (dot < 0) {
+
+	        // Intersection point is from + direction * scalar
+	        direction.mult(scalar,intersectPoint);
+	        intersectPoint.vadd(from,intersectPoint);
+
+	        // a is the point we compare points b and c with.
+	        a.copy(vertices[face[0]]);
+	        q.vmult(a,a);
+	        x.vadd(a,a);
+
+	        for(var i = 1; !result._shouldStop && i < face.length - 1; i++){
+	            // Transform 3 vertices to world coords
+	            b.copy(vertices[face[i]]);
+	            c.copy(vertices[face[i+1]]);
+	            q.vmult(b,b);
+	            q.vmult(c,c);
+	            x.vadd(b,b);
+	            x.vadd(c,c);
+
+	            var distance = intersectPoint.distanceTo(from);
+
+	            if(!(pointInTriangle(intersectPoint, a, b, c) || pointInTriangle(intersectPoint, b, a, c)) || distance > fromToDistance){
+	                continue;
+	            }
+
+	            this.reportIntersection(normal, intersectPoint, shape, body, fi);
+	        }
+	        // }
+	    }
+	};
+	Ray.prototype[Shape.types.CONVEXPOLYHEDRON] = Ray.prototype.intersectConvex;
+
+	var intersectTrimesh_normal = new Vec3();
+	var intersectTrimesh_localDirection = new Vec3();
+	var intersectTrimesh_localFrom = new Vec3();
+	var intersectTrimesh_localTo = new Vec3();
+	var intersectTrimesh_worldNormal = new Vec3();
+	var intersectTrimesh_worldIntersectPoint = new Vec3();
+	var intersectTrimesh_localAABB = new AABB();
+	var intersectTrimesh_triangles = [];
+	var intersectTrimesh_treeTransform = new Transform();
+
+	/**
+	 * @method intersectTrimesh
+	 * @private
+	 * @param  {Shape} shape
+	 * @param  {Quaternion} quat
+	 * @param  {Vec3} position
+	 * @param  {Body} body
+	 * @param {object} [options]
+	 * @todo Optimize by transforming the world to local space first.
+	 * @todo Use Octree lookup
+	 */
+	Ray.prototype.intersectTrimesh = function intersectTrimesh(
+	    mesh,
+	    quat,
+	    position,
+	    body,
+	    options
+	){
+	    var normal = intersectTrimesh_normal;
+	    var triangles = intersectTrimesh_triangles;
+	    var treeTransform = intersectTrimesh_treeTransform;
+	    var minDistNormal = intersectConvex_minDistNormal;
+	    var vector = intersectConvex_vector;
+	    var minDistIntersect = intersectConvex_minDistIntersect;
+	    var localAABB = intersectTrimesh_localAABB;
+	    var localDirection = intersectTrimesh_localDirection;
+	    var localFrom = intersectTrimesh_localFrom;
+	    var localTo = intersectTrimesh_localTo;
+	    var worldIntersectPoint = intersectTrimesh_worldIntersectPoint;
+	    var worldNormal = intersectTrimesh_worldNormal;
+	    var faceList = (options && options.faceList) || null;
+
+	    // Checking faces
+	    var indices = mesh.indices,
+	        vertices = mesh.vertices,
+	        normals = mesh.faceNormals;
+
+	    var from = this.from;
+	    var to = this.to;
+	    var direction = this._direction;
+
+	    var minDist = -1;
+	    treeTransform.position.copy(position);
+	    treeTransform.quaternion.copy(quat);
+
+	    // Transform ray to local space!
+	    Transform.vectorToLocalFrame(position, quat, direction, localDirection);
+	    //body.vectorToLocalFrame(direction, localDirection);
+	    Transform.pointToLocalFrame(position, quat, from, localFrom);
+	    //body.pointToLocalFrame(from, localFrom);
+	    Transform.pointToLocalFrame(position, quat, to, localTo);
+	    //body.pointToLocalFrame(to, localTo);
+	    var fromToDistanceSquared = localFrom.distanceSquared(localTo);
+
+	    mesh.tree.rayQuery(this, treeTransform, triangles);
+
+	    for (var i = 0, N = triangles.length; !this.result._shouldStop && i !== N; i++) {
+	        var trianglesIndex = triangles[i];
+
+	        mesh.getNormal(trianglesIndex, normal);
+
+	        // determine if ray intersects the plane of the face
+	        // note: this works regardless of the direction of the face normal
+
+	        // Get plane point in world coordinates...
+	        mesh.getVertex(indices[trianglesIndex * 3], a);
+
+	        // ...but make it relative to the ray from. We'll fix this later.
+	        a.vsub(localFrom,vector);
+
+	        // Get plane normal
+	        // quat.vmult(normal, normal);
+
+	        // If this dot product is negative, we have something interesting
+	        var dot = localDirection.dot(normal);
+
+	        // Bail out if ray and plane are parallel
+	        // if (Math.abs( dot ) < this.precision){
+	        //     continue;
+	        // }
+
+	        // calc distance to plane
+	        var scalar = normal.dot(vector) / dot;
+
+	        // if negative distance, then plane is behind ray
+	        if (scalar < 0){
+	            continue;
+	        }
+
+	        // Intersection point is from + direction * scalar
+	        localDirection.scale(scalar,intersectPoint);
+	        intersectPoint.vadd(localFrom,intersectPoint);
+
+	        // Get triangle vertices
+	        mesh.getVertex(indices[trianglesIndex * 3 + 1], b);
+	        mesh.getVertex(indices[trianglesIndex * 3 + 2], c);
+
+	        var squaredDistance = intersectPoint.distanceSquared(localFrom);
+
+	        if(!(pointInTriangle(intersectPoint, b, a, c) || pointInTriangle(intersectPoint, a, b, c)) || squaredDistance > fromToDistanceSquared){
+	            continue;
+	        }
+
+	        // transform intersectpoint and normal to world
+	        Transform.vectorToWorldFrame(quat, normal, worldNormal);
+	        //body.vectorToWorldFrame(normal, worldNormal);
+	        Transform.pointToWorldFrame(position, quat, intersectPoint, worldIntersectPoint);
+	        //body.pointToWorldFrame(intersectPoint, worldIntersectPoint);
+	        this.reportIntersection(worldNormal, worldIntersectPoint, mesh, body, trianglesIndex);
+	    }
+	    triangles.length = 0;
+	};
+	Ray.prototype[Shape.types.TRIMESH] = Ray.prototype.intersectTrimesh;
+
+
+	/**
+	 * @method reportIntersection
+	 * @private
+	 * @param  {Vec3} normal
+	 * @param  {Vec3} hitPointWorld
+	 * @param  {Shape} shape
+	 * @param  {Body} body
+	 * @return {boolean} True if the intersections should continue
+	 */
+	Ray.prototype.reportIntersection = function(normal, hitPointWorld, shape, body, hitFaceIndex){
+	    var from = this.from;
+	    var to = this.to;
+	    var distance = from.distanceTo(hitPointWorld);
+	    var result = this.result;
+
+	    // Skip back faces?
+	    if(this.skipBackfaces && normal.dot(this._direction) > 0){
+	        return;
+	    }
+
+	    result.hitFaceIndex = typeof(hitFaceIndex) !== 'undefined' ? hitFaceIndex : -1;
+
+	    switch(this.mode){
+	    case Ray.ALL:
+	        this.hasHit = true;
+	        result.set(
+	            from,
+	            to,
+	            normal,
+	            hitPointWorld,
+	            shape,
+	            body,
+	            distance
+	        );
+	        result.hasHit = true;
+	        this.callback(result);
+	        break;
+
+	    case Ray.CLOSEST:
+
+	        // Store if closer than current closest
+	        if(distance < result.distance || !result.hasHit){
+	            this.hasHit = true;
+	            result.hasHit = true;
+	            result.set(
+	                from,
+	                to,
+	                normal,
+	                hitPointWorld,
+	                shape,
+	                body,
+	                distance
+	            );
+	        }
+	        break;
+
+	    case Ray.ANY:
+
+	        // Report and stop.
+	        this.hasHit = true;
+	        result.hasHit = true;
+	        result.set(
+	            from,
+	            to,
+	            normal,
+	            hitPointWorld,
+	            shape,
+	            body,
+	            distance
+	        );
+	        result._shouldStop = true;
+	        break;
+	    }
+	};
+
+	var v0 = new Vec3(),
+	    intersect = new Vec3();
+	function distanceFromIntersection(from, direction, position) {
+
+	    // v0 is vector from from to position
+	    position.vsub(from,v0);
+	    var dot = v0.dot(direction);
+
+	    // intersect = direction*dot + from
+	    direction.mult(dot,intersect);
+	    intersect.vadd(from,intersect);
+
+	    var distance = position.distanceTo(intersect);
+
+	    return distance;
 	}
 
 
+	},{"../collision/AABB":3,"../collision/RaycastResult":10,"../math/Quaternion":28,"../math/Transform":29,"../math/Vec3":30,"../shapes/Box":37,"../shapes/ConvexPolyhedron":38,"../shapes/Shape":43}],10:[function(_dereq_,module,exports){
+	var Vec3 = _dereq_('../math/Vec3');
+
+	module.exports = RaycastResult;
+
+	/**
+	 * Storage for Ray casting data.
+	 * @class RaycastResult
+	 * @constructor
+	 */
+	function RaycastResult(){
+
+		/**
+		 * @property {Vec3} rayFromWorld
+		 */
+		this.rayFromWorld = new Vec3();
+
+		/**
+		 * @property {Vec3} rayToWorld
+		 */
+		this.rayToWorld = new Vec3();
+
+		/**
+		 * @property {Vec3} hitNormalWorld
+		 */
+		this.hitNormalWorld = new Vec3();
+
+		/**
+		 * @property {Vec3} hitPointWorld
+		 */
+		this.hitPointWorld = new Vec3();
+
+		/**
+		 * @property {boolean} hasHit
+		 */
+		this.hasHit = false;
+
+		/**
+		 * The hit shape, or null.
+		 * @property {Shape} shape
+		 */
+		this.shape = null;
+
+		/**
+		 * The hit body, or null.
+		 * @property {Body} body
+		 */
+		this.body = null;
+
+		/**
+		 * The index of the hit triangle, if the hit shape was a trimesh.
+		 * @property {number} hitFaceIndex
+		 * @default -1
+		 */
+		this.hitFaceIndex = -1;
+
+		/**
+		 * Distance to the hit. Will be set to -1 if there was no hit.
+		 * @property {number} distance
+		 * @default -1
+		 */
+		this.distance = -1;
+
+		/**
+		 * If the ray should stop traversing the bodies.
+		 * @private
+		 * @property {Boolean} _shouldStop
+		 * @default false
+		 */
+		this._shouldStop = false;
+	}
+
+	/**
+	 * Reset all result data.
+	 * @method reset
+	 */
+	RaycastResult.prototype.reset = function () {
+		this.rayFromWorld.setZero();
+		this.rayToWorld.setZero();
+		this.hitNormalWorld.setZero();
+		this.hitPointWorld.setZero();
+		this.hasHit = false;
+		this.shape = null;
+		this.body = null;
+		this.hitFaceIndex = -1;
+		this.distance = -1;
+		this._shouldStop = false;
+	};
+
+	/**
+	 * @method abort
+	 */
+	RaycastResult.prototype.abort = function(){
+		this._shouldStop = true;
+	};
+
+	/**
+	 * @method set
+	 * @param {Vec3} rayFromWorld
+	 * @param {Vec3} rayToWorld
+	 * @param {Vec3} hitNormalWorld
+	 * @param {Vec3} hitPointWorld
+	 * @param {Shape} shape
+	 * @param {Body} body
+	 * @param {number} distance
+	 */
+	RaycastResult.prototype.set = function(
+		rayFromWorld,
+		rayToWorld,
+		hitNormalWorld,
+		hitPointWorld,
+		shape,
+		body,
+		distance
+	){
+		this.rayFromWorld.copy(rayFromWorld);
+		this.rayToWorld.copy(rayToWorld);
+		this.hitNormalWorld.copy(hitNormalWorld);
+		this.hitPointWorld.copy(hitPointWorld);
+		this.shape = shape;
+		this.body = body;
+		this.distance = distance;
+	};
+	},{"../math/Vec3":30}],11:[function(_dereq_,module,exports){
+	var Shape = _dereq_('../shapes/Shape');
+	var Broadphase = _dereq_('../collision/Broadphase');
+
+	module.exports = SAPBroadphase;
+
+	/**
+	 * Sweep and prune broadphase along one axis.
+	 *
+	 * @class SAPBroadphase
+	 * @constructor
+	 * @param {World} [world]
+	 * @extends Broadphase
+	 */
+	function SAPBroadphase(world){
+	    Broadphase.apply(this);
+
+	    /**
+	     * List of bodies currently in the broadphase.
+	     * @property axisList
+	     * @type {Array}
+	     */
+	    this.axisList = [];
+
+	    /**
+	     * The world to search in.
+	     * @property world
+	     * @type {World}
+	     */
+	    this.world = null;
+
+	    /**
+	     * Axis to sort the bodies along. Set to 0 for x axis, and 1 for y axis. For best performance, choose an axis that the bodies are spread out more on.
+	     * @property axisIndex
+	     * @type {Number}
+	     */
+	    this.axisIndex = 0;
+
+	    var axisList = this.axisList;
+
+	    this._addBodyHandler = function(e){
+	        axisList.push(e.body);
+	    };
+
+	    this._removeBodyHandler = function(e){
+	        var idx = axisList.indexOf(e.body);
+	        if(idx !== -1){
+	            axisList.splice(idx,1);
+	        }
+	    };
+
+	    if(world){
+	        this.setWorld(world);
+	    }
+	}
+	SAPBroadphase.prototype = new Broadphase();
+
+	/**
+	 * Change the world
+	 * @method setWorld
+	 * @param  {World} world
+	 */
+	SAPBroadphase.prototype.setWorld = function(world){
+	    // Clear the old axis array
+	    this.axisList.length = 0;
+
+	    // Add all bodies from the new world
+	    for(var i=0; i<world.bodies.length; i++){
+	        this.axisList.push(world.bodies[i]);
+	    }
+
+	    // Remove old handlers, if any
+	    world.removeEventListener("addBody", this._addBodyHandler);
+	    world.removeEventListener("removeBody", this._removeBodyHandler);
+
+	    // Add handlers to update the list of bodies.
+	    world.addEventListener("addBody", this._addBodyHandler);
+	    world.addEventListener("removeBody", this._removeBodyHandler);
+
+	    this.world = world;
+	    this.dirty = true;
+	};
+
+	/**
+	 * @static
+	 * @method insertionSortX
+	 * @param  {Array} a
+	 * @return {Array}
+	 */
+	SAPBroadphase.insertionSortX = function(a) {
+	    for(var i=1,l=a.length;i<l;i++) {
+	        var v = a[i];
+	        for(var j=i - 1;j>=0;j--) {
+	            if(a[j].aabb.lowerBound.x <= v.aabb.lowerBound.x){
+	                break;
+	            }
+	            a[j+1] = a[j];
+	        }
+	        a[j+1] = v;
+	    }
+	    return a;
+	};
+
+	/**
+	 * @static
+	 * @method insertionSortY
+	 * @param  {Array} a
+	 * @return {Array}
+	 */
+	SAPBroadphase.insertionSortY = function(a) {
+	    for(var i=1,l=a.length;i<l;i++) {
+	        var v = a[i];
+	        for(var j=i - 1;j>=0;j--) {
+	            if(a[j].aabb.lowerBound.y <= v.aabb.lowerBound.y){
+	                break;
+	            }
+	            a[j+1] = a[j];
+	        }
+	        a[j+1] = v;
+	    }
+	    return a;
+	};
+
+	/**
+	 * @static
+	 * @method insertionSortZ
+	 * @param  {Array} a
+	 * @return {Array}
+	 */
+	SAPBroadphase.insertionSortZ = function(a) {
+	    for(var i=1,l=a.length;i<l;i++) {
+	        var v = a[i];
+	        for(var j=i - 1;j>=0;j--) {
+	            if(a[j].aabb.lowerBound.z <= v.aabb.lowerBound.z){
+	                break;
+	            }
+	            a[j+1] = a[j];
+	        }
+	        a[j+1] = v;
+	    }
+	    return a;
+	};
+
+	/**
+	 * Collect all collision pairs
+	 * @method collisionPairs
+	 * @param  {World} world
+	 * @param  {Array} p1
+	 * @param  {Array} p2
+	 */
+	SAPBroadphase.prototype.collisionPairs = function(world,p1,p2){
+	    var bodies = this.axisList,
+	        N = bodies.length,
+	        axisIndex = this.axisIndex,
+	        i, j;
+
+	    if(this.dirty){
+	        this.sortList();
+	        this.dirty = false;
+	    }
+
+	    // Look through the list
+	    for(i=0; i !== N; i++){
+	        var bi = bodies[i];
+
+	        for(j=i+1; j < N; j++){
+	            var bj = bodies[j];
+
+	            if(!this.needBroadphaseCollision(bi,bj)){
+	                continue;
+	            }
+
+	            if(!SAPBroadphase.checkBounds(bi,bj,axisIndex)){
+	                break;
+	            }
+
+	            this.intersectionTest(bi,bj,p1,p2);
+	        }
+	    }
+	};
+
+	SAPBroadphase.prototype.sortList = function(){
+	    var axisList = this.axisList;
+	    var axisIndex = this.axisIndex;
+	    var N = axisList.length;
+
+	    // Update AABBs
+	    for(var i = 0; i!==N; i++){
+	        var bi = axisList[i];
+	        if(bi.aabbNeedsUpdate){
+	            bi.computeAABB();
+	        }
+	    }
+
+	    // Sort the list
+	    if(axisIndex === 0){
+	        SAPBroadphase.insertionSortX(axisList);
+	    } else if(axisIndex === 1){
+	        SAPBroadphase.insertionSortY(axisList);
+	    } else if(axisIndex === 2){
+	        SAPBroadphase.insertionSortZ(axisList);
+	    }
+	};
+
+	/**
+	 * Check if the bounds of two bodies overlap, along the given SAP axis.
+	 * @static
+	 * @method checkBounds
+	 * @param  {Body} bi
+	 * @param  {Body} bj
+	 * @param  {Number} axisIndex
+	 * @return {Boolean}
+	 */
+	SAPBroadphase.checkBounds = function(bi, bj, axisIndex){
+	    var biPos;
+	    var bjPos;
+
+	    if(axisIndex === 0){
+	        biPos = bi.position.x;
+	        bjPos = bj.position.x;
+	    } else if(axisIndex === 1){
+	        biPos = bi.position.y;
+	        bjPos = bj.position.y;
+	    } else if(axisIndex === 2){
+	        biPos = bi.position.z;
+	        bjPos = bj.position.z;
+	    }
+
+	    var ri = bi.boundingRadius,
+	        rj = bj.boundingRadius,
+	        boundA1 = biPos - ri,
+	        boundA2 = biPos + ri,
+	        boundB1 = bjPos - rj,
+	        boundB2 = bjPos + rj;
+
+	    return boundB1 < boundA2;
+	};
+
+	/**
+	 * Computes the variance of the body positions and estimates the best
+	 * axis to use. Will automatically set property .axisIndex.
+	 * @method autoDetectAxis
+	 */
+	SAPBroadphase.prototype.autoDetectAxis = function(){
+	    var sumX=0,
+	        sumX2=0,
+	        sumY=0,
+	        sumY2=0,
+	        sumZ=0,
+	        sumZ2=0,
+	        bodies = this.axisList,
+	        N = bodies.length,
+	        invN=1/N;
+
+	    for(var i=0; i!==N; i++){
+	        var b = bodies[i];
+
+	        var centerX = b.position.x;
+	        sumX += centerX;
+	        sumX2 += centerX*centerX;
+
+	        var centerY = b.position.y;
+	        sumY += centerY;
+	        sumY2 += centerY*centerY;
+
+	        var centerZ = b.position.z;
+	        sumZ += centerZ;
+	        sumZ2 += centerZ*centerZ;
+	    }
+
+	    var varianceX = sumX2 - sumX*sumX*invN,
+	        varianceY = sumY2 - sumY*sumY*invN,
+	        varianceZ = sumZ2 - sumZ*sumZ*invN;
+
+	    if(varianceX > varianceY){
+	        if(varianceX > varianceZ){
+	            this.axisIndex = 0;
+	        } else{
+	            this.axisIndex = 2;
+	        }
+	    } else if(varianceY > varianceZ){
+	        this.axisIndex = 1;
+	    } else{
+	        this.axisIndex = 2;
+	    }
+	};
+
+	/**
+	 * Returns all the bodies within an AABB.
+	 * @method aabbQuery
+	 * @param  {World} world
+	 * @param  {AABB} aabb
+	 * @param {array} result An array to store resulting bodies in.
+	 * @return {array}
+	 */
+	SAPBroadphase.prototype.aabbQuery = function(world, aabb, result){
+	    result = result || [];
+
+	    if(this.dirty){
+	        this.sortList();
+	        this.dirty = false;
+	    }
+
+	    var axisIndex = this.axisIndex, axis = 'x';
+	    if(axisIndex === 1){ axis = 'y'; }
+	    if(axisIndex === 2){ axis = 'z'; }
+
+	    var axisList = this.axisList;
+	    var lower = aabb.lowerBound[axis];
+	    var upper = aabb.upperBound[axis];
+	    for(var i = 0; i < axisList.length; i++){
+	        var b = axisList[i];
+
+	        if(b.aabbNeedsUpdate){
+	            b.computeAABB();
+	        }
+
+	        if(b.aabb.overlaps(aabb)){
+	            result.push(b);
+	        }
+	    }
+
+	    return result;
+	};
+	},{"../collision/Broadphase":5,"../shapes/Shape":43}],12:[function(_dereq_,module,exports){
+	module.exports = ConeTwistConstraint;
+
+	var Constraint = _dereq_('./Constraint');
+	var PointToPointConstraint = _dereq_('./PointToPointConstraint');
+	var ConeEquation = _dereq_('../equations/ConeEquation');
+	var RotationalEquation = _dereq_('../equations/RotationalEquation');
+	var ContactEquation = _dereq_('../equations/ContactEquation');
+	var Vec3 = _dereq_('../math/Vec3');
+
+	/**
+	 * @class ConeTwistConstraint
+	 * @constructor
+	 * @author schteppe
+	 * @param {Body} bodyA
+	 * @param {Body} bodyB
+	 * @param {object} [options]
+	 * @param {Vec3} [options.pivotA]
+	 * @param {Vec3} [options.pivotB]
+	 * @param {Vec3} [options.axisA]
+	 * @param {Vec3} [options.axisB]
+	 * @param {Number} [options.maxForce=1e6]
+	 * @extends PointToPointConstraint
+	 */
+	function ConeTwistConstraint(bodyA, bodyB, options){
+	    options = options || {};
+	    var maxForce = typeof(options.maxForce) !== 'undefined' ? options.maxForce : 1e6;
+
+	    // Set pivot point in between
+	    var pivotA = options.pivotA ? options.pivotA.clone() : new Vec3();
+	    var pivotB = options.pivotB ? options.pivotB.clone() : new Vec3();
+	    this.axisA = options.axisA ? options.axisA.clone() : new Vec3();
+	    this.axisB = options.axisB ? options.axisB.clone() : new Vec3();
+
+	    PointToPointConstraint.call(this, bodyA, pivotA, bodyB, pivotB, maxForce);
+
+	    this.collideConnected = !!options.collideConnected;
+
+	    this.angle = typeof(options.angle) !== 'undefined' ? options.angle : 0;
+
+	    /**
+	     * @property {ConeEquation} coneEquation
+	     */
+	    var c = this.coneEquation = new ConeEquation(bodyA,bodyB,options);
+
+	    /**
+	     * @property {RotationalEquation} twistEquation
+	     */
+	    var t = this.twistEquation = new RotationalEquation(bodyA,bodyB,options);
+	    this.twistAngle = typeof(options.twistAngle) !== 'undefined' ? options.twistAngle : 0;
+
+	    // Make the cone equation push the bodies toward the cone axis, not outward
+	    c.maxForce = 0;
+	    c.minForce = -maxForce;
+
+	    // Make the twist equation add torque toward the initial position
+	    t.maxForce = 0;
+	    t.minForce = -maxForce;
+
+	    this.equations.push(c, t);
+	}
+	ConeTwistConstraint.prototype = new PointToPointConstraint();
+	ConeTwistConstraint.constructor = ConeTwistConstraint;
+
+	var ConeTwistConstraint_update_tmpVec1 = new Vec3();
+	var ConeTwistConstraint_update_tmpVec2 = new Vec3();
+
+	ConeTwistConstraint.prototype.update = function(){
+	    var bodyA = this.bodyA,
+	        bodyB = this.bodyB,
+	        cone = this.coneEquation,
+	        twist = this.twistEquation;
+
+	    PointToPointConstraint.prototype.update.call(this);
+
+	    // Update the axes to the cone constraint
+	    bodyA.vectorToWorldFrame(this.axisA, cone.axisA);
+	    bodyB.vectorToWorldFrame(this.axisB, cone.axisB);
+
+	    // Update the world axes in the twist constraint
+	    this.axisA.tangents(twist.axisA, twist.axisA);
+	    bodyA.vectorToWorldFrame(twist.axisA, twist.axisA);
+
+	    this.axisB.tangents(twist.axisB, twist.axisB);
+	    bodyB.vectorToWorldFrame(twist.axisB, twist.axisB);
+
+	    cone.angle = this.angle;
+	    twist.maxAngle = this.twistAngle;
+	};
+
+
+	},{"../equations/ConeEquation":18,"../equations/ContactEquation":19,"../equations/RotationalEquation":22,"../math/Vec3":30,"./Constraint":13,"./PointToPointConstraint":17}],13:[function(_dereq_,module,exports){
+	module.exports = Constraint;
+
+	var Utils = _dereq_('../utils/Utils');
+
+	/**
+	 * Constraint base class
+	 * @class Constraint
+	 * @author schteppe
+	 * @constructor
+	 * @param {Body} bodyA
+	 * @param {Body} bodyB
+	 * @param {object} [options]
+	 * @param {boolean} [options.collideConnected=true]
+	 * @param {boolean} [options.wakeUpBodies=true]
+	 */
+	function Constraint(bodyA, bodyB, options){
+	    options = Utils.defaults(options,{
+	        collideConnected : true,
+	        wakeUpBodies : true,
+	    });
+
+	    /**
+	     * Equations to be solved in this constraint
+	     * @property equations
+	     * @type {Array}
+	     */
+	    this.equations = [];
+
+	    /**
+	     * @property {Body} bodyA
+	     */
+	    this.bodyA = bodyA;
+
+	    /**
+	     * @property {Body} bodyB
+	     */
+	    this.bodyB = bodyB;
+
+	    /**
+	     * @property {Number} id
+	     */
+	    this.id = Constraint.idCounter++;
+
+	    /**
+	     * Set to true if you want the bodies to collide when they are connected.
+	     * @property collideConnected
+	     * @type {boolean}
+	     */
+	    this.collideConnected = options.collideConnected;
+
+	    if(options.wakeUpBodies){
+	        if(bodyA){
+	            bodyA.wakeUp();
+	        }
+	        if(bodyB){
+	            bodyB.wakeUp();
+	        }
+	    }
+	}
+
+	/**
+	 * Update all the equations with data.
+	 * @method update
+	 */
+	Constraint.prototype.update = function(){
+	    throw new Error("method update() not implmemented in this Constraint subclass!");
+	};
+
+	/**
+	 * Enables all equations in the constraint.
+	 * @method enable
+	 */
+	Constraint.prototype.enable = function(){
+	    var eqs = this.equations;
+	    for(var i=0; i<eqs.length; i++){
+	        eqs[i].enabled = true;
+	    }
+	};
+
+	/**
+	 * Disables all equations in the constraint.
+	 * @method disable
+	 */
+	Constraint.prototype.disable = function(){
+	    var eqs = this.equations;
+	    for(var i=0; i<eqs.length; i++){
+	        eqs[i].enabled = false;
+	    }
+	};
+
+	Constraint.idCounter = 0;
+
+	},{"../utils/Utils":53}],14:[function(_dereq_,module,exports){
+	module.exports = DistanceConstraint;
+
+	var Constraint = _dereq_('./Constraint');
+	var ContactEquation = _dereq_('../equations/ContactEquation');
+
+	/**
+	 * Constrains two bodies to be at a constant distance from each others center of mass.
+	 * @class DistanceConstraint
+	 * @constructor
+	 * @author schteppe
+	 * @param {Body} bodyA
+	 * @param {Body} bodyB
+	 * @param {Number} [distance] The distance to keep. If undefined, it will be set to the current distance between bodyA and bodyB
+	 * @param {Number} [maxForce=1e6]
+	 * @extends Constraint
+	 */
+	function DistanceConstraint(bodyA,bodyB,distance,maxForce){
+	    Constraint.call(this,bodyA,bodyB);
+
+	    if(typeof(distance)==="undefined") {
+	        distance = bodyA.position.distanceTo(bodyB.position);
+	    }
+
+	    if(typeof(maxForce)==="undefined") {
+	        maxForce = 1e6;
+	    }
+
+	    /**
+	     * @property {number} distance
+	     */
+	    this.distance = distance;
+
+	    /**
+	     * @property {ContactEquation} distanceEquation
+	     */
+	    var eq = this.distanceEquation = new ContactEquation(bodyA, bodyB);
+	    this.equations.push(eq);
+
+	    // Make it bidirectional
+	    eq.minForce = -maxForce;
+	    eq.maxForce =  maxForce;
+	}
+	DistanceConstraint.prototype = new Constraint();
+
+	DistanceConstraint.prototype.update = function(){
+	    var bodyA = this.bodyA;
+	    var bodyB = this.bodyB;
+	    var eq = this.distanceEquation;
+	    var halfDist = this.distance * 0.5;
+	    var normal = eq.ni;
+
+	    bodyB.position.vsub(bodyA.position, normal);
+	    normal.normalize();
+	    normal.mult(halfDist, eq.ri);
+	    normal.mult(-halfDist, eq.rj);
+	};
+	},{"../equations/ContactEquation":19,"./Constraint":13}],15:[function(_dereq_,module,exports){
+	module.exports = HingeConstraint;
+
+	var Constraint = _dereq_('./Constraint');
+	var PointToPointConstraint = _dereq_('./PointToPointConstraint');
+	var RotationalEquation = _dereq_('../equations/RotationalEquation');
+	var RotationalMotorEquation = _dereq_('../equations/RotationalMotorEquation');
+	var ContactEquation = _dereq_('../equations/ContactEquation');
+	var Vec3 = _dereq_('../math/Vec3');
+
+	/**
+	 * Hinge constraint. Think of it as a door hinge. It tries to keep the door in the correct place and with the correct orientation.
+	 * @class HingeConstraint
+	 * @constructor
+	 * @author schteppe
+	 * @param {Body} bodyA
+	 * @param {Body} bodyB
+	 * @param {object} [options]
+	 * @param {Vec3} [options.pivotA] A point defined locally in bodyA. This defines the offset of axisA.
+	 * @param {Vec3} [options.axisA] An axis that bodyA can rotate around, defined locally in bodyA.
+	 * @param {Vec3} [options.pivotB]
+	 * @param {Vec3} [options.axisB]
+	 * @param {Number} [options.maxForce=1e6]
+	 * @extends PointToPointConstraint
+	 */
+	function HingeConstraint(bodyA, bodyB, options){
+	    options = options || {};
+	    var maxForce = typeof(options.maxForce) !== 'undefined' ? options.maxForce : 1e6;
+	    var pivotA = options.pivotA ? options.pivotA.clone() : new Vec3();
+	    var pivotB = options.pivotB ? options.pivotB.clone() : new Vec3();
+
+	    PointToPointConstraint.call(this, bodyA, pivotA, bodyB, pivotB, maxForce);
+
+	    /**
+	     * Rotation axis, defined locally in bodyA.
+	     * @property {Vec3} axisA
+	     */
+	    var axisA = this.axisA = options.axisA ? options.axisA.clone() : new Vec3(1,0,0);
+	    axisA.normalize();
+
+	    /**
+	     * Rotation axis, defined locally in bodyB.
+	     * @property {Vec3} axisB
+	     */
+	    var axisB = this.axisB = options.axisB ? options.axisB.clone() : new Vec3(1,0,0);
+	    axisB.normalize();
+
+	    /**
+	     * @property {RotationalEquation} rotationalEquation1
+	     */
+	    var r1 = this.rotationalEquation1 = new RotationalEquation(bodyA,bodyB,options);
+
+	    /**
+	     * @property {RotationalEquation} rotationalEquation2
+	     */
+	    var r2 = this.rotationalEquation2 = new RotationalEquation(bodyA,bodyB,options);
+
+	    /**
+	     * @property {RotationalMotorEquation} motorEquation
+	     */
+	    var motor = this.motorEquation = new RotationalMotorEquation(bodyA,bodyB,maxForce);
+	    motor.enabled = false; // Not enabled by default
+
+	    // Equations to be fed to the solver
+	    this.equations.push(
+	        r1, // rotational1
+	        r2, // rotational2
+	        motor
+	    );
+	}
+	HingeConstraint.prototype = new PointToPointConstraint();
+	HingeConstraint.constructor = HingeConstraint;
+
+	/**
+	 * @method enableMotor
+	 */
+	HingeConstraint.prototype.enableMotor = function(){
+	    this.motorEquation.enabled = true;
+	};
+
+	/**
+	 * @method disableMotor
+	 */
+	HingeConstraint.prototype.disableMotor = function(){
+	    this.motorEquation.enabled = false;
+	};
+
+	/**
+	 * @method setMotorSpeed
+	 * @param {number} speed
+	 */
+	HingeConstraint.prototype.setMotorSpeed = function(speed){
+	    this.motorEquation.targetVelocity = speed;
+	};
+
+	/**
+	 * @method setMotorMaxForce
+	 * @param {number} maxForce
+	 */
+	HingeConstraint.prototype.setMotorMaxForce = function(maxForce){
+	    this.motorEquation.maxForce = maxForce;
+	    this.motorEquation.minForce = -maxForce;
+	};
+
+	var HingeConstraint_update_tmpVec1 = new Vec3();
+	var HingeConstraint_update_tmpVec2 = new Vec3();
+
+	HingeConstraint.prototype.update = function(){
+	    var bodyA = this.bodyA,
+	        bodyB = this.bodyB,
+	        motor = this.motorEquation,
+	        r1 = this.rotationalEquation1,
+	        r2 = this.rotationalEquation2,
+	        worldAxisA = HingeConstraint_update_tmpVec1,
+	        worldAxisB = HingeConstraint_update_tmpVec2;
+
+	    var axisA = this.axisA;
+	    var axisB = this.axisB;
+
+	    PointToPointConstraint.prototype.update.call(this);
+
+	    // Get world axes
+	    bodyA.quaternion.vmult(axisA, worldAxisA);
+	    bodyB.quaternion.vmult(axisB, worldAxisB);
+
+	    worldAxisA.tangents(r1.axisA, r2.axisA);
+	    r1.axisB.copy(worldAxisB);
+	    r2.axisB.copy(worldAxisB);
+
+	    if(this.motorEquation.enabled){
+	        bodyA.quaternion.vmult(this.axisA, motor.axisA);
+	        bodyB.quaternion.vmult(this.axisB, motor.axisB);
+	    }
+	};
+
+
+	},{"../equations/ContactEquation":19,"../equations/RotationalEquation":22,"../equations/RotationalMotorEquation":23,"../math/Vec3":30,"./Constraint":13,"./PointToPointConstraint":17}],16:[function(_dereq_,module,exports){
+	module.exports = LockConstraint;
+
+	var Constraint = _dereq_('./Constraint');
+	var PointToPointConstraint = _dereq_('./PointToPointConstraint');
+	var RotationalEquation = _dereq_('../equations/RotationalEquation');
+	var RotationalMotorEquation = _dereq_('../equations/RotationalMotorEquation');
+	var ContactEquation = _dereq_('../equations/ContactEquation');
+	var Vec3 = _dereq_('../math/Vec3');
+
+	/**
+	 * Lock constraint. Will remove all degrees of freedom between the bodies.
+	 * @class LockConstraint
+	 * @constructor
+	 * @author schteppe
+	 * @param {Body} bodyA
+	 * @param {Body} bodyB
+	 * @param {object} [options]
+	 * @param {Number} [options.maxForce=1e6]
+	 * @extends PointToPointConstraint
+	 */
+	function LockConstraint(bodyA, bodyB, options){
+	    options = options || {};
+	    var maxForce = typeof(options.maxForce) !== 'undefined' ? options.maxForce : 1e6;
+
+	    // Set pivot point in between
+	    var pivotA = new Vec3();
+	    var pivotB = new Vec3();
+	    var halfWay = new Vec3();
+	    bodyA.position.vadd(bodyB.position, halfWay);
+	    halfWay.scale(0.5, halfWay);
+	    bodyB.pointToLocalFrame(halfWay, pivotB);
+	    bodyA.pointToLocalFrame(halfWay, pivotA);
+	    PointToPointConstraint.call(this, bodyA, pivotA, bodyB, pivotB, maxForce);
+
+	    /**
+	     * @property {RotationalEquation} rotationalEquation1
+	     */
+	    var r1 = this.rotationalEquation1 = new RotationalEquation(bodyA,bodyB,options);
+
+	    /**
+	     * @property {RotationalEquation} rotationalEquation2
+	     */
+	    var r2 = this.rotationalEquation2 = new RotationalEquation(bodyA,bodyB,options);
+
+	    /**
+	     * @property {RotationalEquation} rotationalEquation3
+	     */
+	    var r3 = this.rotationalEquation3 = new RotationalEquation(bodyA,bodyB,options);
+
+	    this.equations.push(r1, r2, r3);
+	}
+	LockConstraint.prototype = new PointToPointConstraint();
+	LockConstraint.constructor = LockConstraint;
+
+	var LockConstraint_update_tmpVec1 = new Vec3();
+	var LockConstraint_update_tmpVec2 = new Vec3();
+
+	LockConstraint.prototype.update = function(){
+	    var bodyA = this.bodyA,
+	        bodyB = this.bodyB,
+	        motor = this.motorEquation,
+	        r1 = this.rotationalEquation1,
+	        r2 = this.rotationalEquation2,
+	        r3 = this.rotationalEquation3,
+	        worldAxisA = LockConstraint_update_tmpVec1,
+	        worldAxisB = LockConstraint_update_tmpVec2;
+
+	    PointToPointConstraint.prototype.update.call(this);
+
+	    bodyA.vectorToWorldFrame(Vec3.UNIT_X, r1.axisA);
+	    bodyB.vectorToWorldFrame(Vec3.UNIT_Y, r1.axisB);
+
+	    bodyA.vectorToWorldFrame(Vec3.UNIT_Y, r2.axisA);
+	    bodyB.vectorToWorldFrame(Vec3.UNIT_Z, r2.axisB);
+
+	    bodyA.vectorToWorldFrame(Vec3.UNIT_Z, r3.axisA);
+	    bodyB.vectorToWorldFrame(Vec3.UNIT_X, r3.axisB);
+	};
+
+
+	},{"../equations/ContactEquation":19,"../equations/RotationalEquation":22,"../equations/RotationalMotorEquation":23,"../math/Vec3":30,"./Constraint":13,"./PointToPointConstraint":17}],17:[function(_dereq_,module,exports){
+	module.exports = PointToPointConstraint;
+
+	var Constraint = _dereq_('./Constraint');
+	var ContactEquation = _dereq_('../equations/ContactEquation');
+	var Vec3 = _dereq_('../math/Vec3');
+
+	/**
+	 * Connects two bodies at given offset points.
+	 * @class PointToPointConstraint
+	 * @extends Constraint
+	 * @constructor
+	 * @param {Body} bodyA
+	 * @param {Vec3} pivotA The point relative to the center of mass of bodyA which bodyA is constrained to.
+	 * @param {Body} bodyB Body that will be constrained in a similar way to the same point as bodyA. We will therefore get a link between bodyA and bodyB. If not specified, bodyA will be constrained to a static point.
+	 * @param {Vec3} pivotB See pivotA.
+	 * @param {Number} maxForce The maximum force that should be applied to constrain the bodies.
+	 *
+	 * @example
+	 *     var bodyA = new Body({ mass: 1 });
+	 *     var bodyB = new Body({ mass: 1 });
+	 *     bodyA.position.set(-1, 0, 0);
+	 *     bodyB.position.set(1, 0, 0);
+	 *     bodyA.addShape(shapeA);
+	 *     bodyB.addShape(shapeB);
+	 *     world.addBody(bodyA);
+	 *     world.addBody(bodyB);
+	 *     var localPivotA = new Vec3(1, 0, 0);
+	 *     var localPivotB = new Vec3(-1, 0, 0);
+	 *     var constraint = new PointToPointConstraint(bodyA, localPivotA, bodyB, localPivotB);
+	 *     world.addConstraint(constraint);
+	 */
+	function PointToPointConstraint(bodyA,pivotA,bodyB,pivotB,maxForce){
+	    Constraint.call(this,bodyA,bodyB);
+
+	    maxForce = typeof(maxForce) !== 'undefined' ? maxForce : 1e6;
+
+	    /**
+	     * Pivot, defined locally in bodyA.
+	     * @property {Vec3} pivotA
+	     */
+	    this.pivotA = pivotA ? pivotA.clone() : new Vec3();
+
+	    /**
+	     * Pivot, defined locally in bodyB.
+	     * @property {Vec3} pivotB
+	     */
+	    this.pivotB = pivotB ? pivotB.clone() : new Vec3();
+
+	    /**
+	     * @property {ContactEquation} equationX
+	     */
+	    var x = this.equationX = new ContactEquation(bodyA,bodyB);
+
+	    /**
+	     * @property {ContactEquation} equationY
+	     */
+	    var y = this.equationY = new ContactEquation(bodyA,bodyB);
+
+	    /**
+	     * @property {ContactEquation} equationZ
+	     */
+	    var z = this.equationZ = new ContactEquation(bodyA,bodyB);
+
+	    // Equations to be fed to the solver
+	    this.equations.push(x, y, z);
+
+	    // Make the equations bidirectional
+	    x.minForce = y.minForce = z.minForce = -maxForce;
+	    x.maxForce = y.maxForce = z.maxForce =  maxForce;
+
+	    x.ni.set(1, 0, 0);
+	    y.ni.set(0, 1, 0);
+	    z.ni.set(0, 0, 1);
+	}
+	PointToPointConstraint.prototype = new Constraint();
+
+	PointToPointConstraint.prototype.update = function(){
+	    var bodyA = this.bodyA;
+	    var bodyB = this.bodyB;
+	    var x = this.equationX;
+	    var y = this.equationY;
+	    var z = this.equationZ;
+
+	    // Rotate the pivots to world space
+	    bodyA.quaternion.vmult(this.pivotA,x.ri);
+	    bodyB.quaternion.vmult(this.pivotB,x.rj);
+
+	    y.ri.copy(x.ri);
+	    y.rj.copy(x.rj);
+	    z.ri.copy(x.ri);
+	    z.rj.copy(x.rj);
+	};
+	},{"../equations/ContactEquation":19,"../math/Vec3":30,"./Constraint":13}],18:[function(_dereq_,module,exports){
+	module.exports = ConeEquation;
+
+	var Vec3 = _dereq_('../math/Vec3');
+	var Mat3 = _dereq_('../math/Mat3');
+	var Equation = _dereq_('./Equation');
+
+	/**
+	 * Cone equation. Works to keep the given body world vectors aligned, or tilted within a given angle from each other.
+	 * @class ConeEquation
+	 * @constructor
+	 * @author schteppe
+	 * @param {Body} bodyA
+	 * @param {Body} bodyB
+	 * @param {Vec3} [options.axisA] Local axis in A
+	 * @param {Vec3} [options.axisB] Local axis in B
+	 * @param {Vec3} [options.angle] The "cone angle" to keep
+	 * @param {number} [options.maxForce=1e6]
+	 * @extends Equation
+	 */
+	function ConeEquation(bodyA, bodyB, options){
+	    options = options || {};
+	    var maxForce = typeof(options.maxForce) !== 'undefined' ? options.maxForce : 1e6;
+
+	    Equation.call(this,bodyA,bodyB,-maxForce, maxForce);
+
+	    this.axisA = options.axisA ? options.axisA.clone() : new Vec3(1, 0, 0);
+	    this.axisB = options.axisB ? options.axisB.clone() : new Vec3(0, 1, 0);
+
+	    /**
+	     * The cone angle to keep
+	     * @property {number} angle
+	     */
+	    this.angle = typeof(options.angle) !== 'undefined' ? options.angle : 0;
+	}
+
+	ConeEquation.prototype = new Equation();
+	ConeEquation.prototype.constructor = ConeEquation;
+
+	var tmpVec1 = new Vec3();
+	var tmpVec2 = new Vec3();
+
+	ConeEquation.prototype.computeB = function(h){
+	    var a = this.a,
+	        b = this.b,
+
+	        ni = this.axisA,
+	        nj = this.axisB,
+
+	        nixnj = tmpVec1,
+	        njxni = tmpVec2,
+
+	        GA = this.jacobianElementA,
+	        GB = this.jacobianElementB;
+
+	    // Caluclate cross products
+	    ni.cross(nj, nixnj);
+	    nj.cross(ni, njxni);
+
+	    // The angle between two vector is:
+	    // cos(theta) = a * b / (length(a) * length(b) = { len(a) = len(b) = 1 } = a * b
+
+	    // g = a * b
+	    // gdot = (b x a) * wi + (a x b) * wj
+	    // G = [0 bxa 0 axb]
+	    // W = [vi wi vj wj]
+	    GA.rotational.copy(njxni);
+	    GB.rotational.copy(nixnj);
+
+	    var g = Math.cos(this.angle) - ni.dot(nj),
+	        GW = this.computeGW(),
+	        GiMf = this.computeGiMf();
+
+	    var B = - g * a - GW * b - h * GiMf;
+
+	    return B;
+	};
+
+
+	},{"../math/Mat3":27,"../math/Vec3":30,"./Equation":20}],19:[function(_dereq_,module,exports){
+	module.exports = ContactEquation;
+
+	var Equation = _dereq_('./Equation');
+	var Vec3 = _dereq_('../math/Vec3');
+	var Mat3 = _dereq_('../math/Mat3');
+
+	/**
+	 * Contact/non-penetration constraint equation
+	 * @class ContactEquation
+	 * @constructor
+	 * @author schteppe
+	 * @param {Body} bodyA
+	 * @param {Body} bodyB
+	 * @extends Equation
+	 */
+	function ContactEquation(bodyA, bodyB, maxForce){
+	    maxForce = typeof(maxForce) !== 'undefined' ? maxForce : 1e6;
+	    Equation.call(this, bodyA, bodyB, 0, maxForce);
+
+	    /**
+	     * @property restitution
+	     * @type {Number}
+	     */
+	    this.restitution = 0.0; // "bounciness": u1 = -e*u0
+
+	    /**
+	     * World-oriented vector that goes from the center of bi to the contact point.
+	     * @property {Vec3} ri
+	     */
+	    this.ri = new Vec3();
+
+	    /**
+	     * World-oriented vector that starts in body j position and goes to the contact point.
+	     * @property {Vec3} rj
+	     */
+	    this.rj = new Vec3();
+
+	    /**
+	     * Contact normal, pointing out of body i.
+	     * @property {Vec3} ni
+	     */
+	    this.ni = new Vec3();
+	}
+
+	ContactEquation.prototype = new Equation();
+	ContactEquation.prototype.constructor = ContactEquation;
+
+	var ContactEquation_computeB_temp1 = new Vec3(); // Temp vectors
+	var ContactEquation_computeB_temp2 = new Vec3();
+	var ContactEquation_computeB_temp3 = new Vec3();
+	ContactEquation.prototype.computeB = function(h){
+	    var a = this.a,
+	        b = this.b,
+	        bi = this.bi,
+	        bj = this.bj,
+	        ri = this.ri,
+	        rj = this.rj,
+	        rixn = ContactEquation_computeB_temp1,
+	        rjxn = ContactEquation_computeB_temp2,
+
+	        vi = bi.velocity,
+	        wi = bi.angularVelocity,
+	        fi = bi.force,
+	        taui = bi.torque,
+
+	        vj = bj.velocity,
+	        wj = bj.angularVelocity,
+	        fj = bj.force,
+	        tauj = bj.torque,
+
+	        penetrationVec = ContactEquation_computeB_temp3,
+
+	        GA = this.jacobianElementA,
+	        GB = this.jacobianElementB,
+
+	        n = this.ni;
+
+	    // Caluclate cross products
+	    ri.cross(n,rixn);
+	    rj.cross(n,rjxn);
+
+	    // g = xj+rj -(xi+ri)
+	    // G = [ -ni  -rixn  ni  rjxn ]
+	    n.negate(GA.spatial);
+	    rixn.negate(GA.rotational);
+	    GB.spatial.copy(n);
+	    GB.rotational.copy(rjxn);
+
+	    // Calculate the penetration vector
+	    penetrationVec.copy(bj.position);
+	    penetrationVec.vadd(rj,penetrationVec);
+	    penetrationVec.vsub(bi.position,penetrationVec);
+	    penetrationVec.vsub(ri,penetrationVec);
+
+	    var g = n.dot(penetrationVec);
+
+	    // Compute iteration
+	    var ePlusOne = this.restitution + 1;
+	    var GW = ePlusOne * vj.dot(n) - ePlusOne * vi.dot(n) + wj.dot(rjxn) - wi.dot(rixn);
+	    var GiMf = this.computeGiMf();
+
+	    var B = - g * a - GW * b - h*GiMf;
+
+	    return B;
+	};
+
+	var ContactEquation_getImpactVelocityAlongNormal_vi = new Vec3();
+	var ContactEquation_getImpactVelocityAlongNormal_vj = new Vec3();
+	var ContactEquation_getImpactVelocityAlongNormal_xi = new Vec3();
+	var ContactEquation_getImpactVelocityAlongNormal_xj = new Vec3();
+	var ContactEquation_getImpactVelocityAlongNormal_relVel = new Vec3();
+
+	/**
+	 * Get the current relative velocity in the contact point.
+	 * @method getImpactVelocityAlongNormal
+	 * @return {number}
+	 */
+	ContactEquation.prototype.getImpactVelocityAlongNormal = function(){
+	    var vi = ContactEquation_getImpactVelocityAlongNormal_vi;
+	    var vj = ContactEquation_getImpactVelocityAlongNormal_vj;
+	    var xi = ContactEquation_getImpactVelocityAlongNormal_xi;
+	    var xj = ContactEquation_getImpactVelocityAlongNormal_xj;
+	    var relVel = ContactEquation_getImpactVelocityAlongNormal_relVel;
+
+	    this.bi.position.vadd(this.ri, xi);
+	    this.bj.position.vadd(this.rj, xj);
+
+	    this.bi.getVelocityAtWorldPoint(xi, vi);
+	    this.bj.getVelocityAtWorldPoint(xj, vj);
+
+	    vi.vsub(vj, relVel);
+
+	    return this.ni.dot(relVel);
+	};
+
+
+	},{"../math/Mat3":27,"../math/Vec3":30,"./Equation":20}],20:[function(_dereq_,module,exports){
+	module.exports = Equation;
+
+	var JacobianElement = _dereq_('../math/JacobianElement'),
+	    Vec3 = _dereq_('../math/Vec3');
+
+	/**
+	 * Equation base class
+	 * @class Equation
+	 * @constructor
+	 * @author schteppe
+	 * @param {Body} bi
+	 * @param {Body} bj
+	 * @param {Number} minForce Minimum (read: negative max) force to be applied by the constraint.
+	 * @param {Number} maxForce Maximum (read: positive max) force to be applied by the constraint.
+	 */
+	function Equation(bi,bj,minForce,maxForce){
+	    this.id = Equation.id++;
+
+	    /**
+	     * @property {number} minForce
+	     */
+	    this.minForce = typeof(minForce)==="undefined" ? -1e6 : minForce;
+
+	    /**
+	     * @property {number} maxForce
+	     */
+	    this.maxForce = typeof(maxForce)==="undefined" ? 1e6 : maxForce;
+
+	    /**
+	     * @property bi
+	     * @type {Body}
+	     */
+	    this.bi = bi;
+
+	    /**
+	     * @property bj
+	     * @type {Body}
+	     */
+	    this.bj = bj;
+
+	    /**
+	     * SPOOK parameter
+	     * @property {number} a
+	     */
+	    this.a = 0.0;
+
+	    /**
+	     * SPOOK parameter
+	     * @property {number} b
+	     */
+	    this.b = 0.0;
+
+	    /**
+	     * SPOOK parameter
+	     * @property {number} eps
+	     */
+	    this.eps = 0.0;
+
+	    /**
+	     * @property {JacobianElement} jacobianElementA
+	     */
+	    this.jacobianElementA = new JacobianElement();
+
+	    /**
+	     * @property {JacobianElement} jacobianElementB
+	     */
+	    this.jacobianElementB = new JacobianElement();
+
+	    /**
+	     * @property {boolean} enabled
+	     * @default true
+	     */
+	    this.enabled = true;
+
+	    // Set typical spook params
+	    this.setSpookParams(1e7,4,1/60);
+	}
+	Equation.prototype.constructor = Equation;
+
+	Equation.id = 0;
+
+	/**
+	 * Recalculates a,b,eps.
+	 * @method setSpookParams
+	 */
+	Equation.prototype.setSpookParams = function(stiffness,relaxation,timeStep){
+	    var d = relaxation,
+	        k = stiffness,
+	        h = timeStep;
+	    this.a = 4.0 / (h * (1 + 4 * d));
+	    this.b = (4.0 * d) / (1 + 4 * d);
+	    this.eps = 4.0 / (h * h * k * (1 + 4 * d));
+	};
+
+	/**
+	 * Computes the RHS of the SPOOK equation
+	 * @method computeB
+	 * @return {Number}
+	 */
+	Equation.prototype.computeB = function(a,b,h){
+	    var GW = this.computeGW(),
+	        Gq = this.computeGq(),
+	        GiMf = this.computeGiMf();
+	    return - Gq * a - GW * b - GiMf*h;
+	};
+
+	/**
+	 * Computes G*q, where q are the generalized body coordinates
+	 * @method computeGq
+	 * @return {Number}
+	 */
+	Equation.prototype.computeGq = function(){
+	    var GA = this.jacobianElementA,
+	        GB = this.jacobianElementB,
+	        bi = this.bi,
+	        bj = this.bj,
+	        xi = bi.position,
+	        xj = bj.position;
+	    return GA.spatial.dot(xi) + GB.spatial.dot(xj);
+	};
+
+	var zero = new Vec3();
+
+	/**
+	 * Computes G*W, where W are the body velocities
+	 * @method computeGW
+	 * @return {Number}
+	 */
+	Equation.prototype.computeGW = function(){
+	    var GA = this.jacobianElementA,
+	        GB = this.jacobianElementB,
+	        bi = this.bi,
+	        bj = this.bj,
+	        vi = bi.velocity,
+	        vj = bj.velocity,
+	        wi = bi.angularVelocity || zero,
+	        wj = bj.angularVelocity || zero;
+	    return GA.multiplyVectors(vi,wi) + GB.multiplyVectors(vj,wj);
+	};
+
+
+	/**
+	 * Computes G*Wlambda, where W are the body velocities
+	 * @method computeGWlambda
+	 * @return {Number}
+	 */
+	Equation.prototype.computeGWlambda = function(){
+	    var GA = this.jacobianElementA,
+	        GB = this.jacobianElementB,
+	        bi = this.bi,
+	        bj = this.bj,
+	        vi = bi.vlambda,
+	        vj = bj.vlambda,
+	        wi = bi.wlambda || zero,
+	        wj = bj.wlambda || zero;
+	    return GA.multiplyVectors(vi,wi) + GB.multiplyVectors(vj,wj);
+	};
+
+	/**
+	 * Computes G*inv(M)*f, where M is the mass matrix with diagonal blocks for each body, and f are the forces on the bodies.
+	 * @method computeGiMf
+	 * @return {Number}
+	 */
+	var iMfi = new Vec3(),
+	    iMfj = new Vec3(),
+	    invIi_vmult_taui = new Vec3(),
+	    invIj_vmult_tauj = new Vec3();
+	Equation.prototype.computeGiMf = function(){
+	    var GA = this.jacobianElementA,
+	        GB = this.jacobianElementB,
+	        bi = this.bi,
+	        bj = this.bj,
+	        fi = bi.force,
+	        ti = bi.torque,
+	        fj = bj.force,
+	        tj = bj.torque,
+	        invMassi = bi.invMassSolve,
+	        invMassj = bj.invMassSolve;
+
+	    if(bi.invInertiaWorldSolve){ bi.invInertiaWorldSolve.vmult(ti,invIi_vmult_taui); }
+	    else { invIi_vmult_taui.set(0,0,0); }
+	    if(bj.invInertiaWorldSolve){ bj.invInertiaWorldSolve.vmult(tj,invIj_vmult_tauj); }
+	    else { invIj_vmult_tauj.set(0,0,0); }
+
+	    fi.mult(invMassi,iMfi);
+	    fj.mult(invMassj,iMfj);
+
+	    return GA.multiplyVectors(iMfi,invIi_vmult_taui) + GB.multiplyVectors(iMfj,invIj_vmult_tauj);
+	};
+
+	/**
+	 * Computes G*inv(M)*G'
+	 * @method computeGiMGt
+	 * @return {Number}
+	 */
+	var tmp = new Vec3();
+	Equation.prototype.computeGiMGt = function(){
+	    var GA = this.jacobianElementA,
+	        GB = this.jacobianElementB,
+	        bi = this.bi,
+	        bj = this.bj,
+	        invMassi = bi.invMassSolve,
+	        invMassj = bj.invMassSolve,
+	        invIi = bi.invInertiaWorldSolve,
+	        invIj = bj.invInertiaWorldSolve,
+	        result = invMassi + invMassj;
+
+	    if(invIi){
+	        invIi.vmult(GA.rotational,tmp);
+	        result += tmp.dot(GA.rotational);
+	    }
+
+	    if(invIj){
+	        invIj.vmult(GB.rotational,tmp);
+	        result += tmp.dot(GB.rotational);
+	    }
+
+	    return  result;
+	};
+
+	var addToWlambda_temp = new Vec3(),
+	    addToWlambda_Gi = new Vec3(),
+	    addToWlambda_Gj = new Vec3(),
+	    addToWlambda_ri = new Vec3(),
+	    addToWlambda_rj = new Vec3(),
+	    addToWlambda_Mdiag = new Vec3();
+
+	/**
+	 * Add constraint velocity to the bodies.
+	 * @method addToWlambda
+	 * @param {Number} deltalambda
+	 */
+	Equation.prototype.addToWlambda = function(deltalambda){
+	    var GA = this.jacobianElementA,
+	        GB = this.jacobianElementB,
+	        bi = this.bi,
+	        bj = this.bj,
+	        temp = addToWlambda_temp;
+
+	    // Add to linear velocity
+	    // v_lambda += inv(M) * delta_lamba * G
+	    GA.spatial.mult(bi.invMassSolve * deltalambda,temp);
+	    bi.vlambda.vadd(temp, bi.vlambda);
+
+	    GB.spatial.mult(bj.invMassSolve * deltalambda,temp);
+	    bj.vlambda.vadd(temp, bj.vlambda);
+
+	    // Add to angular velocity
+	    if(bi.invInertiaWorldSolve){
+	        bi.invInertiaWorldSolve.vmult(GA.rotational,temp);
+	        temp.mult(deltalambda,temp);
+	        bi.wlambda.vadd(temp,bi.wlambda);
+	    }
+
+	    if(bj.invInertiaWorldSolve){
+	        bj.invInertiaWorldSolve.vmult(GB.rotational,temp);
+	        temp.mult(deltalambda,temp);
+	        bj.wlambda.vadd(temp,bj.wlambda);
+	    }
+	};
+
+	/**
+	 * Compute the denominator part of the SPOOK equation: C = G*inv(M)*G' + eps
+	 * @method computeInvC
+	 * @param  {Number} eps
+	 * @return {Number}
+	 */
+	Equation.prototype.computeC = function(){
+	    return this.computeGiMGt() + this.eps;
+	};
+
+	},{"../math/JacobianElement":26,"../math/Vec3":30}],21:[function(_dereq_,module,exports){
+	module.exports = FrictionEquation;
+
+	var Equation = _dereq_('./Equation');
+	var Vec3 = _dereq_('../math/Vec3');
+	var Mat3 = _dereq_('../math/Mat3');
+
+	/**
+	 * Constrains the slipping in a contact along a tangent
+	 * @class FrictionEquation
+	 * @constructor
+	 * @author schteppe
+	 * @param {Body} bodyA
+	 * @param {Body} bodyB
+	 * @param {Number} slipForce should be +-F_friction = +-mu * F_normal = +-mu * m * g
+	 * @extends Equation
+	 */
+	function FrictionEquation(bodyA, bodyB, slipForce){
+	    Equation.call(this,bodyA, bodyB, -slipForce, slipForce);
+	    this.ri = new Vec3();
+	    this.rj = new Vec3();
+	    this.t = new Vec3(); // tangent
+	}
+
+	FrictionEquation.prototype = new Equation();
+	FrictionEquation.prototype.constructor = FrictionEquation;
+
+	var FrictionEquation_computeB_temp1 = new Vec3();
+	var FrictionEquation_computeB_temp2 = new Vec3();
+	FrictionEquation.prototype.computeB = function(h){
+	    var a = this.a,
+	        b = this.b,
+	        bi = this.bi,
+	        bj = this.bj,
+	        ri = this.ri,
+	        rj = this.rj,
+	        rixt = FrictionEquation_computeB_temp1,
+	        rjxt = FrictionEquation_computeB_temp2,
+	        t = this.t;
+
+	    // Caluclate cross products
+	    ri.cross(t,rixt);
+	    rj.cross(t,rjxt);
+
+	    // G = [-t -rixt t rjxt]
+	    // And remember, this is a pure velocity constraint, g is always zero!
+	    var GA = this.jacobianElementA,
+	        GB = this.jacobianElementB;
+	    t.negate(GA.spatial);
+	    rixt.negate(GA.rotational);
+	    GB.spatial.copy(t);
+	    GB.rotational.copy(rjxt);
+
+	    var GW = this.computeGW();
+	    var GiMf = this.computeGiMf();
+
+	    var B = - GW * b - h * GiMf;
+
+	    return B;
+	};
+
+	},{"../math/Mat3":27,"../math/Vec3":30,"./Equation":20}],22:[function(_dereq_,module,exports){
+	module.exports = RotationalEquation;
+
+	var Vec3 = _dereq_('../math/Vec3');
+	var Mat3 = _dereq_('../math/Mat3');
+	var Equation = _dereq_('./Equation');
+
+	/**
+	 * Rotational constraint. Works to keep the local vectors orthogonal to each other in world space.
+	 * @class RotationalEquation
+	 * @constructor
+	 * @author schteppe
+	 * @param {Body} bodyA
+	 * @param {Body} bodyB
+	 * @param {Vec3} [options.axisA]
+	 * @param {Vec3} [options.axisB]
+	 * @param {number} [options.maxForce]
+	 * @extends Equation
+	 */
+	function RotationalEquation(bodyA, bodyB, options){
+	    options = options || {};
+	    var maxForce = typeof(options.maxForce) !== 'undefined' ? options.maxForce : 1e6;
+
+	    Equation.call(this,bodyA,bodyB,-maxForce, maxForce);
+
+	    this.axisA = options.axisA ? options.axisA.clone() : new Vec3(1, 0, 0);
+	    this.axisB = options.axisB ? options.axisB.clone() : new Vec3(0, 1, 0);
+
+	    this.maxAngle = Math.PI / 2;
+	}
+
+	RotationalEquation.prototype = new Equation();
+	RotationalEquation.prototype.constructor = RotationalEquation;
+
+	var tmpVec1 = new Vec3();
+	var tmpVec2 = new Vec3();
+
+	RotationalEquation.prototype.computeB = function(h){
+	    var a = this.a,
+	        b = this.b,
+
+	        ni = this.axisA,
+	        nj = this.axisB,
+
+	        nixnj = tmpVec1,
+	        njxni = tmpVec2,
+
+	        GA = this.jacobianElementA,
+	        GB = this.jacobianElementB;
+
+	    // Caluclate cross products
+	    ni.cross(nj, nixnj);
+	    nj.cross(ni, njxni);
+
+	    // g = ni * nj
+	    // gdot = (nj x ni) * wi + (ni x nj) * wj
+	    // G = [0 njxni 0 nixnj]
+	    // W = [vi wi vj wj]
+	    GA.rotational.copy(njxni);
+	    GB.rotational.copy(nixnj);
+
+	    var g = Math.cos(this.maxAngle) - ni.dot(nj),
+	        GW = this.computeGW(),
+	        GiMf = this.computeGiMf();
+
+	    var B = - g * a - GW * b - h * GiMf;
+
+	    return B;
+	};
+
+
+	},{"../math/Mat3":27,"../math/Vec3":30,"./Equation":20}],23:[function(_dereq_,module,exports){
+	module.exports = RotationalMotorEquation;
+
+	var Vec3 = _dereq_('../math/Vec3');
+	var Mat3 = _dereq_('../math/Mat3');
+	var Equation = _dereq_('./Equation');
+
+	/**
+	 * Rotational motor constraint. Tries to keep the relative angular velocity of the bodies to a given value.
+	 * @class RotationalMotorEquation
+	 * @constructor
+	 * @author schteppe
+	 * @param {Body} bodyA
+	 * @param {Body} bodyB
+	 * @param {Number} maxForce
+	 * @extends Equation
+	 */
+	function RotationalMotorEquation(bodyA, bodyB, maxForce){
+	    maxForce = typeof(maxForce)!=='undefined' ? maxForce : 1e6;
+	    Equation.call(this,bodyA,bodyB,-maxForce,maxForce);
+
+	    /**
+	     * World oriented rotational axis
+	     * @property {Vec3} axisA
+	     */
+	    this.axisA = new Vec3();
+
+	    /**
+	     * World oriented rotational axis
+	     * @property {Vec3} axisB
+	     */
+	    this.axisB = new Vec3(); // World oriented rotational axis
+
+	    /**
+	     * Motor velocity
+	     * @property {Number} targetVelocity
+	     */
+	    this.targetVelocity = 0;
+	}
+
+	RotationalMotorEquation.prototype = new Equation();
+	RotationalMotorEquation.prototype.constructor = RotationalMotorEquation;
+
+	RotationalMotorEquation.prototype.computeB = function(h){
+	    var a = this.a,
+	        b = this.b,
+	        bi = this.bi,
+	        bj = this.bj,
+
+	        axisA = this.axisA,
+	        axisB = this.axisB,
+
+	        GA = this.jacobianElementA,
+	        GB = this.jacobianElementB;
+
+	    // g = 0
+	    // gdot = axisA * wi - axisB * wj
+	    // gdot = G * W = G * [vi wi vj wj]
+	    // =>
+	    // G = [0 axisA 0 -axisB]
+
+	    GA.rotational.copy(axisA);
+	    axisB.negate(GB.rotational);
+
+	    var GW = this.computeGW() - this.targetVelocity,
+	        GiMf = this.computeGiMf();
+
+	    var B = - GW * b - h * GiMf;
+
+	    return B;
+	};
+
+	},{"../math/Mat3":27,"../math/Vec3":30,"./Equation":20}],24:[function(_dereq_,module,exports){
+	var Utils = _dereq_('../utils/Utils');
+
+	module.exports = ContactMaterial;
+
+	/**
+	 * Defines what happens when two materials meet.
+	 * @class ContactMaterial
+	 * @constructor
+	 * @param {Material} m1
+	 * @param {Material} m2
+	 * @param {object} [options]
+	 * @param {Number} [options.friction=0.3]
+	 * @param {Number} [options.restitution=0.3]
+	 * @param {number} [options.contactEquationStiffness=1e7]
+	 * @param {number} [options.contactEquationRelaxation=3]
+	 * @param {number} [options.frictionEquationStiffness=1e7]
+	 * @param {Number} [options.frictionEquationRelaxation=3]
+	 */
+	function ContactMaterial(m1, m2, options){
+	    options = Utils.defaults(options, {
+	        friction: 0.3,
+	        restitution: 0.3,
+	        contactEquationStiffness: 1e7,
+	        contactEquationRelaxation: 3,
+	        frictionEquationStiffness: 1e7,
+	        frictionEquationRelaxation: 3
+	    });
+
+	    /**
+	     * Identifier of this material
+	     * @property {Number} id
+	     */
+	    this.id = ContactMaterial.idCounter++;
+
+	    /**
+	     * Participating materials
+	     * @property {Array} materials
+	     * @todo  Should be .materialA and .materialB instead
+	     */
+	    this.materials = [m1, m2];
+
+	    /**
+	     * Friction coefficient
+	     * @property {Number} friction
+	     */
+	    this.friction = options.friction;
+
+	    /**
+	     * Restitution coefficient
+	     * @property {Number} restitution
+	     */
+	    this.restitution = options.restitution;
+
+	    /**
+	     * Stiffness of the produced contact equations
+	     * @property {Number} contactEquationStiffness
+	     */
+	    this.contactEquationStiffness = options.contactEquationStiffness;
+
+	    /**
+	     * Relaxation time of the produced contact equations
+	     * @property {Number} contactEquationRelaxation
+	     */
+	    this.contactEquationRelaxation = options.contactEquationRelaxation;
+
+	    /**
+	     * Stiffness of the produced friction equations
+	     * @property {Number} frictionEquationStiffness
+	     */
+	    this.frictionEquationStiffness = options.frictionEquationStiffness;
+
+	    /**
+	     * Relaxation time of the produced friction equations
+	     * @property {Number} frictionEquationRelaxation
+	     */
+	    this.frictionEquationRelaxation = options.frictionEquationRelaxation;
+	}
+
+	ContactMaterial.idCounter = 0;
+
+	},{"../utils/Utils":53}],25:[function(_dereq_,module,exports){
+	module.exports = Material;
+
+	/**
+	 * Defines a physics material.
+	 * @class Material
+	 * @constructor
+	 * @param {object} [options]
+	 * @author schteppe
+	 */
+	function Material(options){
+	    var name = '';
+	    options = options || {};
+
+	    // Backwards compatibility fix
+	    if(typeof(options) === 'string'){
+	        name = options;
+	        options = {};
+	    } else if(typeof(options) === 'object') {
+	        name = '';
+	    }
+
+	    /**
+	     * @property name
+	     * @type {String}
+	     */
+	    this.name = name;
+
+	    /**
+	     * material id.
+	     * @property id
+	     * @type {number}
+	     */
+	    this.id = Material.idCounter++;
+
+	    /**
+	     * Friction for this material. If non-negative, it will be used instead of the friction given by ContactMaterials. If there's no matching ContactMaterial, the value from .defaultContactMaterial in the World will be used.
+	     * @property {number} friction
+	     */
+	    this.friction = typeof(options.friction) !== 'undefined' ? options.friction : -1;
+
+	    /**
+	     * Restitution for this material. If non-negative, it will be used instead of the restitution given by ContactMaterials. If there's no matching ContactMaterial, the value from .defaultContactMaterial in the World will be used.
+	     * @property {number} restitution
+	     */
+	    this.restitution = typeof(options.restitution) !== 'undefined' ? options.restitution : -1;
+	}
+
+	Material.idCounter = 0;
+
+	},{}],26:[function(_dereq_,module,exports){
+	module.exports = JacobianElement;
+
+	var Vec3 = _dereq_('./Vec3');
+
+	/**
+	 * An element containing 6 entries, 3 spatial and 3 rotational degrees of freedom.
+	 * @class JacobianElement
+	 * @constructor
+	 */
+	function JacobianElement(){
+
+	    /**
+	     * @property {Vec3} spatial
+	     */
+	    this.spatial = new Vec3();
+
+	    /**
+	     * @property {Vec3} rotational
+	     */
+	    this.rotational = new Vec3();
+	}
+
+	/**
+	 * Multiply with other JacobianElement
+	 * @method multiplyElement
+	 * @param  {JacobianElement} element
+	 * @return {Number}
+	 */
+	JacobianElement.prototype.multiplyElement = function(element){
+	    return element.spatial.dot(this.spatial) + element.rotational.dot(this.rotational);
+	};
+
+	/**
+	 * Multiply with two vectors
+	 * @method multiplyVectors
+	 * @param  {Vec3} spatial
+	 * @param  {Vec3} rotational
+	 * @return {Number}
+	 */
+	JacobianElement.prototype.multiplyVectors = function(spatial,rotational){
+	    return spatial.dot(this.spatial) + rotational.dot(this.rotational);
+	};
+
+	},{"./Vec3":30}],27:[function(_dereq_,module,exports){
+	module.exports = Mat3;
+
+	var Vec3 = _dereq_('./Vec3');
+
+	/**
+	 * A 3x3 matrix.
+	 * @class Mat3
+	 * @constructor
+	 * @param array elements Array of nine elements. Optional.
+	 * @author schteppe / http://github.com/schteppe
+	 */
+	function Mat3(elements){
+	    /**
+	     * A vector of length 9, containing all matrix elements
+	     * @property {Array} elements
+	     */
+	    if(elements){
+	        this.elements = elements;
+	    } else {
+	        this.elements = [0,0,0,0,0,0,0,0,0];
+	    }
+	}
+
+	/**
+	 * Sets the matrix to identity
+	 * @method identity
+	 * @todo Should perhaps be renamed to setIdentity() to be more clear.
+	 * @todo Create another function that immediately creates an identity matrix eg. eye()
+	 */
+	Mat3.prototype.identity = function(){
+	    var e = this.elements;
+	    e[0] = 1;
+	    e[1] = 0;
+	    e[2] = 0;
+
+	    e[3] = 0;
+	    e[4] = 1;
+	    e[5] = 0;
+
+	    e[6] = 0;
+	    e[7] = 0;
+	    e[8] = 1;
+	};
+
+	/**
+	 * Set all elements to zero
+	 * @method setZero
+	 */
+	Mat3.prototype.setZero = function(){
+	    var e = this.elements;
+	    e[0] = 0;
+	    e[1] = 0;
+	    e[2] = 0;
+	    e[3] = 0;
+	    e[4] = 0;
+	    e[5] = 0;
+	    e[6] = 0;
+	    e[7] = 0;
+	    e[8] = 0;
+	};
+
+	/**
+	 * Sets the matrix diagonal elements from a Vec3
+	 * @method setTrace
+	 * @param {Vec3} vec3
+	 */
+	Mat3.prototype.setTrace = function(vec3){
+	    var e = this.elements;
+	    e[0] = vec3.x;
+	    e[4] = vec3.y;
+	    e[8] = vec3.z;
+	};
+
+	/**
+	 * Gets the matrix diagonal elements
+	 * @method getTrace
+	 * @return {Vec3}
+	 */
+	Mat3.prototype.getTrace = function(target){
+	    var target = target || new Vec3();
+	    var e = this.elements;
+	    target.x = e[0];
+	    target.y = e[4];
+	    target.z = e[8];
+	};
+
+	/**
+	 * Matrix-Vector multiplication
+	 * @method vmult
+	 * @param {Vec3} v The vector to multiply with
+	 * @param {Vec3} target Optional, target to save the result in.
+	 */
+	Mat3.prototype.vmult = function(v,target){
+	    target = target || new Vec3();
+
+	    var e = this.elements,
+	        x = v.x,
+	        y = v.y,
+	        z = v.z;
+	    target.x = e[0]*x + e[1]*y + e[2]*z;
+	    target.y = e[3]*x + e[4]*y + e[5]*z;
+	    target.z = e[6]*x + e[7]*y + e[8]*z;
+
+	    return target;
+	};
+
+	/**
+	 * Matrix-scalar multiplication
+	 * @method smult
+	 * @param {Number} s
+	 */
+	Mat3.prototype.smult = function(s){
+	    for(var i=0; i<this.elements.length; i++){
+	        this.elements[i] *= s;
+	    }
+	};
+
+	/**
+	 * Matrix multiplication
+	 * @method mmult
+	 * @param {Mat3} m Matrix to multiply with from left side.
+	 * @return {Mat3} The result.
+	 */
+	Mat3.prototype.mmult = function(m,target){
+	    var r = target || new Mat3();
+	    for(var i=0; i<3; i++){
+	        for(var j=0; j<3; j++){
+	            var sum = 0.0;
+	            for(var k=0; k<3; k++){
+	                sum += m.elements[i+k*3] * this.elements[k+j*3];
+	            }
+	            r.elements[i+j*3] = sum;
+	        }
+	    }
+	    return r;
+	};
+
+	/**
+	 * Scale each column of the matrix
+	 * @method scale
+	 * @param {Vec3} v
+	 * @return {Mat3} The result.
+	 */
+	Mat3.prototype.scale = function(v,target){
+	    target = target || new Mat3();
+	    var e = this.elements,
+	        t = target.elements;
+	    for(var i=0; i!==3; i++){
+	        t[3*i + 0] = v.x * e[3*i + 0];
+	        t[3*i + 1] = v.y * e[3*i + 1];
+	        t[3*i + 2] = v.z * e[3*i + 2];
+	    }
+	    return target;
+	};
+
+	/**
+	 * Solve Ax=b
+	 * @method solve
+	 * @param {Vec3} b The right hand side
+	 * @param {Vec3} target Optional. Target vector to save in.
+	 * @return {Vec3} The solution x
+	 * @todo should reuse arrays
+	 */
+	Mat3.prototype.solve = function(b,target){
+	    target = target || new Vec3();
+
+	    // Construct equations
+	    var nr = 3; // num rows
+	    var nc = 4; // num cols
+	    var eqns = [];
+	    for(var i=0; i<nr*nc; i++){
+	        eqns.push(0);
+	    }
+	    var i,j;
+	    for(i=0; i<3; i++){
+	        for(j=0; j<3; j++){
+	            eqns[i+nc*j] = this.elements[i+3*j];
+	        }
+	    }
+	    eqns[3+4*0] = b.x;
+	    eqns[3+4*1] = b.y;
+	    eqns[3+4*2] = b.z;
+
+	    // Compute right upper triangular version of the matrix - Gauss elimination
+	    var n = 3, k = n, np;
+	    var kp = 4; // num rows
+	    var p, els;
+	    do {
+	        i = k - n;
+	        if (eqns[i+nc*i] === 0) {
+	            // the pivot is null, swap lines
+	            for (j = i + 1; j < k; j++) {
+	                if (eqns[i+nc*j] !== 0) {
+	                    np = kp;
+	                    do {  // do ligne( i ) = ligne( i ) + ligne( k )
+	                        p = kp - np;
+	                        eqns[p+nc*i] += eqns[p+nc*j];
+	                    } while (--np);
+	                    break;
+	                }
+	            }
+	        }
+	        if (eqns[i+nc*i] !== 0) {
+	            for (j = i + 1; j < k; j++) {
+	                var multiplier = eqns[i+nc*j] / eqns[i+nc*i];
+	                np = kp;
+	                do {  // do ligne( k ) = ligne( k ) - multiplier * ligne( i )
+	                    p = kp - np;
+	                    eqns[p+nc*j] = p <= i ? 0 : eqns[p+nc*j] - eqns[p+nc*i] * multiplier ;
+	                } while (--np);
+	            }
+	        }
+	    } while (--n);
+
+	    // Get the solution
+	    target.z = eqns[2*nc+3] / eqns[2*nc+2];
+	    target.y = (eqns[1*nc+3] - eqns[1*nc+2]*target.z) / eqns[1*nc+1];
+	    target.x = (eqns[0*nc+3] - eqns[0*nc+2]*target.z - eqns[0*nc+1]*target.y) / eqns[0*nc+0];
+
+	    if(isNaN(target.x) || isNaN(target.y) || isNaN(target.z) || target.x===Infinity || target.y===Infinity || target.z===Infinity){
+	        throw "Could not solve equation! Got x=["+target.toString()+"], b=["+b.toString()+"], A=["+this.toString()+"]";
+	    }
+
+	    return target;
+	};
+
+	/**
+	 * Get an element in the matrix by index. Index starts at 0, not 1!!!
+	 * @method e
+	 * @param {Number} row
+	 * @param {Number} column
+	 * @param {Number} value Optional. If provided, the matrix element will be set to this value.
+	 * @return {Number}
+	 */
+	Mat3.prototype.e = function( row , column ,value){
+	    if(value===undefined){
+	        return this.elements[column+3*row];
+	    } else {
+	        // Set value
+	        this.elements[column+3*row] = value;
+	    }
+	};
+
+	/**
+	 * Copy another matrix into this matrix object.
+	 * @method copy
+	 * @param {Mat3} source
+	 * @return {Mat3} this
+	 */
+	Mat3.prototype.copy = function(source){
+	    for(var i=0; i < source.elements.length; i++){
+	        this.elements[i] = source.elements[i];
+	    }
+	    return this;
+	};
+
+	/**
+	 * Returns a string representation of the matrix.
+	 * @method toString
+	 * @return string
+	 */
+	Mat3.prototype.toString = function(){
+	    var r = "";
+	    var sep = ",";
+	    for(var i=0; i<9; i++){
+	        r += this.elements[i] + sep;
+	    }
+	    return r;
+	};
+
+	/**
+	 * reverse the matrix
+	 * @method reverse
+	 * @param {Mat3} target Optional. Target matrix to save in.
+	 * @return {Mat3} The solution x
+	 */
+	Mat3.prototype.reverse = function(target){
+
+	    target = target || new Mat3();
+
+	    // Construct equations
+	    var nr = 3; // num rows
+	    var nc = 6; // num cols
+	    var eqns = [];
+	    for(var i=0; i<nr*nc; i++){
+	        eqns.push(0);
+	    }
+	    var i,j;
+	    for(i=0; i<3; i++){
+	        for(j=0; j<3; j++){
+	            eqns[i+nc*j] = this.elements[i+3*j];
+	        }
+	    }
+	    eqns[3+6*0] = 1;
+	    eqns[3+6*1] = 0;
+	    eqns[3+6*2] = 0;
+	    eqns[4+6*0] = 0;
+	    eqns[4+6*1] = 1;
+	    eqns[4+6*2] = 0;
+	    eqns[5+6*0] = 0;
+	    eqns[5+6*1] = 0;
+	    eqns[5+6*2] = 1;
+
+	    // Compute right upper triangular version of the matrix - Gauss elimination
+	    var n = 3, k = n, np;
+	    var kp = nc; // num rows
+	    var p;
+	    do {
+	        i = k - n;
+	        if (eqns[i+nc*i] === 0) {
+	            // the pivot is null, swap lines
+	            for (j = i + 1; j < k; j++) {
+	                if (eqns[i+nc*j] !== 0) {
+	                    np = kp;
+	                    do { // do line( i ) = line( i ) + line( k )
+	                        p = kp - np;
+	                        eqns[p+nc*i] += eqns[p+nc*j];
+	                    } while (--np);
+	                    break;
+	                }
+	            }
+	        }
+	        if (eqns[i+nc*i] !== 0) {
+	            for (j = i + 1; j < k; j++) {
+	                var multiplier = eqns[i+nc*j] / eqns[i+nc*i];
+	                np = kp;
+	                do { // do line( k ) = line( k ) - multiplier * line( i )
+	                    p = kp - np;
+	                    eqns[p+nc*j] = p <= i ? 0 : eqns[p+nc*j] - eqns[p+nc*i] * multiplier ;
+	                } while (--np);
+	            }
+	        }
+	    } while (--n);
+
+	    // eliminate the upper left triangle of the matrix
+	    i = 2;
+	    do {
+	        j = i-1;
+	        do {
+	            var multiplier = eqns[i+nc*j] / eqns[i+nc*i];
+	            np = nc;
+	            do {
+	                p = nc - np;
+	                eqns[p+nc*j] =  eqns[p+nc*j] - eqns[p+nc*i] * multiplier ;
+	            } while (--np);
+	        } while (j--);
+	    } while (--i);
+
+	    // operations on the diagonal
+	    i = 2;
+	    do {
+	        var multiplier = 1 / eqns[i+nc*i];
+	        np = nc;
+	        do {
+	            p = nc - np;
+	            eqns[p+nc*i] = eqns[p+nc*i] * multiplier ;
+	        } while (--np);
+	    } while (i--);
+
+	    i = 2;
+	    do {
+	        j = 2;
+	        do {
+	            p = eqns[nr+j+nc*i];
+	            if( isNaN( p ) || p ===Infinity ){
+	                throw "Could not reverse! A=["+this.toString()+"]";
+	            }
+	            target.e( i , j , p );
+	        } while (j--);
+	    } while (i--);
+
+	    return target;
+	};
+
+	/**
+	 * Set the matrix from a quaterion
+	 * @method setRotationFromQuaternion
+	 * @param {Quaternion} q
+	 */
+	Mat3.prototype.setRotationFromQuaternion = function( q ) {
+	    var x = q.x, y = q.y, z = q.z, w = q.w,
+	        x2 = x + x, y2 = y + y, z2 = z + z,
+	        xx = x * x2, xy = x * y2, xz = x * z2,
+	        yy = y * y2, yz = y * z2, zz = z * z2,
+	        wx = w * x2, wy = w * y2, wz = w * z2,
+	        e = this.elements;
+
+	    e[3*0 + 0] = 1 - ( yy + zz );
+	    e[3*0 + 1] = xy - wz;
+	    e[3*0 + 2] = xz + wy;
+
+	    e[3*1 + 0] = xy + wz;
+	    e[3*1 + 1] = 1 - ( xx + zz );
+	    e[3*1 + 2] = yz - wx;
+
+	    e[3*2 + 0] = xz - wy;
+	    e[3*2 + 1] = yz + wx;
+	    e[3*2 + 2] = 1 - ( xx + yy );
+
+	    return this;
+	};
+
+	/**
+	 * Transpose the matrix
+	 * @method transpose
+	 * @param  {Mat3} target Where to store the result.
+	 * @return {Mat3} The target Mat3, or a new Mat3 if target was omitted.
+	 */
+	Mat3.prototype.transpose = function( target ) {
+	    target = target || new Mat3();
+
+	    var Mt = target.elements,
+	        M = this.elements;
+
+	    for(var i=0; i!==3; i++){
+	        for(var j=0; j!==3; j++){
+	            Mt[3*i + j] = M[3*j + i];
+	        }
+	    }
+
+	    return target;
+	};
+
+	},{"./Vec3":30}],28:[function(_dereq_,module,exports){
+	module.exports = Quaternion;
+
+	var Vec3 = _dereq_('./Vec3');
+
+	/**
+	 * A Quaternion describes a rotation in 3D space. The Quaternion is mathematically defined as Q = x*i + y*j + z*k + w, where (i,j,k) are imaginary basis vectors. (x,y,z) can be seen as a vector related to the axis of rotation, while the real multiplier, w, is related to the amount of rotation.
+	 * @class Quaternion
+	 * @constructor
+	 * @param {Number} x Multiplier of the imaginary basis vector i.
+	 * @param {Number} y Multiplier of the imaginary basis vector j.
+	 * @param {Number} z Multiplier of the imaginary basis vector k.
+	 * @param {Number} w Multiplier of the real part.
+	 * @see http://en.wikipedia.org/wiki/Quaternion
+	 */
+	function Quaternion(x,y,z,w){
+	    /**
+	     * @property {Number} x
+	     */
+	    this.x = x!==undefined ? x : 0;
+
+	    /**
+	     * @property {Number} y
+	     */
+	    this.y = y!==undefined ? y : 0;
+
+	    /**
+	     * @property {Number} z
+	     */
+	    this.z = z!==undefined ? z : 0;
+
+	    /**
+	     * The multiplier of the real quaternion basis vector.
+	     * @property {Number} w
+	     */
+	    this.w = w!==undefined ? w : 1;
+	}
+
+	/**
+	 * Set the value of the quaternion.
+	 * @method set
+	 * @param {Number} x
+	 * @param {Number} y
+	 * @param {Number} z
+	 * @param {Number} w
+	 */
+	Quaternion.prototype.set = function(x,y,z,w){
+	    this.x = x;
+	    this.y = y;
+	    this.z = z;
+	    this.w = w;
+	};
+
+	/**
+	 * Convert to a readable format
+	 * @method toString
+	 * @return string
+	 */
+	Quaternion.prototype.toString = function(){
+	    return this.x+","+this.y+","+this.z+","+this.w;
+	};
+
+	/**
+	 * Convert to an Array
+	 * @method toArray
+	 * @return Array
+	 */
+	Quaternion.prototype.toArray = function(){
+	    return [this.x, this.y, this.z, this.w];
+	};
+
+	/**
+	 * Set the quaternion components given an axis and an angle.
+	 * @method setFromAxisAngle
+	 * @param {Vec3} axis
+	 * @param {Number} angle in radians
+	 */
+	Quaternion.prototype.setFromAxisAngle = function(axis,angle){
+	    var s = Math.sin(angle*0.5);
+	    this.x = axis.x * s;
+	    this.y = axis.y * s;
+	    this.z = axis.z * s;
+	    this.w = Math.cos(angle*0.5);
+	};
+
+	/**
+	 * Converts the quaternion to axis/angle representation.
+	 * @method toAxisAngle
+	 * @param {Vec3} targetAxis Optional. A vector object to reuse for storing the axis.
+	 * @return Array An array, first elemnt is the axis and the second is the angle in radians.
+	 */
+	Quaternion.prototype.toAxisAngle = function(targetAxis){
+	    targetAxis = targetAxis || new Vec3();
+	    this.normalize(); // if w>1 acos and sqrt will produce errors, this cant happen if quaternion is normalised
+	    var angle = 2 * Math.acos(this.w);
+	    var s = Math.sqrt(1-this.w*this.w); // assuming quaternion normalised then w is less than 1, so term always positive.
+	    if (s < 0.001) { // test to avoid divide by zero, s is always positive due to sqrt
+	        // if s close to zero then direction of axis not important
+	        targetAxis.x = this.x; // if it is important that axis is normalised then replace with x=1; y=z=0;
+	        targetAxis.y = this.y;
+	        targetAxis.z = this.z;
+	    } else {
+	        targetAxis.x = this.x / s; // normalise axis
+	        targetAxis.y = this.y / s;
+	        targetAxis.z = this.z / s;
+	    }
+	    return [targetAxis,angle];
+	};
+
+	var sfv_t1 = new Vec3(),
+	    sfv_t2 = new Vec3();
+
+	/**
+	 * Set the quaternion value given two vectors. The resulting rotation will be the needed rotation to rotate u to v.
+	 * @method setFromVectors
+	 * @param {Vec3} u
+	 * @param {Vec3} v
+	 */
+	Quaternion.prototype.setFromVectors = function(u,v){
+	    if(u.isAntiparallelTo(v)){
+	        var t1 = sfv_t1;
+	        var t2 = sfv_t2;
+
+	        u.tangents(t1,t2);
+	        this.setFromAxisAngle(t1,Math.PI);
+	    } else {
+	        var a = u.cross(v);
+	        this.x = a.x;
+	        this.y = a.y;
+	        this.z = a.z;
+	        this.w = Math.sqrt(Math.pow(u.norm(),2) * Math.pow(v.norm(),2)) + u.dot(v);
+	        this.normalize();
+	    }
+	};
+
+	/**
+	 * Quaternion multiplication
+	 * @method mult
+	 * @param {Quaternion} q
+	 * @param {Quaternion} target Optional.
+	 * @return {Quaternion}
+	 */
+	var Quaternion_mult_va = new Vec3();
+	var Quaternion_mult_vb = new Vec3();
+	var Quaternion_mult_vaxvb = new Vec3();
+	Quaternion.prototype.mult = function(q,target){
+	    target = target || new Quaternion();
+	    var w = this.w,
+	        va = Quaternion_mult_va,
+	        vb = Quaternion_mult_vb,
+	        vaxvb = Quaternion_mult_vaxvb;
+
+	    va.set(this.x,this.y,this.z);
+	    vb.set(q.x,q.y,q.z);
+	    target.w = w*q.w - va.dot(vb);
+	    va.cross(vb,vaxvb);
+
+	    target.x = w * vb.x + q.w*va.x + vaxvb.x;
+	    target.y = w * vb.y + q.w*va.y + vaxvb.y;
+	    target.z = w * vb.z + q.w*va.z + vaxvb.z;
+
+	    return target;
+	};
+
+	/**
+	 * Get the inverse quaternion rotation.
+	 * @method inverse
+	 * @param {Quaternion} target
+	 * @return {Quaternion}
+	 */
+	Quaternion.prototype.inverse = function(target){
+	    var x = this.x, y = this.y, z = this.z, w = this.w;
+	    target = target || new Quaternion();
+
+	    this.conjugate(target);
+	    var inorm2 = 1/(x*x + y*y + z*z + w*w);
+	    target.x *= inorm2;
+	    target.y *= inorm2;
+	    target.z *= inorm2;
+	    target.w *= inorm2;
+
+	    return target;
+	};
+
+	/**
+	 * Get the quaternion conjugate
+	 * @method conjugate
+	 * @param {Quaternion} target
+	 * @return {Quaternion}
+	 */
+	Quaternion.prototype.conjugate = function(target){
+	    target = target || new Quaternion();
+
+	    target.x = -this.x;
+	    target.y = -this.y;
+	    target.z = -this.z;
+	    target.w = this.w;
+
+	    return target;
+	};
+
+	/**
+	 * Normalize the quaternion. Note that this changes the values of the quaternion.
+	 * @method normalize
+	 */
+	Quaternion.prototype.normalize = function(){
+	    var l = Math.sqrt(this.x*this.x+this.y*this.y+this.z*this.z+this.w*this.w);
+	    if ( l === 0 ) {
+	        this.x = 0;
+	        this.y = 0;
+	        this.z = 0;
+	        this.w = 0;
+	    } else {
+	        l = 1 / l;
+	        this.x *= l;
+	        this.y *= l;
+	        this.z *= l;
+	        this.w *= l;
+	    }
+	};
+
+	/**
+	 * Approximation of quaternion normalization. Works best when quat is already almost-normalized.
+	 * @method normalizeFast
+	 * @see http://jsperf.com/fast-quaternion-normalization
+	 * @author unphased, https://github.com/unphased
+	 */
+	Quaternion.prototype.normalizeFast = function () {
+	    var f = (3.0-(this.x*this.x+this.y*this.y+this.z*this.z+this.w*this.w))/2.0;
+	    if ( f === 0 ) {
+	        this.x = 0;
+	        this.y = 0;
+	        this.z = 0;
+	        this.w = 0;
+	    } else {
+	        this.x *= f;
+	        this.y *= f;
+	        this.z *= f;
+	        this.w *= f;
+	    }
+	};
+
+	/**
+	 * Multiply the quaternion by a vector
+	 * @method vmult
+	 * @param {Vec3} v
+	 * @param {Vec3} target Optional
+	 * @return {Vec3}
+	 */
+	Quaternion.prototype.vmult = function(v,target){
+	    target = target || new Vec3();
+
+	    var x = v.x,
+	        y = v.y,
+	        z = v.z;
+
+	    var qx = this.x,
+	        qy = this.y,
+	        qz = this.z,
+	        qw = this.w;
+
+	    // q*v
+	    var ix =  qw * x + qy * z - qz * y,
+	    iy =  qw * y + qz * x - qx * z,
+	    iz =  qw * z + qx * y - qy * x,
+	    iw = -qx * x - qy * y - qz * z;
+
+	    target.x = ix * qw + iw * -qx + iy * -qz - iz * -qy;
+	    target.y = iy * qw + iw * -qy + iz * -qx - ix * -qz;
+	    target.z = iz * qw + iw * -qz + ix * -qy - iy * -qx;
+
+	    return target;
+	};
+
+	/**
+	 * Copies value of source to this quaternion.
+	 * @method copy
+	 * @param {Quaternion} source
+	 * @return {Quaternion} this
+	 */
+	Quaternion.prototype.copy = function(source){
+	    this.x = source.x;
+	    this.y = source.y;
+	    this.z = source.z;
+	    this.w = source.w;
+	    return this;
+	};
+
+	/**
+	 * Convert the quaternion to euler angle representation. Order: YZX, as this page describes: http://www.euclideanspace.com/maths/standards/index.htm
+	 * @method toEuler
+	 * @param {Vec3} target
+	 * @param string order Three-character string e.g. "YZX", which also is default.
+	 */
+	Quaternion.prototype.toEuler = function(target,order){
+	    order = order || "YZX";
+
+	    var heading, attitude, bank;
+	    var x = this.x, y = this.y, z = this.z, w = this.w;
+
+	    switch(order){
+	    case "YZX":
+	        var test = x*y + z*w;
+	        if (test > 0.499) { // singularity at north pole
+	            heading = 2 * Math.atan2(x,w);
+	            attitude = Math.PI/2;
+	            bank = 0;
+	        }
+	        if (test < -0.499) { // singularity at south pole
+	            heading = -2 * Math.atan2(x,w);
+	            attitude = - Math.PI/2;
+	            bank = 0;
+	        }
+	        if(isNaN(heading)){
+	            var sqx = x*x;
+	            var sqy = y*y;
+	            var sqz = z*z;
+	            heading = Math.atan2(2*y*w - 2*x*z , 1 - 2*sqy - 2*sqz); // Heading
+	            attitude = Math.asin(2*test); // attitude
+	            bank = Math.atan2(2*x*w - 2*y*z , 1 - 2*sqx - 2*sqz); // bank
+	        }
+	        break;
+	    default:
+	        throw new Error("Euler order "+order+" not supported yet.");
+	    }
+
+	    target.y = heading;
+	    target.z = attitude;
+	    target.x = bank;
+	};
+
+	/**
+	 * See http://www.mathworks.com/matlabcentral/fileexchange/20696-function-to-convert-between-dcm-euler-angles-quaternions-and-euler-vectors/content/SpinCalc.m
+	 * @method setFromEuler
+	 * @param {Number} x
+	 * @param {Number} y
+	 * @param {Number} z
+	 * @param {String} order The order to apply angles: 'XYZ' or 'YXZ' or any other combination
+	 */
+	Quaternion.prototype.setFromEuler = function ( x, y, z, order ) {
+	    order = order || "XYZ";
+
+	    var c1 = Math.cos( x / 2 );
+	    var c2 = Math.cos( y / 2 );
+	    var c3 = Math.cos( z / 2 );
+	    var s1 = Math.sin( x / 2 );
+	    var s2 = Math.sin( y / 2 );
+	    var s3 = Math.sin( z / 2 );
+
+	    if ( order === 'XYZ' ) {
+
+	        this.x = s1 * c2 * c3 + c1 * s2 * s3;
+	        this.y = c1 * s2 * c3 - s1 * c2 * s3;
+	        this.z = c1 * c2 * s3 + s1 * s2 * c3;
+	        this.w = c1 * c2 * c3 - s1 * s2 * s3;
+
+	    } else if ( order === 'YXZ' ) {
+
+	        this.x = s1 * c2 * c3 + c1 * s2 * s3;
+	        this.y = c1 * s2 * c3 - s1 * c2 * s3;
+	        this.z = c1 * c2 * s3 - s1 * s2 * c3;
+	        this.w = c1 * c2 * c3 + s1 * s2 * s3;
+
+	    } else if ( order === 'ZXY' ) {
+
+	        this.x = s1 * c2 * c3 - c1 * s2 * s3;
+	        this.y = c1 * s2 * c3 + s1 * c2 * s3;
+	        this.z = c1 * c2 * s3 + s1 * s2 * c3;
+	        this.w = c1 * c2 * c3 - s1 * s2 * s3;
+
+	    } else if ( order === 'ZYX' ) {
+
+	        this.x = s1 * c2 * c3 - c1 * s2 * s3;
+	        this.y = c1 * s2 * c3 + s1 * c2 * s3;
+	        this.z = c1 * c2 * s3 - s1 * s2 * c3;
+	        this.w = c1 * c2 * c3 + s1 * s2 * s3;
+
+	    } else if ( order === 'YZX' ) {
+
+	        this.x = s1 * c2 * c3 + c1 * s2 * s3;
+	        this.y = c1 * s2 * c3 + s1 * c2 * s3;
+	        this.z = c1 * c2 * s3 - s1 * s2 * c3;
+	        this.w = c1 * c2 * c3 - s1 * s2 * s3;
+
+	    } else if ( order === 'XZY' ) {
+
+	        this.x = s1 * c2 * c3 - c1 * s2 * s3;
+	        this.y = c1 * s2 * c3 - s1 * c2 * s3;
+	        this.z = c1 * c2 * s3 + s1 * s2 * c3;
+	        this.w = c1 * c2 * c3 + s1 * s2 * s3;
+
+	    }
+
+	    return this;
+
+	};
+
+	Quaternion.prototype.clone = function(){
+	    return new Quaternion(this.x, this.y, this.z, this.w);
+	};
+	},{"./Vec3":30}],29:[function(_dereq_,module,exports){
+	var Vec3 = _dereq_('./Vec3');
+	var Quaternion = _dereq_('./Quaternion');
+
+	module.exports = Transform;
+
+	/**
+	 * @class Transform
+	 * @constructor
+	 */
+	function Transform(options) {
+	    options = options || {};
+
+		/**
+		 * @property {Vec3} position
+		 */
+		this.position = new Vec3();
+	    if(options.position){
+	        this.position.copy(options.position);
+	    }
+
+		/**
+		 * @property {Quaternion} quaternion
+		 */
+		this.quaternion = new Quaternion();
+	    if(options.quaternion){
+	        this.quaternion.copy(options.quaternion);
+	    }
+	}
+
+	var tmpQuat = new Quaternion();
+
+	/**
+	 * @static
+	 * @method pointToLocaFrame
+	 * @param {Vec3} position
+	 * @param {Quaternion} quaternion
+	 * @param {Vec3} worldPoint
+	 * @param {Vec3} result
+	 */
+	Transform.pointToLocalFrame = function(position, quaternion, worldPoint, result){
+	    var result = result || new Vec3();
+	    worldPoint.vsub(position, result);
+	    quaternion.conjugate(tmpQuat);
+	    tmpQuat.vmult(result, result);
+	    return result;
+	};
+
+	/**
+	 * Get a global point in local transform coordinates.
+	 * @method pointToLocal
+	 * @param  {Vec3} point
+	 * @param  {Vec3} result
+	 * @return {Vec3} The "result" vector object
+	 */
+	Transform.prototype.pointToLocal = function(worldPoint, result){
+	    return Transform.pointToLocalFrame(this.position, this.quaternion, worldPoint, result);
+	};
+
+	/**
+	 * @static
+	 * @method pointToWorldFrame
+	 * @param {Vec3} position
+	 * @param {Vec3} quaternion
+	 * @param {Vec3} localPoint
+	 * @param {Vec3} result
+	 */
+	Transform.pointToWorldFrame = function(position, quaternion, localPoint, result){
+	    var result = result || new Vec3();
+	    quaternion.vmult(localPoint, result);
+	    result.vadd(position, result);
+	    return result;
+	};
+
+	/**
+	 * Get a local point in global transform coordinates.
+	 * @method pointToWorld
+	 * @param  {Vec3} point
+	 * @param  {Vec3} result
+	 * @return {Vec3} The "result" vector object
+	 */
+	Transform.prototype.pointToWorld = function(localPoint, result){
+	    return Transform.pointToWorldFrame(this.position, this.quaternion, localPoint, result);
+	};
+
+
+	Transform.prototype.vectorToWorldFrame = function(localVector, result){
+	    var result = result || new Vec3();
+	    this.quaternion.vmult(localVector, result);
+	    return result;
+	};
+
+	Transform.vectorToWorldFrame = function(quaternion, localVector, result){
+	    quaternion.vmult(localVector, result);
+	    return result;
+	};
+
+	Transform.vectorToLocalFrame = function(position, quaternion, worldVector, result){
+	    var result = result || new Vec3();
+	    quaternion.w *= -1;
+	    quaternion.vmult(worldVector, result);
+	    quaternion.w *= -1;
+	    return result;
+	};
+
+	},{"./Quaternion":28,"./Vec3":30}],30:[function(_dereq_,module,exports){
+	module.exports = Vec3;
+
+	var Mat3 = _dereq_('./Mat3');
+
+	/**
+	 * 3-dimensional vector
+	 * @class Vec3
+	 * @constructor
+	 * @param {Number} x
+	 * @param {Number} y
+	 * @param {Number} z
+	 * @author schteppe
+	 * @example
+	 *     var v = new Vec3(1, 2, 3);
+	 *     console.log('x=' + v.x); // x=1
+	 */
+	function Vec3(x,y,z){
+	    /**
+	     * @property x
+	     * @type {Number}
+	     */
+	    this.x = x||0.0;
+
+	    /**
+	     * @property y
+	     * @type {Number}
+	     */
+	    this.y = y||0.0;
+
+	    /**
+	     * @property z
+	     * @type {Number}
+	     */
+	    this.z = z||0.0;
+	}
+
+	/**
+	 * @static
+	 * @property {Vec3} ZERO
+	 */
+	Vec3.ZERO = new Vec3(0, 0, 0);
+
+	/**
+	 * @static
+	 * @property {Vec3} UNIT_X
+	 */
+	Vec3.UNIT_X = new Vec3(1, 0, 0);
+
+	/**
+	 * @static
+	 * @property {Vec3} UNIT_Y
+	 */
+	Vec3.UNIT_Y = new Vec3(0, 1, 0);
+
+	/**
+	 * @static
+	 * @property {Vec3} UNIT_Z
+	 */
+	Vec3.UNIT_Z = new Vec3(0, 0, 1);
+
+	/**
+	 * Vector cross product
+	 * @method cross
+	 * @param {Vec3} v
+	 * @param {Vec3} target Optional. Target to save in.
+	 * @return {Vec3}
+	 */
+	Vec3.prototype.cross = function(v,target){
+	    var vx=v.x, vy=v.y, vz=v.z, x=this.x, y=this.y, z=this.z;
+	    target = target || new Vec3();
+
+	    target.x = (y * vz) - (z * vy);
+	    target.y = (z * vx) - (x * vz);
+	    target.z = (x * vy) - (y * vx);
+
+	    return target;
+	};
+
+	/**
+	 * Set the vectors' 3 elements
+	 * @method set
+	 * @param {Number} x
+	 * @param {Number} y
+	 * @param {Number} z
+	 * @return Vec3
+	 */
+	Vec3.prototype.set = function(x,y,z){
+	    this.x = x;
+	    this.y = y;
+	    this.z = z;
+	    return this;
+	};
+
+	/**
+	 * Set all components of the vector to zero.
+	 * @method setZero
+	 */
+	Vec3.prototype.setZero = function(){
+	    this.x = this.y = this.z = 0;
+	};
+
+	/**
+	 * Vector addition
+	 * @method vadd
+	 * @param {Vec3} v
+	 * @param {Vec3} target Optional.
+	 * @return {Vec3}
+	 */
+	Vec3.prototype.vadd = function(v,target){
+	    if(target){
+	        target.x = v.x + this.x;
+	        target.y = v.y + this.y;
+	        target.z = v.z + this.z;
+	    } else {
+	        return new Vec3(this.x + v.x,
+	                               this.y + v.y,
+	                               this.z + v.z);
+	    }
+	};
+
+	/**
+	 * Vector subtraction
+	 * @method vsub
+	 * @param {Vec3} v
+	 * @param {Vec3} target Optional. Target to save in.
+	 * @return {Vec3}
+	 */
+	Vec3.prototype.vsub = function(v,target){
+	    if(target){
+	        target.x = this.x - v.x;
+	        target.y = this.y - v.y;
+	        target.z = this.z - v.z;
+	    } else {
+	        return new Vec3(this.x-v.x,
+	                               this.y-v.y,
+	                               this.z-v.z);
+	    }
+	};
+
+	/**
+	 * Get the cross product matrix a_cross from a vector, such that a x b = a_cross * b = c
+	 * @method crossmat
+	 * @see http://www8.cs.umu.se/kurser/TDBD24/VT06/lectures/Lecture6.pdf
+	 * @return {Mat3}
+	 */
+	Vec3.prototype.crossmat = function(){
+	    return new Mat3([     0,  -this.z,   this.y,
+	                            this.z,        0,  -this.x,
+	                           -this.y,   this.x,        0]);
+	};
+
+	/**
+	 * Normalize the vector. Note that this changes the values in the vector.
+	 * @method normalize
+	 * @return {Number} Returns the norm of the vector
+	 */
+	Vec3.prototype.normalize = function(){
+	    var x=this.x, y=this.y, z=this.z;
+	    var n = Math.sqrt(x*x + y*y + z*z);
+	    if(n>0.0){
+	        var invN = 1/n;
+	        this.x *= invN;
+	        this.y *= invN;
+	        this.z *= invN;
+	    } else {
+	        // Make something up
+	        this.x = 0;
+	        this.y = 0;
+	        this.z = 0;
+	    }
+	    return n;
+	};
+
+	/**
+	 * Get the version of this vector that is of length 1.
+	 * @method unit
+	 * @param {Vec3} target Optional target to save in
+	 * @return {Vec3} Returns the unit vector
+	 */
+	Vec3.prototype.unit = function(target){
+	    target = target || new Vec3();
+	    var x=this.x, y=this.y, z=this.z;
+	    var ninv = Math.sqrt(x*x + y*y + z*z);
+	    if(ninv>0.0){
+	        ninv = 1.0/ninv;
+	        target.x = x * ninv;
+	        target.y = y * ninv;
+	        target.z = z * ninv;
+	    } else {
+	        target.x = 1;
+	        target.y = 0;
+	        target.z = 0;
+	    }
+	    return target;
+	};
+
+	/**
+	 * Get the length of the vector
+	 * @method norm
+	 * @return {Number}
+	 * @deprecated Use .length() instead
+	 */
+	Vec3.prototype.norm = function(){
+	    var x=this.x, y=this.y, z=this.z;
+	    return Math.sqrt(x*x + y*y + z*z);
+	};
+
+	/**
+	 * Get the length of the vector
+	 * @method length
+	 * @return {Number}
+	 */
+	Vec3.prototype.length = Vec3.prototype.norm;
+
+	/**
+	 * Get the squared length of the vector
+	 * @method norm2
+	 * @return {Number}
+	 * @deprecated Use .lengthSquared() instead.
+	 */
+	Vec3.prototype.norm2 = function(){
+	    return this.dot(this);
+	};
+
+	/**
+	 * Get the squared length of the vector.
+	 * @method lengthSquared
+	 * @return {Number}
+	 */
+	Vec3.prototype.lengthSquared = Vec3.prototype.norm2;
+
+	/**
+	 * Get distance from this point to another point
+	 * @method distanceTo
+	 * @param  {Vec3} p
+	 * @return {Number}
+	 */
+	Vec3.prototype.distanceTo = function(p){
+	    var x=this.x, y=this.y, z=this.z;
+	    var px=p.x, py=p.y, pz=p.z;
+	    return Math.sqrt((px-x)*(px-x)+
+	                     (py-y)*(py-y)+
+	                     (pz-z)*(pz-z));
+	};
+
+	/**
+	 * Get squared distance from this point to another point
+	 * @method distanceSquared
+	 * @param  {Vec3} p
+	 * @return {Number}
+	 */
+	Vec3.prototype.distanceSquared = function(p){
+	    var x=this.x, y=this.y, z=this.z;
+	    var px=p.x, py=p.y, pz=p.z;
+	    return (px-x)*(px-x) + (py-y)*(py-y) + (pz-z)*(pz-z);
+	};
+
+	/**
+	 * Multiply all the components of the vector with a scalar.
+	 * @deprecated Use .scale instead
+	 * @method mult
+	 * @param {Number} scalar
+	 * @param {Vec3} target The vector to save the result in.
+	 * @return {Vec3}
+	 * @deprecated Use .scale() instead
+	 */
+	Vec3.prototype.mult = function(scalar,target){
+	    target = target || new Vec3();
+	    var x = this.x,
+	        y = this.y,
+	        z = this.z;
+	    target.x = scalar * x;
+	    target.y = scalar * y;
+	    target.z = scalar * z;
+	    return target;
+	};
+
+	/**
+	 * Multiply the vector with a scalar.
+	 * @method scale
+	 * @param {Number} scalar
+	 * @param {Vec3} target
+	 * @return {Vec3}
+	 */
+	Vec3.prototype.scale = Vec3.prototype.mult;
+
+	/**
+	 * Calculate dot product
+	 * @method dot
+	 * @param {Vec3} v
+	 * @return {Number}
+	 */
+	Vec3.prototype.dot = function(v){
+	    return this.x * v.x + this.y * v.y + this.z * v.z;
+	};
+
+	/**
+	 * @method isZero
+	 * @return bool
+	 */
+	Vec3.prototype.isZero = function(){
+	    return this.x===0 && this.y===0 && this.z===0;
+	};
+
+	/**
+	 * Make the vector point in the opposite direction.
+	 * @method negate
+	 * @param {Vec3} target Optional target to save in
+	 * @return {Vec3}
+	 */
+	Vec3.prototype.negate = function(target){
+	    target = target || new Vec3();
+	    target.x = -this.x;
+	    target.y = -this.y;
+	    target.z = -this.z;
+	    return target;
+	};
+
+	/**
+	 * Compute two artificial tangents to the vector
+	 * @method tangents
+	 * @param {Vec3} t1 Vector object to save the first tangent in
+	 * @param {Vec3} t2 Vector object to save the second tangent in
+	 */
+	var Vec3_tangents_n = new Vec3();
+	var Vec3_tangents_randVec = new Vec3();
+	Vec3.prototype.tangents = function(t1,t2){
+	    var norm = this.norm();
+	    if(norm>0.0){
+	        var n = Vec3_tangents_n;
+	        var inorm = 1/norm;
+	        n.set(this.x*inorm,this.y*inorm,this.z*inorm);
+	        var randVec = Vec3_tangents_randVec;
+	        if(Math.abs(n.x) < 0.9){
+	            randVec.set(1,0,0);
+	            n.cross(randVec,t1);
+	        } else {
+	            randVec.set(0,1,0);
+	            n.cross(randVec,t1);
+	        }
+	        n.cross(t1,t2);
+	    } else {
+	        // The normal length is zero, make something up
+	        t1.set(1, 0, 0);
+	        t2.set(0, 1, 0);
+	    }
+	};
+
+	/**
+	 * Converts to a more readable format
+	 * @method toString
+	 * @return string
+	 */
+	Vec3.prototype.toString = function(){
+	    return this.x+","+this.y+","+this.z;
+	};
+
+	/**
+	 * Converts to an array
+	 * @method toArray
+	 * @return Array
+	 */
+	Vec3.prototype.toArray = function(){
+	    return [this.x, this.y, this.z];
+	};
+
+	/**
+	 * Copies value of source to this vector.
+	 * @method copy
+	 * @param {Vec3} source
+	 * @return {Vec3} this
+	 */
+	Vec3.prototype.copy = function(source){
+	    this.x = source.x;
+	    this.y = source.y;
+	    this.z = source.z;
+	    return this;
+	};
+
+
+	/**
+	 * Do a linear interpolation between two vectors
+	 * @method lerp
+	 * @param {Vec3} v
+	 * @param {Number} t A number between 0 and 1. 0 will make this function return u, and 1 will make it return v. Numbers in between will generate a vector in between them.
+	 * @param {Vec3} target
+	 */
+	Vec3.prototype.lerp = function(v,t,target){
+	    var x=this.x, y=this.y, z=this.z;
+	    target.x = x + (v.x-x)*t;
+	    target.y = y + (v.y-y)*t;
+	    target.z = z + (v.z-z)*t;
+	};
+
+	/**
+	 * Check if a vector equals is almost equal to another one.
+	 * @method almostEquals
+	 * @param {Vec3} v
+	 * @param {Number} precision
+	 * @return bool
+	 */
+	Vec3.prototype.almostEquals = function(v,precision){
+	    if(precision===undefined){
+	        precision = 1e-6;
+	    }
+	    if( Math.abs(this.x-v.x)>precision ||
+	        Math.abs(this.y-v.y)>precision ||
+	        Math.abs(this.z-v.z)>precision){
+	        return false;
+	    }
+	    return true;
+	};
+
+	/**
+	 * Check if a vector is almost zero
+	 * @method almostZero
+	 * @param {Number} precision
+	 */
+	Vec3.prototype.almostZero = function(precision){
+	    if(precision===undefined){
+	        precision = 1e-6;
+	    }
+	    if( Math.abs(this.x)>precision ||
+	        Math.abs(this.y)>precision ||
+	        Math.abs(this.z)>precision){
+	        return false;
+	    }
+	    return true;
+	};
+
+	var antip_neg = new Vec3();
+
+	/**
+	 * Check if the vector is anti-parallel to another vector.
+	 * @method isAntiparallelTo
+	 * @param  {Vec3}  v
+	 * @param  {Number}  precision Set to zero for exact comparisons
+	 * @return {Boolean}
+	 */
+	Vec3.prototype.isAntiparallelTo = function(v,precision){
+	    this.negate(antip_neg);
+	    return antip_neg.almostEquals(v,precision);
+	};
+
+	/**
+	 * Clone the vector
+	 * @method clone
+	 * @return {Vec3}
+	 */
+	Vec3.prototype.clone = function(){
+	    return new Vec3(this.x, this.y, this.z);
+	};
+	},{"./Mat3":27}],31:[function(_dereq_,module,exports){
+	module.exports = Body;
+
+	var EventTarget = _dereq_('../utils/EventTarget');
+	var Shape = _dereq_('../shapes/Shape');
+	var Vec3 = _dereq_('../math/Vec3');
+	var Mat3 = _dereq_('../math/Mat3');
+	var Quaternion = _dereq_('../math/Quaternion');
+	var Material = _dereq_('../material/Material');
+	var AABB = _dereq_('../collision/AABB');
+	var Box = _dereq_('../shapes/Box');
+
+	/**
+	 * Base class for all body types.
+	 * @class Body
+	 * @constructor
+	 * @extends EventTarget
+	 * @param {object} [options]
+	 * @param {Vec3} [options.position]
+	 * @param {Vec3} [options.velocity]
+	 * @param {Vec3} [options.angularVelocity]
+	 * @param {Quaternion} [options.quaternion]
+	 * @param {number} [options.mass]
+	 * @param {Material} [options.material]
+	 * @param {number} [options.type]
+	 * @param {number} [options.linearDamping=0.01]
+	 * @param {number} [options.angularDamping=0.01]
+	 * @param {boolean} [options.allowSleep=true]
+	 * @param {number} [options.sleepSpeedLimit=0.1]
+	 * @param {number} [options.sleepTimeLimit=1]
+	 * @param {number} [options.collisionFilterGroup=1]
+	 * @param {number} [options.collisionFilterMask=1]
+	 * @param {boolean} [options.fixedRotation=false]
+	 * @param {Body} [options.shape]
+	 * @example
+	 *     var body = new Body({
+	 *         mass: 1
+	 *     });
+	 *     var shape = new Sphere(1);
+	 *     body.addShape(shape);
+	 *     world.add(body);
+	 */
+	function Body(options){
+	    options = options || {};
+
+	    EventTarget.apply(this);
+
+	    this.id = Body.idCounter++;
+
+	    /**
+	     * Reference to the world the body is living in
+	     * @property world
+	     * @type {World}
+	     */
+	    this.world = null;
+
+	    /**
+	     * Callback function that is used BEFORE stepping the system. Use it to apply forces, for example. Inside the function, "this" will refer to this Body object.
+	     * @property preStep
+	     * @type {Function}
+	     * @deprecated Use World events instead
+	     */
+	    this.preStep = null;
+
+	    /**
+	     * Callback function that is used AFTER stepping the system. Inside the function, "this" will refer to this Body object.
+	     * @property postStep
+	     * @type {Function}
+	     * @deprecated Use World events instead
+	     */
+	    this.postStep = null;
+
+	    this.vlambda = new Vec3();
+
+	    /**
+	     * @property {Number} collisionFilterGroup
+	     */
+	    this.collisionFilterGroup = typeof(options.collisionFilterGroup) === 'number' ? options.collisionFilterGroup : 1;
+
+	    /**
+	     * @property {Number} collisionFilterMask
+	     */
+	    this.collisionFilterMask = typeof(options.collisionFilterMask) === 'number' ? options.collisionFilterMask : 1;
+
+	    /**
+	     * Whether to produce contact forces when in contact with other bodies. Note that contacts will be generated, but they will be disabled.
+	     * @property {Number} collisionResponse
+	     */
+		this.collisionResponse = true;
+
+	    /**
+	     * @property position
+	     * @type {Vec3}
+	     */
+	    this.position = new Vec3();
+
+	    if(options.position){
+	        this.position.copy(options.position);
+	    }
+
+	    /**
+	     * @property {Vec3} previousPosition
+	     */
+	    this.previousPosition = new Vec3();
+
+	    /**
+	     * Initial position of the body
+	     * @property initPosition
+	     * @type {Vec3}
+	     */
+	    this.initPosition = new Vec3();
+
+	    /**
+	     * @property velocity
+	     * @type {Vec3}
+	     */
+	    this.velocity = new Vec3();
+
+	    if(options.velocity){
+	        this.velocity.copy(options.velocity);
+	    }
+
+	    /**
+	     * @property initVelocity
+	     * @type {Vec3}
+	     */
+	    this.initVelocity = new Vec3();
+
+	    /**
+	     * Linear force on the body
+	     * @property force
+	     * @type {Vec3}
+	     */
+	    this.force = new Vec3();
+
+	    var mass = typeof(options.mass) === 'number' ? options.mass : 0;
+
+	    /**
+	     * @property mass
+	     * @type {Number}
+	     * @default 0
+	     */
+	    this.mass = mass;
+
+	    /**
+	     * @property invMass
+	     * @type {Number}
+	     */
+	    this.invMass = mass > 0 ? 1.0 / mass : 0;
+
+	    /**
+	     * @property material
+	     * @type {Material}
+	     */
+	    this.material = options.material || null;
+
+	    /**
+	     * @property linearDamping
+	     * @type {Number}
+	     */
+	    this.linearDamping = typeof(options.linearDamping) === 'number' ? options.linearDamping : 0.01;
+
+	    /**
+	     * One of: Body.DYNAMIC, Body.STATIC and Body.KINEMATIC.
+	     * @property type
+	     * @type {Number}
+	     */
+	    this.type = (mass <= 0.0 ? Body.STATIC : Body.DYNAMIC);
+	    if(typeof(options.type) === typeof(Body.STATIC)){
+	        this.type = options.type;
+	    }
+
+	    /**
+	     * If true, the body will automatically fall to sleep.
+	     * @property allowSleep
+	     * @type {Boolean}
+	     * @default true
+	     */
+	    this.allowSleep = typeof(options.allowSleep) !== 'undefined' ? options.allowSleep : true;
+
+	    /**
+	     * Current sleep state.
+	     * @property sleepState
+	     * @type {Number}
+	     */
+	    this.sleepState = 0;
+
+	    /**
+	     * If the speed (the norm of the velocity) is smaller than this value, the body is considered sleepy.
+	     * @property sleepSpeedLimit
+	     * @type {Number}
+	     * @default 0.1
+	     */
+	    this.sleepSpeedLimit = typeof(options.sleepSpeedLimit) !== 'undefined' ? options.sleepSpeedLimit : 0.1;
+
+	    /**
+	     * If the body has been sleepy for this sleepTimeLimit seconds, it is considered sleeping.
+	     * @property sleepTimeLimit
+	     * @type {Number}
+	     * @default 1
+	     */
+	    this.sleepTimeLimit = typeof(options.sleepTimeLimit) !== 'undefined' ? options.sleepTimeLimit : 1;
+
+	    this.timeLastSleepy = 0;
+
+	    this._wakeUpAfterNarrowphase = false;
+
+
+	    /**
+	     * Rotational force on the body, around center of mass
+	     * @property {Vec3} torque
+	     */
+	    this.torque = new Vec3();
+
+	    /**
+	     * Orientation of the body
+	     * @property quaternion
+	     * @type {Quaternion}
+	     */
+	    this.quaternion = new Quaternion();
+
+	    if(options.quaternion){
+	        this.quaternion.copy(options.quaternion);
+	    }
+
+	    /**
+	     * @property initQuaternion
+	     * @type {Quaternion}
+	     */
+	    this.initQuaternion = new Quaternion();
+
+	    /**
+	     * @property angularVelocity
+	     * @type {Vec3}
+	     */
+	    this.angularVelocity = new Vec3();
+
+	    if(options.angularVelocity){
+	        this.angularVelocity.copy(options.angularVelocity);
+	    }
+
+	    /**
+	     * @property initAngularVelocity
+	     * @type {Vec3}
+	     */
+	    this.initAngularVelocity = new Vec3();
+
+	    this.interpolatedPosition = new Vec3();
+	    this.interpolatedQuaternion = new Quaternion();
+
+	    /**
+	     * @property shapes
+	     * @type {array}
+	     */
+	    this.shapes = [];
+
+	    /**
+	     * @property shapeOffsets
+	     * @type {array}
+	     */
+	    this.shapeOffsets = [];
+
+	    /**
+	     * @property shapeOrientations
+	     * @type {array}
+	     */
+	    this.shapeOrientations = [];
+
+	    /**
+	     * @property inertia
+	     * @type {Vec3}
+	     */
+	    this.inertia = new Vec3();
+
+	    /**
+	     * @property {Vec3} invInertia
+	     */
+	    this.invInertia = new Vec3();
+
+	    /**
+	     * @property {Mat3} invInertiaWorld
+	     */
+	    this.invInertiaWorld = new Mat3();
+
+	    this.invMassSolve = 0;
+
+	    /**
+	     * @property {Vec3} invInertiaSolve
+	     */
+	    this.invInertiaSolve = new Vec3();
+
+	    /**
+	     * @property {Mat3} invInertiaWorldSolve
+	     */
+	    this.invInertiaWorldSolve = new Mat3();
+
+	    /**
+	     * Set to true if you don't want the body to rotate. Make sure to run .updateMassProperties() after changing this.
+	     * @property {Boolean} fixedRotation
+	     * @default false
+	     */
+	    this.fixedRotation = typeof(options.fixedRotation) !== "undefined" ? options.fixedRotation : false;
+
+	    /**
+	     * @property {Number} angularDamping
+	     */
+	    this.angularDamping = typeof(options.angularDamping) !== 'undefined' ? options.angularDamping : 0.01;
+
+	    /**
+	     * @property aabb
+	     * @type {AABB}
+	     */
+	    this.aabb = new AABB();
+
+	    /**
+	     * Indicates if the AABB needs to be updated before use.
+	     * @property aabbNeedsUpdate
+	     * @type {Boolean}
+	     */
+	    this.aabbNeedsUpdate = true;
+
+	    this.wlambda = new Vec3();
+
+	    if(options.shape){
+	        this.addShape(options.shape);
+	    }
+
+	    this.updateMassProperties();
+	}
+	Body.prototype = new EventTarget();
+	Body.prototype.constructor = Body;
+
+	/**
+	 * A dynamic body is fully simulated. Can be moved manually by the user, but normally they move according to forces. A dynamic body can collide with all body types. A dynamic body always has finite, non-zero mass.
+	 * @static
+	 * @property DYNAMIC
+	 * @type {Number}
+	 */
+	Body.DYNAMIC = 1;
+
+	/**
+	 * A static body does not move during simulation and behaves as if it has infinite mass. Static bodies can be moved manually by setting the position of the body. The velocity of a static body is always zero. Static bodies do not collide with other static or kinematic bodies.
+	 * @static
+	 * @property STATIC
+	 * @type {Number}
+	 */
+	Body.STATIC = 2;
+
+	/**
+	 * A kinematic body moves under simulation according to its velocity. They do not respond to forces. They can be moved manually, but normally a kinematic body is moved by setting its velocity. A kinematic body behaves as if it has infinite mass. Kinematic bodies do not collide with other static or kinematic bodies.
+	 * @static
+	 * @property KINEMATIC
+	 * @type {Number}
+	 */
+	Body.KINEMATIC = 4;
+
+
+
+	/**
+	 * @static
+	 * @property AWAKE
+	 * @type {number}
+	 */
+	Body.AWAKE = 0;
+
+	/**
+	 * @static
+	 * @property SLEEPY
+	 * @type {number}
+	 */
+	Body.SLEEPY = 1;
+
+	/**
+	 * @static
+	 * @property SLEEPING
+	 * @type {number}
+	 */
+	Body.SLEEPING = 2;
+
+	Body.idCounter = 0;
+
+	/**
+	 * Wake the body up.
+	 * @method wakeUp
+	 */
+	Body.prototype.wakeUp = function(){
+	    var s = this.sleepState;
+	    this.sleepState = 0;
+	    if(s === Body.SLEEPING){
+	        this.dispatchEvent({type:"wakeup"});
+	    }
+	};
+
+	/**
+	 * Force body sleep
+	 * @method sleep
+	 */
+	Body.prototype.sleep = function(){
+	    this.sleepState = Body.SLEEPING;
+	    this.velocity.set(0,0,0);
+	    this.angularVelocity.set(0,0,0);
+	};
+
+	Body.sleepyEvent = {
+	    type: "sleepy"
+	};
+
+	Body.sleepEvent = {
+	    type: "sleep"
+	};
+
+	/**
+	 * Called every timestep to update internal sleep timer and change sleep state if needed.
+	 * @method sleepTick
+	 * @param {Number} time The world time in seconds
+	 */
+	Body.prototype.sleepTick = function(time){
+	    if(this.allowSleep){
+	        var sleepState = this.sleepState;
+	        var speedSquared = this.velocity.norm2() + this.angularVelocity.norm2();
+	        var speedLimitSquared = Math.pow(this.sleepSpeedLimit,2);
+	        if(sleepState===Body.AWAKE && speedSquared < speedLimitSquared){
+	            this.sleepState = Body.SLEEPY; // Sleepy
+	            this.timeLastSleepy = time;
+	            this.dispatchEvent(Body.sleepyEvent);
+	        } else if(sleepState===Body.SLEEPY && speedSquared > speedLimitSquared){
+	            this.wakeUp(); // Wake up
+	        } else if(sleepState===Body.SLEEPY && (time - this.timeLastSleepy ) > this.sleepTimeLimit){
+	            this.sleep(); // Sleeping
+	            this.dispatchEvent(Body.sleepEvent);
+	        }
+	    }
+	};
+
+	/**
+	 * If the body is sleeping, it should be immovable / have infinite mass during solve. We solve it by having a separate "solve mass".
+	 * @method updateSolveMassProperties
+	 */
+	Body.prototype.updateSolveMassProperties = function(){
+	    if(this.sleepState === Body.SLEEPING || this.type === Body.KINEMATIC){
+	        this.invMassSolve = 0;
+	        this.invInertiaSolve.setZero();
+	        this.invInertiaWorldSolve.setZero();
+	    } else {
+	        this.invMassSolve = this.invMass;
+	        this.invInertiaSolve.copy(this.invInertia);
+	        this.invInertiaWorldSolve.copy(this.invInertiaWorld);
+	    }
+	};
+
+	/**
+	 * Convert a world point to local body frame.
+	 * @method pointToLocalFrame
+	 * @param  {Vec3} worldPoint
+	 * @param  {Vec3} result
+	 * @return {Vec3}
+	 */
+	Body.prototype.pointToLocalFrame = function(worldPoint,result){
+	    var result = result || new Vec3();
+	    worldPoint.vsub(this.position,result);
+	    this.quaternion.conjugate().vmult(result,result);
+	    return result;
+	};
+
+	/**
+	 * Convert a world vector to local body frame.
+	 * @method vectorToLocalFrame
+	 * @param  {Vec3} worldPoint
+	 * @param  {Vec3} result
+	 * @return {Vec3}
+	 */
+	Body.prototype.vectorToLocalFrame = function(worldVector, result){
+	    var result = result || new Vec3();
+	    this.quaternion.conjugate().vmult(worldVector,result);
+	    return result;
+	};
+
+	/**
+	 * Convert a local body point to world frame.
+	 * @method pointToWorldFrame
+	 * @param  {Vec3} localPoint
+	 * @param  {Vec3} result
+	 * @return {Vec3}
+	 */
+	Body.prototype.pointToWorldFrame = function(localPoint,result){
+	    var result = result || new Vec3();
+	    this.quaternion.vmult(localPoint,result);
+	    result.vadd(this.position,result);
+	    return result;
+	};
+
+	/**
+	 * Convert a local body point to world frame.
+	 * @method vectorToWorldFrame
+	 * @param  {Vec3} localVector
+	 * @param  {Vec3} result
+	 * @return {Vec3}
+	 */
+	Body.prototype.vectorToWorldFrame = function(localVector, result){
+	    var result = result || new Vec3();
+	    this.quaternion.vmult(localVector, result);
+	    return result;
+	};
+
+	var tmpVec = new Vec3();
+	var tmpQuat = new Quaternion();
+
+	/**
+	 * Add a shape to the body with a local offset and orientation.
+	 * @method addShape
+	 * @param {Shape} shape
+	 * @param {Vec3} offset
+	 * @param {Quaternion} quaternion
+	 * @return {Body} The body object, for chainability.
+	 */
+	Body.prototype.addShape = function(shape, _offset, _orientation){
+	    var offset = new Vec3();
+	    var orientation = new Quaternion();
+
+	    if(_offset){
+	        offset.copy(_offset);
+	    }
+	    if(_orientation){
+	        orientation.copy(_orientation);
+	    }
+
+	    this.shapes.push(shape);
+	    this.shapeOffsets.push(offset);
+	    this.shapeOrientations.push(orientation);
+	    this.updateMassProperties();
+	    this.updateBoundingRadius();
+
+	    this.aabbNeedsUpdate = true;
+
+	    return this;
+	};
+
+	/**
+	 * Update the bounding radius of the body. Should be done if any of the shapes are changed.
+	 * @method updateBoundingRadius
+	 */
+	Body.prototype.updateBoundingRadius = function(){
+	    var shapes = this.shapes,
+	        shapeOffsets = this.shapeOffsets,
+	        N = shapes.length,
+	        radius = 0;
+
+	    for(var i=0; i!==N; i++){
+	        var shape = shapes[i];
+	        shape.updateBoundingSphereRadius();
+	        var offset = shapeOffsets[i].norm(),
+	            r = shape.boundingSphereRadius;
+	        if(offset + r > radius){
+	            radius = offset + r;
+	        }
+	    }
+
+	    this.boundingRadius = radius;
+	};
+
+	var computeAABB_shapeAABB = new AABB();
+
+	/**
+	 * Updates the .aabb
+	 * @method computeAABB
+	 * @todo rename to updateAABB()
+	 */
+	Body.prototype.computeAABB = function(){
+	    var shapes = this.shapes,
+	        shapeOffsets = this.shapeOffsets,
+	        shapeOrientations = this.shapeOrientations,
+	        N = shapes.length,
+	        offset = tmpVec,
+	        orientation = tmpQuat,
+	        bodyQuat = this.quaternion,
+	        aabb = this.aabb,
+	        shapeAABB = computeAABB_shapeAABB;
+
+	    for(var i=0; i!==N; i++){
+	        var shape = shapes[i];
+
+	        // Get shape world quaternion
+	        shapeOrientations[i].mult(bodyQuat, orientation);
+
+	        // Get shape world position
+	        orientation.vmult(shapeOffsets[i], offset);
+	        offset.vadd(this.position, offset);
+
+	        // vec2.rotate(offset, shapeOffsets[i], bodyAngle);
+	        // vec2.add(offset, offset, this.position);
+
+	        // Get shape AABB
+	        shape.calculateWorldAABB(offset, orientation, shapeAABB.lowerBound, shapeAABB.upperBound);
+
+	        if(i === 0){
+	            aabb.copy(shapeAABB);
+	        } else {
+	            aabb.extend(shapeAABB);
+	        }
+	    }
+
+	    this.aabbNeedsUpdate = false;
+	};
+
+	var uiw_m1 = new Mat3(),
+	    uiw_m2 = new Mat3(),
+	    uiw_m3 = new Mat3();
+
+	/**
+	 * Update .inertiaWorld and .invInertiaWorld
+	 * @method updateInertiaWorld
+	 */
+	Body.prototype.updateInertiaWorld = function(force){
+	    var I = this.invInertia;
+	    if (I.x === I.y && I.y === I.z && !force) {
+	        // If inertia M = s*I, where I is identity and s a scalar, then
+	        //    R*M*R' = R*(s*I)*R' = s*R*I*R' = s*R*R' = s*I = M
+	        // where R is the rotation matrix.
+	        // In other words, we don't have to transform the inertia if all
+	        // inertia diagonal entries are equal.
+	    } else {
+	        var m1 = uiw_m1,
+	            m2 = uiw_m2,
+	            m3 = uiw_m3;
+	        m1.setRotationFromQuaternion(this.quaternion);
+	        m1.transpose(m2);
+	        m1.scale(I,m1);
+	        m1.mmult(m2,this.invInertiaWorld);
+	        //m3.getTrace(this.invInertiaWorld);
+	    }
+
+	    /*
+	    this.quaternion.vmult(this.inertia,this.inertiaWorld);
+	    this.quaternion.vmult(this.invInertia,this.invInertiaWorld);
+	    */
+	};
+
+	/**
+	 * Apply force to a world point. This could for example be a point on the Body surface. Applying force this way will add to Body.force and Body.torque.
+	 * @method applyForce
+	 * @param  {Vec3} force The amount of force to add.
+	 * @param  {Vec3} worldPoint A world point to apply the force on.
+	 */
+	var Body_applyForce_r = new Vec3();
+	var Body_applyForce_rotForce = new Vec3();
+	Body.prototype.applyForce = function(force,worldPoint){
+	    if(this.type !== Body.DYNAMIC){
+	        return;
+	    }
+
+	    // Compute point position relative to the body center
+	    var r = Body_applyForce_r;
+	    worldPoint.vsub(this.position,r);
+
+	    // Compute produced rotational force
+	    var rotForce = Body_applyForce_rotForce;
+	    r.cross(force,rotForce);
+
+	    // Add linear force
+	    this.force.vadd(force,this.force);
+
+	    // Add rotational force
+	    this.torque.vadd(rotForce,this.torque);
+	};
+
+	/**
+	 * Apply force to a local point in the body.
+	 * @method applyLocalForce
+	 * @param  {Vec3} force The force vector to apply, defined locally in the body frame.
+	 * @param  {Vec3} localPoint A local point in the body to apply the force on.
+	 */
+	var Body_applyLocalForce_worldForce = new Vec3();
+	var Body_applyLocalForce_worldPoint = new Vec3();
+	Body.prototype.applyLocalForce = function(localForce, localPoint){
+	    if(this.type !== Body.DYNAMIC){
+	        return;
+	    }
+
+	    var worldForce = Body_applyLocalForce_worldForce;
+	    var worldPoint = Body_applyLocalForce_worldPoint;
+
+	    // Transform the force vector to world space
+	    this.vectorToWorldFrame(localForce, worldForce);
+	    this.pointToWorldFrame(localPoint, worldPoint);
+
+	    this.applyForce(worldForce, worldPoint);
+	};
+
+	/**
+	 * Apply impulse to a world point. This could for example be a point on the Body surface. An impulse is a force added to a body during a short period of time (impulse = force * time). Impulses will be added to Body.velocity and Body.angularVelocity.
+	 * @method applyImpulse
+	 * @param  {Vec3} impulse The amount of impulse to add.
+	 * @param  {Vec3} worldPoint A world point to apply the force on.
+	 */
+	var Body_applyImpulse_r = new Vec3();
+	var Body_applyImpulse_velo = new Vec3();
+	var Body_applyImpulse_rotVelo = new Vec3();
+	Body.prototype.applyImpulse = function(impulse, worldPoint){
+	    if(this.type !== Body.DYNAMIC){
+	        return;
+	    }
+
+	    // Compute point position relative to the body center
+	    var r = Body_applyImpulse_r;
+	    worldPoint.vsub(this.position,r);
+
+	    // Compute produced central impulse velocity
+	    var velo = Body_applyImpulse_velo;
+	    velo.copy(impulse);
+	    velo.mult(this.invMass,velo);
+
+	    // Add linear impulse
+	    this.velocity.vadd(velo, this.velocity);
+
+	    // Compute produced rotational impulse velocity
+	    var rotVelo = Body_applyImpulse_rotVelo;
+	    r.cross(impulse,rotVelo);
+
+	    /*
+	    rotVelo.x *= this.invInertia.x;
+	    rotVelo.y *= this.invInertia.y;
+	    rotVelo.z *= this.invInertia.z;
+	    */
+	    this.invInertiaWorld.vmult(rotVelo,rotVelo);
+
+	    // Add rotational Impulse
+	    this.angularVelocity.vadd(rotVelo, this.angularVelocity);
+	};
+
+	/**
+	 * Apply locally-defined impulse to a local point in the body.
+	 * @method applyLocalImpulse
+	 * @param  {Vec3} force The force vector to apply, defined locally in the body frame.
+	 * @param  {Vec3} localPoint A local point in the body to apply the force on.
+	 */
+	var Body_applyLocalImpulse_worldImpulse = new Vec3();
+	var Body_applyLocalImpulse_worldPoint = new Vec3();
+	Body.prototype.applyLocalImpulse = function(localImpulse, localPoint){
+	    if(this.type !== Body.DYNAMIC){
+	        return;
+	    }
+
+	    var worldImpulse = Body_applyLocalImpulse_worldImpulse;
+	    var worldPoint = Body_applyLocalImpulse_worldPoint;
+
+	    // Transform the force vector to world space
+	    this.vectorToWorldFrame(localImpulse, worldImpulse);
+	    this.pointToWorldFrame(localPoint, worldPoint);
+
+	    this.applyImpulse(worldImpulse, worldPoint);
+	};
+
+	var Body_updateMassProperties_halfExtents = new Vec3();
+
+	/**
+	 * Should be called whenever you change the body shape or mass.
+	 * @method updateMassProperties
+	 */
+	Body.prototype.updateMassProperties = function(){
+	    var halfExtents = Body_updateMassProperties_halfExtents;
+
+	    this.invMass = this.mass > 0 ? 1.0 / this.mass : 0;
+	    var I = this.inertia;
+	    var fixed = this.fixedRotation;
+
+	    // Approximate with AABB box
+	    this.computeAABB();
+	    halfExtents.set(
+	        (this.aabb.upperBound.x-this.aabb.lowerBound.x) / 2,
+	        (this.aabb.upperBound.y-this.aabb.lowerBound.y) / 2,
+	        (this.aabb.upperBound.z-this.aabb.lowerBound.z) / 2
+	    );
+	    Box.calculateInertia(halfExtents, this.mass, I);
+
+	    this.invInertia.set(
+	        I.x > 0 && !fixed ? 1.0 / I.x : 0,
+	        I.y > 0 && !fixed ? 1.0 / I.y : 0,
+	        I.z > 0 && !fixed ? 1.0 / I.z : 0
+	    );
+	    this.updateInertiaWorld(true);
+	};
+
+	/**
+	 * Get world velocity of a point in the body.
+	 * @method getVelocityAtWorldPoint
+	 * @param  {Vec3} worldPoint
+	 * @param  {Vec3} result
+	 * @return {Vec3} The result vector.
+	 */
+	Body.prototype.getVelocityAtWorldPoint = function(worldPoint, result){
+	    var r = new Vec3();
+	    worldPoint.vsub(this.position, r);
+	    this.angularVelocity.cross(r, result);
+	    this.velocity.vadd(result, result);
+	    return result;
+	};
+
+	},{"../collision/AABB":3,"../material/Material":25,"../math/Mat3":27,"../math/Quaternion":28,"../math/Vec3":30,"../shapes/Box":37,"../shapes/Shape":43,"../utils/EventTarget":49}],32:[function(_dereq_,module,exports){
+	var Body = _dereq_('./Body');
+	var Vec3 = _dereq_('../math/Vec3');
+	var Quaternion = _dereq_('../math/Quaternion');
+	var RaycastResult = _dereq_('../collision/RaycastResult');
+	var Ray = _dereq_('../collision/Ray');
+	var WheelInfo = _dereq_('../objects/WheelInfo');
+
+	module.exports = RaycastVehicle;
+
+	/**
+	 * Vehicle helper class that casts rays from the wheel positions towards the ground and applies forces.
+	 * @class RaycastVehicle
+	 * @constructor
+	 * @param {object} [options]
+	 * @param {Body} [options.chassisBody] The car chassis body.
+	 * @param {integer} [options.indexRightAxis] Axis to use for right. x=0, y=1, z=2
+	 * @param {integer} [options.indexLeftAxis]
+	 * @param {integer} [options.indexUpAxis]
+	 */
+	function RaycastVehicle(options){
+
+	    /**
+	     * @property {Body} chassisBody
+	     */
+	    this.chassisBody = options.chassisBody;
+
+	    /**
+	     * An array of WheelInfo objects.
+	     * @property {array} wheelInfos
+	     */
+	    this.wheelInfos = [];
+
+	    /**
+	     * Will be set to true if the car is sliding.
+	     * @property {boolean} sliding
+	     */
+	    this.sliding = false;
+
+	    /**
+	     * @property {World} world
+	     */
+	    this.world = null;
+
+	    /**
+	     * Index of the right axis, 0=x, 1=y, 2=z
+	     * @property {integer} indexRightAxis
+	     * @default 1
+	     */
+	    this.indexRightAxis = typeof(options.indexRightAxis) !== 'undefined' ? options.indexRightAxis : 1;
+
+	    /**
+	     * Index of the forward axis, 0=x, 1=y, 2=z
+	     * @property {integer} indexForwardAxis
+	     * @default 0
+	     */
+	    this.indexForwardAxis = typeof(options.indexForwardAxis) !== 'undefined' ? options.indexForwardAxis : 0;
+
+	    /**
+	     * Index of the up axis, 0=x, 1=y, 2=z
+	     * @property {integer} indexUpAxis
+	     * @default 2
+	     */
+	    this.indexUpAxis = typeof(options.indexUpAxis) !== 'undefined' ? options.indexUpAxis : 2;
+	}
+
+	var tmpVec1 = new Vec3();
+	var tmpVec2 = new Vec3();
+	var tmpVec3 = new Vec3();
+	var tmpVec4 = new Vec3();
+	var tmpVec5 = new Vec3();
+	var tmpVec6 = new Vec3();
+	var tmpRay = new Ray();
+
+	/**
+	 * Add a wheel. For information about the options, see WheelInfo.
+	 * @method addWheel
+	 * @param {object} [options]
+	 */
+	RaycastVehicle.prototype.addWheel = function(options){
+	    options = options || {};
+
+	    var info = new WheelInfo(options);
+	    var index = this.wheelInfos.length;
+	    this.wheelInfos.push(info);
+
+	    return index;
+	};
+
+	/**
+	 * Set the steering value of a wheel.
+	 * @method setSteeringValue
+	 * @param {number} value
+	 * @param {integer} wheelIndex
+	 */
+	RaycastVehicle.prototype.setSteeringValue = function(value, wheelIndex){
+	    var wheel = this.wheelInfos[wheelIndex];
+	    wheel.steering = value;
+	};
+
+	var torque = new Vec3();
+
+	/**
+	 * Set the wheel force to apply on one of the wheels each time step
+	 * @method applyEngineForce
+	 * @param  {number} value
+	 * @param  {integer} wheelIndex
+	 */
+	RaycastVehicle.prototype.applyEngineForce = function(value, wheelIndex){
+	    this.wheelInfos[wheelIndex].engineForce = value;
+	};
+
+	/**
+	 * Set the braking force of a wheel
+	 * @method setBrake
+	 * @param {number} brake
+	 * @param {integer} wheelIndex
+	 */
+	RaycastVehicle.prototype.setBrake = function(brake, wheelIndex){
+	    this.wheelInfos[wheelIndex].brake = brake;
+	};
+
+	/**
+	 * Add the vehicle including its constraints to the world.
+	 * @method addToWorld
+	 * @param {World} world
+	 */
+	RaycastVehicle.prototype.addToWorld = function(world){
+	    var constraints = this.constraints;
+	    world.add(this.chassisBody);
+	    var that = this;
+	    this.preStepCallback = function(){
+	        that.updateVehicle(world.dt);
+	    };
+	    world.addEventListener('preStep', this.preStepCallback);
+	    this.world = world;
+	};
+
+	/**
+	 * Get one of the wheel axles, world-oriented.
+	 * @private
+	 * @method getVehicleAxisWorld
+	 * @param  {integer} axisIndex
+	 * @param  {Vec3} result
+	 */
+	RaycastVehicle.prototype.getVehicleAxisWorld = function(axisIndex, result){
+	    result.set(
+	        axisIndex === 0 ? 1 : 0,
+	        axisIndex === 1 ? 1 : 0,
+	        axisIndex === 2 ? 1 : 0
+	    );
+	    this.chassisBody.vectorToWorldFrame(result, result);
+	};
+
+	RaycastVehicle.prototype.updateVehicle = function(timeStep){
+	    var wheelInfos = this.wheelInfos;
+	    var numWheels = wheelInfos.length;
+	    var chassisBody = this.chassisBody;
+
+	    for (var i = 0; i < numWheels; i++) {
+	        this.updateWheelTransform(i);
+	    }
+
+	    this.currentVehicleSpeedKmHour = 3.6 * chassisBody.velocity.norm();
+
+	    var forwardWorld = new Vec3();
+	    this.getVehicleAxisWorld(this.indexForwardAxis, forwardWorld);
+
+	    if (forwardWorld.dot(chassisBody.velocity) < 0){
+	        this.currentVehicleSpeedKmHour *= -1;
+	    }
+
+	    // simulate suspension
+	    for (var i = 0; i < numWheels; i++) {
+	        this.castRay(wheelInfos[i]);
+	    }
+
+	    this.updateSuspension(timeStep);
+
+	    var impulse = new Vec3();
+	    var relpos = new Vec3();
+	    for (var i = 0; i < numWheels; i++) {
+	        //apply suspension force
+	        var wheel = wheelInfos[i];
+	        var suspensionForce = wheel.suspensionForce;
+	        if (suspensionForce > wheel.maxSuspensionForce) {
+	            suspensionForce = wheel.maxSuspensionForce;
+	        }
+	        wheel.raycastResult.hitNormalWorld.scale(suspensionForce * timeStep, impulse);
+
+	        wheel.raycastResult.hitPointWorld.vsub(chassisBody.position, relpos);
+	        chassisBody.applyImpulse(impulse, wheel.raycastResult.hitPointWorld/*relpos*/);
+	    }
+
+	    this.updateFriction(timeStep);
+
+	    var hitNormalWorldScaledWithProj = new Vec3();
+	    var fwd  = new Vec3();
+	    var vel = new Vec3();
+	    for (i = 0; i < numWheels; i++) {
+	        var wheel = wheelInfos[i];
+	        //var relpos = new Vec3();
+	        //wheel.chassisConnectionPointWorld.vsub(chassisBody.position, relpos);
+	        chassisBody.getVelocityAtWorldPoint(wheel.chassisConnectionPointWorld, vel);
+
+	        // Hack to get the rotation in the correct direction
+	        var m = 1;
+	        switch(this.indexUpAxis){
+	        case 1:
+	            m = -1;
+	            break;
+	        }
+
+	        if (wheel.isInContact) {
+
+	            this.getVehicleAxisWorld(this.indexForwardAxis, fwd);
+	            var proj = fwd.dot(wheel.raycastResult.hitNormalWorld);
+	            wheel.raycastResult.hitNormalWorld.scale(proj, hitNormalWorldScaledWithProj);
+
+	            fwd.vsub(hitNormalWorldScaledWithProj, fwd);
+
+	            var proj2 = fwd.dot(vel);
+	            wheel.deltaRotation = m * proj2 * timeStep / wheel.radius;
+	        }
+
+	        if((wheel.sliding || !wheel.isInContact) && wheel.engineForce !== 0 && wheel.useCustomSlidingRotationalSpeed){
+	            // Apply custom rotation when accelerating and sliding
+	            wheel.deltaRotation = (wheel.engineForce > 0 ? 1 : -1) * wheel.customSlidingRotationalSpeed * timeStep;
+	        }
+
+	        // Lock wheels
+	        if(Math.abs(wheel.brake) > Math.abs(wheel.engineForce)){
+	            wheel.deltaRotation = 0;
+	        }
+
+	        wheel.rotation += wheel.deltaRotation; // Use the old value
+	        wheel.deltaRotation *= 0.99; // damping of rotation when not in contact
+	    }
+	};
+
+	RaycastVehicle.prototype.updateSuspension = function(deltaTime) {
+	    var chassisBody = this.chassisBody;
+	    var chassisMass = chassisBody.mass;
+	    var wheelInfos = this.wheelInfos;
+	    var numWheels = wheelInfos.length;
+
+	    for (var w_it = 0; w_it < numWheels; w_it++){
+	        var wheel = wheelInfos[w_it];
+
+	        if (wheel.isInContact){
+	            var force;
+
+	            // Spring
+	            var susp_length = wheel.suspensionRestLength;
+	            var current_length = wheel.suspensionLength;
+	            var length_diff = (susp_length - current_length);
+
+	            force = wheel.suspensionStiffness * length_diff * wheel.clippedInvContactDotSuspension;
+
+	            // Damper
+	            var projected_rel_vel = wheel.suspensionRelativeVelocity;
+	            var susp_damping;
+	            if (projected_rel_vel < 0) {
+	                susp_damping = wheel.dampingCompression;
+	            } else {
+	                susp_damping = wheel.dampingRelaxation;
+	            }
+	            force -= susp_damping * projected_rel_vel;
+
+	            wheel.suspensionForce = force * chassisMass;
+	            if (wheel.suspensionForce < 0) {
+	                wheel.suspensionForce = 0;
+	            }
+	        } else {
+	            wheel.suspensionForce = 0;
+	        }
+	    }
+	};
+
+	/**
+	 * Remove the vehicle including its constraints from the world.
+	 * @method removeFromWorld
+	 * @param {World} world
+	 */
+	RaycastVehicle.prototype.removeFromWorld = function(world){
+	    var constraints = this.constraints;
+	    world.remove(this.chassisBody);
+	    world.removeEventListener('preStep', this.preStepCallback);
+	    this.world = null;
+	};
+
+	var castRay_rayvector = new Vec3();
+	var castRay_target = new Vec3();
+	RaycastVehicle.prototype.castRay = function(wheel) {
+	    var rayvector = castRay_rayvector;
+	    var target = castRay_target;
+
+	    this.updateWheelTransformWorld(wheel);
+	    var chassisBody = this.chassisBody;
+
+	    var depth = -1;
+
+	    var raylen = wheel.suspensionRestLength + wheel.radius;
+
+	    wheel.directionWorld.scale(raylen, rayvector);
+	    var source = wheel.chassisConnectionPointWorld;
+	    source.vadd(rayvector, target);
+	    var raycastResult = wheel.raycastResult;
+
+	    var param = 0;
+
+	    raycastResult.reset();
+	    // Turn off ray collision with the chassis temporarily
+	    var oldState = chassisBody.collisionResponse;
+	    chassisBody.collisionResponse = false;
+
+	    // Cast ray against world
+	    this.world.rayTest(source, target, raycastResult);
+	    chassisBody.collisionResponse = oldState;
+
+	    var object = raycastResult.body;
+
+	    wheel.raycastResult.groundObject = 0;
+
+	    if (object) {
+	        depth = raycastResult.distance;
+	        wheel.raycastResult.hitNormalWorld  = raycastResult.hitNormalWorld;
+	        wheel.isInContact = true;
+
+	        var hitDistance = raycastResult.distance;
+	        wheel.suspensionLength = hitDistance - wheel.radius;
+
+	        // clamp on max suspension travel
+	        var minSuspensionLength = wheel.suspensionRestLength - wheel.maxSuspensionTravel;
+	        var maxSuspensionLength = wheel.suspensionRestLength + wheel.maxSuspensionTravel;
+	        if (wheel.suspensionLength < minSuspensionLength) {
+	            wheel.suspensionLength = minSuspensionLength;
+	        }
+	        if (wheel.suspensionLength > maxSuspensionLength) {
+	            wheel.suspensionLength = maxSuspensionLength;
+	            wheel.raycastResult.reset();
+	        }
+
+	        var denominator = wheel.raycastResult.hitNormalWorld.dot(wheel.directionWorld);
+
+	        var chassis_velocity_at_contactPoint = new Vec3();
+	        chassisBody.getVelocityAtWorldPoint(wheel.raycastResult.hitPointWorld, chassis_velocity_at_contactPoint);
+
+	        var projVel = wheel.raycastResult.hitNormalWorld.dot( chassis_velocity_at_contactPoint );
+
+	        if (denominator >= -0.1) {
+	            wheel.suspensionRelativeVelocity = 0;
+	            wheel.clippedInvContactDotSuspension = 1 / 0.1;
+	        } else {
+	            var inv = -1 / denominator;
+	            wheel.suspensionRelativeVelocity = projVel * inv;
+	            wheel.clippedInvContactDotSuspension = inv;
+	        }
+
+	    } else {
+
+	        //put wheel info as in rest position
+	        wheel.suspensionLength = wheel.suspensionRestLength + 0 * wheel.maxSuspensionTravel;
+	        wheel.suspensionRelativeVelocity = 0.0;
+	        wheel.directionWorld.scale(-1, wheel.raycastResult.hitNormalWorld);
+	        wheel.clippedInvContactDotSuspension = 1.0;
+	    }
+
+	    return depth;
+	};
+
+	RaycastVehicle.prototype.updateWheelTransformWorld = function(wheel){
+	    wheel.isInContact = false;
+	    var chassisBody = this.chassisBody;
+	    chassisBody.pointToWorldFrame(wheel.chassisConnectionPointLocal, wheel.chassisConnectionPointWorld);
+	    chassisBody.vectorToWorldFrame(wheel.directionLocal, wheel.directionWorld);
+	    chassisBody.vectorToWorldFrame(wheel.axleLocal, wheel.axleWorld);
+	};
+
+
+	/**
+	 * Update one of the wheel transform.
+	 * Note when rendering wheels: during each step, wheel transforms are updated BEFORE the chassis; ie. their position becomes invalid after the step. Thus when you render wheels, you must update wheel transforms before rendering them. See raycastVehicle demo for an example.
+	 * @method updateWheelTransform
+	 * @param {integer} wheelIndex The wheel index to update.
+	 */
+	RaycastVehicle.prototype.updateWheelTransform = function(wheelIndex){
+	    var up = tmpVec4;
+	    var right = tmpVec5;
+	    var fwd = tmpVec6;
+
+	    var wheel = this.wheelInfos[wheelIndex];
+	    this.updateWheelTransformWorld(wheel);
+
+	    wheel.directionLocal.scale(-1, up);
+	    right.copy(wheel.axleLocal);
+	    up.cross(right, fwd);
+	    fwd.normalize();
+	    right.normalize();
+
+	    // Rotate around steering over the wheelAxle
+	    var steering = wheel.steering;
+	    var steeringOrn = new Quaternion();
+	    steeringOrn.setFromAxisAngle(up, steering);
+
+	    var rotatingOrn = new Quaternion();
+	    rotatingOrn.setFromAxisAngle(right, wheel.rotation);
+
+	    // World rotation of the wheel
+	    var q = wheel.worldTransform.quaternion;
+	    this.chassisBody.quaternion.mult(steeringOrn, q);
+	    q.mult(rotatingOrn, q);
+
+	    q.normalize();
+
+	    // world position of the wheel
+	    var p = wheel.worldTransform.position;
+	    p.copy(wheel.directionWorld);
+	    p.scale(wheel.suspensionLength, p);
+	    p.vadd(wheel.chassisConnectionPointWorld, p);
+	};
+
+	var directions = [
+	    new Vec3(1, 0, 0),
+	    new Vec3(0, 1, 0),
+	    new Vec3(0, 0, 1)
+	];
+
+	/**
+	 * Get the world transform of one of the wheels
+	 * @method getWheelTransformWorld
+	 * @param  {integer} wheelIndex
+	 * @return {Transform}
+	 */
+	RaycastVehicle.prototype.getWheelTransformWorld = function(wheelIndex) {
+	    return this.wheelInfos[wheelIndex].worldTransform;
+	};
+
+
+	var updateFriction_surfNormalWS_scaled_proj = new Vec3();
+	var updateFriction_axle = [];
+	var updateFriction_forwardWS = [];
+	var sideFrictionStiffness2 = 1;
+	RaycastVehicle.prototype.updateFriction = function(timeStep) {
+	    var surfNormalWS_scaled_proj = updateFriction_surfNormalWS_scaled_proj;
+
+	    //calculate the impulse, so that the wheels don't move sidewards
+	    var wheelInfos = this.wheelInfos;
+	    var numWheels = wheelInfos.length;
+	    var chassisBody = this.chassisBody;
+	    var forwardWS = updateFriction_forwardWS;
+	    var axle = updateFriction_axle;
+
+	    var numWheelsOnGround = 0;
+
+	    for (var i = 0; i < numWheels; i++) {
+	        var wheel = wheelInfos[i];
+
+	        var groundObject = wheel.raycastResult.body;
+	        if (groundObject){
+	            numWheelsOnGround++;
+	        }
+
+	        wheel.sideImpulse = 0;
+	        wheel.forwardImpulse = 0;
+	        if(!forwardWS[i]){
+	            forwardWS[i] = new Vec3();
+	        }
+	        if(!axle[i]){
+	            axle[i] = new Vec3();
+	        }
+	    }
+
+	    for (var i = 0; i < numWheels; i++){
+	        var wheel = wheelInfos[i];
+
+	        var groundObject = wheel.raycastResult.body;
+
+	        if (groundObject) {
+	            var axlei = axle[i];
+	            var wheelTrans = this.getWheelTransformWorld(i);
+
+	            // Get world axle
+	            wheelTrans.vectorToWorldFrame(directions[this.indexRightAxis], axlei);
+
+	            var surfNormalWS = wheel.raycastResult.hitNormalWorld;
+	            var proj = axlei.dot(surfNormalWS);
+	            surfNormalWS.scale(proj, surfNormalWS_scaled_proj);
+	            axlei.vsub(surfNormalWS_scaled_proj, axlei);
+	            axlei.normalize();
+
+	            surfNormalWS.cross(axlei, forwardWS[i]);
+	            forwardWS[i].normalize();
+
+	            wheel.sideImpulse = resolveSingleBilateral(
+	                chassisBody,
+	                wheel.raycastResult.hitPointWorld,
+	                groundObject,
+	                wheel.raycastResult.hitPointWorld,
+	                axlei
+	            );
+
+	            wheel.sideImpulse *= sideFrictionStiffness2;
+	        }
+	    }
+
+	    var sideFactor = 1;
+	    var fwdFactor = 0.5;
+
+	    this.sliding = false;
+	    for (var i = 0; i < numWheels; i++) {
+	        var wheel = wheelInfos[i];
+	        var groundObject = wheel.raycastResult.body;
+
+	        var rollingFriction = 0;
+
+	        wheel.slipInfo = 1;
+	        if (groundObject) {
+	            var defaultRollingFrictionImpulse = 0;
+	            var maxImpulse = wheel.brake ? wheel.brake : defaultRollingFrictionImpulse;
+
+	            // btWheelContactPoint contactPt(chassisBody,groundObject,wheelInfraycastInfo.hitPointWorld,forwardWS[wheel],maxImpulse);
+	            // rollingFriction = calcRollingFriction(contactPt);
+	            rollingFriction = calcRollingFriction(chassisBody, groundObject, wheel.raycastResult.hitPointWorld, forwardWS[i], maxImpulse);
+
+	            rollingFriction += wheel.engineForce * timeStep;
+
+	            // rollingFriction = 0;
+	            var factor = maxImpulse / rollingFriction;
+	            wheel.slipInfo *= factor;
+	        }
+
+	        //switch between active rolling (throttle), braking and non-active rolling friction (nthrottle/break)
+
+	        wheel.forwardImpulse = 0;
+	        wheel.skidInfo = 1;
+
+	        if (groundObject) {
+	            wheel.skidInfo = 1;
+
+	            var maximp = wheel.suspensionForce * timeStep * wheel.frictionSlip;
+	            var maximpSide = maximp;
+
+	            var maximpSquared = maximp * maximpSide;
+
+	            wheel.forwardImpulse = rollingFriction;//wheelInfo.engineForce* timeStep;
+
+	            var x = wheel.forwardImpulse * fwdFactor;
+	            var y = wheel.sideImpulse * sideFactor;
+
+	            var impulseSquared = x * x + y * y;
+
+	            wheel.sliding = false;
+	            if (impulseSquared > maximpSquared) {
+	                this.sliding = true;
+	                wheel.sliding = true;
+
+	                var factor = maximp / Math.sqrt(impulseSquared);
+
+	                wheel.skidInfo *= factor;
+	            }
+	        }
+	    }
+
+	    if (this.sliding) {
+	        for (var i = 0; i < numWheels; i++) {
+	            var wheel = wheelInfos[i];
+	            if (wheel.sideImpulse !== 0) {
+	                if (wheel.skidInfo < 1){
+	                    wheel.forwardImpulse *= wheel.skidInfo;
+	                    wheel.sideImpulse *= wheel.skidInfo;
+	                }
+	            }
+	        }
+	    }
+
+	    // apply the impulses
+	    for (var i = 0; i < numWheels; i++) {
+	        var wheel = wheelInfos[i];
+
+	        var rel_pos = new Vec3();
+	        //wheel.raycastResult.hitPointWorld.vsub(chassisBody.position, rel_pos);
+	        // cannons applyimpulse is using world coord for the position
+	        rel_pos.copy(wheel.raycastResult.hitPointWorld);
+
+	        if (wheel.forwardImpulse !== 0) {
+	            var impulse = new Vec3();
+	            forwardWS[i].scale(wheel.forwardImpulse, impulse);
+	            chassisBody.applyImpulse(impulse, rel_pos);
+	        }
+
+	        if (wheel.sideImpulse !== 0){
+	            var groundObject = wheel.raycastResult.body;
+
+	            var rel_pos2 = new Vec3();
+	            //wheel.raycastResult.hitPointWorld.vsub(groundObject.position, rel_pos2);
+	            rel_pos2.copy(wheel.raycastResult.hitPointWorld);
+	            var sideImp = new Vec3();
+	            axle[i].scale(wheel.sideImpulse, sideImp);
+
+	            // Scale the relative position in the up direction with rollInfluence.
+	            // If rollInfluence is 1, the impulse will be applied on the hitPoint (easy to roll over), if it is zero it will be applied in the same plane as the center of mass (not easy to roll over).
+	            chassisBody.pointToLocalFrame(rel_pos, rel_pos);
+	            rel_pos['xyz'[this.indexUpAxis]] *= wheel.rollInfluence;
+	            chassisBody.pointToWorldFrame(rel_pos, rel_pos);
+	            chassisBody.applyImpulse(sideImp, rel_pos);
+
+	            //apply friction impulse on the ground
+	            sideImp.scale(-1, sideImp);
+	            groundObject.applyImpulse(sideImp, rel_pos2);
+	        }
+	    }
+	};
+
+	var calcRollingFriction_vel1 = new Vec3();
+	var calcRollingFriction_vel2 = new Vec3();
+	var calcRollingFriction_vel = new Vec3();
+
+	function calcRollingFriction(body0, body1, frictionPosWorld, frictionDirectionWorld, maxImpulse) {
+	    var j1 = 0;
+	    var contactPosWorld = frictionPosWorld;
+
+	    // var rel_pos1 = new Vec3();
+	    // var rel_pos2 = new Vec3();
+	    var vel1 = calcRollingFriction_vel1;
+	    var vel2 = calcRollingFriction_vel2;
+	    var vel = calcRollingFriction_vel;
+	    // contactPosWorld.vsub(body0.position, rel_pos1);
+	    // contactPosWorld.vsub(body1.position, rel_pos2);
+
+	    body0.getVelocityAtWorldPoint(contactPosWorld, vel1);
+	    body1.getVelocityAtWorldPoint(contactPosWorld, vel2);
+	    vel1.vsub(vel2, vel);
+
+	    var vrel = frictionDirectionWorld.dot(vel);
+
+	    var denom0 = computeImpulseDenominator(body0, frictionPosWorld, frictionDirectionWorld);
+	    var denom1 = computeImpulseDenominator(body1, frictionPosWorld, frictionDirectionWorld);
+	    var relaxation = 1;
+	    var jacDiagABInv = relaxation / (denom0 + denom1);
+
+	    // calculate j that moves us to zero relative velocity
+	    j1 = -vrel * jacDiagABInv;
+
+	    if (maxImpulse < j1) {
+	        j1 = maxImpulse;
+	    }
+	    if (j1 < -maxImpulse) {
+	        j1 = -maxImpulse;
+	    }
+
+	    return j1;
+	}
+
+	var computeImpulseDenominator_r0 = new Vec3();
+	var computeImpulseDenominator_c0 = new Vec3();
+	var computeImpulseDenominator_vec = new Vec3();
+	var computeImpulseDenominator_m = new Vec3();
+	function computeImpulseDenominator(body, pos, normal) {
+	    var r0 = computeImpulseDenominator_r0;
+	    var c0 = computeImpulseDenominator_c0;
+	    var vec = computeImpulseDenominator_vec;
+	    var m = computeImpulseDenominator_m;
+
+	    pos.vsub(body.position, r0);
+	    r0.cross(normal, c0);
+	    body.invInertiaWorld.vmult(c0, m);
+	    m.cross(r0, vec);
+
+	    return body.invMass + normal.dot(vec);
+	}
+
+
+	var resolveSingleBilateral_vel1 = new Vec3();
+	var resolveSingleBilateral_vel2 = new Vec3();
+	var resolveSingleBilateral_vel = new Vec3();
+
+	//bilateral constraint between two dynamic objects
+	function resolveSingleBilateral(body1, pos1, body2, pos2, normal, impulse){
+	    var normalLenSqr = normal.norm2();
+	    if (normalLenSqr > 1.1){
+	        return 0; // no impulse
+	    }
+	    // var rel_pos1 = new Vec3();
+	    // var rel_pos2 = new Vec3();
+	    // pos1.vsub(body1.position, rel_pos1);
+	    // pos2.vsub(body2.position, rel_pos2);
+
+	    var vel1 = resolveSingleBilateral_vel1;
+	    var vel2 = resolveSingleBilateral_vel2;
+	    var vel = resolveSingleBilateral_vel;
+	    body1.getVelocityAtWorldPoint(pos1, vel1);
+	    body2.getVelocityAtWorldPoint(pos2, vel2);
+
+	    vel1.vsub(vel2, vel);
+
+	    var rel_vel = normal.dot(vel);
+
+	    var contactDamping = 0.2;
+	    var massTerm = 1 / (body1.invMass + body2.invMass);
+	    var impulse = - contactDamping * rel_vel * massTerm;
+
+	    return impulse;
+	}
+	},{"../collision/Ray":9,"../collision/RaycastResult":10,"../math/Quaternion":28,"../math/Vec3":30,"../objects/WheelInfo":36,"./Body":31}],33:[function(_dereq_,module,exports){
+	var Body = _dereq_('./Body');
+	var Sphere = _dereq_('../shapes/Sphere');
+	var Box = _dereq_('../shapes/Box');
+	var Vec3 = _dereq_('../math/Vec3');
+	var HingeConstraint = _dereq_('../constraints/HingeConstraint');
+
+	module.exports = RigidVehicle;
+
+	/**
+	 * Simple vehicle helper class with spherical rigid body wheels.
+	 * @class RigidVehicle
+	 * @constructor
+	 * @param {Body} [options.chassisBody]
+	 */
+	function RigidVehicle(options){
+	    this.wheelBodies = [];
+
+	    /**
+	     * @property coordinateSystem
+	     * @type {Vec3}
+	     */
+	    this.coordinateSystem = typeof(options.coordinateSystem)==='undefined' ? new Vec3(1, 2, 3) : options.coordinateSystem.clone();
+
+	    /**
+	     * @property {Body} chassisBody
+	     */
+	    this.chassisBody = options.chassisBody;
+
+	    if(!this.chassisBody){
+	        // No chassis body given. Create it!
+	        var chassisShape = new Box(new Vec3(5, 2, 0.5));
+	        this.chassisBody = new Body(1, chassisShape);
+	    }
+
+	    /**
+	     * @property constraints
+	     * @type {Array}
+	     */
+	    this.constraints = [];
+
+	    this.wheelAxes = [];
+	    this.wheelForces = [];
+	}
+
+	/**
+	 * Add a wheel
+	 * @method addWheel
+	 * @param {object} options
+	 * @param {boolean} [options.isFrontWheel]
+	 * @param {Vec3} [options.position] Position of the wheel, locally in the chassis body.
+	 * @param {Vec3} [options.direction] Slide direction of the wheel along the suspension.
+	 * @param {Vec3} [options.axis] Axis of rotation of the wheel, locally defined in the chassis.
+	 * @param {Body} [options.body] The wheel body.
+	 */
+	RigidVehicle.prototype.addWheel = function(options){
+	    options = options || {};
+	    var wheelBody = options.body;
+	    if(!wheelBody){
+	        wheelBody =  new Body(1, new Sphere(1.2));
+	    }
+	    this.wheelBodies.push(wheelBody);
+	    this.wheelForces.push(0);
+
+	    // Position constrain wheels
+	    var zero = new Vec3();
+	    var position = typeof(options.position) !== 'undefined' ? options.position.clone() : new Vec3();
+
+	    // Set position locally to the chassis
+	    var worldPosition = new Vec3();
+	    this.chassisBody.pointToWorldFrame(position, worldPosition);
+	    wheelBody.position.set(worldPosition.x, worldPosition.y, worldPosition.z);
+
+	    // Constrain wheel
+	    var axis = typeof(options.axis) !== 'undefined' ? options.axis.clone() : new Vec3(0, 1, 0);
+	    this.wheelAxes.push(axis);
+
+	    var hingeConstraint = new HingeConstraint(this.chassisBody, wheelBody, {
+	        pivotA: position,
+	        axisA: axis,
+	        pivotB: Vec3.ZERO,
+	        axisB: axis,
+	        collideConnected: false
+	    });
+	    this.constraints.push(hingeConstraint);
+
+	    return this.wheelBodies.length - 1;
+	};
+
+	/**
+	 * Set the steering value of a wheel.
+	 * @method setSteeringValue
+	 * @param {number} value
+	 * @param {integer} wheelIndex
+	 * @todo check coordinateSystem
+	 */
+	RigidVehicle.prototype.setSteeringValue = function(value, wheelIndex){
+	    // Set angle of the hinge axis
+	    var axis = this.wheelAxes[wheelIndex];
+
+	    var c = Math.cos(value),
+	        s = Math.sin(value),
+	        x = axis.x,
+	        y = axis.y;
+	    this.constraints[wheelIndex].axisA.set(
+	        c*x -s*y,
+	        s*x +c*y,
+	        0
+	    );
+	};
+
+	/**
+	 * Set the target rotational speed of the hinge constraint.
+	 * @method setMotorSpeed
+	 * @param {number} value
+	 * @param {integer} wheelIndex
+	 */
+	RigidVehicle.prototype.setMotorSpeed = function(value, wheelIndex){
+	    var hingeConstraint = this.constraints[wheelIndex];
+	    hingeConstraint.enableMotor();
+	    hingeConstraint.motorTargetVelocity = value;
+	};
+
+	/**
+	 * Set the target rotational speed of the hinge constraint.
+	 * @method disableMotor
+	 * @param {number} value
+	 * @param {integer} wheelIndex
+	 */
+	RigidVehicle.prototype.disableMotor = function(wheelIndex){
+	    var hingeConstraint = this.constraints[wheelIndex];
+	    hingeConstraint.disableMotor();
+	};
+
+	var torque = new Vec3();
+
+	/**
+	 * Set the wheel force to apply on one of the wheels each time step
+	 * @method setWheelForce
+	 * @param  {number} value
+	 * @param  {integer} wheelIndex
+	 */
+	RigidVehicle.prototype.setWheelForce = function(value, wheelIndex){
+	    this.wheelForces[wheelIndex] = value;
+	};
+
+	/**
+	 * Apply a torque on one of the wheels.
+	 * @method applyWheelForce
+	 * @param  {number} value
+	 * @param  {integer} wheelIndex
+	 */
+	RigidVehicle.prototype.applyWheelForce = function(value, wheelIndex){
+	    var axis = this.wheelAxes[wheelIndex];
+	    var wheelBody = this.wheelBodies[wheelIndex];
+	    var bodyTorque = wheelBody.torque;
+
+	    axis.scale(value, torque);
+	    wheelBody.vectorToWorldFrame(torque, torque);
+	    bodyTorque.vadd(torque, bodyTorque);
+	};
+
+	/**
+	 * Add the vehicle including its constraints to the world.
+	 * @method addToWorld
+	 * @param {World} world
+	 */
+	RigidVehicle.prototype.addToWorld = function(world){
+	    var constraints = this.constraints;
+	    var bodies = this.wheelBodies.concat([this.chassisBody]);
+
+	    for (var i = 0; i < bodies.length; i++) {
+	        world.add(bodies[i]);
+	    }
+
+	    for (var i = 0; i < constraints.length; i++) {
+	        world.addConstraint(constraints[i]);
+	    }
+
+	    world.addEventListener('preStep', this._update.bind(this));
+	};
+
+	RigidVehicle.prototype._update = function(){
+	    var wheelForces = this.wheelForces;
+	    for (var i = 0; i < wheelForces.length; i++) {
+	        this.applyWheelForce(wheelForces[i], i);
+	    }
+	};
+
+	/**
+	 * Remove the vehicle including its constraints from the world.
+	 * @method removeFromWorld
+	 * @param {World} world
+	 */
+	RigidVehicle.prototype.removeFromWorld = function(world){
+	    var constraints = this.constraints;
+	    var bodies = this.wheelBodies.concat([this.chassisBody]);
+
+	    for (var i = 0; i < bodies.length; i++) {
+	        world.remove(bodies[i]);
+	    }
+
+	    for (var i = 0; i < constraints.length; i++) {
+	        world.removeConstraint(constraints[i]);
+	    }
+	};
+
+	var worldAxis = new Vec3();
+
+	/**
+	 * Get current rotational velocity of a wheel
+	 * @method getWheelSpeed
+	 * @param {integer} wheelIndex
+	 */
+	RigidVehicle.prototype.getWheelSpeed = function(wheelIndex){
+	    var axis = this.wheelAxes[wheelIndex];
+	    var wheelBody = this.wheelBodies[wheelIndex];
+	    var w = wheelBody.angularVelocity;
+	    this.chassisBody.vectorToWorldFrame(axis, worldAxis);
+	    return w.dot(worldAxis);
+	};
+
+	},{"../constraints/HingeConstraint":15,"../math/Vec3":30,"../shapes/Box":37,"../shapes/Sphere":44,"./Body":31}],34:[function(_dereq_,module,exports){
+	module.exports = SPHSystem;
+
+	var Shape = _dereq_('../shapes/Shape');
+	var Vec3 = _dereq_('../math/Vec3');
+	var Quaternion = _dereq_('../math/Quaternion');
+	var Particle = _dereq_('../shapes/Particle');
+	var Body = _dereq_('../objects/Body');
+	var Material = _dereq_('../material/Material');
+
+	/**
+	 * Smoothed-particle hydrodynamics system
+	 * @class SPHSystem
+	 * @constructor
+	 */
+	function SPHSystem(){
+	    this.particles = [];
+		
+	    /**
+	     * Density of the system (kg/m3).
+	     * @property {number} density
+	     */
+	    this.density = 1;
+		
+	    /**
+	     * Distance below which two particles are considered to be neighbors.
+	     * It should be adjusted so there are about 15-20 neighbor particles within this radius.
+	     * @property {number} smoothingRadius
+	     */
+	    this.smoothingRadius = 1;
+	    this.speedOfSound = 1;
+		
+	    /**
+	     * Viscosity of the system.
+	     * @property {number} viscosity
+	     */
+	    this.viscosity = 0.01;
+	    this.eps = 0.000001;
+
+	    // Stuff Computed per particle
+	    this.pressures = [];
+	    this.densities = [];
+	    this.neighbors = [];
+	}
+
+	/**
+	 * Add a particle to the system.
+	 * @method add
+	 * @param {Body} particle
+	 */
+	SPHSystem.prototype.add = function(particle){
+	    this.particles.push(particle);
+	    if(this.neighbors.length < this.particles.length){
+	        this.neighbors.push([]);
+	    }
+	};
+
+	/**
+	 * Remove a particle from the system.
+	 * @method remove
+	 * @param {Body} particle
+	 */
+	SPHSystem.prototype.remove = function(particle){
+	    var idx = this.particles.indexOf(particle);
+	    if(idx !== -1){
+	        this.particles.splice(idx,1);
+	        if(this.neighbors.length > this.particles.length){
+	            this.neighbors.pop();
+	        }
+	    }
+	};
+
+	/**
+	 * Get neighbors within smoothing volume, save in the array neighbors
+	 * @method getNeighbors
+	 * @param {Body} particle
+	 * @param {Array} neighbors
+	 */
+	var SPHSystem_getNeighbors_dist = new Vec3();
+	SPHSystem.prototype.getNeighbors = function(particle,neighbors){
+	    var N = this.particles.length,
+	        id = particle.id,
+	        R2 = this.smoothingRadius * this.smoothingRadius,
+	        dist = SPHSystem_getNeighbors_dist;
+	    for(var i=0; i!==N; i++){
+	        var p = this.particles[i];
+	        p.position.vsub(particle.position,dist);
+	        if(id!==p.id && dist.norm2() < R2){
+	            neighbors.push(p);
+	        }
+	    }
+	};
+
+	// Temp vectors for calculation
+	var SPHSystem_update_dist = new Vec3(),
+	    SPHSystem_update_a_pressure = new Vec3(),
+	    SPHSystem_update_a_visc = new Vec3(),
+	    SPHSystem_update_gradW = new Vec3(),
+	    SPHSystem_update_r_vec = new Vec3(),
+	    SPHSystem_update_u = new Vec3(); // Relative velocity
+	SPHSystem.prototype.update = function(){
+	    var N = this.particles.length,
+	        dist = SPHSystem_update_dist,
+	        cs = this.speedOfSound,
+	        eps = this.eps;
+
+	    for(var i=0; i!==N; i++){
+	        var p = this.particles[i]; // Current particle
+	        var neighbors = this.neighbors[i];
+
+	        // Get neighbors
+	        neighbors.length = 0;
+	        this.getNeighbors(p,neighbors);
+	        neighbors.push(this.particles[i]); // Add current too
+	        var numNeighbors = neighbors.length;
+
+	        // Accumulate density for the particle
+	        var sum = 0.0;
+	        for(var j=0; j!==numNeighbors; j++){
+
+	            //printf("Current particle has position %f %f %f\n",objects[id].pos.x(),objects[id].pos.y(),objects[id].pos.z());
+	            p.position.vsub(neighbors[j].position, dist);
+	            var len = dist.norm();
+
+	            var weight = this.w(len);
+	            sum += neighbors[j].mass * weight;
+	        }
+
+	        // Save
+	        this.densities[i] = sum;
+	        this.pressures[i] = cs * cs * (this.densities[i] - this.density);
+	    }
+
+	    // Add forces
+
+	    // Sum to these accelerations
+	    var a_pressure= SPHSystem_update_a_pressure;
+	    var a_visc =    SPHSystem_update_a_visc;
+	    var gradW =     SPHSystem_update_gradW;
+	    var r_vec =     SPHSystem_update_r_vec;
+	    var u =         SPHSystem_update_u;
+
+	    for(var i=0; i!==N; i++){
+
+	        var particle = this.particles[i];
+
+	        a_pressure.set(0,0,0);
+	        a_visc.set(0,0,0);
+
+	        // Init vars
+	        var Pij;
+	        var nabla;
+	        var Vij;
+
+	        // Sum up for all other neighbors
+	        var neighbors = this.neighbors[i];
+	        var numNeighbors = neighbors.length;
+
+	        //printf("Neighbors: ");
+	        for(var j=0; j!==numNeighbors; j++){
+
+	            var neighbor = neighbors[j];
+	            //printf("%d ",nj);
+
+	            // Get r once for all..
+	            particle.position.vsub(neighbor.position,r_vec);
+	            var r = r_vec.norm();
+
+	            // Pressure contribution
+	            Pij = -neighbor.mass * (this.pressures[i] / (this.densities[i]*this.densities[i] + eps) + this.pressures[j] / (this.densities[j]*this.densities[j] + eps));
+	            this.gradw(r_vec, gradW);
+	            // Add to pressure acceleration
+	            gradW.mult(Pij , gradW);
+	            a_pressure.vadd(gradW, a_pressure);
+
+	            // Viscosity contribution
+	            neighbor.velocity.vsub(particle.velocity, u);
+	            u.mult( 1.0 / (0.0001+this.densities[i] * this.densities[j]) * this.viscosity * neighbor.mass , u );
+	            nabla = this.nablaw(r);
+	            u.mult(nabla,u);
+	            // Add to viscosity acceleration
+	            a_visc.vadd( u, a_visc );
+	        }
+
+	        // Calculate force
+	        a_visc.mult(particle.mass, a_visc);
+	        a_pressure.mult(particle.mass, a_pressure);
+
+	        // Add force to particles
+	        particle.force.vadd(a_visc, particle.force);
+	        particle.force.vadd(a_pressure, particle.force);
+	    }
+	};
+
+	// Calculate the weight using the W(r) weightfunction
+	SPHSystem.prototype.w = function(r){
+	    // 315
+	    var h = this.smoothingRadius;
+	    return 315.0/(64.0*Math.PI*Math.pow(h,9)) * Math.pow(h*h-r*r,3);
+	};
+
+	// calculate gradient of the weight function
+	SPHSystem.prototype.gradw = function(rVec,resultVec){
+	    var r = rVec.norm(),
+	        h = this.smoothingRadius;
+	    rVec.mult(945.0/(32.0*Math.PI*Math.pow(h,9)) * Math.pow((h*h-r*r),2) , resultVec);
+	};
+
+	// Calculate nabla(W)
+	SPHSystem.prototype.nablaw = function(r){
+	    var h = this.smoothingRadius;
+	    var nabla = 945.0/(32.0*Math.PI*Math.pow(h,9)) * (h*h-r*r)*(7*r*r - 3*h*h);
+	    return nabla;
+	};
+
+	},{"../material/Material":25,"../math/Quaternion":28,"../math/Vec3":30,"../objects/Body":31,"../shapes/Particle":41,"../shapes/Shape":43}],35:[function(_dereq_,module,exports){
+	var Vec3 = _dereq_('../math/Vec3');
+
+	module.exports = Spring;
+
+	/**
+	 * A spring, connecting two bodies.
+	 *
+	 * @class Spring
+	 * @constructor
+	 * @param {Body} bodyA
+	 * @param {Body} bodyB
+	 * @param {Object} [options]
+	 * @param {number} [options.restLength]   A number > 0. Default: 1
+	 * @param {number} [options.stiffness]    A number >= 0. Default: 100
+	 * @param {number} [options.damping]      A number >= 0. Default: 1
+	 * @param {Vec3}  [options.worldAnchorA] Where to hook the spring to body A, in world coordinates.
+	 * @param {Vec3}  [options.worldAnchorB]
+	 * @param {Vec3}  [options.localAnchorA] Where to hook the spring to body A, in local body coordinates.
+	 * @param {Vec3}  [options.localAnchorB]
+	 */
+	function Spring(bodyA,bodyB,options){
+	    options = options || {};
+
+	    /**
+	     * Rest length of the spring.
+	     * @property restLength
+	     * @type {number}
+	     */
+	    this.restLength = typeof(options.restLength) === "number" ? options.restLength : 1;
+
+	    /**
+	     * Stiffness of the spring.
+	     * @property stiffness
+	     * @type {number}
+	     */
+	    this.stiffness = options.stiffness || 100;
+
+	    /**
+	     * Damping of the spring.
+	     * @property damping
+	     * @type {number}
+	     */
+	    this.damping = options.damping || 1;
+
+	    /**
+	     * First connected body.
+	     * @property bodyA
+	     * @type {Body}
+	     */
+	    this.bodyA = bodyA;
+
+	    /**
+	     * Second connected body.
+	     * @property bodyB
+	     * @type {Body}
+	     */
+	    this.bodyB = bodyB;
+
+	    /**
+	     * Anchor for bodyA in local bodyA coordinates.
+	     * @property localAnchorA
+	     * @type {Vec3}
+	     */
+	    this.localAnchorA = new Vec3();
+
+	    /**
+	     * Anchor for bodyB in local bodyB coordinates.
+	     * @property localAnchorB
+	     * @type {Vec3}
+	     */
+	    this.localAnchorB = new Vec3();
+
+	    if(options.localAnchorA){
+	        this.localAnchorA.copy(options.localAnchorA);
+	    }
+	    if(options.localAnchorB){
+	        this.localAnchorB.copy(options.localAnchorB);
+	    }
+	    if(options.worldAnchorA){
+	        this.setWorldAnchorA(options.worldAnchorA);
+	    }
+	    if(options.worldAnchorB){
+	        this.setWorldAnchorB(options.worldAnchorB);
+	    }
+	}
+
+	/**
+	 * Set the anchor point on body A, using world coordinates.
+	 * @method setWorldAnchorA
+	 * @param {Vec3} worldAnchorA
+	 */
+	Spring.prototype.setWorldAnchorA = function(worldAnchorA){
+	    this.bodyA.pointToLocalFrame(worldAnchorA,this.localAnchorA);
+	};
+
+	/**
+	 * Set the anchor point on body B, using world coordinates.
+	 * @method setWorldAnchorB
+	 * @param {Vec3} worldAnchorB
+	 */
+	Spring.prototype.setWorldAnchorB = function(worldAnchorB){
+	    this.bodyB.pointToLocalFrame(worldAnchorB,this.localAnchorB);
+	};
+
+	/**
+	 * Get the anchor point on body A, in world coordinates.
+	 * @method getWorldAnchorA
+	 * @param {Vec3} result The vector to store the result in.
+	 */
+	Spring.prototype.getWorldAnchorA = function(result){
+	    this.bodyA.pointToWorldFrame(this.localAnchorA,result);
+	};
+
+	/**
+	 * Get the anchor point on body B, in world coordinates.
+	 * @method getWorldAnchorB
+	 * @param {Vec3} result The vector to store the result in.
+	 */
+	Spring.prototype.getWorldAnchorB = function(result){
+	    this.bodyB.pointToWorldFrame(this.localAnchorB,result);
+	};
+
+	var applyForce_r =              new Vec3(),
+	    applyForce_r_unit =         new Vec3(),
+	    applyForce_u =              new Vec3(),
+	    applyForce_f =              new Vec3(),
+	    applyForce_worldAnchorA =   new Vec3(),
+	    applyForce_worldAnchorB =   new Vec3(),
+	    applyForce_ri =             new Vec3(),
+	    applyForce_rj =             new Vec3(),
+	    applyForce_ri_x_f =         new Vec3(),
+	    applyForce_rj_x_f =         new Vec3(),
+	    applyForce_tmp =            new Vec3();
+
+	/**
+	 * Apply the spring force to the connected bodies.
+	 * @method applyForce
+	 */
+	Spring.prototype.applyForce = function(){
+	    var k = this.stiffness,
+	        d = this.damping,
+	        l = this.restLength,
+	        bodyA = this.bodyA,
+	        bodyB = this.bodyB,
+	        r = applyForce_r,
+	        r_unit = applyForce_r_unit,
+	        u = applyForce_u,
+	        f = applyForce_f,
+	        tmp = applyForce_tmp;
+
+	    var worldAnchorA = applyForce_worldAnchorA,
+	        worldAnchorB = applyForce_worldAnchorB,
+	        ri = applyForce_ri,
+	        rj = applyForce_rj,
+	        ri_x_f = applyForce_ri_x_f,
+	        rj_x_f = applyForce_rj_x_f;
+
+	    // Get world anchors
+	    this.getWorldAnchorA(worldAnchorA);
+	    this.getWorldAnchorB(worldAnchorB);
+
+	    // Get offset points
+	    worldAnchorA.vsub(bodyA.position,ri);
+	    worldAnchorB.vsub(bodyB.position,rj);
+
+	    // Compute distance vector between world anchor points
+	    worldAnchorB.vsub(worldAnchorA,r);
+	    var rlen = r.norm();
+	    r_unit.copy(r);
+	    r_unit.normalize();
+
+	    // Compute relative velocity of the anchor points, u
+	    bodyB.velocity.vsub(bodyA.velocity,u);
+	    // Add rotational velocity
+
+	    bodyB.angularVelocity.cross(rj,tmp);
+	    u.vadd(tmp,u);
+	    bodyA.angularVelocity.cross(ri,tmp);
+	    u.vsub(tmp,u);
+
+	    // F = - k * ( x - L ) - D * ( u )
+	    r_unit.mult(-k*(rlen-l) - d*u.dot(r_unit), f);
+
+	    // Add forces to bodies
+	    bodyA.force.vsub(f,bodyA.force);
+	    bodyB.force.vadd(f,bodyB.force);
+
+	    // Angular force
+	    ri.cross(f,ri_x_f);
+	    rj.cross(f,rj_x_f);
+	    bodyA.torque.vsub(ri_x_f,bodyA.torque);
+	    bodyB.torque.vadd(rj_x_f,bodyB.torque);
+	};
+
+	},{"../math/Vec3":30}],36:[function(_dereq_,module,exports){
+	var Vec3 = _dereq_('../math/Vec3');
+	var Transform = _dereq_('../math/Transform');
+	var RaycastResult = _dereq_('../collision/RaycastResult');
+	var Utils = _dereq_('../utils/Utils');
+
+	module.exports = WheelInfo;
+
+	/**
+	 * @class WheelInfo
+	 * @constructor
+	 * @param {Object} [options]
+	 *
+	 * @param {Vec3} [options.chassisConnectionPointLocal]
+	 * @param {Vec3} [options.chassisConnectionPointWorld]
+	 * @param {Vec3} [options.directionLocal]
+	 * @param {Vec3} [options.directionWorld]
+	 * @param {Vec3} [options.axleLocal]
+	 * @param {Vec3} [options.axleWorld]
+	 * @param {number} [options.suspensionRestLength=1]
+	 * @param {number} [options.suspensionMaxLength=2]
+	 * @param {number} [options.radius=1]
+	 * @param {number} [options.suspensionStiffness=100]
+	 * @param {number} [options.dampingCompression=10]
+	 * @param {number} [options.dampingRelaxation=10]
+	 * @param {number} [options.frictionSlip=10000]
+	 * @param {number} [options.steering=0]
+	 * @param {number} [options.rotation=0]
+	 * @param {number} [options.deltaRotation=0]
+	 * @param {number} [options.rollInfluence=0.01]
+	 * @param {number} [options.maxSuspensionForce]
+	 * @param {boolean} [options.isFrontWheel=true]
+	 * @param {number} [options.clippedInvContactDotSuspension=1]
+	 * @param {number} [options.suspensionRelativeVelocity=0]
+	 * @param {number} [options.suspensionForce=0]
+	 * @param {number} [options.skidInfo=0]
+	 * @param {number} [options.suspensionLength=0]
+	 * @param {number} [options.maxSuspensionTravel=1]
+	 * @param {boolean} [options.useCustomSlidingRotationalSpeed=false]
+	 * @param {number} [options.customSlidingRotationalSpeed=-0.1]
+	 */
+	function WheelInfo(options){
+	    options = Utils.defaults(options, {
+	        chassisConnectionPointLocal: new Vec3(),
+	        chassisConnectionPointWorld: new Vec3(),
+	        directionLocal: new Vec3(),
+	        directionWorld: new Vec3(),
+	        axleLocal: new Vec3(),
+	        axleWorld: new Vec3(),
+	        suspensionRestLength: 1,
+	        suspensionMaxLength: 2,
+	        radius: 1,
+	        suspensionStiffness: 100,
+	        dampingCompression: 10,
+	        dampingRelaxation: 10,
+	        frictionSlip: 10000,
+	        steering: 0,
+	        rotation: 0,
+	        deltaRotation: 0,
+	        rollInfluence: 0.01,
+	        maxSuspensionForce: Number.MAX_VALUE,
+	        isFrontWheel: true,
+	        clippedInvContactDotSuspension: 1,
+	        suspensionRelativeVelocity: 0,
+	        suspensionForce: 0,
+	        skidInfo: 0,
+	        suspensionLength: 0,
+	        maxSuspensionTravel: 1,
+	        useCustomSlidingRotationalSpeed: false,
+	        customSlidingRotationalSpeed: -0.1
+	    });
+
+	    /**
+	     * Max travel distance of the suspension, in meters.
+	     * @property {number} maxSuspensionTravel
+	     */
+	    this.maxSuspensionTravel = options.maxSuspensionTravel;
+
+	    /**
+	     * Speed to apply to the wheel rotation when the wheel is sliding.
+	     * @property {number} customSlidingRotationalSpeed
+	     */
+	    this.customSlidingRotationalSpeed = options.customSlidingRotationalSpeed;
+
+	    /**
+	     * If the customSlidingRotationalSpeed should be used.
+	     * @property {Boolean} useCustomSlidingRotationalSpeed
+	     */
+	    this.useCustomSlidingRotationalSpeed = options.useCustomSlidingRotationalSpeed;
+
+	    /**
+	     * @property {Boolean} sliding
+	     */
+	    this.sliding = false;
+
+	    /**
+	     * Connection point, defined locally in the chassis body frame.
+	     * @property {Vec3} chassisConnectionPointLocal
+	     */
+	    this.chassisConnectionPointLocal = options.chassisConnectionPointLocal.clone();
+
+	    /**
+	     * @property {Vec3} chassisConnectionPointWorld
+	     */
+	    this.chassisConnectionPointWorld = options.chassisConnectionPointWorld.clone();
+
+	    /**
+	     * @property {Vec3} directionLocal
+	     */
+	    this.directionLocal = options.directionLocal.clone();
+
+	    /**
+	     * @property {Vec3} directionWorld
+	     */
+	    this.directionWorld = options.directionWorld.clone();
+
+	    /**
+	     * @property {Vec3} axleLocal
+	     */
+	    this.axleLocal = options.axleLocal.clone();
+
+	    /**
+	     * @property {Vec3} axleWorld
+	     */
+	    this.axleWorld = options.axleWorld.clone();
+
+	    /**
+	     * @property {number} suspensionRestLength
+	     */
+	    this.suspensionRestLength = options.suspensionRestLength;
+
+	    /**
+	     * @property {number} suspensionMaxLength
+	     */
+	    this.suspensionMaxLength = options.suspensionMaxLength;
+
+	    /**
+	     * @property {number} radius
+	     */
+	    this.radius = options.radius;
+
+	    /**
+	     * @property {number} suspensionStiffness
+	     */
+	    this.suspensionStiffness = options.suspensionStiffness;
+
+	    /**
+	     * @property {number} dampingCompression
+	     */
+	    this.dampingCompression = options.dampingCompression;
+
+	    /**
+	     * @property {number} dampingRelaxation
+	     */
+	    this.dampingRelaxation = options.dampingRelaxation;
+
+	    /**
+	     * @property {number} frictionSlip
+	     */
+	    this.frictionSlip = options.frictionSlip;
+
+	    /**
+	     * @property {number} steering
+	     */
+	    this.steering = 0;
+
+	    /**
+	     * Rotation value, in radians.
+	     * @property {number} rotation
+	     */
+	    this.rotation = 0;
+
+	    /**
+	     * @property {number} deltaRotation
+	     */
+	    this.deltaRotation = 0;
+
+	    /**
+	     * @property {number} rollInfluence
+	     */
+	    this.rollInfluence = options.rollInfluence;
+
+	    /**
+	     * @property {number} maxSuspensionForce
+	     */
+	    this.maxSuspensionForce = options.maxSuspensionForce;
+
+	    /**
+	     * @property {number} engineForce
+	     */
+	    this.engineForce = 0;
+
+	    /**
+	     * @property {number} brake
+	     */
+	    this.brake = 0;
+
+	    /**
+	     * @property {number} isFrontWheel
+	     */
+	    this.isFrontWheel = options.isFrontWheel;
+
+	    /**
+	     * @property {number} clippedInvContactDotSuspension
+	     */
+	    this.clippedInvContactDotSuspension = 1;
+
+	    /**
+	     * @property {number} suspensionRelativeVelocity
+	     */
+	    this.suspensionRelativeVelocity = 0;
+
+	    /**
+	     * @property {number} suspensionForce
+	     */
+	    this.suspensionForce = 0;
+
+	    /**
+	     * @property {number} skidInfo
+	     */
+	    this.skidInfo = 0;
+
+	    /**
+	     * @property {number} suspensionLength
+	     */
+	    this.suspensionLength = 0;
+
+	    /**
+	     * @property {number} sideImpulse
+	     */
+	    this.sideImpulse = 0;
+
+	    /**
+	     * @property {number} forwardImpulse
+	     */
+	    this.forwardImpulse = 0;
+
+	    /**
+	     * The result from raycasting
+	     * @property {RaycastResult} raycastResult
+	     */
+	    this.raycastResult = new RaycastResult();
+
+	    /**
+	     * Wheel world transform
+	     * @property {Transform} worldTransform
+	     */
+	    this.worldTransform = new Transform();
+
+	    /**
+	     * @property {boolean} isInContact
+	     */
+	    this.isInContact = false;
+	}
+
+	var chassis_velocity_at_contactPoint = new Vec3();
+	var relpos = new Vec3();
+	var chassis_velocity_at_contactPoint = new Vec3();
+	WheelInfo.prototype.updateWheel = function(chassis){
+	    var raycastResult = this.raycastResult;
+
+	    if (this.isInContact){
+	        var project= raycastResult.hitNormalWorld.dot(raycastResult.directionWorld);
+	        raycastResult.hitPointWorld.vsub(chassis.position, relpos);
+	        chassis.getVelocityAtWorldPoint(relpos, chassis_velocity_at_contactPoint);
+	        var projVel = raycastResult.hitNormalWorld.dot( chassis_velocity_at_contactPoint );
+	        if (project >= -0.1) {
+	            this.suspensionRelativeVelocity = 0.0;
+	            this.clippedInvContactDotSuspension = 1.0 / 0.1;
+	        } else {
+	            var inv = -1 / project;
+	            this.suspensionRelativeVelocity = projVel * inv;
+	            this.clippedInvContactDotSuspension = inv;
+	        }
+
+	    } else {
+	        // Not in contact : position wheel in a nice (rest length) position
+	        raycastResult.suspensionLength = this.suspensionRestLength;
+	        this.suspensionRelativeVelocity = 0.0;
+	        raycastResult.directionWorld.scale(-1, raycastResult.hitNormalWorld);
+	        this.clippedInvContactDotSuspension = 1.0;
+	    }
+	};
+	},{"../collision/RaycastResult":10,"../math/Transform":29,"../math/Vec3":30,"../utils/Utils":53}],37:[function(_dereq_,module,exports){
+	module.exports = Box;
+
+	var Shape = _dereq_('./Shape');
+	var Vec3 = _dereq_('../math/Vec3');
+	var ConvexPolyhedron = _dereq_('./ConvexPolyhedron');
+
+	/**
+	 * A 3d box shape.
+	 * @class Box
+	 * @constructor
+	 * @param {Vec3} halfExtents
+	 * @author schteppe
+	 * @extends Shape
+	 */
+	function Box(halfExtents){
+	    Shape.call(this);
+
+	    this.type = Shape.types.BOX;
+
+	    /**
+	     * @property halfExtents
+	     * @type {Vec3}
+	     */
+	    this.halfExtents = halfExtents;
+
+	    /**
+	     * Used by the contact generator to make contacts with other convex polyhedra for example
+	     * @property convexPolyhedronRepresentation
+	     * @type {ConvexPolyhedron}
+	     */
+	    this.convexPolyhedronRepresentation = null;
+
+	    this.updateConvexPolyhedronRepresentation();
+	    this.updateBoundingSphereRadius();
+	}
+	Box.prototype = new Shape();
+	Box.prototype.constructor = Box;
+
+	/**
+	 * Updates the local convex polyhedron representation used for some collisions.
+	 * @method updateConvexPolyhedronRepresentation
+	 */
+	Box.prototype.updateConvexPolyhedronRepresentation = function(){
+	    var sx = this.halfExtents.x;
+	    var sy = this.halfExtents.y;
+	    var sz = this.halfExtents.z;
+	    var V = Vec3;
+
+	    var vertices = [
+	        new V(-sx,-sy,-sz),
+	        new V( sx,-sy,-sz),
+	        new V( sx, sy,-sz),
+	        new V(-sx, sy,-sz),
+	        new V(-sx,-sy, sz),
+	        new V( sx,-sy, sz),
+	        new V( sx, sy, sz),
+	        new V(-sx, sy, sz)
+	    ];
+
+	    var indices = [
+	        [3,2,1,0], // -z
+	        [4,5,6,7], // +z
+	        [5,4,0,1], // -y
+	        [2,3,7,6], // +y
+	        [0,4,7,3], // -x
+	        [1,2,6,5], // +x
+	    ];
+
+	    var axes = [
+	        new V(0, 0, 1),
+	        new V(0, 1, 0),
+	        new V(1, 0, 0)
+	    ];
+
+	    var h = new ConvexPolyhedron(vertices, indices);
+	    this.convexPolyhedronRepresentation = h;
+	    h.material = this.material;
+	};
+
+	/**
+	 * @method calculateLocalInertia
+	 * @param  {Number} mass
+	 * @param  {Vec3} target
+	 * @return {Vec3}
+	 */
+	Box.prototype.calculateLocalInertia = function(mass,target){
+	    target = target || new Vec3();
+	    Box.calculateInertia(this.halfExtents, mass, target);
+	    return target;
+	};
+
+	Box.calculateInertia = function(halfExtents,mass,target){
+	    var e = halfExtents;
+	    target.x = 1.0 / 12.0 * mass * (   2*e.y*2*e.y + 2*e.z*2*e.z );
+	    target.y = 1.0 / 12.0 * mass * (   2*e.x*2*e.x + 2*e.z*2*e.z );
+	    target.z = 1.0 / 12.0 * mass * (   2*e.y*2*e.y + 2*e.x*2*e.x );
+	};
+
+	/**
+	 * Get the box 6 side normals
+	 * @method getSideNormals
+	 * @param {array}      sixTargetVectors An array of 6 vectors, to store the resulting side normals in.
+	 * @param {Quaternion} quat             Orientation to apply to the normal vectors. If not provided, the vectors will be in respect to the local frame.
+	 * @return {array}
+	 */
+	Box.prototype.getSideNormals = function(sixTargetVectors,quat){
+	    var sides = sixTargetVectors;
+	    var ex = this.halfExtents;
+	    sides[0].set(  ex.x,     0,     0);
+	    sides[1].set(     0,  ex.y,     0);
+	    sides[2].set(     0,     0,  ex.z);
+	    sides[3].set( -ex.x,     0,     0);
+	    sides[4].set(     0, -ex.y,     0);
+	    sides[5].set(     0,     0, -ex.z);
+
+	    if(quat!==undefined){
+	        for(var i=0; i!==sides.length; i++){
+	            quat.vmult(sides[i],sides[i]);
+	        }
+	    }
+
+	    return sides;
+	};
+
+	Box.prototype.volume = function(){
+	    return 8.0 * this.halfExtents.x * this.halfExtents.y * this.halfExtents.z;
+	};
+
+	Box.prototype.updateBoundingSphereRadius = function(){
+	    this.boundingSphereRadius = this.halfExtents.norm();
+	};
+
+	var worldCornerTempPos = new Vec3();
+	var worldCornerTempNeg = new Vec3();
+	Box.prototype.forEachWorldCorner = function(pos,quat,callback){
+
+	    var e = this.halfExtents;
+	    var corners = [[  e.x,  e.y,  e.z],
+	                   [ -e.x,  e.y,  e.z],
+	                   [ -e.x, -e.y,  e.z],
+	                   [ -e.x, -e.y, -e.z],
+	                   [  e.x, -e.y, -e.z],
+	                   [  e.x,  e.y, -e.z],
+	                   [ -e.x,  e.y, -e.z],
+	                   [  e.x, -e.y,  e.z]];
+	    for(var i=0; i<corners.length; i++){
+	        worldCornerTempPos.set(corners[i][0],corners[i][1],corners[i][2]);
+	        quat.vmult(worldCornerTempPos,worldCornerTempPos);
+	        pos.vadd(worldCornerTempPos,worldCornerTempPos);
+	        callback(worldCornerTempPos.x,
+	                 worldCornerTempPos.y,
+	                 worldCornerTempPos.z);
+	    }
+	};
+
+	var worldCornersTemp = [
+	    new Vec3(),
+	    new Vec3(),
+	    new Vec3(),
+	    new Vec3(),
+	    new Vec3(),
+	    new Vec3(),
+	    new Vec3(),
+	    new Vec3()
+	];
+	Box.prototype.calculateWorldAABB = function(pos,quat,min,max){
+
+	    var e = this.halfExtents;
+	    worldCornersTemp[0].set(e.x, e.y, e.z);
+	    worldCornersTemp[1].set(-e.x,  e.y, e.z);
+	    worldCornersTemp[2].set(-e.x, -e.y, e.z);
+	    worldCornersTemp[3].set(-e.x, -e.y, -e.z);
+	    worldCornersTemp[4].set(e.x, -e.y, -e.z);
+	    worldCornersTemp[5].set(e.x,  e.y, -e.z);
+	    worldCornersTemp[6].set(-e.x,  e.y, -e.z);
+	    worldCornersTemp[7].set(e.x, -e.y,  e.z);
+
+	    var wc = worldCornersTemp[0];
+	    quat.vmult(wc, wc);
+	    pos.vadd(wc, wc);
+	    max.copy(wc);
+	    min.copy(wc);
+	    for(var i=1; i<8; i++){
+	        var wc = worldCornersTemp[i];
+	        quat.vmult(wc, wc);
+	        pos.vadd(wc, wc);
+	        var x = wc.x;
+	        var y = wc.y;
+	        var z = wc.z;
+	        if(x > max.x){
+	            max.x = x;
+	        }
+	        if(y > max.y){
+	            max.y = y;
+	        }
+	        if(z > max.z){
+	            max.z = z;
+	        }
+
+	        if(x < min.x){
+	            min.x = x;
+	        }
+	        if(y < min.y){
+	            min.y = y;
+	        }
+	        if(z < min.z){
+	            min.z = z;
+	        }
+	    }
+
+	    // Get each axis max
+	    // min.set(Infinity,Infinity,Infinity);
+	    // max.set(-Infinity,-Infinity,-Infinity);
+	    // this.forEachWorldCorner(pos,quat,function(x,y,z){
+	    //     if(x > max.x){
+	    //         max.x = x;
+	    //     }
+	    //     if(y > max.y){
+	    //         max.y = y;
+	    //     }
+	    //     if(z > max.z){
+	    //         max.z = z;
+	    //     }
+
+	    //     if(x < min.x){
+	    //         min.x = x;
+	    //     }
+	    //     if(y < min.y){
+	    //         min.y = y;
+	    //     }
+	    //     if(z < min.z){
+	    //         min.z = z;
+	    //     }
+	    // });
+	};
+
+	},{"../math/Vec3":30,"./ConvexPolyhedron":38,"./Shape":43}],38:[function(_dereq_,module,exports){
+	module.exports = ConvexPolyhedron;
+
+	var Shape = _dereq_('./Shape');
+	var Vec3 = _dereq_('../math/Vec3');
+	var Quaternion = _dereq_('../math/Quaternion');
+	var Transform = _dereq_('../math/Transform');
+
+	/**
+	 * A set of polygons describing a convex shape.
+	 * @class ConvexPolyhedron
+	 * @constructor
+	 * @extends Shape
+	 * @description The shape MUST be convex for the code to work properly. No polygons may be coplanar (contained
+	 * in the same 3D plane), instead these should be merged into one polygon.
+	 *
+	 * @param {array} points An array of Vec3's
+	 * @param {array} faces Array of integer arrays, describing which vertices that is included in each face.
+	 *
+	 * @author qiao / https://github.com/qiao (original author, see https://github.com/qiao/three.js/commit/85026f0c769e4000148a67d45a9e9b9c5108836f)
+	 * @author schteppe / https://github.com/schteppe
+	 * @see http://www.altdevblogaday.com/2011/05/13/contact-generation-between-3d-convex-meshes/
+	 * @see http://bullet.googlecode.com/svn/trunk/src/BulletCollision/NarrowPhaseCollision/btPolyhedralContactClipping.cpp
+	 *
+	 * @todo Move the clipping functions to ContactGenerator?
+	 * @todo Automatically merge coplanar polygons in constructor.
+	 */
+	function ConvexPolyhedron(points, faces, uniqueAxes) {
+	    var that = this;
+	    Shape.call(this);
+	    this.type = Shape.types.CONVEXPOLYHEDRON;
+
+	    /**
+	     * Array of Vec3
+	     * @property vertices
+	     * @type {Array}
+	     */
+	    this.vertices = points||[];
+
+	    this.worldVertices = []; // World transformed version of .vertices
+	    this.worldVerticesNeedsUpdate = true;
+
+	    /**
+	     * Array of integer arrays, indicating which vertices each face consists of
+	     * @property faces
+	     * @type {Array}
+	     */
+	    this.faces = faces||[];
+
+	    /**
+	     * Array of Vec3
+	     * @property faceNormals
+	     * @type {Array}
+	     */
+	    this.faceNormals = [];
+	    this.computeNormals();
+
+	    this.worldFaceNormalsNeedsUpdate = true;
+	    this.worldFaceNormals = []; // World transformed version of .faceNormals
+
+	    /**
+	     * Array of Vec3
+	     * @property uniqueEdges
+	     * @type {Array}
+	     */
+	    this.uniqueEdges = [];
+
+	    /**
+	     * If given, these locally defined, normalized axes are the only ones being checked when doing separating axis check.
+	     * @property {Array} uniqueAxes
+	     */
+	    this.uniqueAxes = uniqueAxes ? uniqueAxes.slice() : null;
+
+	    this.computeEdges();
+	    this.updateBoundingSphereRadius();
+	}
+	ConvexPolyhedron.prototype = new Shape();
+	ConvexPolyhedron.prototype.constructor = ConvexPolyhedron;
+
+	var computeEdges_tmpEdge = new Vec3();
+	/**
+	 * Computes uniqueEdges
+	 * @method computeEdges
+	 */
+	ConvexPolyhedron.prototype.computeEdges = function(){
+	    var faces = this.faces;
+	    var vertices = this.vertices;
+	    var nv = vertices.length;
+	    var edges = this.uniqueEdges;
+
+	    edges.length = 0;
+
+	    var edge = computeEdges_tmpEdge;
+
+	    for(var i=0; i !== faces.length; i++){
+	        var face = faces[i];
+	        var numVertices = face.length;
+	        for(var j = 0; j !== numVertices; j++){
+	            var k = ( j+1 ) % numVertices;
+	            vertices[face[j]].vsub(vertices[face[k]], edge);
+	            edge.normalize();
+	            var found = false;
+	            for(var p=0; p !== edges.length; p++){
+	                if (edges[p].almostEquals(edge) || edges[p].almostEquals(edge)){
+	                    found = true;
+	                    break;
+	                }
+	            }
+
+	            if (!found){
+	                edges.push(edge.clone());
+	            }
+	        }
+	    }
+	};
+
+	/**
+	 * Compute the normals of the faces. Will reuse existing Vec3 objects in the .faceNormals array if they exist.
+	 * @method computeNormals
+	 */
+	ConvexPolyhedron.prototype.computeNormals = function(){
+	    this.faceNormals.length = this.faces.length;
+
+	    // Generate normals
+	    for(var i=0; i<this.faces.length; i++){
+
+	        // Check so all vertices exists for this face
+	        for(var j=0; j<this.faces[i].length; j++){
+	            if(!this.vertices[this.faces[i][j]]){
+	                throw new Error("Vertex "+this.faces[i][j]+" not found!");
+	            }
+	        }
+
+	        var n = this.faceNormals[i] || new Vec3();
+	        this.getFaceNormal(i,n);
+	        n.negate(n);
+	        this.faceNormals[i] = n;
+	        var vertex = this.vertices[this.faces[i][0]];
+	        if(n.dot(vertex) < 0){
+	            console.error(".faceNormals[" + i + "] = Vec3("+n.toString()+") looks like it points into the shape? The vertices follow. Make sure they are ordered CCW around the normal, using the right hand rule.");
+	            for(var j=0; j<this.faces[i].length; j++){
+	                console.warn(".vertices["+this.faces[i][j]+"] = Vec3("+this.vertices[this.faces[i][j]].toString()+")");
+	            }
+	        }
+	    }
+	};
+
+	/**
+	 * Get face normal given 3 vertices
+	 * @static
+	 * @method getFaceNormal
+	 * @param {Vec3} va
+	 * @param {Vec3} vb
+	 * @param {Vec3} vc
+	 * @param {Vec3} target
+	 */
+	var cb = new Vec3();
+	var ab = new Vec3();
+	ConvexPolyhedron.computeNormal = function ( va, vb, vc, target ) {
+	    vb.vsub(va,ab);
+	    vc.vsub(vb,cb);
+	    cb.cross(ab,target);
+	    if ( !target.isZero() ) {
+	        target.normalize();
+	    }
+	};
+
+	/**
+	 * Compute the normal of a face from its vertices
+	 * @method getFaceNormal
+	 * @param  {Number} i
+	 * @param  {Vec3} target
+	 */
+	ConvexPolyhedron.prototype.getFaceNormal = function(i,target){
+	    var f = this.faces[i];
+	    var va = this.vertices[f[0]];
+	    var vb = this.vertices[f[1]];
+	    var vc = this.vertices[f[2]];
+	    return ConvexPolyhedron.computeNormal(va,vb,vc,target);
+	};
+
+	/**
+	 * @method clipAgainstHull
+	 * @param {Vec3} posA
+	 * @param {Quaternion} quatA
+	 * @param {ConvexPolyhedron} hullB
+	 * @param {Vec3} posB
+	 * @param {Quaternion} quatB
+	 * @param {Vec3} separatingNormal
+	 * @param {Number} minDist Clamp distance
+	 * @param {Number} maxDist
+	 * @param {array} result The an array of contact point objects, see clipFaceAgainstHull
+	 * @see http://bullet.googlecode.com/svn/trunk/src/BulletCollision/NarrowPhaseCollision/btPolyhedralContactClipping.cpp
+	 */
+	var cah_WorldNormal = new Vec3();
+	ConvexPolyhedron.prototype.clipAgainstHull = function(posA,quatA,hullB,posB,quatB,separatingNormal,minDist,maxDist,result){
+	    var WorldNormal = cah_WorldNormal;
+	    var hullA = this;
+	    var curMaxDist = maxDist;
+	    var closestFaceB = -1;
+	    var dmax = -Number.MAX_VALUE;
+	    for(var face=0; face < hullB.faces.length; face++){
+	        WorldNormal.copy(hullB.faceNormals[face]);
+	        quatB.vmult(WorldNormal,WorldNormal);
+	        //posB.vadd(WorldNormal,WorldNormal);
+	        var d = WorldNormal.dot(separatingNormal);
+	        if (d > dmax){
+	            dmax = d;
+	            closestFaceB = face;
+	        }
+	    }
+	    var worldVertsB1 = [];
+	    var polyB = hullB.faces[closestFaceB];
+	    var numVertices = polyB.length;
+	    for(var e0=0; e0<numVertices; e0++){
+	        var b = hullB.vertices[polyB[e0]];
+	        var worldb = new Vec3();
+	        worldb.copy(b);
+	        quatB.vmult(worldb,worldb);
+	        posB.vadd(worldb,worldb);
+	        worldVertsB1.push(worldb);
+	    }
+
+	    if (closestFaceB>=0){
+	        this.clipFaceAgainstHull(separatingNormal,
+	                                 posA,
+	                                 quatA,
+	                                 worldVertsB1,
+	                                 minDist,
+	                                 maxDist,
+	                                 result);
+	    }
+	};
+
+	/**
+	 * Find the separating axis between this hull and another
+	 * @method findSeparatingAxis
+	 * @param {ConvexPolyhedron} hullB
+	 * @param {Vec3} posA
+	 * @param {Quaternion} quatA
+	 * @param {Vec3} posB
+	 * @param {Quaternion} quatB
+	 * @param {Vec3} target The target vector to save the axis in
+	 * @return {bool} Returns false if a separation is found, else true
+	 */
+	var fsa_faceANormalWS3 = new Vec3(),
+	    fsa_Worldnormal1 = new Vec3(),
+	    fsa_deltaC = new Vec3(),
+	    fsa_worldEdge0 = new Vec3(),
+	    fsa_worldEdge1 = new Vec3(),
+	    fsa_Cross = new Vec3();
+	ConvexPolyhedron.prototype.findSeparatingAxis = function(hullB,posA,quatA,posB,quatB,target, faceListA, faceListB){
+	    var faceANormalWS3 = fsa_faceANormalWS3,
+	        Worldnormal1 = fsa_Worldnormal1,
+	        deltaC = fsa_deltaC,
+	        worldEdge0 = fsa_worldEdge0,
+	        worldEdge1 = fsa_worldEdge1,
+	        Cross = fsa_Cross;
+
+	    var dmin = Number.MAX_VALUE;
+	    var hullA = this;
+	    var curPlaneTests=0;
+
+	    if(!hullA.uniqueAxes){
+
+	        var numFacesA = faceListA ? faceListA.length : hullA.faces.length;
+
+	        // Test face normals from hullA
+	        for(var i=0; i<numFacesA; i++){
+	            var fi = faceListA ? faceListA[i] : i;
+
+	            // Get world face normal
+	            faceANormalWS3.copy(hullA.faceNormals[fi]);
+	            quatA.vmult(faceANormalWS3,faceANormalWS3);
+
+	            var d = hullA.testSepAxis(faceANormalWS3, hullB, posA, quatA, posB, quatB);
+	            if(d===false){
+	                return false;
+	            }
+
+	            if(d<dmin){
+	                dmin = d;
+	                target.copy(faceANormalWS3);
+	            }
+	        }
+
+	    } else {
+
+	        // Test unique axes
+	        for(var i = 0; i !== hullA.uniqueAxes.length; i++){
+
+	            // Get world axis
+	            quatA.vmult(hullA.uniqueAxes[i],faceANormalWS3);
+
+	            var d = hullA.testSepAxis(faceANormalWS3, hullB, posA, quatA, posB, quatB);
+	            if(d===false){
+	                return false;
+	            }
+
+	            if(d<dmin){
+	                dmin = d;
+	                target.copy(faceANormalWS3);
+	            }
+	        }
+	    }
+
+	    if(!hullB.uniqueAxes){
+
+	        // Test face normals from hullB
+	        var numFacesB = faceListB ? faceListB.length : hullB.faces.length;
+	        for(var i=0;i<numFacesB;i++){
+
+	            var fi = faceListB ? faceListB[i] : i;
+
+	            Worldnormal1.copy(hullB.faceNormals[fi]);
+	            quatB.vmult(Worldnormal1,Worldnormal1);
+	            curPlaneTests++;
+	            var d = hullA.testSepAxis(Worldnormal1, hullB,posA,quatA,posB,quatB);
+	            if(d===false){
+	                return false;
+	            }
+
+	            if(d<dmin){
+	                dmin = d;
+	                target.copy(Worldnormal1);
+	            }
+	        }
+	    } else {
+
+	        // Test unique axes in B
+	        for(var i = 0; i !== hullB.uniqueAxes.length; i++){
+	            quatB.vmult(hullB.uniqueAxes[i],Worldnormal1);
+
+	            curPlaneTests++;
+	            var d = hullA.testSepAxis(Worldnormal1, hullB,posA,quatA,posB,quatB);
+	            if(d===false){
+	                return false;
+	            }
+
+	            if(d<dmin){
+	                dmin = d;
+	                target.copy(Worldnormal1);
+	            }
+	        }
+	    }
+
+	    // Test edges
+	    for(var e0=0; e0 !== hullA.uniqueEdges.length; e0++){
+
+	        // Get world edge
+	        quatA.vmult(hullA.uniqueEdges[e0],worldEdge0);
+
+	        for(var e1=0; e1 !== hullB.uniqueEdges.length; e1++){
+
+	            // Get world edge 2
+	            quatB.vmult(hullB.uniqueEdges[e1], worldEdge1);
+	            worldEdge0.cross(worldEdge1,Cross);
+
+	            if(!Cross.almostZero()){
+	                Cross.normalize();
+	                var dist = hullA.testSepAxis(Cross, hullB, posA, quatA, posB, quatB);
+	                if(dist === false){
+	                    return false;
+	                }
+	                if(dist < dmin){
+	                    dmin = dist;
+	                    target.copy(Cross);
+	                }
+	            }
+	        }
+	    }
+
+	    posB.vsub(posA,deltaC);
+	    if((deltaC.dot(target))>0.0){
+	        target.negate(target);
+	    }
+
+	    return true;
+	};
+
+	var maxminA=[], maxminB=[];
+
+	/**
+	 * Test separating axis against two hulls. Both hulls are projected onto the axis and the overlap size is returned if there is one.
+	 * @method testSepAxis
+	 * @param {Vec3} axis
+	 * @param {ConvexPolyhedron} hullB
+	 * @param {Vec3} posA
+	 * @param {Quaternion} quatA
+	 * @param {Vec3} posB
+	 * @param {Quaternion} quatB
+	 * @return {number} The overlap depth, or FALSE if no penetration.
+	 */
+	ConvexPolyhedron.prototype.testSepAxis = function(axis, hullB, posA, quatA, posB, quatB){
+	    var hullA=this;
+	    ConvexPolyhedron.project(hullA, axis, posA, quatA, maxminA);
+	    ConvexPolyhedron.project(hullB, axis, posB, quatB, maxminB);
+	    var maxA = maxminA[0];
+	    var minA = maxminA[1];
+	    var maxB = maxminB[0];
+	    var minB = maxminB[1];
+	    if(maxA<minB || maxB<minA){
+	        return false; // Separated
+	    }
+	    var d0 = maxA - minB;
+	    var d1 = maxB - minA;
+	    var depth = d0<d1 ? d0:d1;
+	    return depth;
+	};
+
+	var cli_aabbmin = new Vec3(),
+	    cli_aabbmax = new Vec3();
+
+	/**
+	 * @method calculateLocalInertia
+	 * @param  {Number} mass
+	 * @param  {Vec3} target
+	 */
+	ConvexPolyhedron.prototype.calculateLocalInertia = function(mass,target){
+	    // Approximate with box inertia
+	    // Exact inertia calculation is overkill, but see http://geometrictools.com/Documentation/PolyhedralMassProperties.pdf for the correct way to do it
+	    this.computeLocalAABB(cli_aabbmin,cli_aabbmax);
+	    var x = cli_aabbmax.x - cli_aabbmin.x,
+	        y = cli_aabbmax.y - cli_aabbmin.y,
+	        z = cli_aabbmax.z - cli_aabbmin.z;
+	    target.x = 1.0 / 12.0 * mass * ( 2*y*2*y + 2*z*2*z );
+	    target.y = 1.0 / 12.0 * mass * ( 2*x*2*x + 2*z*2*z );
+	    target.z = 1.0 / 12.0 * mass * ( 2*y*2*y + 2*x*2*x );
+	};
+
+	/**
+	 * @method getPlaneConstantOfFace
+	 * @param  {Number} face_i Index of the face
+	 * @return {Number}
+	 */
+	ConvexPolyhedron.prototype.getPlaneConstantOfFace = function(face_i){
+	    var f = this.faces[face_i];
+	    var n = this.faceNormals[face_i];
+	    var v = this.vertices[f[0]];
+	    var c = -n.dot(v);
+	    return c;
+	};
+
+	/**
+	 * Clip a face against a hull.
+	 * @method clipFaceAgainstHull
+	 * @param {Vec3} separatingNormal
+	 * @param {Vec3} posA
+	 * @param {Quaternion} quatA
+	 * @param {Array} worldVertsB1 An array of Vec3 with vertices in the world frame.
+	 * @param {Number} minDist Distance clamping
+	 * @param {Number} maxDist
+	 * @param Array result Array to store resulting contact points in. Will be objects with properties: point, depth, normal. These are represented in world coordinates.
+	 */
+	var cfah_faceANormalWS = new Vec3(),
+	    cfah_edge0 = new Vec3(),
+	    cfah_WorldEdge0 = new Vec3(),
+	    cfah_worldPlaneAnormal1 = new Vec3(),
+	    cfah_planeNormalWS1 = new Vec3(),
+	    cfah_worldA1 = new Vec3(),
+	    cfah_localPlaneNormal = new Vec3(),
+	    cfah_planeNormalWS = new Vec3();
+	ConvexPolyhedron.prototype.clipFaceAgainstHull = function(separatingNormal, posA, quatA, worldVertsB1, minDist, maxDist,result){
+	    var faceANormalWS = cfah_faceANormalWS,
+	        edge0 = cfah_edge0,
+	        WorldEdge0 = cfah_WorldEdge0,
+	        worldPlaneAnormal1 = cfah_worldPlaneAnormal1,
+	        planeNormalWS1 = cfah_planeNormalWS1,
+	        worldA1 = cfah_worldA1,
+	        localPlaneNormal = cfah_localPlaneNormal,
+	        planeNormalWS = cfah_planeNormalWS;
+
+	    var hullA = this;
+	    var worldVertsB2 = [];
+	    var pVtxIn = worldVertsB1;
+	    var pVtxOut = worldVertsB2;
+	    // Find the face with normal closest to the separating axis
+	    var closestFaceA = -1;
+	    var dmin = Number.MAX_VALUE;
+	    for(var face=0; face<hullA.faces.length; face++){
+	        faceANormalWS.copy(hullA.faceNormals[face]);
+	        quatA.vmult(faceANormalWS,faceANormalWS);
+	        //posA.vadd(faceANormalWS,faceANormalWS);
+	        var d = faceANormalWS.dot(separatingNormal);
+	        if (d < dmin){
+	            dmin = d;
+	            closestFaceA = face;
+	        }
+	    }
+	    if (closestFaceA < 0){
+	        // console.log("--- did not find any closest face... ---");
+	        return;
+	    }
+	    //console.log("closest A: ",closestFaceA);
+	    // Get the face and construct connected faces
+	    var polyA = hullA.faces[closestFaceA];
+	    polyA.connectedFaces = [];
+	    for(var i=0; i<hullA.faces.length; i++){
+	        for(var j=0; j<hullA.faces[i].length; j++){
+	            if(polyA.indexOf(hullA.faces[i][j])!==-1 /* Sharing a vertex*/ && i!==closestFaceA /* Not the one we are looking for connections from */ && polyA.connectedFaces.indexOf(i)===-1 /* Not already added */ ){
+	                polyA.connectedFaces.push(i);
+	            }
+	        }
+	    }
+	    // Clip the polygon to the back of the planes of all faces of hull A, that are adjacent to the witness face
+	    var numContacts = pVtxIn.length;
+	    var numVerticesA = polyA.length;
+	    var res = [];
+	    for(var e0=0; e0<numVerticesA; e0++){
+	        var a = hullA.vertices[polyA[e0]];
+	        var b = hullA.vertices[polyA[(e0+1)%numVerticesA]];
+	        a.vsub(b,edge0);
+	        WorldEdge0.copy(edge0);
+	        quatA.vmult(WorldEdge0,WorldEdge0);
+	        posA.vadd(WorldEdge0,WorldEdge0);
+	        worldPlaneAnormal1.copy(this.faceNormals[closestFaceA]);//transA.getBasis()* btVector3(polyA.m_plane[0],polyA.m_plane[1],polyA.m_plane[2]);
+	        quatA.vmult(worldPlaneAnormal1,worldPlaneAnormal1);
+	        posA.vadd(worldPlaneAnormal1,worldPlaneAnormal1);
+	        WorldEdge0.cross(worldPlaneAnormal1,planeNormalWS1);
+	        planeNormalWS1.negate(planeNormalWS1);
+	        worldA1.copy(a);
+	        quatA.vmult(worldA1,worldA1);
+	        posA.vadd(worldA1,worldA1);
+	        var planeEqWS1 = -worldA1.dot(planeNormalWS1);
+	        var planeEqWS;
+	        if(true){
+	            var otherFace = polyA.connectedFaces[e0];
+	            localPlaneNormal.copy(this.faceNormals[otherFace]);
+	            var localPlaneEq = this.getPlaneConstantOfFace(otherFace);
+
+	            planeNormalWS.copy(localPlaneNormal);
+	            quatA.vmult(planeNormalWS,planeNormalWS);
+	            //posA.vadd(planeNormalWS,planeNormalWS);
+	            var planeEqWS = localPlaneEq - planeNormalWS.dot(posA);
+	        } else  {
+	            planeNormalWS.copy(planeNormalWS1);
+	            planeEqWS = planeEqWS1;
+	        }
+
+	        // Clip face against our constructed plane
+	        this.clipFaceAgainstPlane(pVtxIn, pVtxOut, planeNormalWS, planeEqWS);
+
+	        // Throw away all clipped points, but save the reamining until next clip
+	        while(pVtxIn.length){
+	            pVtxIn.shift();
+	        }
+	        while(pVtxOut.length){
+	            pVtxIn.push(pVtxOut.shift());
+	        }
+	    }
+
+	    //console.log("Resulting points after clip:",pVtxIn);
+
+	    // only keep contact points that are behind the witness face
+	    localPlaneNormal.copy(this.faceNormals[closestFaceA]);
+
+	    var localPlaneEq = this.getPlaneConstantOfFace(closestFaceA);
+	    planeNormalWS.copy(localPlaneNormal);
+	    quatA.vmult(planeNormalWS,planeNormalWS);
+
+	    var planeEqWS = localPlaneEq - planeNormalWS.dot(posA);
+	    for (var i=0; i<pVtxIn.length; i++){
+	        var depth = planeNormalWS.dot(pVtxIn[i]) + planeEqWS; //???
+	        /*console.log("depth calc from normal=",planeNormalWS.toString()," and constant "+planeEqWS+" and vertex ",pVtxIn[i].toString()," gives "+depth);*/
+	        if (depth <=minDist){
+	            console.log("clamped: depth="+depth+" to minDist="+(minDist+""));
+	            depth = minDist;
+	        }
+
+	        if (depth <=maxDist){
+	            var point = pVtxIn[i];
+	            if(depth<=0){
+	                /*console.log("Got contact point ",point.toString(),
+	                  ", depth=",depth,
+	                  "contact normal=",separatingNormal.toString(),
+	                  "plane",planeNormalWS.toString(),
+	                  "planeConstant",planeEqWS);*/
+	                var p = {
+	                    point:point,
+	                    normal:planeNormalWS,
+	                    depth: depth,
+	                };
+	                result.push(p);
+	            }
+	        }
+	    }
+	};
+
+	/**
+	 * Clip a face in a hull against the back of a plane.
+	 * @method clipFaceAgainstPlane
+	 * @param {Array} inVertices
+	 * @param {Array} outVertices
+	 * @param {Vec3} planeNormal
+	 * @param {Number} planeConstant The constant in the mathematical plane equation
+	 */
+	ConvexPolyhedron.prototype.clipFaceAgainstPlane = function(inVertices,outVertices, planeNormal, planeConstant){
+	    var n_dot_first, n_dot_last;
+	    var numVerts = inVertices.length;
+
+	    if(numVerts < 2){
+	        return outVertices;
+	    }
+
+	    var firstVertex = inVertices[inVertices.length-1],
+	        lastVertex =   inVertices[0];
+
+	    n_dot_first = planeNormal.dot(firstVertex) + planeConstant;
+
+	    for(var vi = 0; vi < numVerts; vi++){
+	        lastVertex = inVertices[vi];
+	        n_dot_last = planeNormal.dot(lastVertex) + planeConstant;
+	        if(n_dot_first < 0){
+	            if(n_dot_last < 0){
+	                // Start < 0, end < 0, so output lastVertex
+	                var newv = new Vec3();
+	                newv.copy(lastVertex);
+	                outVertices.push(newv);
+	            } else {
+	                // Start < 0, end >= 0, so output intersection
+	                var newv = new Vec3();
+	                firstVertex.lerp(lastVertex,
+	                                 n_dot_first / (n_dot_first - n_dot_last),
+	                                 newv);
+	                outVertices.push(newv);
+	            }
+	        } else {
+	            if(n_dot_last<0){
+	                // Start >= 0, end < 0 so output intersection and end
+	                var newv = new Vec3();
+	                firstVertex.lerp(lastVertex,
+	                                 n_dot_first / (n_dot_first - n_dot_last),
+	                                 newv);
+	                outVertices.push(newv);
+	                outVertices.push(lastVertex);
+	            }
+	        }
+	        firstVertex = lastVertex;
+	        n_dot_first = n_dot_last;
+	    }
+	    return outVertices;
+	};
+
+	// Updates .worldVertices and sets .worldVerticesNeedsUpdate to false.
+	ConvexPolyhedron.prototype.computeWorldVertices = function(position,quat){
+	    var N = this.vertices.length;
+	    while(this.worldVertices.length < N){
+	        this.worldVertices.push( new Vec3() );
+	    }
+
+	    var verts = this.vertices,
+	        worldVerts = this.worldVertices;
+	    for(var i=0; i!==N; i++){
+	        quat.vmult( verts[i] , worldVerts[i] );
+	        position.vadd( worldVerts[i] , worldVerts[i] );
+	    }
+
+	    this.worldVerticesNeedsUpdate = false;
+	};
+
+	var computeLocalAABB_worldVert = new Vec3();
+	ConvexPolyhedron.prototype.computeLocalAABB = function(aabbmin,aabbmax){
+	    var n = this.vertices.length,
+	        vertices = this.vertices,
+	        worldVert = computeLocalAABB_worldVert;
+
+	    aabbmin.set(Number.MAX_VALUE, Number.MAX_VALUE, Number.MAX_VALUE);
+	    aabbmax.set(-Number.MAX_VALUE, -Number.MAX_VALUE, -Number.MAX_VALUE);
+
+	    for(var i=0; i<n; i++){
+	        var v = vertices[i];
+	        if     (v.x < aabbmin.x){
+	            aabbmin.x = v.x;
+	        } else if(v.x > aabbmax.x){
+	            aabbmax.x = v.x;
+	        }
+	        if     (v.y < aabbmin.y){
+	            aabbmin.y = v.y;
+	        } else if(v.y > aabbmax.y){
+	            aabbmax.y = v.y;
+	        }
+	        if     (v.z < aabbmin.z){
+	            aabbmin.z = v.z;
+	        } else if(v.z > aabbmax.z){
+	            aabbmax.z = v.z;
+	        }
+	    }
+	};
+
+	/**
+	 * Updates .worldVertices and sets .worldVerticesNeedsUpdate to false.
+	 * @method computeWorldFaceNormals
+	 * @param  {Quaternion} quat
+	 */
+	ConvexPolyhedron.prototype.computeWorldFaceNormals = function(quat){
+	    var N = this.faceNormals.length;
+	    while(this.worldFaceNormals.length < N){
+	        this.worldFaceNormals.push( new Vec3() );
+	    }
+
+	    var normals = this.faceNormals,
+	        worldNormals = this.worldFaceNormals;
+	    for(var i=0; i!==N; i++){
+	        quat.vmult( normals[i] , worldNormals[i] );
+	    }
+
+	    this.worldFaceNormalsNeedsUpdate = false;
+	};
+
+	/**
+	 * @method updateBoundingSphereRadius
+	 */
+	ConvexPolyhedron.prototype.updateBoundingSphereRadius = function(){
+	    // Assume points are distributed with local (0,0,0) as center
+	    var max2 = 0;
+	    var verts = this.vertices;
+	    for(var i=0, N=verts.length; i!==N; i++) {
+	        var norm2 = verts[i].norm2();
+	        if(norm2 > max2){
+	            max2 = norm2;
+	        }
+	    }
+	    this.boundingSphereRadius = Math.sqrt(max2);
+	};
+
+	var tempWorldVertex = new Vec3();
+
+	/**
+	 * @method calculateWorldAABB
+	 * @param {Vec3}        pos
+	 * @param {Quaternion}  quat
+	 * @param {Vec3}        min
+	 * @param {Vec3}        max
+	 */
+	ConvexPolyhedron.prototype.calculateWorldAABB = function(pos,quat,min,max){
+	    var n = this.vertices.length, verts = this.vertices;
+	    var minx,miny,minz,maxx,maxy,maxz;
+	    for(var i=0; i<n; i++){
+	        tempWorldVertex.copy(verts[i]);
+	        quat.vmult(tempWorldVertex,tempWorldVertex);
+	        pos.vadd(tempWorldVertex,tempWorldVertex);
+	        var v = tempWorldVertex;
+	        if     (v.x < minx || minx===undefined){
+	            minx = v.x;
+	        } else if(v.x > maxx || maxx===undefined){
+	            maxx = v.x;
+	        }
+
+	        if     (v.y < miny || miny===undefined){
+	            miny = v.y;
+	        } else if(v.y > maxy || maxy===undefined){
+	            maxy = v.y;
+	        }
+
+	        if     (v.z < minz || minz===undefined){
+	            minz = v.z;
+	        } else if(v.z > maxz || maxz===undefined){
+	            maxz = v.z;
+	        }
+	    }
+	    min.set(minx,miny,minz);
+	    max.set(maxx,maxy,maxz);
+	};
+
+	/**
+	 * Get approximate convex volume
+	 * @method volume
+	 * @return {Number}
+	 */
+	ConvexPolyhedron.prototype.volume = function(){
+	    return 4.0 * Math.PI * this.boundingSphereRadius / 3.0;
+	};
+
+	/**
+	 * Get an average of all the vertices positions
+	 * @method getAveragePointLocal
+	 * @param  {Vec3} target
+	 * @return {Vec3}
+	 */
+	ConvexPolyhedron.prototype.getAveragePointLocal = function(target){
+	    target = target || new Vec3();
+	    var n = this.vertices.length,
+	        verts = this.vertices;
+	    for(var i=0; i<n; i++){
+	        target.vadd(verts[i],target);
+	    }
+	    target.mult(1/n,target);
+	    return target;
+	};
+
+	/**
+	 * Transform all local points. Will change the .vertices
+	 * @method transformAllPoints
+	 * @param  {Vec3} offset
+	 * @param  {Quaternion} quat
+	 */
+	ConvexPolyhedron.prototype.transformAllPoints = function(offset,quat){
+	    var n = this.vertices.length,
+	        verts = this.vertices;
+
+	    // Apply rotation
+	    if(quat){
+	        // Rotate vertices
+	        for(var i=0; i<n; i++){
+	            var v = verts[i];
+	            quat.vmult(v,v);
+	        }
+	        // Rotate face normals
+	        for(var i=0; i<this.faceNormals.length; i++){
+	            var v = this.faceNormals[i];
+	            quat.vmult(v,v);
+	        }
+	        /*
+	        // Rotate edges
+	        for(var i=0; i<this.uniqueEdges.length; i++){
+	            var v = this.uniqueEdges[i];
+	            quat.vmult(v,v);
+	        }*/
+	    }
+
+	    // Apply offset
+	    if(offset){
+	        for(var i=0; i<n; i++){
+	            var v = verts[i];
+	            v.vadd(offset,v);
+	        }
+	    }
+	};
+
+	/**
+	 * Checks whether p is inside the polyhedra. Must be in local coords. The point lies outside of the convex hull of the other points if and only if the direction of all the vectors from it to those other points are on less than one half of a sphere around it.
+	 * @method pointIsInside
+	 * @param  {Vec3} p      A point given in local coordinates
+	 * @return {Boolean}
+	 */
+	var ConvexPolyhedron_pointIsInside = new Vec3();
+	var ConvexPolyhedron_vToP = new Vec3();
+	var ConvexPolyhedron_vToPointInside = new Vec3();
+	ConvexPolyhedron.prototype.pointIsInside = function(p){
+	    var n = this.vertices.length,
+	        verts = this.vertices,
+	        faces = this.faces,
+	        normals = this.faceNormals;
+	    var positiveResult = null;
+	    var N = this.faces.length;
+	    var pointInside = ConvexPolyhedron_pointIsInside;
+	    this.getAveragePointLocal(pointInside);
+	    for(var i=0; i<N; i++){
+	        var numVertices = this.faces[i].length;
+	        var n = normals[i];
+	        var v = verts[faces[i][0]]; // We only need one point in the face
+
+	        // This dot product determines which side of the edge the point is
+	        var vToP = ConvexPolyhedron_vToP;
+	        p.vsub(v,vToP);
+	        var r1 = n.dot(vToP);
+
+	        var vToPointInside = ConvexPolyhedron_vToPointInside;
+	        pointInside.vsub(v,vToPointInside);
+	        var r2 = n.dot(vToPointInside);
+
+	        if((r1<0 && r2>0) || (r1>0 && r2<0)){
+	            return false; // Encountered some other sign. Exit.
+	        } else {
+	        }
+	    }
+
+	    // If we got here, all dot products were of the same sign.
+	    return positiveResult ? 1 : -1;
+	};
+
+	/**
+	 * Get max and min dot product of a convex hull at position (pos,quat) projected onto an axis. Results are saved in the array maxmin.
+	 * @static
+	 * @method project
+	 * @param {ConvexPolyhedron} hull
+	 * @param {Vec3} axis
+	 * @param {Vec3} pos
+	 * @param {Quaternion} quat
+	 * @param {array} result result[0] and result[1] will be set to maximum and minimum, respectively.
+	 */
+	var project_worldVertex = new Vec3();
+	var project_localAxis = new Vec3();
+	var project_localOrigin = new Vec3();
+	ConvexPolyhedron.project = function(hull, axis, pos, quat, result){
+	    var n = hull.vertices.length,
+	        worldVertex = project_worldVertex,
+	        localAxis = project_localAxis,
+	        max = 0,
+	        min = 0,
+	        localOrigin = project_localOrigin,
+	        vs = hull.vertices;
+
+	    localOrigin.setZero();
+
+	    // Transform the axis to local
+	    Transform.vectorToLocalFrame(pos, quat, axis, localAxis);
+	    Transform.pointToLocalFrame(pos, quat, localOrigin, localOrigin);
+	    var add = localOrigin.dot(localAxis);
+
+	    min = max = vs[0].dot(localAxis);
+
+	    for(var i = 1; i < n; i++){
+	        var val = vs[i].dot(localAxis);
+
+	        if(val > max){
+	            max = val;
+	        }
+
+	        if(val < min){
+	            min = val;
+	        }
+	    }
+
+	    min -= add;
+	    max -= add;
+
+	    if(min > max){
+	        // Inconsistent - swap
+	        var temp = min;
+	        min = max;
+	        max = temp;
+	    }
+	    // Output
+	    result[0] = max;
+	    result[1] = min;
+	};
+
+	},{"../math/Quaternion":28,"../math/Transform":29,"../math/Vec3":30,"./Shape":43}],39:[function(_dereq_,module,exports){
+	module.exports = Cylinder;
+
+	var Shape = _dereq_('./Shape');
+	var Vec3 = _dereq_('../math/Vec3');
+	var Quaternion = _dereq_('../math/Quaternion');
+	var ConvexPolyhedron = _dereq_('./ConvexPolyhedron');
+
+	/**
+	 * @class Cylinder
+	 * @constructor
+	 * @extends ConvexPolyhedron
+	 * @author schteppe / https://github.com/schteppe
+	 * @param {Number} radiusTop
+	 * @param {Number} radiusBottom
+	 * @param {Number} height
+	 * @param {Number} numSegments The number of segments to build the cylinder out of
+	 */
+	function Cylinder( radiusTop, radiusBottom, height , numSegments ) {
+	    var N = numSegments,
+	        verts = [],
+	        axes = [],
+	        faces = [],
+	        bottomface = [],
+	        topface = [],
+	        cos = Math.cos,
+	        sin = Math.sin;
+
+	    // First bottom point
+	    verts.push(new Vec3(radiusBottom*cos(0),
+	                               radiusBottom*sin(0),
+	                               -height*0.5));
+	    bottomface.push(0);
+
+	    // First top point
+	    verts.push(new Vec3(radiusTop*cos(0),
+	                               radiusTop*sin(0),
+	                               height*0.5));
+	    topface.push(1);
+
+	    for(var i=0; i<N; i++){
+	        var theta = 2*Math.PI/N * (i+1);
+	        var thetaN = 2*Math.PI/N * (i+0.5);
+	        if(i<N-1){
+	            // Bottom
+	            verts.push(new Vec3(radiusBottom*cos(theta),
+	                                       radiusBottom*sin(theta),
+	                                       -height*0.5));
+	            bottomface.push(2*i+2);
+	            // Top
+	            verts.push(new Vec3(radiusTop*cos(theta),
+	                                       radiusTop*sin(theta),
+	                                       height*0.5));
+	            topface.push(2*i+3);
+
+	            // Face
+	            faces.push([2*i+2, 2*i+3, 2*i+1,2*i]);
+	        } else {
+	            faces.push([0,1, 2*i+1, 2*i]); // Connect
+	        }
+
+	        // Axis: we can cut off half of them if we have even number of segments
+	        if(N % 2 === 1 || i < N / 2){
+	            axes.push(new Vec3(cos(thetaN), sin(thetaN), 0));
+	        }
+	    }
+	    faces.push(topface);
+	    axes.push(new Vec3(0,0,1));
+
+	    // Reorder bottom face
+	    var temp = [];
+	    for(var i=0; i<bottomface.length; i++){
+	        temp.push(bottomface[bottomface.length - i - 1]);
+	    }
+	    faces.push(temp);
+
+	    this.type = Shape.types.CONVEXPOLYHEDRON;
+	    ConvexPolyhedron.call( this, verts, faces, axes );
+	}
+
+	Cylinder.prototype = new ConvexPolyhedron();
+
+	},{"../math/Quaternion":28,"../math/Vec3":30,"./ConvexPolyhedron":38,"./Shape":43}],40:[function(_dereq_,module,exports){
+	var Shape = _dereq_('./Shape');
+	var ConvexPolyhedron = _dereq_('./ConvexPolyhedron');
+	var Vec3 = _dereq_('../math/Vec3');
+	var Utils = _dereq_('../utils/Utils');
+
+	module.exports = Heightfield;
+
+	/**
+	 * Heightfield shape class. Height data is given as an array. These data points are spread out evenly with a given distance.
+	 * @class Heightfield
+	 * @extends Shape
+	 * @constructor
+	 * @param {Array} data An array of Y values that will be used to construct the terrain.
+	 * @param {object} options
+	 * @param {Number} [options.minValue] Minimum value of the data points in the data array. Will be computed automatically if not given.
+	 * @param {Number} [options.maxValue] Maximum value.
+	 * @param {Number} [options.elementSize=0.1] World spacing between the data points in X direction.
+	 * @todo Should be possible to use along all axes, not just y
+	 *
+	 * @example
+	 *     // Generate some height data (y-values).
+	 *     var data = [];
+	 *     for(var i = 0; i < 1000; i++){
+	 *         var y = 0.5 * Math.cos(0.2 * i);
+	 *         data.push(y);
+	 *     }
+	 *
+	 *     // Create the heightfield shape
+	 *     var heightfieldShape = new Heightfield(data, {
+	 *         elementSize: 1 // Distance between the data points in X and Y directions
+	 *     });
+	 *     var heightfieldBody = new Body();
+	 *     heightfieldBody.addShape(heightfieldShape);
+	 *     world.addBody(heightfieldBody);
+	 */
+	function Heightfield(data, options){
+	    options = Utils.defaults(options, {
+	        maxValue : null,
+	        minValue : null,
+	        elementSize : 1
+	    });
+
+	    /**
+	     * An array of numbers, or height values, that are spread out along the x axis.
+	     * @property {array} data
+	     */
+	    this.data = data;
+
+	    /**
+	     * Max value of the data
+	     * @property {number} maxValue
+	     */
+	    this.maxValue = options.maxValue;
+
+	    /**
+	     * Max value of the data
+	     * @property {number} minValue
+	     */
+	    this.minValue = options.minValue;
+
+	    /**
+	     * The width of each element
+	     * @property {number} elementSize
+	     * @todo elementSizeX and Y
+	     */
+	    this.elementSize = options.elementSize;
+
+	    if(options.minValue === null){
+	        this.updateMinValue();
+	    }
+	    if(options.maxValue === null){
+	        this.updateMaxValue();
+	    }
+
+	    this.cacheEnabled = true;
+
+	    Shape.call(this);
+
+	    this.pillarConvex = new ConvexPolyhedron();
+	    this.pillarOffset = new Vec3();
+
+	    this.type = Shape.types.HEIGHTFIELD;
+	    this.updateBoundingSphereRadius();
+
+	    // "i_j_isUpper" => { convex: ..., offset: ... }
+	    // for example:
+	    // _cachedPillars["0_2_1"]
+	    this._cachedPillars = {};
+	}
+	Heightfield.prototype = new Shape();
+
+	/**
+	 * Call whenever you change the data array.
+	 * @method update
+	 */
+	Heightfield.prototype.update = function(){
+	    this._cachedPillars = {};
+	};
+
+	/**
+	 * Update the .minValue property
+	 * @method updateMinValue
+	 */
+	Heightfield.prototype.updateMinValue = function(){
+	    var data = this.data;
+	    var minValue = data[0][0];
+	    for(var i=0; i !== data.length; i++){
+	        for(var j=0; j !== data[i].length; j++){
+	            var v = data[i][j];
+	            if(v < minValue){
+	                minValue = v;
+	            }
+	        }
+	    }
+	    this.minValue = minValue;
+	};
+
+	/**
+	 * Update the .maxValue property
+	 * @method updateMaxValue
+	 */
+	Heightfield.prototype.updateMaxValue = function(){
+	    var data = this.data;
+	    var maxValue = data[0][0];
+	    for(var i=0; i !== data.length; i++){
+	        for(var j=0; j !== data[i].length; j++){
+	            var v = data[i][j];
+	            if(v > maxValue){
+	                maxValue = v;
+	            }
+	        }
+	    }
+	    this.maxValue = maxValue;
+	};
+
+	/**
+	 * Set the height value at an index. Don't forget to update maxValue and minValue after you're done.
+	 * @method setHeightValueAtIndex
+	 * @param {integer} xi
+	 * @param {integer} yi
+	 * @param {number} value
+	 */
+	Heightfield.prototype.setHeightValueAtIndex = function(xi, yi, value){
+	    var data = this.data;
+	    data[xi][yi] = value;
+
+	    // Invalidate cache
+	    this.clearCachedConvexTrianglePillar(xi, yi, false);
+	    if(xi > 0){
+	        this.clearCachedConvexTrianglePillar(xi - 1, yi, true);
+	        this.clearCachedConvexTrianglePillar(xi - 1, yi, false);
+	    }
+	    if(yi > 0){
+	        this.clearCachedConvexTrianglePillar(xi, yi - 1, true);
+	        this.clearCachedConvexTrianglePillar(xi, yi - 1, false);
+	    }
+	    if(yi > 0 && xi > 0){
+	        this.clearCachedConvexTrianglePillar(xi - 1, yi - 1, true);
+	    }
+	};
+
+	/**
+	 * Get max/min in a rectangle in the matrix data
+	 * @method getRectMinMax
+	 * @param  {integer} iMinX
+	 * @param  {integer} iMinY
+	 * @param  {integer} iMaxX
+	 * @param  {integer} iMaxY
+	 * @param  {array} [result] An array to store the results in.
+	 * @return {array} The result array, if it was passed in. Minimum will be at position 0 and max at 1.
+	 */
+	Heightfield.prototype.getRectMinMax = function (iMinX, iMinY, iMaxX, iMaxY, result) {
+	    result = result || [];
+
+	    // Get max and min of the data
+	    var data = this.data,
+	        max = this.minValue; // Set first value
+	    for(var i = iMinX; i <= iMaxX; i++){
+	        for(var j = iMinY; j <= iMaxY; j++){
+	            var height = data[i][j];
+	            if(height > max){
+	                max = height;
+	            }
+	        }
+	    }
+
+	    result[0] = this.minValue;
+	    result[1] = max;
+	};
+
+	/**
+	 * Get the index of a local position on the heightfield. The indexes indicate the rectangles, so if your terrain is made of N x N height data points, you will have rectangle indexes ranging from 0 to N-1.
+	 * @method getIndexOfPosition
+	 * @param  {number} x
+	 * @param  {number} y
+	 * @param  {array} result Two-element array
+	 * @param  {boolean} clamp If the position should be clamped to the heightfield edge.
+	 * @return {boolean}
+	 */
+	Heightfield.prototype.getIndexOfPosition = function (x, y, result, clamp) {
+
+	    // Get the index of the data points to test against
+	    var w = this.elementSize;
+	    var data = this.data;
+	    var xi = Math.floor(x / w);
+	    var yi = Math.floor(y / w);
+
+	    result[0] = xi;
+	    result[1] = yi;
+
+	    if(clamp){
+	        // Clamp index to edges
+	        if(xi < 0){ xi = 0; }
+	        if(yi < 0){ yi = 0; }
+	        if(xi >= data.length - 1){ xi = data.length - 1; }
+	        if(yi >= data[0].length - 1){ yi = data[0].length - 1; }
+	    }
+
+	    // Bail out if we are out of the terrain
+	    if(xi < 0 || yi < 0 || xi >= data.length-1 || yi >= data[0].length-1){
+	        return false;
+	    }
+
+	    return true;
+	};
+
+	Heightfield.prototype.getHeightAt = function(x, y, edgeClamp){
+	    var idx = [];
+	    this.getIndexOfPosition(x, y, idx, edgeClamp);
+
+	    // TODO: get upper or lower triangle, then use barycentric interpolation to get the height in the triangle.
+	    var minmax = [];
+	    this.getRectMinMax(idx[0], idx[1] + 1, idx[0], idx[1] + 1, minmax);
+
+	    return (minmax[0] + minmax[1]) / 2; // average
+	};
+
+	Heightfield.prototype.getCacheConvexTrianglePillarKey = function(xi, yi, getUpperTriangle){
+	    return xi + '_' + yi + '_' + (getUpperTriangle ? 1 : 0);
+	};
+
+	Heightfield.prototype.getCachedConvexTrianglePillar = function(xi, yi, getUpperTriangle){
+	    return this._cachedPillars[this.getCacheConvexTrianglePillarKey(xi, yi, getUpperTriangle)];
+	};
+
+	Heightfield.prototype.setCachedConvexTrianglePillar = function(xi, yi, getUpperTriangle, convex, offset){
+	    this._cachedPillars[this.getCacheConvexTrianglePillarKey(xi, yi, getUpperTriangle)] = {
+	        convex: convex,
+	        offset: offset
+	    };
+	};
+
+	Heightfield.prototype.clearCachedConvexTrianglePillar = function(xi, yi, getUpperTriangle){
+	    delete this._cachedPillars[this.getCacheConvexTrianglePillarKey(xi, yi, getUpperTriangle)];
+	};
+
+	/**
+	 * Get a triangle in the terrain in the form of a triangular convex shape.
+	 * @method getConvexTrianglePillar
+	 * @param  {integer} i
+	 * @param  {integer} j
+	 * @param  {boolean} getUpperTriangle
+	 */
+	Heightfield.prototype.getConvexTrianglePillar = function(xi, yi, getUpperTriangle){
+	    var result = this.pillarConvex;
+	    var offsetResult = this.pillarOffset;
+
+	    if(this.cacheEnabled){
+	        var data = this.getCachedConvexTrianglePillar(xi, yi, getUpperTriangle);
+	        if(data){
+	            this.pillarConvex = data.convex;
+	            this.pillarOffset = data.offset;
+	            return;
+	        }
+
+	        result = new ConvexPolyhedron();
+	        offsetResult = new Vec3();
+
+	        this.pillarConvex = result;
+	        this.pillarOffset = offsetResult;
+	    }
+
+	    var data = this.data;
+	    var elementSize = this.elementSize;
+	    var faces = result.faces;
+
+	    // Reuse verts if possible
+	    result.vertices.length = 6;
+	    for (var i = 0; i < 6; i++) {
+	        if(!result.vertices[i]){
+	            result.vertices[i] = new Vec3();
+	        }
+	    }
+
+	    // Reuse faces if possible
+	    faces.length = 5;
+	    for (var i = 0; i < 5; i++) {
+	        if(!faces[i]){
+	            faces[i] = [];
+	        }
+	    }
+
+	    var verts = result.vertices;
+
+	    var h = (Math.min(
+	        data[xi][yi],
+	        data[xi+1][yi],
+	        data[xi][yi+1],
+	        data[xi+1][yi+1]
+	    ) - this.minValue ) / 2 + this.minValue;
+
+	    if (!getUpperTriangle) {
+
+	        // Center of the triangle pillar - all polygons are given relative to this one
+	        offsetResult.set(
+	            (xi + 0.25) * elementSize, // sort of center of a triangle
+	            (yi + 0.25) * elementSize,
+	            h // vertical center
+	        );
+
+	        // Top triangle verts
+	        verts[0].set(
+	            -0.25 * elementSize,
+	            -0.25 * elementSize,
+	            data[xi][yi] - h
+	        );
+	        verts[1].set(
+	            0.75 * elementSize,
+	            -0.25 * elementSize,
+	            data[xi + 1][yi] - h
+	        );
+	        verts[2].set(
+	            -0.25 * elementSize,
+	            0.75 * elementSize,
+	            data[xi][yi + 1] - h
+	        );
+
+	        // bottom triangle verts
+	        verts[3].set(
+	            -0.25 * elementSize,
+	            -0.25 * elementSize,
+	            -h-1
+	        );
+	        verts[4].set(
+	            0.75 * elementSize,
+	            -0.25 * elementSize,
+	            -h-1
+	        );
+	        verts[5].set(
+	            -0.25 * elementSize,
+	            0.75  * elementSize,
+	            -h-1
+	        );
+
+	        // top triangle
+	        faces[0][0] = 0;
+	        faces[0][1] = 1;
+	        faces[0][2] = 2;
+
+	        // bottom triangle
+	        faces[1][0] = 5;
+	        faces[1][1] = 4;
+	        faces[1][2] = 3;
+
+	        // -x facing quad
+	        faces[2][0] = 0;
+	        faces[2][1] = 2;
+	        faces[2][2] = 5;
+	        faces[2][3] = 3;
+
+	        // -y facing quad
+	        faces[3][0] = 1;
+	        faces[3][1] = 0;
+	        faces[3][2] = 3;
+	        faces[3][3] = 4;
+
+	        // +xy facing quad
+	        faces[4][0] = 4;
+	        faces[4][1] = 5;
+	        faces[4][2] = 2;
+	        faces[4][3] = 1;
+
+
+	    } else {
+
+	        // Center of the triangle pillar - all polygons are given relative to this one
+	        offsetResult.set(
+	            (xi + 0.75) * elementSize, // sort of center of a triangle
+	            (yi + 0.75) * elementSize,
+	            h // vertical center
+	        );
+
+	        // Top triangle verts
+	        verts[0].set(
+	            0.25 * elementSize,
+	            0.25 * elementSize,
+	            data[xi + 1][yi + 1] - h
+	        );
+	        verts[1].set(
+	            -0.75 * elementSize,
+	            0.25 * elementSize,
+	            data[xi][yi + 1] - h
+	        );
+	        verts[2].set(
+	            0.25 * elementSize,
+	            -0.75 * elementSize,
+	            data[xi + 1][yi] - h
+	        );
+
+	        // bottom triangle verts
+	        verts[3].set(
+	            0.25 * elementSize,
+	            0.25 * elementSize,
+	            - h-1
+	        );
+	        verts[4].set(
+	            -0.75 * elementSize,
+	            0.25 * elementSize,
+	            - h-1
+	        );
+	        verts[5].set(
+	            0.25 * elementSize,
+	            -0.75 * elementSize,
+	            - h-1
+	        );
+
+	        // Top triangle
+	        faces[0][0] = 0;
+	        faces[0][1] = 1;
+	        faces[0][2] = 2;
+
+	        // bottom triangle
+	        faces[1][0] = 5;
+	        faces[1][1] = 4;
+	        faces[1][2] = 3;
+
+	        // +x facing quad
+	        faces[2][0] = 2;
+	        faces[2][1] = 5;
+	        faces[2][2] = 3;
+	        faces[2][3] = 0;
+
+	        // +y facing quad
+	        faces[3][0] = 3;
+	        faces[3][1] = 4;
+	        faces[3][2] = 1;
+	        faces[3][3] = 0;
+
+	        // -xy facing quad
+	        faces[4][0] = 1;
+	        faces[4][1] = 4;
+	        faces[4][2] = 5;
+	        faces[4][3] = 2;
+	    }
+
+	    result.computeNormals();
+	    result.computeEdges();
+	    result.updateBoundingSphereRadius();
+
+	    this.setCachedConvexTrianglePillar(xi, yi, getUpperTriangle, result, offsetResult);
+	};
+
+	Heightfield.prototype.calculateLocalInertia = function(mass, target){
+	    target = target || new Vec3();
+	    target.set(0, 0, 0);
+	    return target;
+	};
+
+	Heightfield.prototype.volume = function(){
+	    return Number.MAX_VALUE; // The terrain is infinite
+	};
+
+	Heightfield.prototype.calculateWorldAABB = function(pos, quat, min, max){
+	    // TODO: do it properly
+	    min.set(-Number.MAX_VALUE, -Number.MAX_VALUE, -Number.MAX_VALUE);
+	    max.set(Number.MAX_VALUE, Number.MAX_VALUE, Number.MAX_VALUE);
+	};
+
+	Heightfield.prototype.updateBoundingSphereRadius = function(){
+	    // Use the bounding box of the min/max values
+	    var data = this.data,
+	        s = this.elementSize;
+	    this.boundingSphereRadius = new Vec3(data.length * s, data[0].length * s, Math.max(Math.abs(this.maxValue), Math.abs(this.minValue))).norm();
+	};
+
+	},{"../math/Vec3":30,"../utils/Utils":53,"./ConvexPolyhedron":38,"./Shape":43}],41:[function(_dereq_,module,exports){
+	module.exports = Particle;
+
+	var Shape = _dereq_('./Shape');
+	var Vec3 = _dereq_('../math/Vec3');
+
+	/**
+	 * Particle shape.
+	 * @class Particle
+	 * @constructor
+	 * @author schteppe
+	 * @extends Shape
+	 */
+	function Particle(){
+	    Shape.call(this);
+
+	    this.type = Shape.types.PARTICLE;
+	}
+	Particle.prototype = new Shape();
+	Particle.prototype.constructor = Particle;
+
+	/**
+	 * @method calculateLocalInertia
+	 * @param  {Number} mass
+	 * @param  {Vec3} target
+	 * @return {Vec3}
+	 */
+	Particle.prototype.calculateLocalInertia = function(mass,target){
+	    target = target || new Vec3();
+	    target.set(0, 0, 0);
+	    return target;
+	};
+
+	Particle.prototype.volume = function(){
+	    return 0;
+	};
+
+	Particle.prototype.updateBoundingSphereRadius = function(){
+	    this.boundingSphereRadius = 0;
+	};
+
+	Particle.prototype.calculateWorldAABB = function(pos,quat,min,max){
+	    // Get each axis max
+	    min.copy(pos);
+	    max.copy(pos);
+	};
+
+	},{"../math/Vec3":30,"./Shape":43}],42:[function(_dereq_,module,exports){
+	module.exports = Plane;
+
+	var Shape = _dereq_('./Shape');
+	var Vec3 = _dereq_('../math/Vec3');
+
+	/**
+	 * A plane, facing in the Z direction. The plane has its surface at z=0 and everything below z=0 is assumed to be solid plane. To make the plane face in some other direction than z, you must put it inside a RigidBody and rotate that body. See the demos.
+	 * @class Plane
+	 * @constructor
+	 * @extends Shape
+	 * @author schteppe
+	 */
+	function Plane(){
+	    Shape.call(this);
+	    this.type = Shape.types.PLANE;
+
+	    // World oriented normal
+	    this.worldNormal = new Vec3();
+	    this.worldNormalNeedsUpdate = true;
+
+	    this.boundingSphereRadius = Number.MAX_VALUE;
+	}
+	Plane.prototype = new Shape();
+	Plane.prototype.constructor = Plane;
+
+	Plane.prototype.computeWorldNormal = function(quat){
+	    var n = this.worldNormal;
+	    n.set(0,0,1);
+	    quat.vmult(n,n);
+	    this.worldNormalNeedsUpdate = false;
+	};
+
+	Plane.prototype.calculateLocalInertia = function(mass,target){
+	    target = target || new Vec3();
+	    return target;
+	};
+
+	Plane.prototype.volume = function(){
+	    return Number.MAX_VALUE; // The plane is infinite...
+	};
+
+	var tempNormal = new Vec3();
+	Plane.prototype.calculateWorldAABB = function(pos, quat, min, max){
+	    // The plane AABB is infinite, except if the normal is pointing along any axis
+	    tempNormal.set(0,0,1); // Default plane normal is z
+	    quat.vmult(tempNormal,tempNormal);
+	    var maxVal = Number.MAX_VALUE;
+	    min.set(-maxVal, -maxVal, -maxVal);
+	    max.set(maxVal, maxVal, maxVal);
+
+	    if(tempNormal.x === 1){ max.x = pos.x; }
+	    if(tempNormal.y === 1){ max.y = pos.y; }
+	    if(tempNormal.z === 1){ max.z = pos.z; }
+
+	    if(tempNormal.x === -1){ min.x = pos.x; }
+	    if(tempNormal.y === -1){ min.y = pos.y; }
+	    if(tempNormal.z === -1){ min.z = pos.z; }
+	};
+
+	Plane.prototype.updateBoundingSphereRadius = function(){
+	    this.boundingSphereRadius = Number.MAX_VALUE;
+	};
+	},{"../math/Vec3":30,"./Shape":43}],43:[function(_dereq_,module,exports){
+	module.exports = Shape;
+
+	var Shape = _dereq_('./Shape');
+	var Vec3 = _dereq_('../math/Vec3');
+	var Quaternion = _dereq_('../math/Quaternion');
+	var Material = _dereq_('../material/Material');
+
+	/**
+	 * Base class for shapes
+	 * @class Shape
+	 * @constructor
+	 * @author schteppe
+	 * @todo Should have a mechanism for caching bounding sphere radius instead of calculating it each time
+	 */
+	function Shape(){
+
+	    /**
+	     * Identifyer of the Shape.
+	     * @property {number} id
+	     */
+	    this.id = Shape.idCounter++;
+
+	    /**
+	     * The type of this shape. Must be set to an int > 0 by subclasses.
+	     * @property type
+	     * @type {Number}
+	     * @see Shape.types
+	     */
+	    this.type = 0;
+
+	    /**
+	     * The local bounding sphere radius of this shape.
+	     * @property {Number} boundingSphereRadius
+	     */
+	    this.boundingSphereRadius = 0;
+
+	    /**
+	     * Whether to produce contact forces when in contact with other bodies. Note that contacts will be generated, but they will be disabled.
+	     * @property {boolean} collisionResponse
+	     */
+	    this.collisionResponse = true;
+
+	    /**
+	     * @property {Material} material
+	     */
+	    this.material = null;
+	}
+	Shape.prototype.constructor = Shape;
+
+	/**
+	 * Computes the bounding sphere radius. The result is stored in the property .boundingSphereRadius
+	 * @method updateBoundingSphereRadius
+	 * @return {Number}
+	 */
+	Shape.prototype.updateBoundingSphereRadius = function(){
+	    throw "computeBoundingSphereRadius() not implemented for shape type "+this.type;
+	};
+
+	/**
+	 * Get the volume of this shape
+	 * @method volume
+	 * @return {Number}
+	 */
+	Shape.prototype.volume = function(){
+	    throw "volume() not implemented for shape type "+this.type;
+	};
+
+	/**
+	 * Calculates the inertia in the local frame for this shape.
+	 * @method calculateLocalInertia
+	 * @return {Vec3}
+	 * @see http://en.wikipedia.org/wiki/List_of_moments_of_inertia
+	 */
+	Shape.prototype.calculateLocalInertia = function(mass,target){
+	    throw "calculateLocalInertia() not implemented for shape type "+this.type;
+	};
+
+	Shape.idCounter = 0;
+
+	/**
+	 * The available shape types.
+	 * @static
+	 * @property types
+	 * @type {Object}
+	 */
+	Shape.types = {
+	    SPHERE:1,
+	    PLANE:2,
+	    BOX:4,
+	    COMPOUND:8,
+	    CONVEXPOLYHEDRON:16,
+	    HEIGHTFIELD:32,
+	    PARTICLE:64,
+	    CYLINDER:128,
+	    TRIMESH:256
+	};
+
+
+	},{"../material/Material":25,"../math/Quaternion":28,"../math/Vec3":30,"./Shape":43}],44:[function(_dereq_,module,exports){
+	module.exports = Sphere;
+
+	var Shape = _dereq_('./Shape');
+	var Vec3 = _dereq_('../math/Vec3');
+
+	/**
+	 * Spherical shape
+	 * @class Sphere
+	 * @constructor
+	 * @extends Shape
+	 * @param {Number} radius The radius of the sphere, a non-negative number.
+	 * @author schteppe / http://github.com/schteppe
+	 */
+	function Sphere(radius){
+	    Shape.call(this);
+
+	    /**
+	     * @property {Number} radius
+	     */
+	    this.radius = radius!==undefined ? Number(radius) : 1.0;
+	    this.type = Shape.types.SPHERE;
+
+	    if(this.radius < 0){
+	        throw new Error('The sphere radius cannot be negative.');
+	    }
+
+	    this.updateBoundingSphereRadius();
+	}
+	Sphere.prototype = new Shape();
+	Sphere.prototype.constructor = Sphere;
+
+	Sphere.prototype.calculateLocalInertia = function(mass,target){
+	    target = target || new Vec3();
+	    var I = 2.0*mass*this.radius*this.radius/5.0;
+	    target.x = I;
+	    target.y = I;
+	    target.z = I;
+	    return target;
+	};
+
+	Sphere.prototype.volume = function(){
+	    return 4.0 * Math.PI * this.radius / 3.0;
+	};
+
+	Sphere.prototype.updateBoundingSphereRadius = function(){
+	    this.boundingSphereRadius = this.radius;
+	};
+
+	Sphere.prototype.calculateWorldAABB = function(pos,quat,min,max){
+	    var r = this.radius;
+	    var axes = ['x','y','z'];
+	    for(var i=0; i<axes.length; i++){
+	        var ax = axes[i];
+	        min[ax] = pos[ax] - r;
+	        max[ax] = pos[ax] + r;
+	    }
+	};
+
+	},{"../math/Vec3":30,"./Shape":43}],45:[function(_dereq_,module,exports){
+	module.exports = Trimesh;
+
+	var Shape = _dereq_('./Shape');
+	var Vec3 = _dereq_('../math/Vec3');
+	var Quaternion = _dereq_('../math/Quaternion');
+	var Transform = _dereq_('../math/Transform');
+	var AABB = _dereq_('../collision/AABB');
+	var Octree = _dereq_('../utils/Octree');
+
+	/**
+	 * @class Trimesh
+	 * @constructor
+	 * @param {array} vertices
+	 * @param {array} indices
+	 * @extends Shape
+	 * @example
+	 *     // How to make a mesh with a single triangle
+	 *     var vertices = [
+	 *         0, 0, 0, // vertex 0
+	 *         1, 0, 0, // vertex 1
+	 *         0, 1, 0  // vertex 2
+	 *     ];
+	 *     var indices = [
+	 *         0, 1, 2  // triangle 0
+	 *     ];
+	 *     var trimeshShape = new Trimesh(vertices, indices);
+	 */
+	function Trimesh(vertices, indices) {
+	    Shape.call(this);
+	    this.type = Shape.types.TRIMESH;
+
+	    /**
+	     * @property vertices
+	     * @type {Array}
+	     */
+	    this.vertices = new Float32Array(vertices);
+
+	    /**
+	     * Array of integers, indicating which vertices each triangle consists of. The length of this array is thus 3 times the number of triangles.
+	     * @property indices
+	     * @type {Array}
+	     */
+	    this.indices = new Int16Array(indices);
+
+	    /**
+	     * The normals data.
+	     * @property normals
+	     * @type {Array}
+	     */
+	    this.normals = new Float32Array(indices.length);
+
+	    /**
+	     * The local AABB of the mesh.
+	     * @property aabb
+	     * @type {Array}
+	     */
+	    this.aabb = new AABB();
+
+	    /**
+	     * References to vertex pairs, making up all unique edges in the trimesh.
+	     * @property {array} edges
+	     */
+	    this.edges = null;
+
+	    /**
+	     * Local scaling of the mesh. Use .setScale() to set it.
+	     * @property {Vec3} scale
+	     */
+	    this.scale = new Vec3(1, 1, 1);
+
+	    /**
+	     * The indexed triangles. Use .updateTree() to update it.
+	     * @property {Octree} tree
+	     */
+	    this.tree = new Octree();
+
+	    this.updateEdges();
+	    this.updateNormals();
+	    this.updateAABB();
+	    this.updateBoundingSphereRadius();
+	    this.updateTree();
+	}
+	Trimesh.prototype = new Shape();
+	Trimesh.prototype.constructor = Trimesh;
+
+	var computeNormals_n = new Vec3();
+
+	/**
+	 * @method updateTree
+	 */
+	Trimesh.prototype.updateTree = function(){
+	    var tree = this.tree;
+
+	    tree.reset();
+	    tree.aabb.copy(this.aabb);
+	    var scale = this.scale; // The local mesh AABB is scaled, but the octree AABB should be unscaled
+	    tree.aabb.lowerBound.x *= 1 / scale.x;
+	    tree.aabb.lowerBound.y *= 1 / scale.y;
+	    tree.aabb.lowerBound.z *= 1 / scale.z;
+	    tree.aabb.upperBound.x *= 1 / scale.x;
+	    tree.aabb.upperBound.y *= 1 / scale.y;
+	    tree.aabb.upperBound.z *= 1 / scale.z;
+
+	    // Insert all triangles
+	    var triangleAABB = new AABB();
+	    var a = new Vec3();
+	    var b = new Vec3();
+	    var c = new Vec3();
+	    var points = [a, b, c];
+	    for (var i = 0; i < this.indices.length / 3; i++) {
+	        //this.getTriangleVertices(i, a, b, c);
+
+	        // Get unscaled triangle verts
+	        var i3 = i * 3;
+	        this._getUnscaledVertex(this.indices[i3], a);
+	        this._getUnscaledVertex(this.indices[i3 + 1], b);
+	        this._getUnscaledVertex(this.indices[i3 + 2], c);
+
+	        triangleAABB.setFromPoints(points);
+	        tree.insert(triangleAABB, i);
+	    }
+	    tree.removeEmptyNodes();
+	};
+
+	var unscaledAABB = new AABB();
+
+	/**
+	 * Get triangles in a local AABB from the trimesh.
+	 * @method getTrianglesInAABB
+	 * @param  {AABB} aabb
+	 * @param  {array} result An array of integers, referencing the queried triangles.
+	 */
+	Trimesh.prototype.getTrianglesInAABB = function(aabb, result){
+	    unscaledAABB.copy(aabb);
+
+	    // Scale it to local
+	    var scale = this.scale;
+	    var isx = scale.x;
+	    var isy = scale.y;
+	    var isz = scale.z;
+	    var l = unscaledAABB.lowerBound;
+	    var u = unscaledAABB.upperBound;
+	    l.x /= isx;
+	    l.y /= isy;
+	    l.z /= isz;
+	    u.x /= isx;
+	    u.y /= isy;
+	    u.z /= isz;
+
+	    return this.tree.aabbQuery(unscaledAABB, result);
+	};
+
+	/**
+	 * @method setScale
+	 * @param {Vec3} scale
+	 */
+	Trimesh.prototype.setScale = function(scale){
+	    var wasUniform = this.scale.x === this.scale.y === this.scale.z;
+	    var isUniform = scale.x === scale.y === scale.z;
+
+	    if(!(wasUniform && isUniform)){
+	        // Non-uniform scaling. Need to update normals.
+	        this.updateNormals();
+	    }
+	    this.scale.copy(scale);
+	    this.updateAABB();
+	    this.updateBoundingSphereRadius();
+	};
+
+	/**
+	 * Compute the normals of the faces. Will save in the .normals array.
+	 * @method updateNormals
+	 */
+	Trimesh.prototype.updateNormals = function(){
+	    var n = computeNormals_n;
+
+	    // Generate normals
+	    var normals = this.normals;
+	    for(var i=0; i < this.indices.length / 3; i++){
+	        var i3 = i * 3;
+
+	        var a = this.indices[i3],
+	            b = this.indices[i3 + 1],
+	            c = this.indices[i3 + 2];
+
+	        this.getVertex(a, va);
+	        this.getVertex(b, vb);
+	        this.getVertex(c, vc);
+
+	        Trimesh.computeNormal(vb, va, vc, n);
+
+	        normals[i3] = n.x;
+	        normals[i3 + 1] = n.y;
+	        normals[i3 + 2] = n.z;
+	    }
+	};
+
+	/**
+	 * Update the .edges property
+	 * @method updateEdges
+	 */
+	Trimesh.prototype.updateEdges = function(){
+	    var edges = {};
+	    var add = function(indexA, indexB){
+	        var key = a < b ? a + '_' + b : b + '_' + a;
+	        edges[key] = true;
+	    };
+	    for(var i=0; i < this.indices.length / 3; i++){
+	        var i3 = i * 3;
+	        var a = this.indices[i3],
+	            b = this.indices[i3 + 1],
+	            c = this.indices[i3 + 2];
+	        add(a,b);
+	        add(b,c);
+	        add(c,a);
+	    }
+	    var keys = Object.keys(edges);
+	    this.edges = new Int16Array(keys.length * 2);
+	    for (var i = 0; i < keys.length; i++) {
+	        var indices = keys[i].split('_');
+	        this.edges[2 * i] = parseInt(indices[0], 10);
+	        this.edges[2 * i + 1] = parseInt(indices[1], 10);
+	    }
+	};
+
+	/**
+	 * Get an edge vertex
+	 * @method getEdgeVertex
+	 * @param  {number} edgeIndex
+	 * @param  {number} firstOrSecond 0 or 1, depending on which one of the vertices you need.
+	 * @param  {Vec3} vertexStore Where to store the result
+	 */
+	Trimesh.prototype.getEdgeVertex = function(edgeIndex, firstOrSecond, vertexStore){
+	    var vertexIndex = this.edges[edgeIndex * 2 + (firstOrSecond ? 1 : 0)];
+	    this.getVertex(vertexIndex, vertexStore);
+	};
+
+	var getEdgeVector_va = new Vec3();
+	var getEdgeVector_vb = new Vec3();
+
+	/**
+	 * Get a vector along an edge.
+	 * @method getEdgeVector
+	 * @param  {number} edgeIndex
+	 * @param  {Vec3} vectorStore
+	 */
+	Trimesh.prototype.getEdgeVector = function(edgeIndex, vectorStore){
+	    var va = getEdgeVector_va;
+	    var vb = getEdgeVector_vb;
+	    this.getEdgeVertex(edgeIndex, 0, va);
+	    this.getEdgeVertex(edgeIndex, 1, vb);
+	    vb.vsub(va, vectorStore);
+	};
+
+	/**
+	 * Get face normal given 3 vertices
+	 * @static
+	 * @method computeNormal
+	 * @param {Vec3} va
+	 * @param {Vec3} vb
+	 * @param {Vec3} vc
+	 * @param {Vec3} target
+	 */
+	var cb = new Vec3();
+	var ab = new Vec3();
+	Trimesh.computeNormal = function ( va, vb, vc, target ) {
+	    vb.vsub(va,ab);
+	    vc.vsub(vb,cb);
+	    cb.cross(ab,target);
+	    if ( !target.isZero() ) {
+	        target.normalize();
+	    }
+	};
+
+	var va = new Vec3();
+	var vb = new Vec3();
+	var vc = new Vec3();
+
+	/**
+	 * Get vertex i.
+	 * @method getVertex
+	 * @param  {number} i
+	 * @param  {Vec3} out
+	 * @return {Vec3} The "out" vector object
+	 */
+	Trimesh.prototype.getVertex = function(i, out){
+	    var scale = this.scale;
+	    this._getUnscaledVertex(i, out);
+	    out.x *= scale.x;
+	    out.y *= scale.y;
+	    out.z *= scale.z;
+	    return out;
+	};
+
+	/**
+	 * Get raw vertex i
+	 * @private
+	 * @method _getUnscaledVertex
+	 * @param  {number} i
+	 * @param  {Vec3} out
+	 * @return {Vec3} The "out" vector object
+	 */
+	Trimesh.prototype._getUnscaledVertex = function(i, out){
+	    var i3 = i * 3;
+	    var vertices = this.vertices;
+	    return out.set(
+	        vertices[i3],
+	        vertices[i3 + 1],
+	        vertices[i3 + 2]
+	    );
+	};
+
+	/**
+	 * Get a vertex from the trimesh,transformed by the given position and quaternion.
+	 * @method getWorldVertex
+	 * @param  {number} i
+	 * @param  {Vec3} pos
+	 * @param  {Quaternion} quat
+	 * @param  {Vec3} out
+	 * @return {Vec3} The "out" vector object
+	 */
+	Trimesh.prototype.getWorldVertex = function(i, pos, quat, out){
+	    this.getVertex(i, out);
+	    Transform.pointToWorldFrame(pos, quat, out, out);
+	    return out;
+	};
+
+	/**
+	 * Get the three vertices for triangle i.
+	 * @method getTriangleVertices
+	 * @param  {number} i
+	 * @param  {Vec3} a
+	 * @param  {Vec3} b
+	 * @param  {Vec3} c
+	 */
+	Trimesh.prototype.getTriangleVertices = function(i, a, b, c){
+	    var i3 = i * 3;
+	    this.getVertex(this.indices[i3], a);
+	    this.getVertex(this.indices[i3 + 1], b);
+	    this.getVertex(this.indices[i3 + 2], c);
+	};
+
+	/**
+	 * Compute the normal of triangle i.
+	 * @method getNormal
+	 * @param  {Number} i
+	 * @param  {Vec3} target
+	 * @return {Vec3} The "target" vector object
+	 */
+	Trimesh.prototype.getNormal = function(i, target){
+	    var i3 = i * 3;
+	    return target.set(
+	        this.normals[i3],
+	        this.normals[i3 + 1],
+	        this.normals[i3 + 2]
+	    );
+	};
+
+	var cli_aabb = new AABB();
+
+	/**
+	 * @method calculateLocalInertia
+	 * @param  {Number} mass
+	 * @param  {Vec3} target
+	 * @return {Vec3} The "target" vector object
+	 */
+	Trimesh.prototype.calculateLocalInertia = function(mass,target){
+	    // Approximate with box inertia
+	    // Exact inertia calculation is overkill, but see http://geometrictools.com/Documentation/PolyhedralMassProperties.pdf for the correct way to do it
+	    this.computeLocalAABB(cli_aabb);
+	    var x = cli_aabb.upperBound.x - cli_aabb.lowerBound.x,
+	        y = cli_aabb.upperBound.y - cli_aabb.lowerBound.y,
+	        z = cli_aabb.upperBound.z - cli_aabb.lowerBound.z;
+	    return target.set(
+	        1.0 / 12.0 * mass * ( 2*y*2*y + 2*z*2*z ),
+	        1.0 / 12.0 * mass * ( 2*x*2*x + 2*z*2*z ),
+	        1.0 / 12.0 * mass * ( 2*y*2*y + 2*x*2*x )
+	    );
+	};
+
+	var computeLocalAABB_worldVert = new Vec3();
+
+	/**
+	 * Compute the local AABB for the trimesh
+	 * @method computeLocalAABB
+	 * @param  {AABB} aabb
+	 */
+	Trimesh.prototype.computeLocalAABB = function(aabb){
+	    var l = aabb.lowerBound,
+	        u = aabb.upperBound,
+	        n = this.vertices.length,
+	        vertices = this.vertices,
+	        v = computeLocalAABB_worldVert;
+
+	    this.getVertex(0, v);
+	    l.copy(v);
+	    u.copy(v);
+
+	    for(var i=0; i !== n; i++){
+	        this.getVertex(i, v);
+
+	        if(v.x < l.x){
+	            l.x = v.x;
+	        } else if(v.x > u.x){
+	            u.x = v.x;
+	        }
+
+	        if(v.y < l.y){
+	            l.y = v.y;
+	        } else if(v.y > u.y){
+	            u.y = v.y;
+	        }
+
+	        if(v.z < l.z){
+	            l.z = v.z;
+	        } else if(v.z > u.z){
+	            u.z = v.z;
+	        }
+	    }
+	};
+
+
+	/**
+	 * Update the .aabb property
+	 * @method updateAABB
+	 */
+	Trimesh.prototype.updateAABB = function(){
+	    this.computeLocalAABB(this.aabb);
+	};
+
+	/**
+	 * Will update the .boundingSphereRadius property
+	 * @method updateBoundingSphereRadius
+	 */
+	Trimesh.prototype.updateBoundingSphereRadius = function(){
+	    // Assume points are distributed with local (0,0,0) as center
+	    var max2 = 0;
+	    var vertices = this.vertices;
+	    var v = new Vec3();
+	    for(var i=0, N=vertices.length / 3; i !== N; i++) {
+	        this.getVertex(i, v);
+	        var norm2 = v.norm2();
+	        if(norm2 > max2){
+	            max2 = norm2;
+	        }
+	    }
+	    this.boundingSphereRadius = Math.sqrt(max2);
+	};
+
+	var tempWorldVertex = new Vec3();
+	var calculateWorldAABB_frame = new Transform();
+	var calculateWorldAABB_aabb = new AABB();
+
+	/**
+	 * @method calculateWorldAABB
+	 * @param {Vec3}        pos
+	 * @param {Quaternion}  quat
+	 * @param {Vec3}        min
+	 * @param {Vec3}        max
+	 */
+	Trimesh.prototype.calculateWorldAABB = function(pos,quat,min,max){
+	    /*
+	    var n = this.vertices.length / 3,
+	        verts = this.vertices;
+	    var minx,miny,minz,maxx,maxy,maxz;
+
+	    var v = tempWorldVertex;
+	    for(var i=0; i<n; i++){
+	        this.getVertex(i, v);
+	        quat.vmult(v, v);
+	        pos.vadd(v, v);
+	        if (v.x < minx || minx===undefined){
+	            minx = v.x;
+	        } else if(v.x > maxx || maxx===undefined){
+	            maxx = v.x;
+	        }
+
+	        if (v.y < miny || miny===undefined){
+	            miny = v.y;
+	        } else if(v.y > maxy || maxy===undefined){
+	            maxy = v.y;
+	        }
+
+	        if (v.z < minz || minz===undefined){
+	            minz = v.z;
+	        } else if(v.z > maxz || maxz===undefined){
+	            maxz = v.z;
+	        }
+	    }
+	    min.set(minx,miny,minz);
+	    max.set(maxx,maxy,maxz);
+	    */
+
+	    // Faster approximation using local AABB
+	    var frame = calculateWorldAABB_frame;
+	    var result = calculateWorldAABB_aabb;
+	    frame.position = pos;
+	    frame.quaternion = quat;
+	    this.aabb.toWorldFrame(frame, result);
+	    min.copy(result.lowerBound);
+	    max.copy(result.upperBound);
+	};
+
+	/**
+	 * Get approximate volume
+	 * @method volume
+	 * @return {Number}
+	 */
+	Trimesh.prototype.volume = function(){
+	    return 4.0 * Math.PI * this.boundingSphereRadius / 3.0;
+	};
+
+	/**
+	 * Create a Trimesh instance, shaped as a torus.
+	 * @static
+	 * @method createTorus
+	 * @param  {number} [radius=1]
+	 * @param  {number} [tube=0.5]
+	 * @param  {number} [radialSegments=8]
+	 * @param  {number} [tubularSegments=6]
+	 * @param  {number} [arc=6.283185307179586]
+	 * @return {Trimesh} A torus
+	 */
+	Trimesh.createTorus = function (radius, tube, radialSegments, tubularSegments, arc) {
+	    radius = radius || 1;
+	    tube = tube || 0.5;
+	    radialSegments = radialSegments || 8;
+	    tubularSegments = tubularSegments || 6;
+	    arc = arc || Math.PI * 2;
+
+	    var vertices = [];
+	    var indices = [];
+
+	    for ( var j = 0; j <= radialSegments; j ++ ) {
+	        for ( var i = 0; i <= tubularSegments; i ++ ) {
+	            var u = i / tubularSegments * arc;
+	            var v = j / radialSegments * Math.PI * 2;
+
+	            var x = ( radius + tube * Math.cos( v ) ) * Math.cos( u );
+	            var y = ( radius + tube * Math.cos( v ) ) * Math.sin( u );
+	            var z = tube * Math.sin( v );
+
+	            vertices.push( x, y, z );
+	        }
+	    }
+
+	    for ( var j = 1; j <= radialSegments; j ++ ) {
+	        for ( var i = 1; i <= tubularSegments; i ++ ) {
+	            var a = ( tubularSegments + 1 ) * j + i - 1;
+	            var b = ( tubularSegments + 1 ) * ( j - 1 ) + i - 1;
+	            var c = ( tubularSegments + 1 ) * ( j - 1 ) + i;
+	            var d = ( tubularSegments + 1 ) * j + i;
+
+	            indices.push(a, b, d);
+	            indices.push(b, c, d);
+	        }
+	    }
+
+	    return new Trimesh(vertices, indices);
+	};
+
+	},{"../collision/AABB":3,"../math/Quaternion":28,"../math/Transform":29,"../math/Vec3":30,"../utils/Octree":50,"./Shape":43}],46:[function(_dereq_,module,exports){
+	module.exports = GSSolver;
+
+	var Vec3 = _dereq_('../math/Vec3');
+	var Quaternion = _dereq_('../math/Quaternion');
+	var Solver = _dereq_('./Solver');
+
+	/**
+	 * Constraint equation Gauss-Seidel solver.
+	 * @class GSSolver
+	 * @constructor
+	 * @todo The spook parameters should be specified for each constraint, not globally.
+	 * @author schteppe / https://github.com/schteppe
+	 * @see https://www8.cs.umu.se/kurser/5DV058/VT09/lectures/spooknotes.pdf
+	 * @extends Solver
+	 */
+	function GSSolver(){
+	    Solver.call(this);
+
+	    /**
+	     * The number of solver iterations determines quality of the constraints in the world. The more iterations, the more correct simulation. More iterations need more computations though. If you have a large gravity force in your world, you will need more iterations.
+	     * @property iterations
+	     * @type {Number}
+	     * @todo write more about solver and iterations in the wiki
+	     */
+	    this.iterations = 10;
+
+	    /**
+	     * When tolerance is reached, the system is assumed to be converged.
+	     * @property tolerance
+	     * @type {Number}
+	     */
+	    this.tolerance = 1e-7;
+	}
+	GSSolver.prototype = new Solver();
+
+	var GSSolver_solve_lambda = []; // Just temporary number holders that we want to reuse each solve.
+	var GSSolver_solve_invCs = [];
+	var GSSolver_solve_Bs = [];
+	GSSolver.prototype.solve = function(dt,world){
+	    var iter = 0,
+	        maxIter = this.iterations,
+	        tolSquared = this.tolerance*this.tolerance,
+	        equations = this.equations,
+	        Neq = equations.length,
+	        bodies = world.bodies,
+	        Nbodies = bodies.length,
+	        h = dt,
+	        q, B, invC, deltalambda, deltalambdaTot, GWlambda, lambdaj;
+
+	    // Update solve mass
+	    if(Neq !== 0){
+	        for(var i=0; i!==Nbodies; i++){
+	            bodies[i].updateSolveMassProperties();
+	        }
+	    }
+
+	    // Things that does not change during iteration can be computed once
+	    var invCs = GSSolver_solve_invCs,
+	        Bs = GSSolver_solve_Bs,
+	        lambda = GSSolver_solve_lambda;
+	    invCs.length = Neq;
+	    Bs.length = Neq;
+	    lambda.length = Neq;
+	    for(var i=0; i!==Neq; i++){
+	        var c = equations[i];
+	        lambda[i] = 0.0;
+	        Bs[i] = c.computeB(h);
+	        invCs[i] = 1.0 / c.computeC();
+	    }
+
+	    if(Neq !== 0){
+
+	        // Reset vlambda
+	        for(var i=0; i!==Nbodies; i++){
+	            var b=bodies[i],
+	                vlambda=b.vlambda,
+	                wlambda=b.wlambda;
+	            vlambda.set(0,0,0);
+	            if(wlambda){
+	                wlambda.set(0,0,0);
+	            }
+	        }
+
+	        // Iterate over equations
+	        for(iter=0; iter!==maxIter; iter++){
+
+	            // Accumulate the total error for each iteration.
+	            deltalambdaTot = 0.0;
+
+	            for(var j=0; j!==Neq; j++){
+
+	                var c = equations[j];
+
+	                // Compute iteration
+	                B = Bs[j];
+	                invC = invCs[j];
+	                lambdaj = lambda[j];
+	                GWlambda = c.computeGWlambda();
+	                deltalambda = invC * ( B - GWlambda - c.eps * lambdaj );
+
+	                // Clamp if we are not within the min/max interval
+	                if(lambdaj + deltalambda < c.minForce){
+	                    deltalambda = c.minForce - lambdaj;
+	                } else if(lambdaj + deltalambda > c.maxForce){
+	                    deltalambda = c.maxForce - lambdaj;
+	                }
+	                lambda[j] += deltalambda;
+
+	                deltalambdaTot += deltalambda > 0.0 ? deltalambda : -deltalambda; // abs(deltalambda)
+
+	                c.addToWlambda(deltalambda);
+	            }
+
+	            // If the total error is small enough - stop iterate
+	            if(deltalambdaTot*deltalambdaTot < tolSquared){
+	                break;
+	            }
+	        }
+
+	        // Add result to velocity
+	        for(var i=0; i!==Nbodies; i++){
+	            var b=bodies[i],
+	                v=b.velocity,
+	                w=b.angularVelocity;
+	            v.vadd(b.vlambda, v);
+	            if(w){
+	                w.vadd(b.wlambda, w);
+	            }
+	        }
+	    }
+
+	    return iter;
+	};
+
+	},{"../math/Quaternion":28,"../math/Vec3":30,"./Solver":47}],47:[function(_dereq_,module,exports){
+	module.exports = Solver;
+
+	/**
+	 * Constraint equation solver base class.
+	 * @class Solver
+	 * @constructor
+	 * @author schteppe / https://github.com/schteppe
+	 */
+	function Solver(){
+	    /**
+	     * All equations to be solved
+	     * @property {Array} equations
+	     */
+	    this.equations = [];
+	}
+
+	/**
+	 * Should be implemented in subclasses!
+	 * @method solve
+	 * @param  {Number} dt
+	 * @param  {World} world
+	 */
+	Solver.prototype.solve = function(dt,world){
+	    // Should return the number of iterations done!
+	    return 0;
+	};
+
+	/**
+	 * Add an equation
+	 * @method addEquation
+	 * @param {Equation} eq
+	 */
+	Solver.prototype.addEquation = function(eq){
+	    if (eq.enabled) {
+	        this.equations.push(eq);
+	    }
+	};
+
+	/**
+	 * Remove an equation
+	 * @method removeEquation
+	 * @param {Equation} eq
+	 */
+	Solver.prototype.removeEquation = function(eq){
+	    var eqs = this.equations;
+	    var i = eqs.indexOf(eq);
+	    if(i !== -1){
+	        eqs.splice(i,1);
+	    }
+	};
+
+	/**
+	 * Add all equations
+	 * @method removeAllEquations
+	 */
+	Solver.prototype.removeAllEquations = function(){
+	    this.equations.length = 0;
+	};
+
+
+	},{}],48:[function(_dereq_,module,exports){
+	module.exports = SplitSolver;
+
+	var Vec3 = _dereq_('../math/Vec3');
+	var Quaternion = _dereq_('../math/Quaternion');
+	var Solver = _dereq_('./Solver');
+	var Body = _dereq_('../objects/Body');
+
+	/**
+	 * Splits the equations into islands and solves them independently. Can improve performance.
+	 * @class SplitSolver
+	 * @constructor
+	 * @extends Solver
+	 * @param {Solver} subsolver
+	 */
+	function SplitSolver(subsolver){
+	    Solver.call(this);
+	    this.iterations = 10;
+	    this.tolerance = 1e-7;
+	    this.subsolver = subsolver;
+	    this.nodes = [];
+	    this.nodePool = [];
+
+	    // Create needed nodes, reuse if possible
+	    while(this.nodePool.length < 128){
+	        this.nodePool.push(this.createNode());
+	    }
+	}
+	SplitSolver.prototype = new Solver();
+
+	// Returns the number of subsystems
+	var SplitSolver_solve_nodes = []; // All allocated node objects
+	var SplitSolver_solve_nodePool = []; // All allocated node objects
+	var SplitSolver_solve_eqs = [];   // Temp array
+	var SplitSolver_solve_bds = [];   // Temp array
+	var SplitSolver_solve_dummyWorld = {bodies:[]}; // Temp object
+
+	var STATIC = Body.STATIC;
+	function getUnvisitedNode(nodes){
+	    var Nnodes = nodes.length;
+	    for(var i=0; i!==Nnodes; i++){
+	        var node = nodes[i];
+	        if(!node.visited && !(node.body.type & STATIC)){
+	            return node;
+	        }
+	    }
+	    return false;
+	}
+
+	var queue = [];
+	function bfs(root,visitFunc,bds,eqs){
+	    queue.push(root);
+	    root.visited = true;
+	    visitFunc(root,bds,eqs);
+	    while(queue.length) {
+	        var node = queue.pop();
+	        // Loop over unvisited child nodes
+	        var child;
+	        while((child = getUnvisitedNode(node.children))) {
+	            child.visited = true;
+	            visitFunc(child,bds,eqs);
+	            queue.push(child);
+	        }
+	    }
+	}
+
+	function visitFunc(node,bds,eqs){
+	    bds.push(node.body);
+	    var Neqs = node.eqs.length;
+	    for(var i=0; i!==Neqs; i++){
+	        var eq = node.eqs[i];
+	        if(eqs.indexOf(eq) === -1){
+	            eqs.push(eq);
+	        }
+	    }
+	}
+
+	SplitSolver.prototype.createNode = function(){
+	    return { body:null, children:[], eqs:[], visited:false };
+	};
+
+	/**
+	 * Solve the subsystems
+	 * @method solve
+	 * @param  {Number} dt
+	 * @param  {World} world
+	 */
+	SplitSolver.prototype.solve = function(dt,world){
+	    var nodes=SplitSolver_solve_nodes,
+	        nodePool=this.nodePool,
+	        bodies=world.bodies,
+	        equations=this.equations,
+	        Neq=equations.length,
+	        Nbodies=bodies.length,
+	        subsolver=this.subsolver;
+
+	    // Create needed nodes, reuse if possible
+	    while(nodePool.length < Nbodies){
+	        nodePool.push(this.createNode());
+	    }
+	    nodes.length = Nbodies;
+	    for (var i = 0; i < Nbodies; i++) {
+	        nodes[i] = nodePool[i];
+	    }
+
+	    // Reset node values
+	    for(var i=0; i!==Nbodies; i++){
+	        var node = nodes[i];
+	        node.body = bodies[i];
+	        node.children.length = 0;
+	        node.eqs.length = 0;
+	        node.visited = false;
+	    }
+	    for(var k=0; k!==Neq; k++){
+	        var eq=equations[k],
+	            i=bodies.indexOf(eq.bi),
+	            j=bodies.indexOf(eq.bj),
+	            ni=nodes[i],
+	            nj=nodes[j];
+	        ni.children.push(nj);
+	        ni.eqs.push(eq);
+	        nj.children.push(ni);
+	        nj.eqs.push(eq);
+	    }
+
+	    var child, n=0, eqs=SplitSolver_solve_eqs;
+
+	    subsolver.tolerance = this.tolerance;
+	    subsolver.iterations = this.iterations;
+
+	    var dummyWorld = SplitSolver_solve_dummyWorld;
+	    while((child = getUnvisitedNode(nodes))){
+	        eqs.length = 0;
+	        dummyWorld.bodies.length = 0;
+	        bfs(child, visitFunc, dummyWorld.bodies, eqs);
+
+	        var Neqs = eqs.length;
+
+	        eqs = eqs.sort(sortById);
+
+	        for(var i=0; i!==Neqs; i++){
+	            subsolver.addEquation(eqs[i]);
+	        }
+
+	        var iter = subsolver.solve(dt,dummyWorld);
+	        subsolver.removeAllEquations();
+	        n++;
+	    }
+
+	    return n;
+	};
+
+	function sortById(a, b){
+	    return b.id - a.id;
+	}
+	},{"../math/Quaternion":28,"../math/Vec3":30,"../objects/Body":31,"./Solver":47}],49:[function(_dereq_,module,exports){
+	/**
+	 * Base class for objects that dispatches events.
+	 * @class EventTarget
+	 * @constructor
+	 */
+	var EventTarget = function () {
+
+	};
+
+	module.exports = EventTarget;
+
+	EventTarget.prototype = {
+	    constructor: EventTarget,
+
+	    /**
+	     * Add an event listener
+	     * @method addEventListener
+	     * @param  {String} type
+	     * @param  {Function} listener
+	     * @return {EventTarget} The self object, for chainability.
+	     */
+	    addEventListener: function ( type, listener ) {
+	        if ( this._listeners === undefined ){ this._listeners = {}; }
+	        var listeners = this._listeners;
+	        if ( listeners[ type ] === undefined ) {
+	            listeners[ type ] = [];
+	        }
+	        if ( listeners[ type ].indexOf( listener ) === - 1 ) {
+	            listeners[ type ].push( listener );
+	        }
+	        return this;
+	    },
+
+	    /**
+	     * Check if an event listener is added
+	     * @method hasEventListener
+	     * @param  {String} type
+	     * @param  {Function} listener
+	     * @return {Boolean}
+	     */
+	    hasEventListener: function ( type, listener ) {
+	        if ( this._listeners === undefined ){ return false; }
+	        var listeners = this._listeners;
+	        if ( listeners[ type ] !== undefined && listeners[ type ].indexOf( listener ) !== - 1 ) {
+	            return true;
+	        }
+	        return false;
+	    },
+
+	    /**
+	     * Remove an event listener
+	     * @method removeEventListener
+	     * @param  {String} type
+	     * @param  {Function} listener
+	     * @return {EventTarget} The self object, for chainability.
+	     */
+	    removeEventListener: function ( type, listener ) {
+	        if ( this._listeners === undefined ){ return this; }
+	        var listeners = this._listeners;
+	        if ( listeners[type] === undefined ){ return this; }
+	        var index = listeners[ type ].indexOf( listener );
+	        if ( index !== - 1 ) {
+	            listeners[ type ].splice( index, 1 );
+	        }
+	        return this;
+	    },
+
+	    /**
+	     * Emit an event.
+	     * @method dispatchEvent
+	     * @param  {Object} event
+	     * @param  {String} event.type
+	     * @return {EventTarget} The self object, for chainability.
+	     */
+	    dispatchEvent: function ( event ) {
+	        if ( this._listeners === undefined ){ return this; }
+	        var listeners = this._listeners;
+	        var listenerArray = listeners[ event.type ];
+	        if ( listenerArray !== undefined ) {
+	            event.target = this;
+	            for ( var i = 0, l = listenerArray.length; i < l; i ++ ) {
+	                listenerArray[ i ].call( this, event );
+	            }
+	        }
+	        return this;
+	    }
+	};
+
+	},{}],50:[function(_dereq_,module,exports){
+	var AABB = _dereq_('../collision/AABB');
+	var Vec3 = _dereq_('../math/Vec3');
+
+	module.exports = Octree;
+
+	/**
+	 * @class OctreeNode
+	 * @param {object} [options]
+	 * @param {Octree} [options.root]
+	 * @param {AABB} [options.aabb]
+	 */
+	function OctreeNode(options){
+	    options = options || {};
+
+	    /**
+	     * The root node
+	     * @property {OctreeNode} root
+	     */
+	    this.root = options.root || null;
+
+	    /**
+	     * Boundary of this node
+	     * @property {AABB} aabb
+	     */
+	    this.aabb = options.aabb ? options.aabb.clone() : new AABB();
+
+	    /**
+	     * Contained data at the current node level.
+	     * @property {Array} data
+	     */
+	    this.data = [];
+
+	    /**
+	     * Children to this node
+	     * @property {Array} children
+	     */
+	    this.children = [];
+	}
+
+	/**
+	 * @class Octree
+	 * @param {AABB} aabb The total AABB of the tree
+	 * @param {object} [options]
+	 * @param {number} [options.maxDepth=8]
+	 * @extends OctreeNode
+	 */
+	function Octree(aabb, options){
+	    options = options || {};
+	    options.root = null;
+	    options.aabb = aabb;
+	    OctreeNode.call(this, options);
+
+	    /**
+	     * Maximum subdivision depth
+	     * @property {number} maxDepth
+	     */
+	    this.maxDepth = typeof(options.maxDepth) !== 'undefined' ? options.maxDepth : 8;
+	}
+	Octree.prototype = new OctreeNode();
+
+	OctreeNode.prototype.reset = function(aabb, options){
+	    this.children.length = this.data.length = 0;
+	};
+
+	/**
+	 * Insert data into this node
+	 * @method insert
+	 * @param  {AABB} aabb
+	 * @param  {object} elementData
+	 * @return {boolean} True if successful, otherwise false
+	 */
+	OctreeNode.prototype.insert = function(aabb, elementData, level){
+	    var nodeData = this.data;
+	    level = level || 0;
+
+	    // Ignore objects that do not belong in this node
+	    if (!this.aabb.contains(aabb)){
+	        return false; // object cannot be added
+	    }
+
+	    var children = this.children;
+
+	    if(level < (this.maxDepth || this.root.maxDepth)){
+	        // Subdivide if there are no children yet
+	        var subdivided = false;
+	        if (!children.length){
+	            this.subdivide();
+	            subdivided = true;
+	        }
+
+	        // add to whichever node will accept it
+	        for (var i = 0; i !== 8; i++) {
+	            if (children[i].insert(aabb, elementData, level + 1)){
+	                return true;
+	            }
+	        }
+
+	        if(subdivided){
+	            // No children accepted! Might as well just remove em since they contain none
+	            children.length = 0;
+	        }
+	    }
+
+	    // Too deep, or children didnt want it. add it in current node
+	    nodeData.push(elementData);
+
+	    return true;
+	};
+
+	var halfDiagonal = new Vec3();
+
+	/**
+	 * Create 8 equally sized children nodes and put them in the .children array.
+	 * @method subdivide
+	 */
+	OctreeNode.prototype.subdivide = function() {
+	    var aabb = this.aabb;
+	    var l = aabb.lowerBound;
+	    var u = aabb.upperBound;
+
+	    var children = this.children;
+
+	    children.push(
+	        new OctreeNode({ aabb: new AABB({ lowerBound: new Vec3(0,0,0) }) }),
+	        new OctreeNode({ aabb: new AABB({ lowerBound: new Vec3(1,0,0) }) }),
+	        new OctreeNode({ aabb: new AABB({ lowerBound: new Vec3(1,1,0) }) }),
+	        new OctreeNode({ aabb: new AABB({ lowerBound: new Vec3(1,1,1) }) }),
+	        new OctreeNode({ aabb: new AABB({ lowerBound: new Vec3(0,1,1) }) }),
+	        new OctreeNode({ aabb: new AABB({ lowerBound: new Vec3(0,0,1) }) }),
+	        new OctreeNode({ aabb: new AABB({ lowerBound: new Vec3(1,0,1) }) }),
+	        new OctreeNode({ aabb: new AABB({ lowerBound: new Vec3(0,1,0) }) })
+	    );
+
+	    u.vsub(l, halfDiagonal);
+	    halfDiagonal.scale(0.5, halfDiagonal);
+
+	    var root = this.root || this;
+
+	    for (var i = 0; i !== 8; i++) {
+	        var child = children[i];
+
+	        // Set current node as root
+	        child.root = root;
+
+	        // Compute bounds
+	        var lowerBound = child.aabb.lowerBound;
+	        lowerBound.x *= halfDiagonal.x;
+	        lowerBound.y *= halfDiagonal.y;
+	        lowerBound.z *= halfDiagonal.z;
+
+	        lowerBound.vadd(l, lowerBound);
+
+	        // Upper bound is always lower bound + halfDiagonal
+	        lowerBound.vadd(halfDiagonal, child.aabb.upperBound);
+	    }
+	};
+
+	/**
+	 * Get all data, potentially within an AABB
+	 * @method aabbQuery
+	 * @param  {AABB} aabb
+	 * @param  {array} result
+	 * @return {array} The "result" object
+	 */
+	OctreeNode.prototype.aabbQuery = function(aabb, result) {
+
+	    var nodeData = this.data;
+
+	    // abort if the range does not intersect this node
+	    // if (!this.aabb.overlaps(aabb)){
+	    //     return result;
+	    // }
+
+	    // Add objects at this level
+	    // Array.prototype.push.apply(result, nodeData);
+
+	    // Add child data
+	    // @todo unwrap recursion into a queue / loop, that's faster in JS
+	    var children = this.children;
+
+
+	    // for (var i = 0, N = this.children.length; i !== N; i++) {
+	    //     children[i].aabbQuery(aabb, result);
+	    // }
+
+	    var queue = [this];
+	    while (queue.length) {
+	        var node = queue.pop();
+	        if (node.aabb.overlaps(aabb)){
+	            Array.prototype.push.apply(result, node.data);
+	        }
+	        Array.prototype.push.apply(queue, node.children);
+	    }
+
+	    return result;
+	};
+
+	var tmpAABB = new AABB();
+
+	/**
+	 * Get all data, potentially intersected by a ray.
+	 * @method rayQuery
+	 * @param  {Ray} ray
+	 * @param  {Transform} treeTransform
+	 * @param  {array} result
+	 * @return {array} The "result" object
+	 */
+	OctreeNode.prototype.rayQuery = function(ray, treeTransform, result) {
+
+	    // Use aabb query for now.
+	    // @todo implement real ray query which needs less lookups
+	    ray.getAABB(tmpAABB);
+	    tmpAABB.toLocalFrame(treeTransform, tmpAABB);
+	    this.aabbQuery(tmpAABB, result);
+
+	    return result;
+	};
+
+	/**
+	 * @method removeEmptyNodes
+	 */
+	OctreeNode.prototype.removeEmptyNodes = function() {
+	    var queue = [this];
+	    while (queue.length) {
+	        var node = queue.pop();
+	        for (var i = node.children.length - 1; i >= 0; i--) {
+	            if(!node.children[i].data.length){
+	                node.children.splice(i, 1);
+	            }
+	        }
+	        Array.prototype.push.apply(queue, node.children);
+	    }
+	};
+
+	},{"../collision/AABB":3,"../math/Vec3":30}],51:[function(_dereq_,module,exports){
+	module.exports = Pool;
+
+	/**
+	 * For pooling objects that can be reused.
+	 * @class Pool
+	 * @constructor
+	 */
+	function Pool(){
+	    /**
+	     * The pooled objects
+	     * @property {Array} objects
+	     */
+	    this.objects = [];
+
+	    /**
+	     * Constructor of the objects
+	     * @property {mixed} type
+	     */
+	    this.type = Object;
+	}
+
+	/**
+	 * Release an object after use
+	 * @method release
+	 * @param {Object} obj
+	 */
+	Pool.prototype.release = function(){
+	    var Nargs = arguments.length;
+	    for(var i=0; i!==Nargs; i++){
+	        this.objects.push(arguments[i]);
+	    }
+	};
+
+	/**
+	 * Get an object
+	 * @method get
+	 * @return {mixed}
+	 */
+	Pool.prototype.get = function(){
+	    if(this.objects.length===0){
+	        return this.constructObject();
+	    } else {
+	        return this.objects.pop();
+	    }
+	};
+
+	/**
+	 * Construct an object. Should be implmented in each subclass.
+	 * @method constructObject
+	 * @return {mixed}
+	 */
+	Pool.prototype.constructObject = function(){
+	    throw new Error("constructObject() not implemented in this Pool subclass yet!");
+	};
+
+	},{}],52:[function(_dereq_,module,exports){
+	module.exports = TupleDictionary;
+
+	/**
+	 * @class TupleDictionary
+	 * @constructor
+	 */
+	function TupleDictionary() {
+
+	    /**
+	     * The data storage
+	     * @property data
+	     * @type {Object}
+	     */
+	    this.data = { keys:[] };
+	}
+
+	/**
+	 * @method get
+	 * @param  {Number} i
+	 * @param  {Number} j
+	 * @return {Number}
+	 */
+	TupleDictionary.prototype.get = function(i, j) {
+	    if (i > j) {
+	        // swap
+	        var temp = j;
+	        j = i;
+	        i = temp;
+	    }
+	    return this.data[i+'-'+j];
+	};
+
+	/**
+	 * @method set
+	 * @param  {Number} i
+	 * @param  {Number} j
+	 * @param {Number} value
+	 */
+	TupleDictionary.prototype.set = function(i, j, value) {
+	    if (i > j) {
+	        var temp = j;
+	        j = i;
+	        i = temp;
+	    }
+	    var key = i+'-'+j;
+
+	    // Check if key already exists
+	    if(!this.get(i,j)){
+	        this.data.keys.push(key);
+	    }
+
+	    this.data[key] = value;
+	};
+
+	/**
+	 * @method reset
+	 */
+	TupleDictionary.prototype.reset = function() {
+	    var data = this.data,
+	        keys = data.keys;
+	    while(keys.length > 0){
+	        var key = keys.pop();
+	        delete data[key];
+	    }
+	};
+
+	},{}],53:[function(_dereq_,module,exports){
+	function Utils(){}
+
+	module.exports = Utils;
+
+	/**
+	 * Extend an options object with default values.
+	 * @static
+	 * @method defaults
+	 * @param  {object} options The options object. May be falsy: in this case, a new object is created and returned.
+	 * @param  {object} defaults An object containing default values.
+	 * @return {object} The modified options object.
+	 */
+	Utils.defaults = function(options, defaults){
+	    options = options || {};
+
+	    for(var key in defaults){
+	        if(!(key in options)){
+	            options[key] = defaults[key];
+	        }
+	    }
+
+	    return options;
+	};
+
+	},{}],54:[function(_dereq_,module,exports){
+	module.exports = Vec3Pool;
+
+	var Vec3 = _dereq_('../math/Vec3');
+	var Pool = _dereq_('./Pool');
+
+	/**
+	 * @class Vec3Pool
+	 * @constructor
+	 * @extends Pool
+	 */
+	function Vec3Pool(){
+	    Pool.call(this);
+	    this.type = Vec3;
+	}
+	Vec3Pool.prototype = new Pool();
+
+	/**
+	 * Construct a vector
+	 * @method constructObject
+	 * @return {Vec3}
+	 */
+	Vec3Pool.prototype.constructObject = function(){
+	    return new Vec3();
+	};
+
+	},{"../math/Vec3":30,"./Pool":51}],55:[function(_dereq_,module,exports){
+	module.exports = Narrowphase;
+
+	var AABB = _dereq_('../collision/AABB');
+	var Shape = _dereq_('../shapes/Shape');
+	var Ray = _dereq_('../collision/Ray');
+	var Vec3 = _dereq_('../math/Vec3');
+	var Transform = _dereq_('../math/Transform');
+	var ConvexPolyhedron = _dereq_('../shapes/ConvexPolyhedron');
+	var Quaternion = _dereq_('../math/Quaternion');
+	var Solver = _dereq_('../solver/Solver');
+	var Vec3Pool = _dereq_('../utils/Vec3Pool');
+	var ContactEquation = _dereq_('../equations/ContactEquation');
+	var FrictionEquation = _dereq_('../equations/FrictionEquation');
+
+	/**
+	 * Helper class for the World. Generates ContactEquations.
+	 * @class Narrowphase
+	 * @constructor
+	 * @todo Sphere-ConvexPolyhedron contacts
+	 * @todo Contact reduction
+	 * @todo  should move methods to prototype
+	 */
+	function Narrowphase(world){
+
+	    /**
+	     * Internal storage of pooled contact points.
+	     * @property {Array} contactPointPool
+	     */
+	    this.contactPointPool = [];
+
+	    this.frictionEquationPool = [];
+
+	    this.result = [];
+	    this.frictionResult = [];
+
+	    /**
+	     * Pooled vectors.
+	     * @property {Vec3Pool} v3pool
+	     */
+	    this.v3pool = new Vec3Pool();
+
+	    this.world = world;
+	    this.currentContactMaterial = null;
+
+	    /**
+	     * @property {Boolean} enableFrictionReduction
+	     */
+	    this.enableFrictionReduction = false;
+	}
+
+	/**
+	 * Make a contact object, by using the internal pool or creating a new one.
+	 * @method createContactEquation
+	 * @return {ContactEquation}
+	 */
+	Narrowphase.prototype.createContactEquation = function(bi, bj, si, sj, rsi, rsj){
+	    var c;
+	    if(this.contactPointPool.length){
+	        c = this.contactPointPool.pop();
+	        c.bi = bi;
+	        c.bj = bj;
+	    } else {
+	        c = new ContactEquation(bi, bj);
+	    }
+
+	    c.enabled = bi.collisionResponse && bj.collisionResponse && si.collisionResponse && sj.collisionResponse;
+
+	    var cm = this.currentContactMaterial;
+
+	    c.restitution = cm.restitution;
+
+	    c.setSpookParams(
+	        cm.contactEquationStiffness,
+	        cm.contactEquationRelaxation,
+	        this.world.dt
+	    );
+
+	    var matA = si.material || bi.material;
+	    var matB = sj.material || bj.material;
+	    if(matA && matB && matA.restitution >= 0 && matB.restitution >= 0){
+	        c.restitution = matA.restitution * matB.restitution;
+	    }
+
+	    c.si = rsi || si;
+	    c.sj = rsj || sj;
+
+	    return c;
+	};
+
+	Narrowphase.prototype.createFrictionEquationsFromContact = function(contactEquation, outArray){
+	    var bodyA = contactEquation.bi;
+	    var bodyB = contactEquation.bj;
+	    var shapeA = contactEquation.si;
+	    var shapeB = contactEquation.sj;
+
+	    var world = this.world;
+	    var cm = this.currentContactMaterial;
+
+	    // If friction or restitution were specified in the material, use them
+	    var friction = cm.friction;
+	    var matA = shapeA.material || bodyA.material;
+	    var matB = shapeB.material || bodyB.material;
+	    if(matA && matB && matA.friction >= 0 && matB.friction >= 0){
+	        friction = matA.friction * matB.friction;
+	    }
+
+	    if(friction > 0){
+
+	        // Create 2 tangent equations
+	        var mug = friction * world.gravity.length();
+	        var reducedMass = (bodyA.invMass + bodyB.invMass);
+	        if(reducedMass > 0){
+	            reducedMass = 1/reducedMass;
+	        }
+	        var pool = this.frictionEquationPool;
+	        var c1 = pool.length ? pool.pop() : new FrictionEquation(bodyA,bodyB,mug*reducedMass);
+	        var c2 = pool.length ? pool.pop() : new FrictionEquation(bodyA,bodyB,mug*reducedMass);
+
+	        c1.bi = c2.bi = bodyA;
+	        c1.bj = c2.bj = bodyB;
+	        c1.minForce = c2.minForce = -mug*reducedMass;
+	        c1.maxForce = c2.maxForce = mug*reducedMass;
+
+	        // Copy over the relative vectors
+	        c1.ri.copy(contactEquation.ri);
+	        c1.rj.copy(contactEquation.rj);
+	        c2.ri.copy(contactEquation.ri);
+	        c2.rj.copy(contactEquation.rj);
+
+	        // Construct tangents
+	        contactEquation.ni.tangents(c1.t, c2.t);
+
+	        // Set spook params
+	        c1.setSpookParams(cm.frictionEquationStiffness, cm.frictionEquationRelaxation, world.dt);
+	        c2.setSpookParams(cm.frictionEquationStiffness, cm.frictionEquationRelaxation, world.dt);
+
+	        c1.enabled = c2.enabled = contactEquation.enabled;
+
+	        outArray.push(c1, c2);
+
+	        return true;
+	    }
+
+	    return false;
+	};
+
+	var averageNormal = new Vec3();
+	var averageContactPointA = new Vec3();
+	var averageContactPointB = new Vec3();
+
+	// Take the average N latest contact point on the plane.
+	Narrowphase.prototype.createFrictionFromAverage = function(numContacts){
+	    // The last contactEquation
+	    var c = this.result[this.result.length - 1];
+
+	    // Create the result: two "average" friction equations
+	    if (!this.createFrictionEquationsFromContact(c, this.frictionResult) || numContacts === 1) {
+	        return;
+	    }
+
+	    var f1 = this.frictionResult[this.frictionResult.length - 2];
+	    var f2 = this.frictionResult[this.frictionResult.length - 1];
+
+	    averageNormal.setZero();
+	    averageContactPointA.setZero();
+	    averageContactPointB.setZero();
+
+	    var bodyA = c.bi;
+	    var bodyB = c.bj;
+	    for(var i=0; i!==numContacts; i++){
+	        c = this.result[this.result.length - 1 - i];
+	        if(c.bodyA !== bodyA){
+	            averageNormal.vadd(c.ni, averageNormal); // vec2.add(eq.t, eq.t, c.normalA);
+	            averageContactPointA.vadd(c.ri, averageContactPointA); // vec2.add(eq.contactPointA, eq.contactPointA, c.contactPointA);
+	            averageContactPointB.vadd(c.rj, averageContactPointB);
+	        } else {
+	            averageNormal.vsub(c.ni, averageNormal); // vec2.sub(eq.t, eq.t, c.normalA);
+	            averageContactPointA.vadd(c.rj, averageContactPointA); // vec2.add(eq.contactPointA, eq.contactPointA, c.contactPointA);
+	            averageContactPointB.vadd(c.ri, averageContactPointB);
+	        }
+	    }
+
+	    var invNumContacts = 1 / numContacts;
+	    averageContactPointA.scale(invNumContacts, f1.ri); // vec2.scale(eq.contactPointA, eq.contactPointA, invNumContacts);
+	    averageContactPointB.scale(invNumContacts, f1.rj); // vec2.scale(eq.contactPointB, eq.contactPointB, invNumContacts);
+	    f2.ri.copy(f1.ri); // Should be the same
+	    f2.rj.copy(f1.rj);
+	    averageNormal.normalize();
+	    averageNormal.tangents(f1.t, f2.t);
+	    // return eq;
+	};
+
+
+	var tmpVec1 = new Vec3();
+	var tmpVec2 = new Vec3();
+	var tmpQuat1 = new Quaternion();
+	var tmpQuat2 = new Quaternion();
+
+	/**
+	 * Generate all contacts between a list of body pairs
+	 * @method getContacts
+	 * @param {array} p1 Array of body indices
+	 * @param {array} p2 Array of body indices
+	 * @param {World} world
+	 * @param {array} result Array to store generated contacts
+	 * @param {array} oldcontacts Optional. Array of reusable contact objects
+	 */
+	Narrowphase.prototype.getContacts = function(p1, p2, world, result, oldcontacts, frictionResult, frictionPool){
+	    // Save old contact objects
+	    this.contactPointPool = oldcontacts;
+	    this.frictionEquationPool = frictionPool;
+	    this.result = result;
+	    this.frictionResult = frictionResult;
+
+	    var qi = tmpQuat1;
+	    var qj = tmpQuat2;
+	    var xi = tmpVec1;
+	    var xj = tmpVec2;
+
+	    for(var k=0, N=p1.length; k!==N; k++){
+
+	        // Get current collision bodies
+	        var bi = p1[k],
+	            bj = p2[k];
+
+	        // Get contact material
+	        var bodyContactMaterial = null;
+	        if(bi.material && bj.material){
+	            bodyContactMaterial = world.getContactMaterial(bi.material,bj.material) || null;
+	        }
+
+	        for (var i = 0; i < bi.shapes.length; i++) {
+	            bi.quaternion.mult(bi.shapeOrientations[i], qi);
+	            bi.quaternion.vmult(bi.shapeOffsets[i], xi);
+	            xi.vadd(bi.position, xi);
+	            var si = bi.shapes[i];
+
+	            for (var j = 0; j < bj.shapes.length; j++) {
+
+	                // Compute world transform of shapes
+	                bj.quaternion.mult(bj.shapeOrientations[j], qj);
+	                bj.quaternion.vmult(bj.shapeOffsets[j], xj);
+	                xj.vadd(bj.position, xj);
+	                var sj = bj.shapes[j];
+
+	                if(xi.distanceTo(xj) > si.boundingSphereRadius + sj.boundingSphereRadius){
+	                    continue;
+	                }
+
+	                // Get collision material
+	                var shapeContactMaterial = null;
+	                if(si.material && sj.material){
+	                    shapeContactMaterial = world.getContactMaterial(si.material,sj.material) || null;
+	                }
+
+	                this.currentContactMaterial = shapeContactMaterial || bodyContactMaterial || world.defaultContactMaterial;
+
+	                // Get contacts
+	                var resolver = this[si.type | sj.type];
+	                if(resolver){
+	                    if (si.type < sj.type) {
+	                        resolver.call(this, si, sj, xi, xj, qi, qj, bi, bj, si, sj);
+	                    } else {
+	                        resolver.call(this, sj, si, xj, xi, qj, qi, bj, bi, si, sj);
+	                    }
+	                }
+	            }
+	        }
+	    }
+	};
+
+	var numWarnings = 0;
+	var maxWarnings = 10;
+
+	function warn(msg){
+	    if(numWarnings > maxWarnings){
+	        return;
+	    }
+
+	    numWarnings++;
+
+	    console.warn(msg);
+	}
+
+	Narrowphase.prototype[Shape.types.BOX | Shape.types.BOX] =
+	Narrowphase.prototype.boxBox = function(si,sj,xi,xj,qi,qj,bi,bj){
+	    si.convexPolyhedronRepresentation.material = si.material;
+	    sj.convexPolyhedronRepresentation.material = sj.material;
+	    si.convexPolyhedronRepresentation.collisionResponse = si.collisionResponse;
+	    sj.convexPolyhedronRepresentation.collisionResponse = sj.collisionResponse;
+	    this.convexConvex(si.convexPolyhedronRepresentation,sj.convexPolyhedronRepresentation,xi,xj,qi,qj,bi,bj,si,sj);
+	};
+
+	Narrowphase.prototype[Shape.types.BOX | Shape.types.CONVEXPOLYHEDRON] =
+	Narrowphase.prototype.boxConvex = function(si,sj,xi,xj,qi,qj,bi,bj){
+	    si.convexPolyhedronRepresentation.material = si.material;
+	    si.convexPolyhedronRepresentation.collisionResponse = si.collisionResponse;
+	    this.convexConvex(si.convexPolyhedronRepresentation,sj,xi,xj,qi,qj,bi,bj,si,sj);
+	};
+
+	Narrowphase.prototype[Shape.types.BOX | Shape.types.PARTICLE] =
+	Narrowphase.prototype.boxParticle = function(si,sj,xi,xj,qi,qj,bi,bj){
+	    si.convexPolyhedronRepresentation.material = si.material;
+	    si.convexPolyhedronRepresentation.collisionResponse = si.collisionResponse;
+	    this.convexParticle(si.convexPolyhedronRepresentation,sj,xi,xj,qi,qj,bi,bj,si,sj);
+	};
+
+	/**
+	 * @method sphereSphere
+	 * @param  {Shape}      si
+	 * @param  {Shape}      sj
+	 * @param  {Vec3}       xi
+	 * @param  {Vec3}       xj
+	 * @param  {Quaternion} qi
+	 * @param  {Quaternion} qj
+	 * @param  {Body}       bi
+	 * @param  {Body}       bj
+	 */
+	Narrowphase.prototype[Shape.types.SPHERE] =
+	Narrowphase.prototype.sphereSphere = function(si,sj,xi,xj,qi,qj,bi,bj){
+	    // We will have only one contact in this case
+	    var r = this.createContactEquation(bi,bj,si,sj);
+
+	    // Contact normal
+	    xj.vsub(xi, r.ni);
+	    r.ni.normalize();
+
+	    // Contact point locations
+	    r.ri.copy(r.ni);
+	    r.rj.copy(r.ni);
+	    r.ri.mult(si.radius, r.ri);
+	    r.rj.mult(-sj.radius, r.rj);
+
+	    r.ri.vadd(xi, r.ri);
+	    r.ri.vsub(bi.position, r.ri);
+
+	    r.rj.vadd(xj, r.rj);
+	    r.rj.vsub(bj.position, r.rj);
+
+	    this.result.push(r);
+
+	    this.createFrictionEquationsFromContact(r, this.frictionResult);
+	};
+
+	/**
+	 * @method planeTrimesh
+	 * @param  {Shape}      si
+	 * @param  {Shape}      sj
+	 * @param  {Vec3}       xi
+	 * @param  {Vec3}       xj
+	 * @param  {Quaternion} qi
+	 * @param  {Quaternion} qj
+	 * @param  {Body}       bi
+	 * @param  {Body}       bj
+	 */
+	var planeTrimesh_normal = new Vec3();
+	var planeTrimesh_relpos = new Vec3();
+	var planeTrimesh_projected = new Vec3();
+	Narrowphase.prototype[Shape.types.PLANE | Shape.types.TRIMESH] =
+	Narrowphase.prototype.planeTrimesh = function(
+	    planeShape,
+	    trimeshShape,
+	    planePos,
+	    trimeshPos,
+	    planeQuat,
+	    trimeshQuat,
+	    planeBody,
+	    trimeshBody
+	){
+	    // Make contacts!
+	    var v = new Vec3();
+
+	    var normal = planeTrimesh_normal;
+	    normal.set(0,0,1);
+	    planeQuat.vmult(normal,normal); // Turn normal according to plane
+
+	    for(var i=0; i<trimeshShape.vertices.length / 3; i++){
+
+	        // Get world vertex from trimesh
+	        trimeshShape.getVertex(i, v);
+
+	        // Safe up
+	        var v2 = new Vec3();
+	        v2.copy(v);
+	        Transform.pointToWorldFrame(trimeshPos, trimeshQuat, v2, v);
+
+	        // Check plane side
+	        var relpos = planeTrimesh_relpos;
+	        v.vsub(planePos, relpos);
+	        var dot = normal.dot(relpos);
+
+	        if(dot <= 0.0){
+	            var r = this.createContactEquation(planeBody,trimeshBody,planeShape,trimeshShape);
+
+	            r.ni.copy(normal); // Contact normal is the plane normal
+
+	            // Get vertex position projected on plane
+	            var projected = planeTrimesh_projected;
+	            normal.scale(relpos.dot(normal), projected);
+	            v.vsub(projected,projected);
+
+	            // ri is the projected world position minus plane position
+	            r.ri.copy(projected);
+	            r.ri.vsub(planeBody.position, r.ri);
+
+	            r.rj.copy(v);
+	            r.rj.vsub(trimeshBody.position, r.rj);
+
+	            // Store result
+	            this.result.push(r);
+	            this.createFrictionEquationsFromContact(r, this.frictionResult);
+	        }
+	    }
+	};
+
+	/**
+	 * @method sphereTrimesh
+	 * @param  {Shape}      sphereShape
+	 * @param  {Shape}      trimeshShape
+	 * @param  {Vec3}       spherePos
+	 * @param  {Vec3}       trimeshPos
+	 * @param  {Quaternion} sphereQuat
+	 * @param  {Quaternion} trimeshQuat
+	 * @param  {Body}       sphereBody
+	 * @param  {Body}       trimeshBody
+	 */
+	var sphereTrimesh_normal = new Vec3();
+	var sphereTrimesh_relpos = new Vec3();
+	var sphereTrimesh_projected = new Vec3();
+	var sphereTrimesh_v = new Vec3();
+	var sphereTrimesh_v2 = new Vec3();
+	var sphereTrimesh_edgeVertexA = new Vec3();
+	var sphereTrimesh_edgeVertexB = new Vec3();
+	var sphereTrimesh_edgeVector = new Vec3();
+	var sphereTrimesh_edgeVectorUnit = new Vec3();
+	var sphereTrimesh_localSpherePos = new Vec3();
+	var sphereTrimesh_tmp = new Vec3();
+	var sphereTrimesh_va = new Vec3();
+	var sphereTrimesh_vb = new Vec3();
+	var sphereTrimesh_vc = new Vec3();
+	var sphereTrimesh_localSphereAABB = new AABB();
+	var sphereTrimesh_triangles = [];
+	Narrowphase.prototype[Shape.types.SPHERE | Shape.types.TRIMESH] =
+	Narrowphase.prototype.sphereTrimesh = function (
+	    sphereShape,
+	    trimeshShape,
+	    spherePos,
+	    trimeshPos,
+	    sphereQuat,
+	    trimeshQuat,
+	    sphereBody,
+	    trimeshBody
+	) {
+
+	    var edgeVertexA = sphereTrimesh_edgeVertexA;
+	    var edgeVertexB = sphereTrimesh_edgeVertexB;
+	    var edgeVector = sphereTrimesh_edgeVector;
+	    var edgeVectorUnit = sphereTrimesh_edgeVectorUnit;
+	    var localSpherePos = sphereTrimesh_localSpherePos;
+	    var tmp = sphereTrimesh_tmp;
+	    var localSphereAABB = sphereTrimesh_localSphereAABB;
+	    var v2 = sphereTrimesh_v2;
+	    var relpos = sphereTrimesh_relpos;
+	    var triangles = sphereTrimesh_triangles;
+
+	    // Convert sphere position to local in the trimesh
+	    Transform.pointToLocalFrame(trimeshPos, trimeshQuat, spherePos, localSpherePos);
+
+	    // Get the aabb of the sphere locally in the trimesh
+	    var sphereRadius = sphereShape.radius;
+	    localSphereAABB.lowerBound.set(
+	        localSpherePos.x - sphereRadius,
+	        localSpherePos.y - sphereRadius,
+	        localSpherePos.z - sphereRadius
+	    );
+	    localSphereAABB.upperBound.set(
+	        localSpherePos.x + sphereRadius,
+	        localSpherePos.y + sphereRadius,
+	        localSpherePos.z + sphereRadius
+	    );
+
+	    trimeshShape.getTrianglesInAABB(localSphereAABB, triangles);
+	    //for (var i = 0; i < trimeshShape.indices.length / 3; i++) triangles.push(i); // All
+
+	    // Vertices
+	    var v = sphereTrimesh_v;
+	    var radiusSquared = sphereShape.radius * sphereShape.radius;
+	    for(var i=0; i<triangles.length; i++){
+	        for (var j = 0; j < 3; j++) {
+
+	            trimeshShape.getVertex(trimeshShape.indices[triangles[i] * 3 + j], v);
+
+	            // Check vertex overlap in sphere
+	            v.vsub(localSpherePos, relpos);
+
+	            if(relpos.norm2() <= radiusSquared){
+
+	                // Safe up
+	                v2.copy(v);
+	                Transform.pointToWorldFrame(trimeshPos, trimeshQuat, v2, v);
+
+	                v.vsub(spherePos, relpos);
+
+	                var r = this.createContactEquation(sphereBody,trimeshBody,sphereShape,trimeshShape);
+	                r.ni.copy(relpos);
+	                r.ni.normalize();
+
+	                // ri is the vector from sphere center to the sphere surface
+	                r.ri.copy(r.ni);
+	                r.ri.scale(sphereShape.radius, r.ri);
+	                r.ri.vadd(spherePos, r.ri);
+	                r.ri.vsub(sphereBody.position, r.ri);
+
+	                r.rj.copy(v);
+	                r.rj.vsub(trimeshBody.position, r.rj);
+
+	                // Store result
+	                this.result.push(r);
+	                this.createFrictionEquationsFromContact(r, this.frictionResult);
+	            }
+	        }
+	    }
+
+	    // Check all edges
+	    for(var i=0; i<triangles.length; i++){
+	        for (var j = 0; j < 3; j++) {
+
+	            trimeshShape.getVertex(trimeshShape.indices[triangles[i] * 3 + j], edgeVertexA);
+	            trimeshShape.getVertex(trimeshShape.indices[triangles[i] * 3 + ((j+1)%3)], edgeVertexB);
+	            edgeVertexB.vsub(edgeVertexA, edgeVector);
+
+	            // Project sphere position to the edge
+	            localSpherePos.vsub(edgeVertexB, tmp);
+	            var positionAlongEdgeB = tmp.dot(edgeVector);
+
+	            localSpherePos.vsub(edgeVertexA, tmp);
+	            var positionAlongEdgeA = tmp.dot(edgeVector);
+
+	            if(positionAlongEdgeA > 0 && positionAlongEdgeB < 0){
+
+	                // Now check the orthogonal distance from edge to sphere center
+	                localSpherePos.vsub(edgeVertexA, tmp);
+
+	                edgeVectorUnit.copy(edgeVector);
+	                edgeVectorUnit.normalize();
+	                positionAlongEdgeA = tmp.dot(edgeVectorUnit);
+
+	                edgeVectorUnit.scale(positionAlongEdgeA, tmp);
+	                tmp.vadd(edgeVertexA, tmp);
+
+	                // tmp is now the sphere center position projected to the edge, defined locally in the trimesh frame
+	                var dist = tmp.distanceTo(localSpherePos);
+	                if(dist < sphereShape.radius){
+	                    var r = this.createContactEquation(sphereBody, trimeshBody, sphereShape, trimeshShape);
+
+	                    tmp.vsub(localSpherePos, r.ni);
+	                    r.ni.normalize();
+	                    r.ni.scale(sphereShape.radius, r.ri);
+
+	                    Transform.pointToWorldFrame(trimeshPos, trimeshQuat, tmp, tmp);
+	                    tmp.vsub(trimeshBody.position, r.rj);
+
+	                    Transform.vectorToWorldFrame(trimeshQuat, r.ni, r.ni);
+	                    Transform.vectorToWorldFrame(trimeshQuat, r.ri, r.ri);
+
+	                    this.result.push(r);
+	                    this.createFrictionEquationsFromContact(r, this.frictionResult);
+	                }
+	            }
+	        }
+	    }
+
+	    // Triangle faces
+	    var va = sphereTrimesh_va;
+	    var vb = sphereTrimesh_vb;
+	    var vc = sphereTrimesh_vc;
+	    var normal = sphereTrimesh_normal;
+	    for(var i=0, N = triangles.length; i !== N; i++){
+	        trimeshShape.getTriangleVertices(triangles[i], va, vb, vc);
+	        trimeshShape.getNormal(triangles[i], normal);
+	        localSpherePos.vsub(va, tmp);
+	        var dist = tmp.dot(normal);
+	        normal.scale(dist, tmp);
+	        localSpherePos.vsub(tmp, tmp);
+
+	        // tmp is now the sphere position projected to the triangle plane
+	        dist = tmp.distanceTo(localSpherePos);
+	        if(Ray.pointInTriangle(tmp, va, vb, vc) && dist < sphereShape.radius){
+	            var r = this.createContactEquation(sphereBody, trimeshBody, sphereShape, trimeshShape);
+
+	            tmp.vsub(localSpherePos, r.ni);
+	            r.ni.normalize();
+	            r.ni.scale(sphereShape.radius, r.ri);
+
+	            Transform.pointToWorldFrame(trimeshPos, trimeshQuat, tmp, tmp);
+	            tmp.vsub(trimeshBody.position, r.rj);
+
+	            Transform.vectorToWorldFrame(trimeshQuat, r.ni, r.ni);
+	            Transform.vectorToWorldFrame(trimeshQuat, r.ri, r.ri);
+
+	            this.result.push(r);
+	            this.createFrictionEquationsFromContact(r, this.frictionResult);
+	        }
+	    }
+
+	    triangles.length = 0;
+	};
+
+	var point_on_plane_to_sphere = new Vec3();
+	var plane_to_sphere_ortho = new Vec3();
+
+	/**
+	 * @method spherePlane
+	 * @param  {Shape}      si
+	 * @param  {Shape}      sj
+	 * @param  {Vec3}       xi
+	 * @param  {Vec3}       xj
+	 * @param  {Quaternion} qi
+	 * @param  {Quaternion} qj
+	 * @param  {Body}       bi
+	 * @param  {Body}       bj
+	 */
+	Narrowphase.prototype[Shape.types.SPHERE | Shape.types.PLANE] =
+	Narrowphase.prototype.spherePlane = function(si,sj,xi,xj,qi,qj,bi,bj){
+	    // We will have one contact in this case
+	    var r = this.createContactEquation(bi,bj,si,sj);
+
+	    // Contact normal
+	    r.ni.set(0,0,1);
+	    qj.vmult(r.ni, r.ni);
+	    r.ni.negate(r.ni); // body i is the sphere, flip normal
+	    r.ni.normalize(); // Needed?
+
+	    // Vector from sphere center to contact point
+	    r.ni.mult(si.radius, r.ri);
+
+	    // Project down sphere on plane
+	    xi.vsub(xj, point_on_plane_to_sphere);
+	    r.ni.mult(r.ni.dot(point_on_plane_to_sphere), plane_to_sphere_ortho);
+	    point_on_plane_to_sphere.vsub(plane_to_sphere_ortho,r.rj); // The sphere position projected to plane
+
+	    if(-point_on_plane_to_sphere.dot(r.ni) <= si.radius){
+
+	        // Make it relative to the body
+	        var ri = r.ri;
+	        var rj = r.rj;
+	        ri.vadd(xi, ri);
+	        ri.vsub(bi.position, ri);
+	        rj.vadd(xj, rj);
+	        rj.vsub(bj.position, rj);
+
+	        this.result.push(r);
+	        this.createFrictionEquationsFromContact(r, this.frictionResult);
+	    }
+	};
+
+	// See http://bulletphysics.com/Bullet/BulletFull/SphereTriangleDetector_8cpp_source.html
+	var pointInPolygon_edge = new Vec3();
+	var pointInPolygon_edge_x_normal = new Vec3();
+	var pointInPolygon_vtp = new Vec3();
+	function pointInPolygon(verts, normal, p){
+	    var positiveResult = null;
+	    var N = verts.length;
+	    for(var i=0; i!==N; i++){
+	        var v = verts[i];
+
+	        // Get edge to the next vertex
+	        var edge = pointInPolygon_edge;
+	        verts[(i+1) % (N)].vsub(v,edge);
+
+	        // Get cross product between polygon normal and the edge
+	        var edge_x_normal = pointInPolygon_edge_x_normal;
+	        //var edge_x_normal = new Vec3();
+	        edge.cross(normal,edge_x_normal);
+
+	        // Get vector between point and current vertex
+	        var vertex_to_p = pointInPolygon_vtp;
+	        p.vsub(v,vertex_to_p);
+
+	        // This dot product determines which side of the edge the point is
+	        var r = edge_x_normal.dot(vertex_to_p);
+
+	        // If all such dot products have same sign, we are inside the polygon.
+	        if(positiveResult===null || (r>0 && positiveResult===true) || (r<=0 && positiveResult===false)){
+	            if(positiveResult===null){
+	                positiveResult = r>0;
+	            }
+	            continue;
+	        } else {
+	            return false; // Encountered some other sign. Exit.
+	        }
+	    }
+
+	    // If we got here, all dot products were of the same sign.
+	    return true;
+	}
+
+	var box_to_sphere = new Vec3();
+	var sphereBox_ns = new Vec3();
+	var sphereBox_ns1 = new Vec3();
+	var sphereBox_ns2 = new Vec3();
+	var sphereBox_sides = [new Vec3(),new Vec3(),new Vec3(),new Vec3(),new Vec3(),new Vec3()];
+	var sphereBox_sphere_to_corner = new Vec3();
+	var sphereBox_side_ns = new Vec3();
+	var sphereBox_side_ns1 = new Vec3();
+	var sphereBox_side_ns2 = new Vec3();
+
+	/**
+	 * @method sphereBox
+	 * @param  {Shape}      si
+	 * @param  {Shape}      sj
+	 * @param  {Vec3}       xi
+	 * @param  {Vec3}       xj
+	 * @param  {Quaternion} qi
+	 * @param  {Quaternion} qj
+	 * @param  {Body}       bi
+	 * @param  {Body}       bj
+	 */
+	Narrowphase.prototype[Shape.types.SPHERE | Shape.types.BOX] =
+	Narrowphase.prototype.sphereBox = function(si,sj,xi,xj,qi,qj,bi,bj){
+	    var v3pool = this.v3pool;
+
+	    // we refer to the box as body j
+	    var sides = sphereBox_sides;
+	    xi.vsub(xj,box_to_sphere);
+	    sj.getSideNormals(sides,qj);
+	    var R =     si.radius;
+	    var penetrating_sides = [];
+
+	    // Check side (plane) intersections
+	    var found = false;
+
+	    // Store the resulting side penetration info
+	    var side_ns = sphereBox_side_ns;
+	    var side_ns1 = sphereBox_side_ns1;
+	    var side_ns2 = sphereBox_side_ns2;
+	    var side_h = null;
+	    var side_penetrations = 0;
+	    var side_dot1 = 0;
+	    var side_dot2 = 0;
+	    var side_distance = null;
+	    for(var idx=0,nsides=sides.length; idx!==nsides && found===false; idx++){
+	        // Get the plane side normal (ns)
+	        var ns = sphereBox_ns;
+	        ns.copy(sides[idx]);
+
+	        var h = ns.norm();
+	        ns.normalize();
+
+	        // The normal/distance dot product tells which side of the plane we are
+	        var dot = box_to_sphere.dot(ns);
+
+	        if(dot<h+R && dot>0){
+	            // Intersects plane. Now check the other two dimensions
+	            var ns1 = sphereBox_ns1;
+	            var ns2 = sphereBox_ns2;
+	            ns1.copy(sides[(idx+1)%3]);
+	            ns2.copy(sides[(idx+2)%3]);
+	            var h1 = ns1.norm();
+	            var h2 = ns2.norm();
+	            ns1.normalize();
+	            ns2.normalize();
+	            var dot1 = box_to_sphere.dot(ns1);
+	            var dot2 = box_to_sphere.dot(ns2);
+	            if(dot1<h1 && dot1>-h1 && dot2<h2 && dot2>-h2){
+	                var dist = Math.abs(dot-h-R);
+	                if(side_distance===null || dist < side_distance){
+	                    side_distance = dist;
+	                    side_dot1 = dot1;
+	                    side_dot2 = dot2;
+	                    side_h = h;
+	                    side_ns.copy(ns);
+	                    side_ns1.copy(ns1);
+	                    side_ns2.copy(ns2);
+	                    side_penetrations++;
+	                }
+	            }
+	        }
+	    }
+	    if(side_penetrations){
+	        found = true;
+	        var r = this.createContactEquation(bi,bj,si,sj);
+	        side_ns.mult(-R,r.ri); // Sphere r
+	        r.ni.copy(side_ns);
+	        r.ni.negate(r.ni); // Normal should be out of sphere
+	        side_ns.mult(side_h,side_ns);
+	        side_ns1.mult(side_dot1,side_ns1);
+	        side_ns.vadd(side_ns1,side_ns);
+	        side_ns2.mult(side_dot2,side_ns2);
+	        side_ns.vadd(side_ns2,r.rj);
+
+	        // Make relative to bodies
+	        r.ri.vadd(xi, r.ri);
+	        r.ri.vsub(bi.position, r.ri);
+	        r.rj.vadd(xj, r.rj);
+	        r.rj.vsub(bj.position, r.rj);
+
+	        this.result.push(r);
+	        this.createFrictionEquationsFromContact(r, this.frictionResult);
+	    }
+
+	    // Check corners
+	    var rj = v3pool.get();
+	    var sphere_to_corner = sphereBox_sphere_to_corner;
+	    for(var j=0; j!==2 && !found; j++){
+	        for(var k=0; k!==2 && !found; k++){
+	            for(var l=0; l!==2 && !found; l++){
+	                rj.set(0,0,0);
+	                if(j){
+	                    rj.vadd(sides[0],rj);
+	                } else {
+	                    rj.vsub(sides[0],rj);
+	                }
+	                if(k){
+	                    rj.vadd(sides[1],rj);
+	                } else {
+	                    rj.vsub(sides[1],rj);
+	                }
+	                if(l){
+	                    rj.vadd(sides[2],rj);
+	                } else {
+	                    rj.vsub(sides[2],rj);
+	                }
+
+	                // World position of corner
+	                xj.vadd(rj,sphere_to_corner);
+	                sphere_to_corner.vsub(xi,sphere_to_corner);
+
+	                if(sphere_to_corner.norm2() < R*R){
+	                    found = true;
+	                    var r = this.createContactEquation(bi,bj,si,sj);
+	                    r.ri.copy(sphere_to_corner);
+	                    r.ri.normalize();
+	                    r.ni.copy(r.ri);
+	                    r.ri.mult(R,r.ri);
+	                    r.rj.copy(rj);
+
+	                    // Make relative to bodies
+	                    r.ri.vadd(xi, r.ri);
+	                    r.ri.vsub(bi.position, r.ri);
+	                    r.rj.vadd(xj, r.rj);
+	                    r.rj.vsub(bj.position, r.rj);
+
+	                    this.result.push(r);
+	                    this.createFrictionEquationsFromContact(r, this.frictionResult);
+	                }
+	            }
+	        }
+	    }
+	    v3pool.release(rj);
+	    rj = null;
+
+	    // Check edges
+	    var edgeTangent = v3pool.get();
+	    var edgeCenter = v3pool.get();
+	    var r = v3pool.get(); // r = edge center to sphere center
+	    var orthogonal = v3pool.get();
+	    var dist = v3pool.get();
+	    var Nsides = sides.length;
+	    for(var j=0; j!==Nsides && !found; j++){
+	        for(var k=0; k!==Nsides && !found; k++){
+	            if(j%3 !== k%3){
+	                // Get edge tangent
+	                sides[k].cross(sides[j],edgeTangent);
+	                edgeTangent.normalize();
+	                sides[j].vadd(sides[k], edgeCenter);
+	                r.copy(xi);
+	                r.vsub(edgeCenter,r);
+	                r.vsub(xj,r);
+	                var orthonorm = r.dot(edgeTangent); // distance from edge center to sphere center in the tangent direction
+	                edgeTangent.mult(orthonorm,orthogonal); // Vector from edge center to sphere center in the tangent direction
+
+	                // Find the third side orthogonal to this one
+	                var l = 0;
+	                while(l===j%3 || l===k%3){
+	                    l++;
+	                }
+
+	                // vec from edge center to sphere projected to the plane orthogonal to the edge tangent
+	                dist.copy(xi);
+	                dist.vsub(orthogonal,dist);
+	                dist.vsub(edgeCenter,dist);
+	                dist.vsub(xj,dist);
+
+	                // Distances in tangent direction and distance in the plane orthogonal to it
+	                var tdist = Math.abs(orthonorm);
+	                var ndist = dist.norm();
+
+	                if(tdist < sides[l].norm() && ndist<R){
+	                    found = true;
+	                    var res = this.createContactEquation(bi,bj,si,sj);
+	                    edgeCenter.vadd(orthogonal,res.rj); // box rj
+	                    res.rj.copy(res.rj);
+	                    dist.negate(res.ni);
+	                    res.ni.normalize();
+
+	                    res.ri.copy(res.rj);
+	                    res.ri.vadd(xj,res.ri);
+	                    res.ri.vsub(xi,res.ri);
+	                    res.ri.normalize();
+	                    res.ri.mult(R,res.ri);
+
+	                    // Make relative to bodies
+	                    res.ri.vadd(xi, res.ri);
+	                    res.ri.vsub(bi.position, res.ri);
+	                    res.rj.vadd(xj, res.rj);
+	                    res.rj.vsub(bj.position, res.rj);
+
+	                    this.result.push(res);
+	                    this.createFrictionEquationsFromContact(res, this.frictionResult);
+	                }
+	            }
+	        }
+	    }
+	    v3pool.release(edgeTangent,edgeCenter,r,orthogonal,dist);
+	};
+
+	var convex_to_sphere = new Vec3();
+	var sphereConvex_edge = new Vec3();
+	var sphereConvex_edgeUnit = new Vec3();
+	var sphereConvex_sphereToCorner = new Vec3();
+	var sphereConvex_worldCorner = new Vec3();
+	var sphereConvex_worldNormal = new Vec3();
+	var sphereConvex_worldPoint = new Vec3();
+	var sphereConvex_worldSpherePointClosestToPlane = new Vec3();
+	var sphereConvex_penetrationVec = new Vec3();
+	var sphereConvex_sphereToWorldPoint = new Vec3();
+
+	/**
+	 * @method sphereConvex
+	 * @param  {Shape}      si
+	 * @param  {Shape}      sj
+	 * @param  {Vec3}       xi
+	 * @param  {Vec3}       xj
+	 * @param  {Quaternion} qi
+	 * @param  {Quaternion} qj
+	 * @param  {Body}       bi
+	 * @param  {Body}       bj
+	 */
+	Narrowphase.prototype[Shape.types.SPHERE | Shape.types.CONVEXPOLYHEDRON] =
+	Narrowphase.prototype.sphereConvex = function(si,sj,xi,xj,qi,qj,bi,bj){
+	    var v3pool = this.v3pool;
+	    xi.vsub(xj,convex_to_sphere);
+	    var normals = sj.faceNormals;
+	    var faces = sj.faces;
+	    var verts = sj.vertices;
+	    var R =     si.radius;
+	    var penetrating_sides = [];
+
+	    // if(convex_to_sphere.norm2() > si.boundingSphereRadius + sj.boundingSphereRadius){
+	    //     return;
+	    // }
+
+	    // Check corners
+	    for(var i=0; i!==verts.length; i++){
+	        var v = verts[i];
+
+	        // World position of corner
+	        var worldCorner = sphereConvex_worldCorner;
+	        qj.vmult(v,worldCorner);
+	        xj.vadd(worldCorner,worldCorner);
+	        var sphere_to_corner = sphereConvex_sphereToCorner;
+	        worldCorner.vsub(xi, sphere_to_corner);
+	        if(sphere_to_corner.norm2() < R * R){
+	            found = true;
+	            var r = this.createContactEquation(bi,bj,si,sj);
+	            r.ri.copy(sphere_to_corner);
+	            r.ri.normalize();
+	            r.ni.copy(r.ri);
+	            r.ri.mult(R,r.ri);
+	            worldCorner.vsub(xj,r.rj);
+
+	            // Should be relative to the body.
+	            r.ri.vadd(xi, r.ri);
+	            r.ri.vsub(bi.position, r.ri);
+
+	            // Should be relative to the body.
+	            r.rj.vadd(xj, r.rj);
+	            r.rj.vsub(bj.position, r.rj);
+
+	            this.result.push(r);
+	            this.createFrictionEquationsFromContact(r, this.frictionResult);
+	            return;
+	        }
+	    }
+
+	    // Check side (plane) intersections
+	    var found = false;
+	    for(var i=0, nfaces=faces.length; i!==nfaces && found===false; i++){
+	        var normal = normals[i];
+	        var face = faces[i];
+
+	        // Get world-transformed normal of the face
+	        var worldNormal = sphereConvex_worldNormal;
+	        qj.vmult(normal,worldNormal);
+
+	        // Get a world vertex from the face
+	        var worldPoint = sphereConvex_worldPoint;
+	        qj.vmult(verts[face[0]],worldPoint);
+	        worldPoint.vadd(xj,worldPoint);
+
+	        // Get a point on the sphere, closest to the face normal
+	        var worldSpherePointClosestToPlane = sphereConvex_worldSpherePointClosestToPlane;
+	        worldNormal.mult(-R, worldSpherePointClosestToPlane);
+	        xi.vadd(worldSpherePointClosestToPlane, worldSpherePointClosestToPlane);
+
+	        // Vector from a face point to the closest point on the sphere
+	        var penetrationVec = sphereConvex_penetrationVec;
+	        worldSpherePointClosestToPlane.vsub(worldPoint,penetrationVec);
+
+	        // The penetration. Negative value means overlap.
+	        var penetration = penetrationVec.dot(worldNormal);
+
+	        var worldPointToSphere = sphereConvex_sphereToWorldPoint;
+	        xi.vsub(worldPoint, worldPointToSphere);
+
+	        if(penetration < 0 && worldPointToSphere.dot(worldNormal)>0){
+	            // Intersects plane. Now check if the sphere is inside the face polygon
+	            var faceVerts = []; // Face vertices, in world coords
+	            for(var j=0, Nverts=face.length; j!==Nverts; j++){
+	                var worldVertex = v3pool.get();
+	                qj.vmult(verts[face[j]], worldVertex);
+	                xj.vadd(worldVertex,worldVertex);
+	                faceVerts.push(worldVertex);
+	            }
+
+	            if(pointInPolygon(faceVerts,worldNormal,xi)){ // Is the sphere center in the face polygon?
+	                found = true;
+	                var r = this.createContactEquation(bi,bj,si,sj);
+
+	                worldNormal.mult(-R, r.ri); // Contact offset, from sphere center to contact
+	                worldNormal.negate(r.ni); // Normal pointing out of sphere
+
+	                var penetrationVec2 = v3pool.get();
+	                worldNormal.mult(-penetration, penetrationVec2);
+	                var penetrationSpherePoint = v3pool.get();
+	                worldNormal.mult(-R, penetrationSpherePoint);
+
+	                //xi.vsub(xj).vadd(penetrationSpherePoint).vadd(penetrationVec2 , r.rj);
+	                xi.vsub(xj,r.rj);
+	                r.rj.vadd(penetrationSpherePoint,r.rj);
+	                r.rj.vadd(penetrationVec2 , r.rj);
+
+	                // Should be relative to the body.
+	                r.rj.vadd(xj, r.rj);
+	                r.rj.vsub(bj.position, r.rj);
+
+	                // Should be relative to the body.
+	                r.ri.vadd(xi, r.ri);
+	                r.ri.vsub(bi.position, r.ri);
+
+	                v3pool.release(penetrationVec2);
+	                v3pool.release(penetrationSpherePoint);
+
+	                this.result.push(r);
+	                this.createFrictionEquationsFromContact(r, this.frictionResult);
+
+	                // Release world vertices
+	                for(var j=0, Nfaceverts=faceVerts.length; j!==Nfaceverts; j++){
+	                    v3pool.release(faceVerts[j]);
+	                }
+
+	                return; // We only expect *one* face contact
+	            } else {
+	                // Edge?
+	                for(var j=0; j!==face.length; j++){
+
+	                    // Get two world transformed vertices
+	                    var v1 = v3pool.get();
+	                    var v2 = v3pool.get();
+	                    qj.vmult(verts[face[(j+1)%face.length]], v1);
+	                    qj.vmult(verts[face[(j+2)%face.length]], v2);
+	                    xj.vadd(v1, v1);
+	                    xj.vadd(v2, v2);
+
+	                    // Construct edge vector
+	                    var edge = sphereConvex_edge;
+	                    v2.vsub(v1,edge);
+
+	                    // Construct the same vector, but normalized
+	                    var edgeUnit = sphereConvex_edgeUnit;
+	                    edge.unit(edgeUnit);
+
+	                    // p is xi projected onto the edge
+	                    var p = v3pool.get();
+	                    var v1_to_xi = v3pool.get();
+	                    xi.vsub(v1, v1_to_xi);
+	                    var dot = v1_to_xi.dot(edgeUnit);
+	                    edgeUnit.mult(dot, p);
+	                    p.vadd(v1, p);
+
+	                    // Compute a vector from p to the center of the sphere
+	                    var xi_to_p = v3pool.get();
+	                    p.vsub(xi, xi_to_p);
+
+	                    // Collision if the edge-sphere distance is less than the radius
+	                    // AND if p is in between v1 and v2
+	                    if(dot > 0 && dot*dot<edge.norm2() && xi_to_p.norm2() < R*R){ // Collision if the edge-sphere distance is less than the radius
+	                        // Edge contact!
+	                        var r = this.createContactEquation(bi,bj,si,sj);
+	                        p.vsub(xj,r.rj);
+
+	                        p.vsub(xi,r.ni);
+	                        r.ni.normalize();
+
+	                        r.ni.mult(R,r.ri);
+
+	                        // Should be relative to the body.
+	                        r.rj.vadd(xj, r.rj);
+	                        r.rj.vsub(bj.position, r.rj);
+
+	                        // Should be relative to the body.
+	                        r.ri.vadd(xi, r.ri);
+	                        r.ri.vsub(bi.position, r.ri);
+
+	                        this.result.push(r);
+	                        this.createFrictionEquationsFromContact(r, this.frictionResult);
+
+	                        // Release world vertices
+	                        for(var j=0, Nfaceverts=faceVerts.length; j!==Nfaceverts; j++){
+	                            v3pool.release(faceVerts[j]);
+	                        }
+
+	                        v3pool.release(v1);
+	                        v3pool.release(v2);
+	                        v3pool.release(p);
+	                        v3pool.release(xi_to_p);
+	                        v3pool.release(v1_to_xi);
+
+	                        return;
+	                    }
+
+	                    v3pool.release(v1);
+	                    v3pool.release(v2);
+	                    v3pool.release(p);
+	                    v3pool.release(xi_to_p);
+	                    v3pool.release(v1_to_xi);
+	                }
+	            }
+
+	            // Release world vertices
+	            for(var j=0, Nfaceverts=faceVerts.length; j!==Nfaceverts; j++){
+	                v3pool.release(faceVerts[j]);
+	            }
+	        }
+	    }
+	};
+
+	var planeBox_normal = new Vec3();
+	var plane_to_corner = new Vec3();
+
+	/**
+	 * @method planeBox
+	 * @param  {Array}      result
+	 * @param  {Shape}      si
+	 * @param  {Shape}      sj
+	 * @param  {Vec3}       xi
+	 * @param  {Vec3}       xj
+	 * @param  {Quaternion} qi
+	 * @param  {Quaternion} qj
+	 * @param  {Body}       bi
+	 * @param  {Body}       bj
+	 */
+	Narrowphase.prototype[Shape.types.PLANE | Shape.types.BOX] =
+	Narrowphase.prototype.planeBox = function(si,sj,xi,xj,qi,qj,bi,bj){
+	    sj.convexPolyhedronRepresentation.material = sj.material;
+	    sj.convexPolyhedronRepresentation.collisionResponse = sj.collisionResponse;
+	    this.planeConvex(si,sj.convexPolyhedronRepresentation,xi,xj,qi,qj,bi,bj);
+	};
+
+	var planeConvex_v = new Vec3();
+	var planeConvex_normal = new Vec3();
+	var planeConvex_relpos = new Vec3();
+	var planeConvex_projected = new Vec3();
+
+	/**
+	 * @method planeConvex
+	 * @param  {Shape}      si
+	 * @param  {Shape}      sj
+	 * @param  {Vec3}       xi
+	 * @param  {Vec3}       xj
+	 * @param  {Quaternion} qi
+	 * @param  {Quaternion} qj
+	 * @param  {Body}       bi
+	 * @param  {Body}       bj
+	 */
+	Narrowphase.prototype[Shape.types.PLANE | Shape.types.CONVEXPOLYHEDRON] =
+	Narrowphase.prototype.planeConvex = function(
+	    planeShape,
+	    convexShape,
+	    planePosition,
+	    convexPosition,
+	    planeQuat,
+	    convexQuat,
+	    planeBody,
+	    convexBody
+	){
+	    // Simply return the points behind the plane.
+	    var worldVertex = planeConvex_v,
+	        worldNormal = planeConvex_normal;
+	    worldNormal.set(0,0,1);
+	    planeQuat.vmult(worldNormal,worldNormal); // Turn normal according to plane orientation
+
+	    var numContacts = 0;
+	    var relpos = planeConvex_relpos;
+	    for(var i = 0; i !== convexShape.vertices.length; i++){
+
+	        // Get world convex vertex
+	        worldVertex.copy(convexShape.vertices[i]);
+	        convexQuat.vmult(worldVertex, worldVertex);
+	        convexPosition.vadd(worldVertex, worldVertex);
+	        worldVertex.vsub(planePosition, relpos);
+
+	        var dot = worldNormal.dot(relpos);
+	        if(dot <= 0.0){
+
+	            var r = this.createContactEquation(planeBody, convexBody, planeShape, convexShape);
+
+	            // Get vertex position projected on plane
+	            var projected = planeConvex_projected;
+	            worldNormal.mult(worldNormal.dot(relpos),projected);
+	            worldVertex.vsub(projected, projected);
+	            projected.vsub(planePosition, r.ri); // From plane to vertex projected on plane
+
+	            r.ni.copy(worldNormal); // Contact normal is the plane normal out from plane
+
+	            // rj is now just the vector from the convex center to the vertex
+	            worldVertex.vsub(convexPosition, r.rj);
+
+	            // Make it relative to the body
+	            r.ri.vadd(planePosition, r.ri);
+	            r.ri.vsub(planeBody.position, r.ri);
+	            r.rj.vadd(convexPosition, r.rj);
+	            r.rj.vsub(convexBody.position, r.rj);
+
+	            this.result.push(r);
+	            numContacts++;
+	            if(!this.enableFrictionReduction){
+	                this.createFrictionEquationsFromContact(r, this.frictionResult);
+	            }
+	        }
+	    }
+
+	    if(this.enableFrictionReduction && numContacts){
+	        this.createFrictionFromAverage(numContacts);
+	    }
+	};
+
+	var convexConvex_sepAxis = new Vec3();
+	var convexConvex_q = new Vec3();
+
+	/**
+	 * @method convexConvex
+	 * @param  {Shape}      si
+	 * @param  {Shape}      sj
+	 * @param  {Vec3}       xi
+	 * @param  {Vec3}       xj
+	 * @param  {Quaternion} qi
+	 * @param  {Quaternion} qj
+	 * @param  {Body}       bi
+	 * @param  {Body}       bj
+	 */
+	Narrowphase.prototype[Shape.types.CONVEXPOLYHEDRON] =
+	Narrowphase.prototype.convexConvex = function(si,sj,xi,xj,qi,qj,bi,bj,rsi,rsj,faceListA,faceListB){
+	    var sepAxis = convexConvex_sepAxis;
+
+	    if(xi.distanceTo(xj) > si.boundingSphereRadius + sj.boundingSphereRadius){
+	        return;
+	    }
+
+	    if(si.findSeparatingAxis(sj,xi,qi,xj,qj,sepAxis,faceListA,faceListB)){
+	        var res = [];
+	        var q = convexConvex_q;
+	        si.clipAgainstHull(xi,qi,sj,xj,qj,sepAxis,-100,100,res);
+	        var numContacts = 0;
+	        for(var j = 0; j !== res.length; j++){
+	            var r = this.createContactEquation(bi,bj,si,sj,rsi,rsj),
+	                ri = r.ri,
+	                rj = r.rj;
+	            sepAxis.negate(r.ni);
+	            res[j].normal.negate(q);
+	            q.mult(res[j].depth, q);
+	            res[j].point.vadd(q, ri);
+	            rj.copy(res[j].point);
+
+	            // Contact points are in world coordinates. Transform back to relative
+	            ri.vsub(xi,ri);
+	            rj.vsub(xj,rj);
+
+	            // Make relative to bodies
+	            ri.vadd(xi, ri);
+	            ri.vsub(bi.position, ri);
+	            rj.vadd(xj, rj);
+	            rj.vsub(bj.position, rj);
+
+	            this.result.push(r);
+	            numContacts++;
+	            if(!this.enableFrictionReduction){
+	                this.createFrictionEquationsFromContact(r, this.frictionResult);
+	            }
+	        }
+	        if(this.enableFrictionReduction && numContacts){
+	            this.createFrictionFromAverage(numContacts);
+	        }
+	    }
+	};
+
+
+	/**
+	 * @method convexTrimesh
+	 * @param  {Array}      result
+	 * @param  {Shape}      si
+	 * @param  {Shape}      sj
+	 * @param  {Vec3}       xi
+	 * @param  {Vec3}       xj
+	 * @param  {Quaternion} qi
+	 * @param  {Quaternion} qj
+	 * @param  {Body}       bi
+	 * @param  {Body}       bj
+	 */
+	// Narrowphase.prototype[Shape.types.CONVEXPOLYHEDRON | Shape.types.TRIMESH] =
+	// Narrowphase.prototype.convexTrimesh = function(si,sj,xi,xj,qi,qj,bi,bj,rsi,rsj,faceListA,faceListB){
+	//     var sepAxis = convexConvex_sepAxis;
+
+	//     if(xi.distanceTo(xj) > si.boundingSphereRadius + sj.boundingSphereRadius){
+	//         return;
+	//     }
+
+	//     // Construct a temp hull for each triangle
+	//     var hullB = new ConvexPolyhedron();
+
+	//     hullB.faces = [[0,1,2]];
+	//     var va = new Vec3();
+	//     var vb = new Vec3();
+	//     var vc = new Vec3();
+	//     hullB.vertices = [
+	//         va,
+	//         vb,
+	//         vc
+	//     ];
+
+	//     for (var i = 0; i < sj.indices.length / 3; i++) {
+
+	//         var triangleNormal = new Vec3();
+	//         sj.getNormal(i, triangleNormal);
+	//         hullB.faceNormals = [triangleNormal];
+
+	//         sj.getTriangleVertices(i, va, vb, vc);
+
+	//         var d = si.testSepAxis(triangleNormal, hullB, xi, qi, xj, qj);
+	//         if(!d){
+	//             triangleNormal.scale(-1, triangleNormal);
+	//             d = si.testSepAxis(triangleNormal, hullB, xi, qi, xj, qj);
+
+	//             if(!d){
+	//                 continue;
+	//             }
+	//         }
+
+	//         var res = [];
+	//         var q = convexConvex_q;
+	//         si.clipAgainstHull(xi,qi,hullB,xj,qj,triangleNormal,-100,100,res);
+	//         for(var j = 0; j !== res.length; j++){
+	//             var r = this.createContactEquation(bi,bj,si,sj,rsi,rsj),
+	//                 ri = r.ri,
+	//                 rj = r.rj;
+	//             r.ni.copy(triangleNormal);
+	//             r.ni.negate(r.ni);
+	//             res[j].normal.negate(q);
+	//             q.mult(res[j].depth, q);
+	//             res[j].point.vadd(q, ri);
+	//             rj.copy(res[j].point);
+
+	//             // Contact points are in world coordinates. Transform back to relative
+	//             ri.vsub(xi,ri);
+	//             rj.vsub(xj,rj);
+
+	//             // Make relative to bodies
+	//             ri.vadd(xi, ri);
+	//             ri.vsub(bi.position, ri);
+	//             rj.vadd(xj, rj);
+	//             rj.vsub(bj.position, rj);
+
+	//             result.push(r);
+	//         }
+	//     }
+	// };
+
+	var particlePlane_normal = new Vec3();
+	var particlePlane_relpos = new Vec3();
+	var particlePlane_projected = new Vec3();
+
+	/**
+	 * @method particlePlane
+	 * @param  {Array}      result
+	 * @param  {Shape}      si
+	 * @param  {Shape}      sj
+	 * @param  {Vec3}       xi
+	 * @param  {Vec3}       xj
+	 * @param  {Quaternion} qi
+	 * @param  {Quaternion} qj
+	 * @param  {Body}       bi
+	 * @param  {Body}       bj
+	 */
+	Narrowphase.prototype[Shape.types.PLANE | Shape.types.PARTICLE] =
+	Narrowphase.prototype.planeParticle = function(sj,si,xj,xi,qj,qi,bj,bi){
+	    var normal = particlePlane_normal;
+	    normal.set(0,0,1);
+	    bj.quaternion.vmult(normal,normal); // Turn normal according to plane orientation
+	    var relpos = particlePlane_relpos;
+	    xi.vsub(bj.position,relpos);
+	    var dot = normal.dot(relpos);
+	    if(dot <= 0.0){
+	        var r = this.createContactEquation(bi,bj,si,sj);
+	        r.ni.copy(normal); // Contact normal is the plane normal
+	        r.ni.negate(r.ni);
+	        r.ri.set(0,0,0); // Center of particle
+
+	        // Get particle position projected on plane
+	        var projected = particlePlane_projected;
+	        normal.mult(normal.dot(xi),projected);
+	        xi.vsub(projected,projected);
+	        //projected.vadd(bj.position,projected);
+
+	        // rj is now the projected world position minus plane position
+	        r.rj.copy(projected);
+	        this.result.push(r);
+	        this.createFrictionEquationsFromContact(r, this.frictionResult);
+	    }
+	};
+
+	var particleSphere_normal = new Vec3();
+
+	/**
+	 * @method particleSphere
+	 * @param  {Array}      result
+	 * @param  {Shape}      si
+	 * @param  {Shape}      sj
+	 * @param  {Vec3}       xi
+	 * @param  {Vec3}       xj
+	 * @param  {Quaternion} qi
+	 * @param  {Quaternion} qj
+	 * @param  {Body}       bi
+	 * @param  {Body}       bj
+	 */
+	Narrowphase.prototype[Shape.types.PARTICLE | Shape.types.SPHERE] =
+	Narrowphase.prototype.sphereParticle = function(sj,si,xj,xi,qj,qi,bj,bi){
+	    // The normal is the unit vector from sphere center to particle center
+	    var normal = particleSphere_normal;
+	    normal.set(0,0,1);
+	    xi.vsub(xj,normal);
+	    var lengthSquared = normal.norm2();
+
+	    if(lengthSquared <= sj.radius * sj.radius){
+	        var r = this.createContactEquation(bi,bj,si,sj);
+	        normal.normalize();
+	        r.rj.copy(normal);
+	        r.rj.mult(sj.radius,r.rj);
+	        r.ni.copy(normal); // Contact normal
+	        r.ni.negate(r.ni);
+	        r.ri.set(0,0,0); // Center of particle
+	        this.result.push(r);
+	        this.createFrictionEquationsFromContact(r, this.frictionResult);
+	    }
+	};
+
+	// WIP
+	var cqj = new Quaternion();
+	var convexParticle_local = new Vec3();
+	var convexParticle_normal = new Vec3();
+	var convexParticle_penetratedFaceNormal = new Vec3();
+	var convexParticle_vertexToParticle = new Vec3();
+	var convexParticle_worldPenetrationVec = new Vec3();
+
+	/**
+	 * @method convexParticle
+	 * @param  {Array}      result
+	 * @param  {Shape}      si
+	 * @param  {Shape}      sj
+	 * @param  {Vec3}       xi
+	 * @param  {Vec3}       xj
+	 * @param  {Quaternion} qi
+	 * @param  {Quaternion} qj
+	 * @param  {Body}       bi
+	 * @param  {Body}       bj
+	 */
+	Narrowphase.prototype[Shape.types.PARTICLE | Shape.types.CONVEXPOLYHEDRON] =
+	Narrowphase.prototype.convexParticle = function(sj,si,xj,xi,qj,qi,bj,bi){
+	    var penetratedFaceIndex = -1;
+	    var penetratedFaceNormal = convexParticle_penetratedFaceNormal;
+	    var worldPenetrationVec = convexParticle_worldPenetrationVec;
+	    var minPenetration = null;
+	    var numDetectedFaces = 0;
+
+	    // Convert particle position xi to local coords in the convex
+	    var local = convexParticle_local;
+	    local.copy(xi);
+	    local.vsub(xj,local); // Convert position to relative the convex origin
+	    qj.conjugate(cqj);
+	    cqj.vmult(local,local);
+
+	    if(sj.pointIsInside(local)){
+
+	        if(sj.worldVerticesNeedsUpdate){
+	            sj.computeWorldVertices(xj,qj);
+	        }
+	        if(sj.worldFaceNormalsNeedsUpdate){
+	            sj.computeWorldFaceNormals(qj);
+	        }
+
+	        // For each world polygon in the polyhedra
+	        for(var i=0,nfaces=sj.faces.length; i!==nfaces; i++){
+
+	            // Construct world face vertices
+	            var verts = [ sj.worldVertices[ sj.faces[i][0] ] ];
+	            var normal = sj.worldFaceNormals[i];
+
+	            // Check how much the particle penetrates the polygon plane.
+	            xi.vsub(verts[0],convexParticle_vertexToParticle);
+	            var penetration = -normal.dot(convexParticle_vertexToParticle);
+	            if(minPenetration===null || Math.abs(penetration)<Math.abs(minPenetration)){
+	                minPenetration = penetration;
+	                penetratedFaceIndex = i;
+	                penetratedFaceNormal.copy(normal);
+	                numDetectedFaces++;
+	            }
+	        }
+
+	        if(penetratedFaceIndex!==-1){
+	            // Setup contact
+	            var r = this.createContactEquation(bi,bj,si,sj);
+	            penetratedFaceNormal.mult(minPenetration, worldPenetrationVec);
+
+	            // rj is the particle position projected to the face
+	            worldPenetrationVec.vadd(xi,worldPenetrationVec);
+	            worldPenetrationVec.vsub(xj,worldPenetrationVec);
+	            r.rj.copy(worldPenetrationVec);
+	            //var projectedToFace = xi.vsub(xj).vadd(worldPenetrationVec);
+	            //projectedToFace.copy(r.rj);
+
+	            //qj.vmult(r.rj,r.rj);
+	            penetratedFaceNormal.negate( r.ni ); // Contact normal
+	            r.ri.set(0,0,0); // Center of particle
+
+	            var ri = r.ri,
+	                rj = r.rj;
+
+	            // Make relative to bodies
+	            ri.vadd(xi, ri);
+	            ri.vsub(bi.position, ri);
+	            rj.vadd(xj, rj);
+	            rj.vsub(bj.position, rj);
+
+	            this.result.push(r);
+	            this.createFrictionEquationsFromContact(r, this.frictionResult);
+	        } else {
+	            console.warn("Point found inside convex, but did not find penetrating face!");
+	        }
+	    }
+	};
+
+	Narrowphase.prototype[Shape.types.BOX | Shape.types.HEIGHTFIELD] =
+	Narrowphase.prototype.boxHeightfield = function (si,sj,xi,xj,qi,qj,bi,bj){
+	    si.convexPolyhedronRepresentation.material = si.material;
+	    si.convexPolyhedronRepresentation.collisionResponse = si.collisionResponse;
+	    this.convexHeightfield(si.convexPolyhedronRepresentation,sj,xi,xj,qi,qj,bi,bj);
+	};
+
+	var convexHeightfield_tmp1 = new Vec3();
+	var convexHeightfield_tmp2 = new Vec3();
+	var convexHeightfield_faceList = [0];
+
+	/**
+	 * @method convexHeightfield
+	 */
+	Narrowphase.prototype[Shape.types.CONVEXPOLYHEDRON | Shape.types.HEIGHTFIELD] =
+	Narrowphase.prototype.convexHeightfield = function (
+	    convexShape,
+	    hfShape,
+	    convexPos,
+	    hfPos,
+	    convexQuat,
+	    hfQuat,
+	    convexBody,
+	    hfBody
+	){
+	    var data = hfShape.data,
+	        w = hfShape.elementSize,
+	        radius = convexShape.boundingSphereRadius,
+	        worldPillarOffset = convexHeightfield_tmp2,
+	        faceList = convexHeightfield_faceList;
+
+	    // Get sphere position to heightfield local!
+	    var localConvexPos = convexHeightfield_tmp1;
+	    Transform.pointToLocalFrame(hfPos, hfQuat, convexPos, localConvexPos);
+
+	    // Get the index of the data points to test against
+	    var iMinX = Math.floor((localConvexPos.x - radius) / w) - 1,
+	        iMaxX = Math.ceil((localConvexPos.x + radius) / w) + 1,
+	        iMinY = Math.floor((localConvexPos.y - radius) / w) - 1,
+	        iMaxY = Math.ceil((localConvexPos.y + radius) / w) + 1;
+
+	    // Bail out if we are out of the terrain
+	    if(iMaxX < 0 || iMaxY < 0 || iMinX > data.length || iMinY > data[0].length){
+	        return;
+	    }
+
+	    // Clamp index to edges
+	    if(iMinX < 0){ iMinX = 0; }
+	    if(iMaxX < 0){ iMaxX = 0; }
+	    if(iMinY < 0){ iMinY = 0; }
+	    if(iMaxY < 0){ iMaxY = 0; }
+	    if(iMinX >= data.length){ iMinX = data.length - 1; }
+	    if(iMaxX >= data.length){ iMaxX = data.length - 1; }
+	    if(iMaxY >= data[0].length){ iMaxY = data[0].length - 1; }
+	    if(iMinY >= data[0].length){ iMinY = data[0].length - 1; }
+
+	    var minMax = [];
+	    hfShape.getRectMinMax(iMinX, iMinY, iMaxX, iMaxY, minMax);
+	    var min = minMax[0];
+	    var max = minMax[1];
+
+	    // Bail out if we're cant touch the bounding height box
+	    if(localConvexPos.z - radius > max || localConvexPos.z + radius < min){
+	        return;
+	    }
+
+	    for(var i = iMinX; i < iMaxX; i++){
+	        for(var j = iMinY; j < iMaxY; j++){
+
+	            // Lower triangle
+	            hfShape.getConvexTrianglePillar(i, j, false);
+	            Transform.pointToWorldFrame(hfPos, hfQuat, hfShape.pillarOffset, worldPillarOffset);
+	            if (convexPos.distanceTo(worldPillarOffset) < hfShape.pillarConvex.boundingSphereRadius + convexShape.boundingSphereRadius) {
+	                this.convexConvex(convexShape, hfShape.pillarConvex, convexPos, worldPillarOffset, convexQuat, hfQuat, convexBody, hfBody, null, null, faceList, null);
+	            }
+
+	            // Upper triangle
+	            hfShape.getConvexTrianglePillar(i, j, true);
+	            Transform.pointToWorldFrame(hfPos, hfQuat, hfShape.pillarOffset, worldPillarOffset);
+	            if (convexPos.distanceTo(worldPillarOffset) < hfShape.pillarConvex.boundingSphereRadius + convexShape.boundingSphereRadius) {
+	                this.convexConvex(convexShape, hfShape.pillarConvex, convexPos, worldPillarOffset, convexQuat, hfQuat, convexBody, hfBody, null, null, faceList, null);
+	            }
+	        }
+	    }
+	};
+
+	var sphereHeightfield_tmp1 = new Vec3();
+	var sphereHeightfield_tmp2 = new Vec3();
+
+	/**
+	 * @method sphereHeightfield
+	 */
+	Narrowphase.prototype[Shape.types.SPHERE | Shape.types.HEIGHTFIELD] =
+	Narrowphase.prototype.sphereHeightfield = function (
+	    sphereShape,
+	    hfShape,
+	    spherePos,
+	    hfPos,
+	    sphereQuat,
+	    hfQuat,
+	    sphereBody,
+	    hfBody
+	){
+	    var data = hfShape.data,
+	        radius = sphereShape.radius,
+	        w = hfShape.elementSize,
+	        worldPillarOffset = sphereHeightfield_tmp2;
+
+	    // Get sphere position to heightfield local!
+	    var localSpherePos = sphereHeightfield_tmp1;
+	    Transform.pointToLocalFrame(hfPos, hfQuat, spherePos, localSpherePos);
+
+	    // Get the index of the data points to test against
+	    var iMinX = Math.floor((localSpherePos.x - radius) / w) - 1,
+	        iMaxX = Math.ceil((localSpherePos.x + radius) / w) + 1,
+	        iMinY = Math.floor((localSpherePos.y - radius) / w) - 1,
+	        iMaxY = Math.ceil((localSpherePos.y + radius) / w) + 1;
+
+	    // Bail out if we are out of the terrain
+	    if(iMaxX < 0 || iMaxY < 0 || iMinX > data.length || iMaxY > data[0].length){
+	        return;
+	    }
+
+	    // Clamp index to edges
+	    if(iMinX < 0){ iMinX = 0; }
+	    if(iMaxX < 0){ iMaxX = 0; }
+	    if(iMinY < 0){ iMinY = 0; }
+	    if(iMaxY < 0){ iMaxY = 0; }
+	    if(iMinX >= data.length){ iMinX = data.length - 1; }
+	    if(iMaxX >= data.length){ iMaxX = data.length - 1; }
+	    if(iMaxY >= data[0].length){ iMaxY = data[0].length - 1; }
+	    if(iMinY >= data[0].length){ iMinY = data[0].length - 1; }
+
+	    var minMax = [];
+	    hfShape.getRectMinMax(iMinX, iMinY, iMaxX, iMaxY, minMax);
+	    var min = minMax[0];
+	    var max = minMax[1];
+
+	    // Bail out if we're cant touch the bounding height box
+	    if(localSpherePos.z - radius > max || localSpherePos.z + radius < min){
+	        return;
+	    }
+
+	    var result = this.result;
+	    for(var i = iMinX; i < iMaxX; i++){
+	        for(var j = iMinY; j < iMaxY; j++){
+
+	            var numContactsBefore = result.length;
+
+	            // Lower triangle
+	            hfShape.getConvexTrianglePillar(i, j, false);
+	            Transform.pointToWorldFrame(hfPos, hfQuat, hfShape.pillarOffset, worldPillarOffset);
+	            if (spherePos.distanceTo(worldPillarOffset) < hfShape.pillarConvex.boundingSphereRadius + sphereShape.boundingSphereRadius) {
+	                this.sphereConvex(sphereShape, hfShape.pillarConvex, spherePos, worldPillarOffset, sphereQuat, hfQuat, sphereBody, hfBody);
+	            }
+
+	            // Upper triangle
+	            hfShape.getConvexTrianglePillar(i, j, true);
+	            Transform.pointToWorldFrame(hfPos, hfQuat, hfShape.pillarOffset, worldPillarOffset);
+	            if (spherePos.distanceTo(worldPillarOffset) < hfShape.pillarConvex.boundingSphereRadius + sphereShape.boundingSphereRadius) {
+	                this.sphereConvex(sphereShape, hfShape.pillarConvex, spherePos, worldPillarOffset, sphereQuat, hfQuat, sphereBody, hfBody);
+	            }
+
+	            var numContacts = result.length - numContactsBefore;
+
+	            if(numContacts > 2){
+	                return;
+	            }
+	            /*
+	            // Skip all but 1
+	            for (var k = 0; k < numContacts - 1; k++) {
+	                result.pop();
+	            }
+	            */
+	        }
+	    }
+	};
+
+	},{"../collision/AABB":3,"../collision/Ray":9,"../equations/ContactEquation":19,"../equations/FrictionEquation":21,"../math/Quaternion":28,"../math/Transform":29,"../math/Vec3":30,"../shapes/ConvexPolyhedron":38,"../shapes/Shape":43,"../solver/Solver":47,"../utils/Vec3Pool":54}],56:[function(_dereq_,module,exports){
+	/* global performance */
+
+	module.exports = World;
+
+	var Shape = _dereq_('../shapes/Shape');
+	var Vec3 = _dereq_('../math/Vec3');
+	var Quaternion = _dereq_('../math/Quaternion');
+	var GSSolver = _dereq_('../solver/GSSolver');
+	var Vec3Pool = _dereq_('../utils/Vec3Pool');
+	var ContactEquation = _dereq_('../equations/ContactEquation');
+	var FrictionEquation = _dereq_('../equations/FrictionEquation');
+	var Narrowphase = _dereq_('./Narrowphase');
+	var EventTarget = _dereq_('../utils/EventTarget');
+	var ArrayCollisionMatrix = _dereq_('../collision/ArrayCollisionMatrix');
+	var Material = _dereq_('../material/Material');
+	var ContactMaterial = _dereq_('../material/ContactMaterial');
+	var Body = _dereq_('../objects/Body');
+	var TupleDictionary = _dereq_('../utils/TupleDictionary');
+	var RaycastResult = _dereq_('../collision/RaycastResult');
+	var AABB = _dereq_('../collision/AABB');
+	var Ray = _dereq_('../collision/Ray');
+	var NaiveBroadphase = _dereq_('../collision/NaiveBroadphase');
+
+	/**
+	 * The physics world
+	 * @class World
+	 * @constructor
+	 * @extends EventTarget
+	 */
+	function World(){
+	    EventTarget.apply(this);
+
+	    /**
+	     * Currently / last used timestep. Is set to -1 if not available. This value is updated before each internal step, which means that it is "fresh" inside event callbacks.
+	     * @property {Number} dt
+	     */
+	    this.dt = -1;
+
+	    /**
+	     * Makes bodies go to sleep when they've been inactive
+	     * @property allowSleep
+	     * @type {Boolean}
+	     */
+	    this.allowSleep = false;
+
+	    /**
+	     * All the current contacts (instances of ContactEquation) in the world.
+	     * @property contacts
+	     * @type {Array}
+	     */
+	    this.contacts = [];
+	    this.frictionEquations = [];
+
+	    /**
+	     * How often to normalize quaternions. Set to 0 for every step, 1 for every second etc.. A larger value increases performance. If bodies tend to explode, set to a smaller value (zero to be sure nothing can go wrong).
+	     * @property quatNormalizeSkip
+	     * @type {Number}
+	     */
+	    this.quatNormalizeSkip = 0;
+
+	    /**
+	     * Set to true to use fast quaternion normalization. It is often enough accurate to use. If bodies tend to explode, set to false.
+	     * @property quatNormalizeFast
+	     * @type {Boolean}
+	     * @see Quaternion.normalizeFast
+	     * @see Quaternion.normalize
+	     */
+	    this.quatNormalizeFast = false;
+
+	    /**
+	     * The wall-clock time since simulation start
+	     * @property time
+	     * @type {Number}
+	     */
+	    this.time = 0.0;
+
+	    /**
+	     * Number of timesteps taken since start
+	     * @property stepnumber
+	     * @type {Number}
+	     */
+	    this.stepnumber = 0;
+
+	    /// Default and last timestep sizes
+	    this.default_dt = 1/60;
+
+	    this.nextId = 0;
+	    /**
+	     * @property gravity
+	     * @type {Vec3}
+	     */
+	    this.gravity = new Vec3();
+
+	    /**
+	     * @property broadphase
+	     * @type {Broadphase}
+	     */
+	    this.broadphase = new NaiveBroadphase();
+
+	    /**
+	     * @property bodies
+	     * @type {Array}
+	     */
+	    this.bodies = [];
+
+	    /**
+	     * @property solver
+	     * @type {Solver}
+	     */
+	    this.solver = new GSSolver();
+
+	    /**
+	     * @property constraints
+	     * @type {Array}
+	     */
+	    this.constraints = [];
+
+	    /**
+	     * @property narrowphase
+	     * @type {Narrowphase}
+	     */
+	    this.narrowphase = new Narrowphase(this);
+
+	    /**
+	     * @property {ArrayCollisionMatrix} collisionMatrix
+		 * @type {ArrayCollisionMatrix}
+		 */
+		this.collisionMatrix = new ArrayCollisionMatrix();
+
+	    /**
+	     * CollisionMatrix from the previous step.
+	     * @property {ArrayCollisionMatrix} collisionMatrixPrevious
+		 * @type {ArrayCollisionMatrix}
+		 */
+		this.collisionMatrixPrevious = new ArrayCollisionMatrix();
+
+	    /**
+	     * All added materials
+	     * @property materials
+	     * @type {Array}
+	     */
+	    this.materials = [];
+
+	    /**
+	     * @property contactmaterials
+	     * @type {Array}
+	     */
+	    this.contactmaterials = [];
+
+	    /**
+	     * Used to look up a ContactMaterial given two instances of Material.
+	     * @property {TupleDictionary} contactMaterialTable
+	     */
+	    this.contactMaterialTable = new TupleDictionary();
+
+	    this.defaultMaterial = new Material("default");
+
+	    /**
+	     * This contact material is used if no suitable contactmaterial is found for a contact.
+	     * @property defaultContactMaterial
+	     * @type {ContactMaterial}
+	     */
+	    this.defaultContactMaterial = new ContactMaterial(this.defaultMaterial, this.defaultMaterial, { friction: 0.3, restitution: 0.0 });
+
+	    /**
+	     * @property doProfiling
+	     * @type {Boolean}
+	     */
+	    this.doProfiling = false;
+
+	    /**
+	     * @property profile
+	     * @type {Object}
+	     */
+	    this.profile = {
+	        solve:0,
+	        makeContactConstraints:0,
+	        broadphase:0,
+	        integrate:0,
+	        narrowphase:0,
+	    };
+
+	    /**
+	     * @property subsystems
+	     * @type {Array}
+	     */
+	    this.subsystems = [];
+
+	    this.addBodyEvent = {
+	        type:"addBody",
+	        body : null,
+	    };
+
+	    this.removeBodyEvent = {
+	        type:"removeBody",
+	        body : null,
+	    };
+	}
+	World.prototype = new EventTarget();
+
+	// Temp stuff
+	var tmpAABB1 = new AABB();
+	var tmpArray1 = [];
+	var tmpRay = new Ray();
+
+	/**
+	 * Get the contact material between materials m1 and m2
+	 * @method getContactMaterial
+	 * @param {Material} m1
+	 * @param {Material} m2
+	 * @return {ContactMaterial} The contact material if it was found.
+	 */
+	World.prototype.getContactMaterial = function(m1,m2){
+	    return this.contactMaterialTable.get(m1.id,m2.id); //this.contactmaterials[this.mats2cmat[i+j*this.materials.length]];
+	};
+
+	/**
+	 * Get number of objects in the world.
+	 * @method numObjects
+	 * @return {Number}
+	 * @deprecated
+	 */
+	World.prototype.numObjects = function(){
+	    return this.bodies.length;
+	};
+
+	/**
+	 * Store old collision state info
+	 * @method collisionMatrixTick
+	 */
+	World.prototype.collisionMatrixTick = function(){
+		var temp = this.collisionMatrixPrevious;
+		this.collisionMatrixPrevious = this.collisionMatrix;
+		this.collisionMatrix = temp;
+		this.collisionMatrix.reset();
+	};
+
+	/**
+	 * Add a rigid body to the simulation.
+	 * @method add
+	 * @param {Body} body
+	 * @todo If the simulation has not yet started, why recrete and copy arrays for each body? Accumulate in dynamic arrays in this case.
+	 * @todo Adding an array of bodies should be possible. This would save some loops too
+	 * @deprecated Use .addBody instead
+	 */
+	World.prototype.add = World.prototype.addBody = function(body){
+	    if(this.bodies.indexOf(body) !== -1){
+	        return;
+	    }
+	    body.index = this.bodies.length;
+	    this.bodies.push(body);
+	    body.world = this;
+	    body.initPosition.copy(body.position);
+	    body.initVelocity.copy(body.velocity);
+	    body.timeLastSleepy = this.time;
+	    if(body instanceof Body){
+	        body.initAngularVelocity.copy(body.angularVelocity);
+	        body.initQuaternion.copy(body.quaternion);
+	    }
+		this.collisionMatrix.setNumObjects(this.bodies.length);
+	    this.addBodyEvent.body = body;
+	    this.dispatchEvent(this.addBodyEvent);
+	};
+
+	/**
+	 * Add a constraint to the simulation.
+	 * @method addConstraint
+	 * @param {Constraint} c
+	 */
+	World.prototype.addConstraint = function(c){
+	    this.constraints.push(c);
+	};
+
+	/**
+	 * Removes a constraint
+	 * @method removeConstraint
+	 * @param {Constraint} c
+	 */
+	World.prototype.removeConstraint = function(c){
+	    var idx = this.constraints.indexOf(c);
+	    if(idx!==-1){
+	        this.constraints.splice(idx,1);
+	    }
+	};
+
+	/**
+	 * Raycast test
+	 * @method rayTest
+	 * @param {Vec3} from
+	 * @param {Vec3} to
+	 * @param {Function|RaycastResult} result
+	 * @deprecated Use .raycastAll, .raycastClosest or .raycastAny instead.
+	 */
+	World.prototype.rayTest = function(from, to, result){
+	    if(result instanceof RaycastResult){
+	        // Do raycastclosest
+	        this.raycastClosest(from, to, {
+	            skipBackfaces: true
+	        }, result);
+	    } else {
+	        // Do raycastAll
+	        this.raycastAll(from, to, {
+	            skipBackfaces: true
+	        }, result);
+	    }
+	};
+
+	/**
+	 * Ray cast against all bodies. The provided callback will be executed for each hit with a RaycastResult as single argument.
+	 * @method raycastAll
+	 * @param  {Vec3} from
+	 * @param  {Vec3} to
+	 * @param  {Object} options
+	 * @param  {number} [options.collisionFilterMask=-1]
+	 * @param  {number} [options.collisionFilterGroup=-1]
+	 * @param  {boolean} [options.skipBackfaces=false]
+	 * @param  {boolean} [options.checkCollisionResponse=true]
+	 * @param  {Function} callback
+	 * @return {boolean} True if any body was hit.
+	 */
+	World.prototype.raycastAll = function(from, to, options, callback){
+	    options.mode = Ray.ALL;
+	    options.from = from;
+	    options.to = to;
+	    options.callback = callback;
+	    return tmpRay.intersectWorld(this, options);
+	};
+
+	/**
+	 * Ray cast, and stop at the first result. Note that the order is random - but the method is fast.
+	 * @method raycastAny
+	 * @param  {Vec3} from
+	 * @param  {Vec3} to
+	 * @param  {Object} options
+	 * @param  {number} [options.collisionFilterMask=-1]
+	 * @param  {number} [options.collisionFilterGroup=-1]
+	 * @param  {boolean} [options.skipBackfaces=false]
+	 * @param  {boolean} [options.checkCollisionResponse=true]
+	 * @param  {RaycastResult} result
+	 * @return {boolean} True if any body was hit.
+	 */
+	World.prototype.raycastAny = function(from, to, options, result){
+	    options.mode = Ray.ANY;
+	    options.from = from;
+	    options.to = to;
+	    options.result = result;
+	    return tmpRay.intersectWorld(this, options);
+	};
+
+	/**
+	 * Ray cast, and return information of the closest hit.
+	 * @method raycastClosest
+	 * @param  {Vec3} from
+	 * @param  {Vec3} to
+	 * @param  {Object} options
+	 * @param  {number} [options.collisionFilterMask=-1]
+	 * @param  {number} [options.collisionFilterGroup=-1]
+	 * @param  {boolean} [options.skipBackfaces=false]
+	 * @param  {boolean} [options.checkCollisionResponse=true]
+	 * @param  {RaycastResult} result
+	 * @return {boolean} True if any body was hit.
+	 */
+	World.prototype.raycastClosest = function(from, to, options, result){
+	    options.mode = Ray.CLOSEST;
+	    options.from = from;
+	    options.to = to;
+	    options.result = result;
+	    return tmpRay.intersectWorld(this, options);
+	};
+
+	/**
+	 * Remove a rigid body from the simulation.
+	 * @method remove
+	 * @param {Body} body
+	 * @deprecated Use .removeBody instead
+	 */
+	World.prototype.remove = function(body){
+	    body.world = null;
+	    var n = this.bodies.length-1,
+	        bodies = this.bodies,
+	        idx = bodies.indexOf(body);
+	    if(idx !== -1){
+	        bodies.splice(idx, 1); // Todo: should use a garbage free method
+
+	        // Recompute index
+	        for(var i=0; i!==bodies.length; i++){
+	            bodies[i].index = i;
+	        }
+
+	        this.collisionMatrix.setNumObjects(n);
+	        this.removeBodyEvent.body = body;
+	        this.dispatchEvent(this.removeBodyEvent);
+	    }
+	};
+
+	/**
+	 * Remove a rigid body from the simulation.
+	 * @method removeBody
+	 * @param {Body} body
+	 */
+	World.prototype.removeBody = World.prototype.remove;
+
+	/**
+	 * Adds a material to the World.
+	 * @method addMaterial
+	 * @param {Material} m
+	 * @todo Necessary?
+	 */
+	World.prototype.addMaterial = function(m){
+	    this.materials.push(m);
+	};
+
+	/**
+	 * Adds a contact material to the World
+	 * @method addContactMaterial
+	 * @param {ContactMaterial} cmat
+	 */
+	World.prototype.addContactMaterial = function(cmat) {
+
+	    // Add contact material
+	    this.contactmaterials.push(cmat);
+
+	    // Add current contact material to the material table
+	    this.contactMaterialTable.set(cmat.materials[0].id,cmat.materials[1].id,cmat);
+	};
+
+	// performance.now()
+	if(typeof performance === 'undefined'){
+	    performance = {};
+	}
+	if(!performance.now){
+	    var nowOffset = Date.now();
+	    if (performance.timing && performance.timing.navigationStart){
+	        nowOffset = performance.timing.navigationStart;
+	    }
+	    performance.now = function(){
+	        return Date.now() - nowOffset;
+	    };
+	}
+
+	var step_tmp1 = new Vec3();
+
+	/**
+	 * Step the physics world forward in time.
+	 *
+	 * There are two modes. The simple mode is fixed timestepping without interpolation. In this case you only use the first argument. The second case uses interpolation. In that you also provide the time since the function was last used, as well as the maximum fixed timesteps to take.
+	 *
+	 * @method step
+	 * @param {Number} dt                       The fixed time step size to use.
+	 * @param {Number} [timeSinceLastCalled]    The time elapsed since the function was last called.
+	 * @param {Number} [maxSubSteps=10]         Maximum number of fixed steps to take per function call.
+	 *
+	 * @example
+	 *     // fixed timestepping without interpolation
+	 *     world.step(1/60);
+	 *
+	 * @see http://bulletphysics.org/mediawiki-1.5.8/index.php/Stepping_The_World
+	 */
+	World.prototype.step = function(dt, timeSinceLastCalled, maxSubSteps){
+	    maxSubSteps = maxSubSteps || 10;
+	    timeSinceLastCalled = timeSinceLastCalled || 0;
+
+	    if(timeSinceLastCalled === 0){ // Fixed, simple stepping
+
+	        this.internalStep(dt);
+
+	        // Increment time
+	        this.time += dt;
+
+	    } else {
+
+	        // Compute the number of fixed steps we should have taken since the last step
+	        var internalSteps = Math.floor((this.time + timeSinceLastCalled) / dt) - Math.floor(this.time / dt);
+	        internalSteps = Math.min(internalSteps,maxSubSteps);
+
+	        // Do some fixed steps to catch up
+	        var t0 = performance.now();
+	        for(var i=0; i!==internalSteps; i++){
+	            this.internalStep(dt);
+	            if(performance.now() - t0 > dt * 1000){
+	                // We are slower than real-time. Better bail out.
+	                break;
+	            }
+	        }
+
+	        // Increment internal clock
+	        this.time += timeSinceLastCalled;
+
+	        // Compute "Left over" time step
+	        var h = this.time % dt;
+	        var h_div_dt = h / dt;
+	        var interpvelo = step_tmp1;
+	        var bodies = this.bodies;
+
+	        for(var j=0; j !== bodies.length; j++){
+	            var b = bodies[j];
+	            if(b.type !== Body.STATIC && b.sleepState !== Body.SLEEPING){
+
+	                // Interpolate
+	                b.position.vsub(b.previousPosition, interpvelo);
+	                interpvelo.scale(h_div_dt, interpvelo);
+	                b.position.vadd(interpvelo, b.interpolatedPosition);
+
+	                // TODO: interpolate quaternion
+	                // b.interpolatedAngle = b.angle + (b.angle - b.previousAngle) * h_div_dt;
+
+	            } else {
+
+	                // For static bodies, just copy. Who else will do it?
+	                b.interpolatedPosition.copy(b.position);
+	                b.interpolatedQuaternion.copy(b.quaternion);
+	            }
+	        }
+	    }
+	};
+
+	/**
+	 * Step the simulation
+	 * @method step
+	 * @param {Number} dt
+	 */
+	var World_step_postStepEvent = {type:"postStep"}, // Reusable event objects to save memory
+	    World_step_preStepEvent = {type:"preStep"},
+	    World_step_collideEvent = {type:"collide", body:null, contact:null },
+	    World_step_oldContacts = [], // Pools for unused objects
+	    World_step_frictionEquationPool = [],
+	    World_step_p1 = [], // Reusable arrays for collision pairs
+	    World_step_p2 = [],
+	    World_step_gvec = new Vec3(), // Temporary vectors and quats
+	    World_step_vi = new Vec3(),
+	    World_step_vj = new Vec3(),
+	    World_step_wi = new Vec3(),
+	    World_step_wj = new Vec3(),
+	    World_step_t1 = new Vec3(),
+	    World_step_t2 = new Vec3(),
+	    World_step_rixn = new Vec3(),
+	    World_step_rjxn = new Vec3(),
+	    World_step_step_q = new Quaternion(),
+	    World_step_step_w = new Quaternion(),
+	    World_step_step_wq = new Quaternion(),
+	    invI_tau_dt = new Vec3();
+	World.prototype.internalStep = function(dt){
+	    this.dt = dt;
+
+	    var world = this,
+	        that = this,
+	        contacts = this.contacts,
+	        p1 = World_step_p1,
+	        p2 = World_step_p2,
+	        N = this.numObjects(),
+	        bodies = this.bodies,
+	        solver = this.solver,
+	        gravity = this.gravity,
+	        doProfiling = this.doProfiling,
+	        profile = this.profile,
+	        DYNAMIC = Body.DYNAMIC,
+	        profilingStart,
+	        constraints = this.constraints,
+	        frictionEquationPool = World_step_frictionEquationPool,
+	        gnorm = gravity.norm(),
+	        gx = gravity.x,
+	        gy = gravity.y,
+	        gz = gravity.z,
+	        i=0;
+
+	    if(doProfiling){
+	        profilingStart = performance.now();
+	    }
+
+	    // Add gravity to all objects
+	    for(i=0; i!==N; i++){
+	        var bi = bodies[i];
+	        if(bi.type & DYNAMIC){ // Only for dynamic bodies
+	            var f = bi.force, m = bi.mass;
+	            f.x += m*gx;
+	            f.y += m*gy;
+	            f.z += m*gz;
+	        }
+	    }
+
+	    // Update subsystems
+	    for(var i=0, Nsubsystems=this.subsystems.length; i!==Nsubsystems; i++){
+	        this.subsystems[i].update();
+	    }
+
+	    // Collision detection
+	    if(doProfiling){ profilingStart = performance.now(); }
+	    p1.length = 0; // Clean up pair arrays from last step
+	    p2.length = 0;
+	    this.broadphase.collisionPairs(this,p1,p2);
+	    if(doProfiling){ profile.broadphase = performance.now() - profilingStart; }
+
+	    // Remove constrained pairs with collideConnected == false
+	    var Nconstraints = constraints.length;
+	    for(i=0; i!==Nconstraints; i++){
+	        var c = constraints[i];
+	        if(!c.collideConnected){
+	            for(var j = p1.length-1; j>=0; j-=1){
+	                if( (c.bodyA === p1[j] && c.bodyB === p2[j]) ||
+	                    (c.bodyB === p1[j] && c.bodyA === p2[j])){
+	                    p1.splice(j, 1);
+	                    p2.splice(j, 1);
+	                }
+	            }
+	        }
+	    }
+
+	    this.collisionMatrixTick();
+
+	    // Generate contacts
+	    if(doProfiling){ profilingStart = performance.now(); }
+	    var oldcontacts = World_step_oldContacts;
+	    var NoldContacts = contacts.length;
+
+	    for(i=0; i!==NoldContacts; i++){
+	        oldcontacts.push(contacts[i]);
+	    }
+	    contacts.length = 0;
+
+	    // Transfer FrictionEquation from current list to the pool for reuse
+	    var NoldFrictionEquations = this.frictionEquations.length;
+	    for(i=0; i!==NoldFrictionEquations; i++){
+	        frictionEquationPool.push(this.frictionEquations[i]);
+	    }
+	    this.frictionEquations.length = 0;
+
+	    this.narrowphase.getContacts(
+	        p1,
+	        p2,
+	        this,
+	        contacts,
+	        oldcontacts, // To be reused
+	        this.frictionEquations,
+	        frictionEquationPool
+	    );
+
+	    if(doProfiling){
+	        profile.narrowphase = performance.now() - profilingStart;
+	    }
+
+	    // Loop over all collisions
+	    if(doProfiling){
+	        profilingStart = performance.now();
+	    }
+
+	    // Add all friction eqs
+	    for (var i = 0; i < this.frictionEquations.length; i++) {
+	        solver.addEquation(this.frictionEquations[i]);
+	    }
+
+	    var ncontacts = contacts.length;
+	    for(var k=0; k!==ncontacts; k++){
+
+	        // Current contact
+	        var c = contacts[k];
+
+	        // Get current collision indeces
+	        var bi = c.bi,
+	            bj = c.bj,
+	            si = c.si,
+	            sj = c.sj;
+
+	        // Get collision properties
+	        var cm;
+	        if(bi.material && bj.material){
+	            cm = this.getContactMaterial(bi.material,bj.material) || this.defaultContactMaterial;
+	        } else {
+	            cm = this.defaultContactMaterial;
+	        }
+
+	        // c.enabled = bi.collisionResponse && bj.collisionResponse && si.collisionResponse && sj.collisionResponse;
+
+	        var mu = cm.friction;
+	        // c.restitution = cm.restitution;
+
+	        // If friction or restitution were specified in the material, use them
+	        if(bi.material && bj.material){
+	            if(bi.material.friction >= 0 && bj.material.friction >= 0){
+	                mu = bi.material.friction * bj.material.friction;
+	            }
+
+	            if(bi.material.restitution >= 0 && bj.material.restitution >= 0){
+	                c.restitution = bi.material.restitution * bj.material.restitution;
+	            }
+	        }
+
+			// c.setSpookParams(
+	  //           cm.contactEquationStiffness,
+	  //           cm.contactEquationRelaxation,
+	  //           dt
+	  //       );
+
+			solver.addEquation(c);
+
+			// // Add friction constraint equation
+			// if(mu > 0){
+
+			// 	// Create 2 tangent equations
+			// 	var mug = mu * gnorm;
+			// 	var reducedMass = (bi.invMass + bj.invMass);
+			// 	if(reducedMass > 0){
+			// 		reducedMass = 1/reducedMass;
+			// 	}
+			// 	var pool = frictionEquationPool;
+			// 	var c1 = pool.length ? pool.pop() : new FrictionEquation(bi,bj,mug*reducedMass);
+			// 	var c2 = pool.length ? pool.pop() : new FrictionEquation(bi,bj,mug*reducedMass);
+			// 	this.frictionEquations.push(c1, c2);
+
+			// 	c1.bi = c2.bi = bi;
+			// 	c1.bj = c2.bj = bj;
+			// 	c1.minForce = c2.minForce = -mug*reducedMass;
+			// 	c1.maxForce = c2.maxForce = mug*reducedMass;
+
+			// 	// Copy over the relative vectors
+			// 	c1.ri.copy(c.ri);
+			// 	c1.rj.copy(c.rj);
+			// 	c2.ri.copy(c.ri);
+			// 	c2.rj.copy(c.rj);
+
+			// 	// Construct tangents
+			// 	c.ni.tangents(c1.t, c2.t);
+
+	  //           // Set spook params
+	  //           c1.setSpookParams(cm.frictionEquationStiffness, cm.frictionEquationRelaxation, dt);
+	  //           c2.setSpookParams(cm.frictionEquationStiffness, cm.frictionEquationRelaxation, dt);
+
+	  //           c1.enabled = c2.enabled = c.enabled;
+
+			// 	// Add equations to solver
+			// 	solver.addEquation(c1);
+			// 	solver.addEquation(c2);
+			// }
+
+	        if( bi.allowSleep &&
+	            bi.type === Body.DYNAMIC &&
+	            bi.sleepState  === Body.SLEEPING &&
+	            bj.sleepState  === Body.AWAKE &&
+	            bj.type !== Body.STATIC
+	        ){
+	            var speedSquaredB = bj.velocity.norm2() + bj.angularVelocity.norm2();
+	            var speedLimitSquaredB = Math.pow(bj.sleepSpeedLimit,2);
+	            if(speedSquaredB >= speedLimitSquaredB*2){
+	                bi._wakeUpAfterNarrowphase = true;
+	            }
+	        }
+
+	        if( bj.allowSleep &&
+	            bj.type === Body.DYNAMIC &&
+	            bj.sleepState  === Body.SLEEPING &&
+	            bi.sleepState  === Body.AWAKE &&
+	            bi.type !== Body.STATIC
+	        ){
+	            var speedSquaredA = bi.velocity.norm2() + bi.angularVelocity.norm2();
+	            var speedLimitSquaredA = Math.pow(bi.sleepSpeedLimit,2);
+	            if(speedSquaredA >= speedLimitSquaredA*2){
+	                bj._wakeUpAfterNarrowphase = true;
+	            }
+	        }
+
+	        // Now we know that i and j are in contact. Set collision matrix state
+			this.collisionMatrix.set(bi, bj, true);
+
+	        if (!this.collisionMatrixPrevious.get(bi, bj)) {
+	            // First contact!
+	            // We reuse the collideEvent object, otherwise we will end up creating new objects for each new contact, even if there's no event listener attached.
+	            World_step_collideEvent.body = bj;
+	            World_step_collideEvent.contact = c;
+	            bi.dispatchEvent(World_step_collideEvent);
+
+	            World_step_collideEvent.body = bi;
+	            bj.dispatchEvent(World_step_collideEvent);
+	        }
+	    }
+	    if(doProfiling){
+	        profile.makeContactConstraints = performance.now() - profilingStart;
+	        profilingStart = performance.now();
+	    }
+
+	    // Wake up bodies
+	    for(i=0; i!==N; i++){
+	        var bi = bodies[i];
+	        if(bi._wakeUpAfterNarrowphase){
+	            bi.wakeUp();
+	            bi._wakeUpAfterNarrowphase = false;
+	        }
+	    }
+
+	    // Add user-added constraints
+	    var Nconstraints = constraints.length;
+	    for(i=0; i!==Nconstraints; i++){
+	        var c = constraints[i];
+	        c.update();
+	        for(var j=0, Neq=c.equations.length; j!==Neq; j++){
+	            var eq = c.equations[j];
+	            solver.addEquation(eq);
+	        }
+	    }
+
+	    // Solve the constrained system
+	    solver.solve(dt,this);
+
+	    if(doProfiling){
+	        profile.solve = performance.now() - profilingStart;
+	    }
+
+	    // Remove all contacts from solver
+	    solver.removeAllEquations();
+
+	    // Apply damping, see http://code.google.com/p/bullet/issues/detail?id=74 for details
+	    var pow = Math.pow;
+	    for(i=0; i!==N; i++){
+	        var bi = bodies[i];
+	        if(bi.type & DYNAMIC){ // Only for dynamic bodies
+	            var ld = pow(1.0 - bi.linearDamping,dt);
+	            var v = bi.velocity;
+	            v.mult(ld,v);
+	            var av = bi.angularVelocity;
+	            if(av){
+	                var ad = pow(1.0 - bi.angularDamping,dt);
+	                av.mult(ad,av);
+	            }
+	        }
+	    }
+
+	    this.dispatchEvent(World_step_preStepEvent);
+
+	    // Invoke pre-step callbacks
+	    for(i=0; i!==N; i++){
+	        var bi = bodies[i];
+	        if(bi.preStep){
+	            bi.preStep.call(bi);
+	        }
+	    }
+
+	    // Leap frog
+	    // vnew = v + h*f/m
+	    // xnew = x + h*vnew
+	    if(doProfiling){
+	        profilingStart = performance.now();
+	    }
+	    var q = World_step_step_q;
+	    var w = World_step_step_w;
+	    var wq = World_step_step_wq;
+	    var stepnumber = this.stepnumber;
+	    var DYNAMIC_OR_KINEMATIC = Body.DYNAMIC | Body.KINEMATIC;
+	    var quatNormalize = stepnumber % (this.quatNormalizeSkip+1) === 0;
+	    var quatNormalizeFast = this.quatNormalizeFast;
+	    var half_dt = dt * 0.5;
+	    var PLANE = Shape.types.PLANE,
+	        CONVEX = Shape.types.CONVEXPOLYHEDRON;
+
+	    for(i=0; i!==N; i++){
+	        var b = bodies[i],
+	            force = b.force,
+	            tau = b.torque;
+	        if((b.type & DYNAMIC_OR_KINEMATIC) && b.sleepState !== Body.SLEEPING){ // Only for dynamic
+	            var velo = b.velocity,
+	                angularVelo = b.angularVelocity,
+	                pos = b.position,
+	                quat = b.quaternion,
+	                invMass = b.invMass,
+	                invInertia = b.invInertiaWorld;
+
+	            velo.x += force.x * invMass * dt;
+	            velo.y += force.y * invMass * dt;
+	            velo.z += force.z * invMass * dt;
+
+	            if(b.angularVelocity){
+	                invInertia.vmult(tau,invI_tau_dt);
+	                invI_tau_dt.mult(dt,invI_tau_dt);
+	                invI_tau_dt.vadd(angularVelo,angularVelo);
+	            }
+
+	            // Use new velocity  - leap frog
+	            pos.x += velo.x * dt;
+	            pos.y += velo.y * dt;
+	            pos.z += velo.z * dt;
+
+	            if(b.angularVelocity){
+	                w.set(angularVelo.x, angularVelo.y, angularVelo.z, 0);
+	                w.mult(quat,wq);
+	                quat.x += half_dt * wq.x;
+	                quat.y += half_dt * wq.y;
+	                quat.z += half_dt * wq.z;
+	                quat.w += half_dt * wq.w;
+	                if(quatNormalize){
+	                    if(quatNormalizeFast){
+	                        quat.normalizeFast();
+	                    } else {
+	                        quat.normalize();
+	                    }
+	                }
+	            }
+
+	            if(b.aabb){
+	                b.aabbNeedsUpdate = true;
+	            }
+
+	            // Update world inertia
+	            if(b.updateInertiaWorld){
+	                b.updateInertiaWorld();
+	            }
+	        }
+	    }
+	    this.clearForces();
+
+	    this.broadphase.dirty = true;
+
+	    if(doProfiling){
+	        profile.integrate = performance.now() - profilingStart;
+	    }
+
+	    // Update world time
+	    this.time += dt;
+	    this.stepnumber += 1;
+
+	    this.dispatchEvent(World_step_postStepEvent);
+
+	    // Invoke post-step callbacks
+	    for(i=0; i!==N; i++){
+	        var bi = bodies[i];
+	        var postStep = bi.postStep;
+	        if(postStep){
+	            postStep.call(bi);
+	        }
+	    }
+
+	    // Sleeping update
+	    if(this.allowSleep){
+	        for(i=0; i!==N; i++){
+	            bodies[i].sleepTick(this.time);
+	        }
+	    }
+	};
+
+	/**
+	 * Sets all body forces in the world to zero.
+	 * @method clearForces
+	 */
+	World.prototype.clearForces = function(){
+	    var bodies = this.bodies;
+	    var N = bodies.length;
+	    for(var i=0; i !== N; i++){
+	        var b = bodies[i],
+	            force = b.force,
+	            tau = b.torque;
+
+	        b.force.set(0,0,0);
+	        b.torque.set(0,0,0);
+	    }
+	};
+
+	},{"../collision/AABB":3,"../collision/ArrayCollisionMatrix":4,"../collision/NaiveBroadphase":7,"../collision/Ray":9,"../collision/RaycastResult":10,"../equations/ContactEquation":19,"../equations/FrictionEquation":21,"../material/ContactMaterial":24,"../material/Material":25,"../math/Quaternion":28,"../math/Vec3":30,"../objects/Body":31,"../shapes/Shape":43,"../solver/GSSolver":46,"../utils/EventTarget":49,"../utils/TupleDictionary":52,"../utils/Vec3Pool":54,"./Narrowphase":55}]},{},[2])
+	(2)
+	});
+
 /***/ },
-/* 6 */
+/* 197 */
 /*!*****************************************!*\
   !*** ./~/three-orbit-controls/index.js ***!
   \*****************************************/
@@ -36936,63 +56730,378 @@
 
 
 /***/ },
-/* 7 */
+/* 198 */
+/*!********************************************!*\
+  !*** ./static/js/vendor/keyboard_state.js ***!
+  \********************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// THREEx.KeyboardState.js keep the current state of the keyboard.
+	// It is possible to query it at any time. No need of an event.
+	// This is particularly convenient in loop driven case, like in
+	// 3D demos or games.
+	//
+	// # Usage
+	//
+	// **Step 1**: Create the object
+	//
+	// ```var keyboard      = new THREEx.KeyboardState();```
+	//
+	// **Step 2**: Query the keyboard state
+	//
+	// This will return true if shift and A are pressed, false otherwise
+	//
+	// ```keyboard.pressed("shift+A")```
+	//
+	// **Step 3**: Stop listening to the keyboard
+	//
+	// ```keyboard.destroy()```
+	//
+	// NOTE: this library may be nice as standaline. independant from three.js
+	// - rename it keyboardForGame
+	//
+	// # Code
+	//
+
+	/** @namespace */
+	"use strict";
+
+	var _Object$keys = __webpack_require__(/*! babel-runtime/core-js/object/keys */ 199)["default"];
+
+	var THREEx = THREEx || {};
+
+	/**
+	 * - NOTE: it would be quite easy to push event-driven too
+	 *   - microevent.js for events handling
+	 *   - in this._onkeyChange, generate a string from the DOM event
+	 *   - use this as event name
+	*/
+	THREEx.KeyboardState = function () {
+	    // to store the current state
+	    this.keyCodes = {};
+	    this.modifiers = {};
+
+	    // create callback to bind/unbind keyboard events
+	    var self = this;
+	    this._onKeyDown = function (event) {
+	        self._onKeyChange(event, true);
+	    };
+	    this._onKeyUp = function (event) {
+	        self._onKeyChange(event, false);
+	    };
+
+	    // bind keyEvents
+	    document.addEventListener("keydown", this._onKeyDown, false);
+	    document.addEventListener("keyup", this._onKeyUp, false);
+	};
+
+	/**
+	 * To stop listening of the keyboard events
+	*/
+	THREEx.KeyboardState.prototype.destroy = function () {
+	    // unbind keyEvents
+	    document.removeEventListener("keydown", this._onKeyDown, false);
+	    document.removeEventListener("keyup", this._onKeyUp, false);
+	};
+
+	THREEx.KeyboardState.MODIFIERS = ['shift', 'ctrl', 'alt', 'meta'];
+	THREEx.KeyboardState.ALIAS = {
+	    'left': 37,
+	    'up': 38,
+	    'right': 39,
+	    'down': 40,
+	    'space': 32,
+	    'pageup': 33,
+	    'pagedown': 34,
+	    'tab': 9
+	};
+
+	/**
+	 * to process the keyboard dom event
+	*/
+	THREEx.KeyboardState.prototype._onKeyChange = function (event, pressed) {
+	    // log to debug
+	    //console.log("onKeyChange", event, pressed, event.keyCode, event.shiftKey, event.ctrlKey, event.altKey, event.metaKey)
+
+	    // update this.keyCodes
+	    var keyCode = event.keyCode;
+	    this.keyCodes[keyCode] = pressed;
+
+	    // update this.modifiers
+	    this.modifiers['shift'] = event.shiftKey;
+	    this.modifiers['ctrl'] = event.ctrlKey;
+	    this.modifiers['alt'] = event.altKey;
+	    this.modifiers['meta'] = event.metaKey;
+	};
+
+	/**
+	 * query keyboard state to know if a key is pressed of not
+	 *
+	 * @param {String} keyDesc the description of the key. format : modifiers+key e.g shift+A
+	 * @returns {Boolean} true if the key is pressed, false otherwise
+	*/
+	THREEx.KeyboardState.prototype.pressed = function (keyDesc) {
+	    var keys = keyDesc.split("+");
+	    for (var i = 0; i < keys.length; i++) {
+	        var key = keys[i];
+	        var pressed;
+	        if (THREEx.KeyboardState.MODIFIERS.indexOf(key) !== -1) {
+	            pressed = this.modifiers[key];
+	        } else if (_Object$keys(THREEx.KeyboardState.ALIAS).indexOf(key) != -1) {
+	            pressed = this.keyCodes[THREEx.KeyboardState.ALIAS[key]];
+	        } else {
+	            pressed = this.keyCodes[key.toUpperCase().charCodeAt(0)];
+	        }
+	        if (!pressed) return false;
+	    };
+	    return true;
+	};
+
+	module.exports = THREEx.KeyboardState;
+
+/***/ },
+/* 199 */
+/*!************************************************!*\
+  !*** ./~/babel-runtime/core-js/object/keys.js ***!
+  \************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = { "default": __webpack_require__(/*! core-js/library/fn/object/keys */ 200), __esModule: true };
+
+/***/ },
+/* 200 */
+/*!*************************************************************!*\
+  !*** ./~/babel-runtime/~/core-js/library/fn/object/keys.js ***!
+  \*************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	__webpack_require__(/*! ../../modules/es6.object.keys */ 201);
+	module.exports = __webpack_require__(/*! ../../modules/$.core */ 207).Object.keys;
+
+/***/ },
+/* 201 */
+/*!**********************************************************************!*\
+  !*** ./~/babel-runtime/~/core-js/library/modules/es6.object.keys.js ***!
+  \**********************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// 19.1.2.14 Object.keys(O)
+	var toObject = __webpack_require__(/*! ./$.to-object */ 202);
+
+	__webpack_require__(/*! ./$.object-sap */ 204)('keys', function($keys){
+	  return function keys(it){
+	    return $keys(toObject(it));
+	  };
+	});
+
+/***/ },
+/* 202 */
+/*!******************************************************************!*\
+  !*** ./~/babel-runtime/~/core-js/library/modules/$.to-object.js ***!
+  \******************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// 7.1.13 ToObject(argument)
+	var defined = __webpack_require__(/*! ./$.defined */ 203);
+	module.exports = function(it){
+	  return Object(defined(it));
+	};
+
+/***/ },
+/* 203 */
+/*!****************************************************************!*\
+  !*** ./~/babel-runtime/~/core-js/library/modules/$.defined.js ***!
+  \****************************************************************/
+/***/ function(module, exports) {
+
+	// 7.2.1 RequireObjectCoercible(argument)
+	module.exports = function(it){
+	  if(it == undefined)throw TypeError("Can't call method on  " + it);
+	  return it;
+	};
+
+/***/ },
+/* 204 */
+/*!*******************************************************************!*\
+  !*** ./~/babel-runtime/~/core-js/library/modules/$.object-sap.js ***!
+  \*******************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// most Object methods by ES6 should accept primitives
+	module.exports = function(KEY, exec){
+	  var $def = __webpack_require__(/*! ./$.def */ 205)
+	    , fn   = (__webpack_require__(/*! ./$.core */ 207).Object || {})[KEY] || Object[KEY]
+	    , exp  = {};
+	  exp[KEY] = exec(fn);
+	  $def($def.S + $def.F * __webpack_require__(/*! ./$.fails */ 208)(function(){ fn(1); }), 'Object', exp);
+	};
+
+/***/ },
+/* 205 */
+/*!************************************************************!*\
+  !*** ./~/babel-runtime/~/core-js/library/modules/$.def.js ***!
+  \************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var global    = __webpack_require__(/*! ./$.global */ 206)
+	  , core      = __webpack_require__(/*! ./$.core */ 207)
+	  , PROTOTYPE = 'prototype';
+	var ctx = function(fn, that){
+	  return function(){
+	    return fn.apply(that, arguments);
+	  };
+	};
+	var $def = function(type, name, source){
+	  var key, own, out, exp
+	    , isGlobal = type & $def.G
+	    , isProto  = type & $def.P
+	    , target   = isGlobal ? global : type & $def.S
+	        ? global[name] : (global[name] || {})[PROTOTYPE]
+	    , exports  = isGlobal ? core : core[name] || (core[name] = {});
+	  if(isGlobal)source = name;
+	  for(key in source){
+	    // contains in native
+	    own = !(type & $def.F) && target && key in target;
+	    if(own && key in exports)continue;
+	    // export native or passed
+	    out = own ? target[key] : source[key];
+	    // prevent global pollution for namespaces
+	    if(isGlobal && typeof target[key] != 'function')exp = source[key];
+	    // bind timers to global for call from export context
+	    else if(type & $def.B && own)exp = ctx(out, global);
+	    // wrap global constructors for prevent change them in library
+	    else if(type & $def.W && target[key] == out)!function(C){
+	      exp = function(param){
+	        return this instanceof C ? new C(param) : C(param);
+	      };
+	      exp[PROTOTYPE] = C[PROTOTYPE];
+	    }(out);
+	    else exp = isProto && typeof out == 'function' ? ctx(Function.call, out) : out;
+	    // export
+	    exports[key] = exp;
+	    if(isProto)(exports[PROTOTYPE] || (exports[PROTOTYPE] = {}))[key] = out;
+	  }
+	};
+	// type bitmap
+	$def.F = 1;  // forced
+	$def.G = 2;  // global
+	$def.S = 4;  // static
+	$def.P = 8;  // proto
+	$def.B = 16; // bind
+	$def.W = 32; // wrap
+	module.exports = $def;
+
+/***/ },
+/* 206 */
+/*!***************************************************************!*\
+  !*** ./~/babel-runtime/~/core-js/library/modules/$.global.js ***!
+  \***************************************************************/
+/***/ function(module, exports) {
+
+	// https://github.com/zloirock/core-js/issues/86#issuecomment-115759028
+	var UNDEFINED = 'undefined';
+	var global = module.exports = typeof window != UNDEFINED && window.Math == Math
+	  ? window : typeof self != UNDEFINED && self.Math == Math ? self : Function('return this')();
+	if(typeof __g == 'number')__g = global; // eslint-disable-line no-undef
+
+/***/ },
+/* 207 */
+/*!*************************************************************!*\
+  !*** ./~/babel-runtime/~/core-js/library/modules/$.core.js ***!
+  \*************************************************************/
+/***/ function(module, exports) {
+
+	var core = module.exports = {version: '1.2.1'};
+	if(typeof __e == 'number')__e = core; // eslint-disable-line no-undef
+
+/***/ },
+/* 208 */
+/*!**************************************************************!*\
+  !*** ./~/babel-runtime/~/core-js/library/modules/$.fails.js ***!
+  \**************************************************************/
+/***/ function(module, exports) {
+
+	module.exports = function(exec){
+	  try {
+	    return !!exec();
+	  } catch(e){
+	    return true;
+	  }
+	};
+
+/***/ },
+/* 209 */
+/*!*******************************!*\
+  !*** ./static/js/util/ecs.js ***!
+  \*******************************/
+/***/ function(module, exports) {
+
+	"use strict";
+
+	var Entities = {};
+
+	function Entity() {
+	    this.id = Entity.prototype._idGen++;
+	    Entities[this.id] = this;
+	};
+
+	Entity.prototype = {
+	    _idGen: 0,
+
+	    addComponent: function addComponent(component) {
+	        this[component.name] = component;
+	    },
+
+	    removeComponent: function removeComponent(component) {
+	        delete this[component.name];
+	    },
+
+	    "delete": function _delete() {
+	        delete Entities[this.id];
+	    }
+	};
+
+	function Position(x, y, z) {
+	    this.x = x;
+	    this.y = y;
+	    this.z = z;
+	};
+	Position.prototype.name = "position";
+
+	function THREEObject(object) {};
+	THREEObject.prototype.name = "threeObject";
+
+	var Component = { Position: Position, THREEObject: THREEObject };
+
+	module.exports = { Entity: Entity, Entities: Entities, Component: Component };
+
+/***/ },
+/* 210 */
 /*!********************************!*\
-  !*** ./static/js/util/axes.js ***!
+  !*** ./static/js/materials.js ***!
   \********************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 
-	var _interopRequireDefault = __webpack_require__(/*! babel-runtime/helpers/interop-require-default */ 1)["default"];
-
 	exports.__esModule = true;
 
-	var _three = __webpack_require__(/*! three */ 5);
+	var _engine = __webpack_require__(/*! engine */ 194);
 
-	var _three2 = _interopRequireDefault(_three);
+	var SLIPPERY = new _engine.CANNON.Material("slipperyMaterial", { friction: 0.0 });
+	var NORMAL = new _engine.CANNON.Material("normalMaterial", { friction: 0.3 });
 
-	// adapted from http://soledadpenades.com/articles/three-js-tutorials/drawing-the-coordinate-axes/
-
-	var LINE_WIDTH = 3;
-
-	function buildAxis(dest, hex) {
-	  var dashed = arguments.length <= 2 || arguments[2] === undefined ? false : arguments[2];
-
-	  var geometry = new _three2["default"].Geometry();
-	  var material;
-
-	  if (dashed) {
-	    material = new _three2["default"].LineDashedMaterial({ linewidth: LINE_WIDTH, color: hex, dashSize: LINE_WIDTH, gapSize: LINE_WIDTH });
-	  } else {
-	    material = new _three2["default"].LineBasicMaterial({ linewidth: LINE_WIDTH, color: hex });
-	  }
-
-	  geometry.vertices.push(new _three2["default"].Vector3(0, 0, 0));
-	  geometry.vertices.push(dest.clone());
-	  geometry.computeLineDistances(); // This one is SUPER important, otherwise dashed lines will appear as simple plain lines
-
-	  return new _three2["default"].Line(geometry, material, _three2["default"].LineSegments);
-	}
-
-	exports["default"] = function (length) {
-	  var axes = new _three2["default"].Object3D();
-	  axes.add(buildAxis(new _three2["default"].Vector3(length, 0, 0), 0xFF0000, false)); // +X
-	  axes.add(buildAxis(new _three2["default"].Vector3(-length, 0, 0), 0xFF0000, true)); // -X
-	  axes.add(buildAxis(new _three2["default"].Vector3(0, length, 0), 0x00FF00, false)); // +Y
-	  axes.add(buildAxis(new _three2["default"].Vector3(0, -length, 0), 0x00FF00, true)); // -Y
-	  axes.add(buildAxis(new _three2["default"].Vector3(0, 0, length), 0x0000FF, false)); // +Z
-	  axes.add(buildAxis(new _three2["default"].Vector3(0, 0, -length), 0x0000FF, true)); // -Z
-	  return axes;
+	exports["default"] = {
+	    SLIPPERY: SLIPPERY,
+	    NORMAL: NORMAL
 	};
-
 	module.exports = exports["default"];
 
 /***/ },
-/* 8 */
-/*!*************************************!*\
-  !*** ./static/js/util/skysphere.js ***!
-  \*************************************/
+/* 211 */
+/*!****************************!*\
+  !*** ./static/js/props.js ***!
+  \****************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -37001,30 +57110,691 @@
 
 	exports.__esModule = true;
 
-	var _three = __webpack_require__(/*! three */ 5);
+	var _engine = __webpack_require__(/*! engine */ 194);
 
-	var _three2 = _interopRequireDefault(_three);
+	var _constMaterial = __webpack_require__(/*! const/material */ 212);
 
-	exports["default"] = function (texture) {
-	  var radius = arguments.length <= 1 || arguments[1] === undefined ? 200 : arguments[1];
-	  var segments = arguments.length <= 2 || arguments[2] === undefined ? 32 : arguments[2];
+	var _constMaterial2 = _interopRequireDefault(_constMaterial);
 
-	  var geometry = new _three2["default"].SphereGeometry(radius, segments, segments);
-	  var material = new _three2["default"].MeshBasicMaterial({
-	    map: _three2["default"].ImageUtils.loadTexture(texture),
-	    side: _three2["default"].FrontSide
-	  });
-	  var mesh = new _three2["default"].Mesh(geometry, material);
-	  mesh.renderOrder = 1000.0;
-	  mesh.scale.set(-1, 1, 1);
-	  mesh.rotation.order = 'XZY';
-	  return mesh;
+	var Starfield = function Starfield(num, radius, filter) {
+	    var starsGeometry = new _engine.THREE.Geometry();
+	    var starMaterial = new _engine.THREE.MeshBasicMaterial({
+	        color: 0xDDDDFF
+	    });
+	    for (var i = 0; i < num; i++) {
+	        var phi = Math.random() * 2 * Math.PI;
+	        var costheta = Math.random() * 2 - 1;
+	        var u = Math.random();
+
+	        var theta = Math.acos(costheta);
+	        // generate some more stars near the center for exaggerated parallax effect
+	        var R, r;
+	        if (u < 0.4) {
+	            R = radius * Math.pow(u, 0.5);
+	            r = 0.5 + 2 * R / radius * Math.random();
+	        } else if (u < 0.7) {
+	            R = radius * 10 * u / 0.4;
+	            r = 10 + 2 * R / radius * Math.random();
+	        } else {
+	            R = radius * 20 * u / 0.7;
+	            r = 20 + 2 * R / radius * Math.random();
+	        }
+
+	        var x = R * Math.sin(theta) * Math.cos(phi);
+	        var y = R * Math.sin(theta) * Math.sin(phi);
+	        var z = R * Math.cos(theta);
+
+	        if (filter(x, y, z, R)) continue;
+
+	        var starGeometry = new _engine.THREE.SphereGeometry(r);
+	        var starMesh = new _engine.THREE.Mesh(starGeometry, starMaterial);
+	        starMesh.position.set(x, y, z);
+	        starMesh.updateMatrix();
+	        starsGeometry.merge(starGeometry, starMesh.matrix);
+	    }
+
+	    return new _engine.THREE.Mesh(starsGeometry, starMaterial);
 	};
 
-	module.exports = exports["default"];
+	exports.Starfield = Starfield;
+	var Sun = function Sun(radius) {
+	    var segments = arguments.length <= 1 || arguments[1] === undefined ? 32 : arguments[1];
+
+	    var light = new _engine.THREE.PointLight(_constMaterial2["default"].SUN.color.getHex(), 0.8, 10000);
+	    var geometry = new _engine.THREE.SphereGeometry(radius, segments, segments);
+	    var mesh = new _engine.THREE.Mesh(geometry, _constMaterial2["default"].SUN);
+	    light.add(mesh);
+	    return light;
+	};
+
+	exports.Sun = Sun;
+	var Grid = function Grid(worldSize, stepSize) {
+	    var grid = new _engine.THREE.GridHelper(worldSize, stepSize);
+	    grid.position.set(-stepSize / 2, 0, -stepSize / 2);
+	    return grid;
+	};
+
+	exports.Grid = Grid;
+	// adapted from http://soledadpenades.com/articles/three-js-tutorials/drawing-the-coordinate-axes/
+
+	var LINE_WIDTH = 3;
+
+	function buildAxis(dest, hex) {
+	    var dashed = arguments.length <= 2 || arguments[2] === undefined ? false : arguments[2];
+
+	    var geometry = new _engine.THREE.Geometry();
+	    var material;
+
+	    if (dashed) {
+	        material = new _engine.THREE.LineDashedMaterial({ linewidth: LINE_WIDTH, color: hex, dashSize: LINE_WIDTH, gapSize: LINE_WIDTH });
+	    } else {
+	        material = new _engine.THREE.LineBasicMaterial({ linewidth: LINE_WIDTH, color: hex });
+	    }
+
+	    geometry.vertices.push(new _engine.THREE.Vector3(0, 0, 0));
+	    geometry.vertices.push(dest.clone());
+	    geometry.computeLineDistances(); // This one is SUPER important, otherwise dashed lines will appear as simple plain lines
+
+	    return new _engine.THREE.Line(geometry, material, _engine.THREE.LineSegments);
+	};
+
+	var Axes = function Axes(length) {
+	    var axes = new _engine.THREE.Object3D();
+	    axes.add(buildAxis(new _engine.THREE.Vector3(length, 0, 0), 0xFF0000, false)); // +X
+	    axes.add(buildAxis(new _engine.THREE.Vector3(-length, 0, 0), 0xFF0000, true)); // -X
+	    axes.add(buildAxis(new _engine.THREE.Vector3(0, length, 0), 0x00FF00, false)); // +Y
+	    axes.add(buildAxis(new _engine.THREE.Vector3(0, -length, 0), 0x00FF00, true)); // -Y
+	    axes.add(buildAxis(new _engine.THREE.Vector3(0, 0, length), 0x0000FF, false)); // +Z
+	    axes.add(buildAxis(new _engine.THREE.Vector3(0, 0, -length), 0x0000FF, true)); // -Z
+	    return axes;
+	};
+	exports.Axes = Axes;
 
 /***/ },
-/* 9 */
+/* 212 */
+/*!*************************************!*\
+  !*** ./static/js/const/material.js ***!
+  \*************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	var _engine = __webpack_require__(/*! engine */ 194);
+
+	module.exports = {
+	    GROUND: new _engine.THREE.MeshPhongMaterial({
+	        color: 0x882244,
+	        emissive: 0x002200,
+	        side: _engine.THREE.DoubleSide,
+	        shininess: 10,
+	        shading: _engine.THREE.FlatShading
+	    }),
+	    WATER: new _engine.THREE.MeshPhongMaterial({
+	        color: 0x8844AA,
+	        transparent: true,
+	        opacity: 0.6,
+	        emissive: 0x004488,
+	        side: _engine.THREE.DoubleSide,
+	        shininess: 75,
+	        shading: _engine.THREE.FlatShading
+	    }),
+	    SUN: new _engine.THREE.MeshLambertMaterial({
+	        color: 0xFFAA66,
+	        side: _engine.THREE.BackSide
+	    })
+	};
+
+/***/ },
+/* 213 */
+/*!*******************************!*\
+  !*** ./static/js/util/gui.js ***!
+  \*******************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	var _interopRequireDefault = __webpack_require__(/*! babel-runtime/helpers/interop-require-default */ 1)["default"];
+
+	exports.__esModule = true;
+
+	var _vendorDatGui = __webpack_require__(/*! vendor/dat.gui */ 214);
+
+	var _vendorDatGui2 = _interopRequireDefault(_vendorDatGui);
+
+	var dat = _vendorDatGui2["default"];
+	exports.dat = dat;
+	var toggleObject = function toggleObject(name, config, scene) {
+	    var autoAdd = arguments.length <= 3 || arguments[3] === undefined ? true : arguments[3];
+
+	    var callback = function callback(enabled) {
+	        if (enabled) {
+	            scene.add(config["_" + name]);
+	        } else {
+	            scene.remove(config["_" + name]);
+	        }
+	    };
+
+	    if (autoAdd) {
+	        callback(true);
+	    }
+
+	    return callback;
+	};
+	exports.toggleObject = toggleObject;
+
+/***/ },
+/* 214 */
+/*!*************************************!*\
+  !*** ./static/js/vendor/dat.gui.js ***!
+  \*************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * dat-gui JavaScript Controller Library
+	 * http://code.google.com/p/dat-gui
+	 *
+	 * Copyright 2011 Data Arts Team, Google Creative Lab
+	 *
+	 * Licensed under the Apache License, Version 2.0 (the "License");
+	 * you may not use this file except in compliance with the License.
+	 * You may obtain a copy of the License at
+	 *
+	 * http://www.apache.org/licenses/LICENSE-2.0
+	 */ /** @namespace */'use strict';var _Object$defineProperties=__webpack_require__(/*! babel-runtime/core-js/object/define-properties */ 215)['default'];var _Object$defineProperty=__webpack_require__(/*! babel-runtime/core-js/object/define-property */ 218)['default'];var dat=dat || {}; /** @namespace */dat.gui = dat.gui || {}; /** @namespace */dat.utils = dat.utils || {}; /** @namespace */dat.controllers = dat.controllers || {}; /** @namespace */dat.dom = dat.dom || {}; /** @namespace */dat.color = dat.color || {};dat.utils.css = (function(){return {load:function load(url,doc){doc = doc || document;var link=doc.createElement('link');link.type = 'text/css';link.rel = 'stylesheet';link.href = url;doc.getElementsByTagName('head')[0].appendChild(link);},inject:function inject(css,doc){doc = doc || document;var injected=document.createElement('style');injected.type = 'text/css';injected.innerHTML = css;doc.getElementsByTagName('head')[0].appendChild(injected);}};})();dat.utils.common = (function(){var ARR_EACH=Array.prototype.forEach;var ARR_SLICE=Array.prototype.slice; /**
+	   * Band-aid methods for things that should be a lot easier in JavaScript.
+	   * Implementation and structure inspired by underscore.js
+	   * http://documentcloud.github.com/underscore/
+	   */return {BREAK:{},extend:function extend(target){this.each(ARR_SLICE.call(arguments,1),function(obj){for(var key in obj) if(!this.isUndefined(obj[key]))target[key] = obj[key];},this);return target;},defaults:function defaults(target){this.each(ARR_SLICE.call(arguments,1),function(obj){for(var key in obj) if(this.isUndefined(target[key]))target[key] = obj[key];},this);return target;},compose:function compose(){var toCall=ARR_SLICE.call(arguments);return function(){var args=ARR_SLICE.call(arguments);for(var i=toCall.length - 1;i >= 0;i--) {args = [toCall[i].apply(this,args)];}return args[0];};},each:function each(obj,itr,scope){if(!obj)return;if(ARR_EACH && obj.forEach && obj.forEach === ARR_EACH){obj.forEach(itr,scope);}else if(obj.length === obj.length + 0){ // Is number but not NaN
+	for(var key=0,l=obj.length;key < l;key++) if(key in obj && itr.call(scope,obj[key],key) === this.BREAK)return;}else {for(var key in obj) if(itr.call(scope,obj[key],key) === this.BREAK)return;}},defer:function defer(fnc){setTimeout(fnc,0);},toArray:function toArray(obj){if(obj.toArray)return obj.toArray();return ARR_SLICE.call(obj);},isUndefined:function isUndefined(obj){return obj === undefined;},isNull:function isNull(obj){return obj === null;},isNaN:function isNaN(obj){return obj !== obj;},isArray:Array.isArray || function(obj){return obj.constructor === Array;},isObject:function isObject(obj){return obj === Object(obj);},isNumber:function isNumber(obj){return obj === obj + 0;},isString:function isString(obj){return obj === obj + '';},isBoolean:function isBoolean(obj){return obj === false || obj === true;},isFunction:function isFunction(obj){return Object.prototype.toString.call(obj) === '[object Function]';}};})();dat.controllers.Controller = (function(common){ /**
+	   * @class An "abstract" class that represents a given property of an object.
+	   *
+	   * @param {Object} object The object to be manipulated
+	   * @param {string} property The name of the property to be manipulated
+	   *
+	   * @member dat.controllers
+	   */var Controller=function Controller(object,property){this.initialValue = object[property]; /**
+	     * Those who extend this class will put their DOM elements in here.
+	     * @type {DOMElement}
+	     */this.domElement = document.createElement('div'); /**
+	     * The object to manipulate
+	     * @type {Object}
+	     */this.object = object; /**
+	     * The name of the property to manipulate
+	     * @type {String}
+	     */this.property = property; /**
+	     * The function to be called on change.
+	     * @type {Function}
+	     * @ignore
+	     */this.__onChange = undefined; /**
+	     * The function to be called on finishing change.
+	     * @type {Function}
+	     * @ignore
+	     */this.__onFinishChange = undefined;};common.extend(Controller.prototype, /** @lends dat.controllers.Controller.prototype */{ /**
+	         * Specify that a function fire every time someone changes the value with
+	         * this Controller.
+	         *
+	         * @param {Function} fnc This function will be called whenever the value
+	         * is modified via this Controller.
+	         * @returns {dat.controllers.Controller} this
+	         */onChange:function onChange(fnc){this.__onChange = fnc;return this;}, /**
+	         * Specify that a function fire every time someone "finishes" changing
+	         * the value wih this Controller. Useful for values that change
+	         * incrementally like numbers or strings.
+	         *
+	         * @param {Function} fnc This function will be called whenever
+	         * someone "finishes" changing the value via this Controller.
+	         * @returns {dat.controllers.Controller} this
+	         */onFinishChange:function onFinishChange(fnc){this.__onFinishChange = fnc;return this;}, /**
+	         * Change the value of <code>object[property]</code>
+	         *
+	         * @param {Object} newValue The new value of <code>object[property]</code>
+	         */setValue:function setValue(newValue){this.object[this.property] = newValue;if(this.__onChange){this.__onChange.call(this,newValue);}this.updateDisplay();return this;}, /**
+	         * Gets the value of <code>object[property]</code>
+	         *
+	         * @returns {Object} The current value of <code>object[property]</code>
+	         */getValue:function getValue(){return this.object[this.property];}, /**
+	         * Refreshes the visual display of a Controller in order to keep sync
+	         * with the object's current value.
+	         * @returns {dat.controllers.Controller} this
+	         */updateDisplay:function updateDisplay(){return this;}, /**
+	         * @returns {Boolean} true if the value has deviated from initialValue
+	         */isModified:function isModified(){return this.initialValue !== this.getValue();}});return Controller;})(dat.utils.common);dat.dom.dom = (function(common){var EVENT_MAP={'HTMLEvents':['change'],'MouseEvents':['click','mousemove','mousedown','mouseup','mouseover'],'KeyboardEvents':['keydown']};var EVENT_MAP_INV={};common.each(EVENT_MAP,function(v,k){common.each(v,function(e){EVENT_MAP_INV[e] = k;});});var CSS_VALUE_PIXELS=/(\d+(\.\d+)?)px/;function cssValueToPixels(val){if(val === '0' || common.isUndefined(val))return 0;var match=val.match(CSS_VALUE_PIXELS);if(!common.isNull(match)){return parseFloat(match[1]);} // TODO ...ems? %?
+	return 0;} /**
+	   * @namespace
+	   * @member dat.dom
+	   */var dom={ /**
+	     * 
+	     * @param elem
+	     * @param selectable
+	     */makeSelectable:function makeSelectable(elem,selectable){if(elem === undefined || elem.style === undefined)return;elem.onselectstart = selectable?function(){return false;}:function(){};elem.style.MozUserSelect = selectable?'auto':'none';elem.style.KhtmlUserSelect = selectable?'auto':'none';elem.unselectable = selectable?'on':'off';}, /**
+	     *
+	     * @param elem
+	     * @param horizontal
+	     * @param vertical
+	     */makeFullscreen:function makeFullscreen(elem,horizontal,vertical){if(common.isUndefined(horizontal))horizontal = true;if(common.isUndefined(vertical))vertical = true;elem.style.position = 'absolute';if(horizontal){elem.style.left = 0;elem.style.right = 0;}if(vertical){elem.style.top = 0;elem.style.bottom = 0;}}, /**
+	     *
+	     * @param elem
+	     * @param eventType
+	     * @param params
+	     */fakeEvent:function fakeEvent(elem,eventType,params,aux){params = params || {};var className=EVENT_MAP_INV[eventType];if(!className){throw new Error('Event type ' + eventType + ' not supported.');}var evt=document.createEvent(className);switch(className){case 'MouseEvents':var clientX=params.x || params.clientX || 0;var clientY=params.y || params.clientY || 0;evt.initMouseEvent(eventType,params.bubbles || false,params.cancelable || true,window,params.clickCount || 1,0, //screen X
+	0, //screen Y
+	clientX, //client X
+	clientY, //client Y
+	false,false,false,false,0,null);break;case 'KeyboardEvents':var init=evt.initKeyboardEvent || evt.initKeyEvent; // webkit || moz
+	common.defaults(params,{cancelable:true,ctrlKey:false,altKey:false,shiftKey:false,metaKey:false,keyCode:undefined,charCode:undefined});init(eventType,params.bubbles || false,params.cancelable,window,params.ctrlKey,params.altKey,params.shiftKey,params.metaKey,params.keyCode,params.charCode);break;default:evt.initEvent(eventType,params.bubbles || false,params.cancelable || true);break;}common.defaults(evt,aux);elem.dispatchEvent(evt);}, /**
+	     *
+	     * @param elem
+	     * @param event
+	     * @param func
+	     * @param bool
+	     */bind:function bind(elem,event,func,bool){bool = bool || false;if(elem.addEventListener)elem.addEventListener(event,func,bool);else if(elem.attachEvent)elem.attachEvent('on' + event,func);return dom;}, /**
+	     *
+	     * @param elem
+	     * @param event
+	     * @param func
+	     * @param bool
+	     */unbind:function unbind(elem,event,func,bool){bool = bool || false;if(elem.removeEventListener)elem.removeEventListener(event,func,bool);else if(elem.detachEvent)elem.detachEvent('on' + event,func);return dom;}, /**
+	     *
+	     * @param elem
+	     * @param className
+	     */addClass:function addClass(elem,className){if(elem.className === undefined){elem.className = className;}else if(elem.className !== className){var classes=elem.className.split(/ +/);if(classes.indexOf(className) == -1){classes.push(className);elem.className = classes.join(' ').replace(/^\s+/,'').replace(/\s+$/,'');}}return dom;}, /**
+	     *
+	     * @param elem
+	     * @param className
+	     */removeClass:function removeClass(elem,className){if(className){if(elem.className === undefined){ // elem.className = className;
+	}else if(elem.className === className){elem.removeAttribute('class');}else {var classes=elem.className.split(/ +/);var index=classes.indexOf(className);if(index != -1){classes.splice(index,1);elem.className = classes.join(' ');}}}else {elem.className = undefined;}return dom;},hasClass:function hasClass(elem,className){return new RegExp('(?:^|\\s+)' + className + '(?:\\s+|$)').test(elem.className) || false;}, /**
+	     *
+	     * @param elem
+	     */getWidth:function getWidth(elem){var style=getComputedStyle(elem);return cssValueToPixels(style['border-left-width']) + cssValueToPixels(style['border-right-width']) + cssValueToPixels(style['padding-left']) + cssValueToPixels(style['padding-right']) + cssValueToPixels(style['width']);}, /**
+	     *
+	     * @param elem
+	     */getHeight:function getHeight(elem){var style=getComputedStyle(elem);return cssValueToPixels(style['border-top-width']) + cssValueToPixels(style['border-bottom-width']) + cssValueToPixels(style['padding-top']) + cssValueToPixels(style['padding-bottom']) + cssValueToPixels(style['height']);}, /**
+	     *
+	     * @param elem
+	     */getOffset:function getOffset(elem){var offset={left:0,top:0};if(elem.offsetParent){do {offset.left += elem.offsetLeft;offset.top += elem.offsetTop;}while(elem = elem.offsetParent);}return offset;}, // http://stackoverflow.com/posts/2684561/revisions
+	/**
+	     * 
+	     * @param elem
+	     */isActive:function isActive(elem){return elem === document.activeElement && (elem.type || elem.href);}};return dom;})(dat.utils.common);dat.controllers.OptionController = (function(Controller,dom,common){ /**
+	   * @class Provides a select input to alter the property of an object, using a
+	   * list of accepted values.
+	   *
+	   * @extends dat.controllers.Controller
+	   *
+	   * @param {Object} object The object to be manipulated
+	   * @param {string} property The name of the property to be manipulated
+	   * @param {Object|string[]} options A map of labels to acceptable values, or
+	   * a list of acceptable string values.
+	   *
+	   * @member dat.controllers
+	   */var OptionController=function OptionController(object,property,options){OptionController.superclass.call(this,object,property);var _this=this; /**
+	     * The drop down menu
+	     * @ignore
+	     */this.__select = document.createElement('select');if(common.isArray(options)){var map={};common.each(options,function(element){map[element] = element;});options = map;}common.each(options,function(value,key){var opt=document.createElement('option');opt.innerHTML = key;opt.setAttribute('value',value);_this.__select.appendChild(opt);}); // Acknowledge original value
+	this.updateDisplay();dom.bind(this.__select,'change',function(){var desiredValue=this.options[this.selectedIndex].value;_this.setValue(desiredValue);});this.domElement.appendChild(this.__select);};OptionController.superclass = Controller;common.extend(OptionController.prototype,Controller.prototype,{setValue:function setValue(v){var toReturn=OptionController.superclass.prototype.setValue.call(this,v);if(this.__onFinishChange){this.__onFinishChange.call(this,this.getValue());}return toReturn;},updateDisplay:function updateDisplay(){this.__select.value = this.getValue();return OptionController.superclass.prototype.updateDisplay.call(this);}});return OptionController;})(dat.controllers.Controller,dat.dom.dom,dat.utils.common);dat.controllers.NumberController = (function(Controller,common){ /**
+	   * @class Represents a given property of an object that is a number.
+	   *
+	   * @extends dat.controllers.Controller
+	   *
+	   * @param {Object} object The object to be manipulated
+	   * @param {string} property The name of the property to be manipulated
+	   * @param {Object} [params] Optional parameters
+	   * @param {Number} [params.min] Minimum allowed value
+	   * @param {Number} [params.max] Maximum allowed value
+	   * @param {Number} [params.step] Increment by which to change value
+	   *
+	   * @member dat.controllers
+	   */var NumberController=function NumberController(object,property,params){NumberController.superclass.call(this,object,property);params = params || {};this.__min = params.min;this.__max = params.max;this.__step = params.step;if(common.isUndefined(this.__step)){if(this.initialValue == 0){this.__impliedStep = 1; // What are we, psychics?
+	}else { // Hey Doug, check this out.
+	this.__impliedStep = Math.pow(10,Math.floor(Math.log(Math.abs(this.initialValue)) / Math.LN10)) / 10;}}else {this.__impliedStep = this.__step;}this.__precision = numDecimals(this.__impliedStep);};NumberController.superclass = Controller;common.extend(NumberController.prototype,Controller.prototype, /** @lends dat.controllers.NumberController.prototype */{setValue:function setValue(v){if(this.__min !== undefined && v < this.__min){v = this.__min;}else if(this.__max !== undefined && v > this.__max){v = this.__max;}if(this.__step !== undefined && v % this.__step != 0){v = Math.round(v / this.__step) * this.__step;}return NumberController.superclass.prototype.setValue.call(this,v);}, /**
+	         * Specify a minimum value for <code>object[property]</code>.
+	         *
+	         * @param {Number} minValue The minimum value for
+	         * <code>object[property]</code>
+	         * @returns {dat.controllers.NumberController} this
+	         */min:function min(v){this.__min = v;return this;}, /**
+	         * Specify a maximum value for <code>object[property]</code>.
+	         *
+	         * @param {Number} maxValue The maximum value for
+	         * <code>object[property]</code>
+	         * @returns {dat.controllers.NumberController} this
+	         */max:function max(v){this.__max = v;return this;}, /**
+	         * Specify a step value that dat.controllers.NumberController
+	         * increments by.
+	         *
+	         * @param {Number} stepValue The step value for
+	         * dat.controllers.NumberController
+	         * @default if minimum and maximum specified increment is 1% of the
+	         * difference otherwise stepValue is 1
+	         * @returns {dat.controllers.NumberController} this
+	         */step:function step(v){this.__step = v;this.__impliedStep = v;this.__precision = numDecimals(v);return this;}});function numDecimals(x){x = x.toString();if(x.indexOf('.') > -1){return x.length - x.indexOf('.') - 1;}else {return 0;}}return NumberController;})(dat.controllers.Controller,dat.utils.common);dat.controllers.NumberControllerBox = (function(NumberController,dom,common){ /**
+	   * @class Represents a given property of an object that is a number and
+	   * provides an input element with which to manipulate it.
+	   *
+	   * @extends dat.controllers.Controller
+	   * @extends dat.controllers.NumberController
+	   *
+	   * @param {Object} object The object to be manipulated
+	   * @param {string} property The name of the property to be manipulated
+	   * @param {Object} [params] Optional parameters
+	   * @param {Number} [params.min] Minimum allowed value
+	   * @param {Number} [params.max] Maximum allowed value
+	   * @param {Number} [params.step] Increment by which to change value
+	   *
+	   * @member dat.controllers
+	   */var NumberControllerBox=function NumberControllerBox(object,property,params){this.__truncationSuspended = false;NumberControllerBox.superclass.call(this,object,property,params);var _this=this; /**
+	     * {Number} Previous mouse y position
+	     * @ignore
+	     */var prev_y;this.__input = document.createElement('input');this.__input.setAttribute('type','text'); // Makes it so manually specified values are not truncated.
+	dom.bind(this.__input,'change',onChange);dom.bind(this.__input,'blur',onBlur);dom.bind(this.__input,'mousedown',onMouseDown);dom.bind(this.__input,'keydown',function(e){ // When pressing entire, you can be as precise as you want.
+	if(e.keyCode === 13){_this.__truncationSuspended = true;this.blur();_this.__truncationSuspended = false;}});function onChange(){var attempted=parseFloat(_this.__input.value);if(!common.isNaN(attempted))_this.setValue(attempted);}function onBlur(){onChange();if(_this.__onFinishChange){_this.__onFinishChange.call(_this,_this.getValue());}}function onMouseDown(e){dom.bind(window,'mousemove',onMouseDrag);dom.bind(window,'mouseup',onMouseUp);prev_y = e.clientY;}function onMouseDrag(e){var diff=prev_y - e.clientY;_this.setValue(_this.getValue() + diff * _this.__impliedStep);prev_y = e.clientY;}function onMouseUp(){dom.unbind(window,'mousemove',onMouseDrag);dom.unbind(window,'mouseup',onMouseUp);}this.updateDisplay();this.domElement.appendChild(this.__input);};NumberControllerBox.superclass = NumberController;common.extend(NumberControllerBox.prototype,NumberController.prototype,{updateDisplay:function updateDisplay(){this.__input.value = this.__truncationSuspended?this.getValue():roundToDecimal(this.getValue(),this.__precision);return NumberControllerBox.superclass.prototype.updateDisplay.call(this);}});function roundToDecimal(value,decimals){var tenTo=Math.pow(10,decimals);return Math.round(value * tenTo) / tenTo;}return NumberControllerBox;})(dat.controllers.NumberController,dat.dom.dom,dat.utils.common);dat.controllers.NumberControllerSlider = (function(NumberController,dom,css,common,styleSheet){ /**
+	   * @class Represents a given property of an object that is a number, contains
+	   * a minimum and maximum, and provides a slider element with which to
+	   * manipulate it. It should be noted that the slider element is made up of
+	   * <code>&lt;div&gt;</code> tags, <strong>not</strong> the html5
+	   * <code>&lt;slider&gt;</code> element.
+	   *
+	   * @extends dat.controllers.Controller
+	   * @extends dat.controllers.NumberController
+	   * 
+	   * @param {Object} object The object to be manipulated
+	   * @param {string} property The name of the property to be manipulated
+	   * @param {Number} minValue Minimum allowed value
+	   * @param {Number} maxValue Maximum allowed value
+	   * @param {Number} stepValue Increment by which to change value
+	   *
+	   * @member dat.controllers
+	   */var NumberControllerSlider=function NumberControllerSlider(object,property,min,max,step){NumberControllerSlider.superclass.call(this,object,property,{min:min,max:max,step:step});var _this=this;this.__background = document.createElement('div');this.__foreground = document.createElement('div');dom.bind(this.__background,'mousedown',onMouseDown);dom.addClass(this.__background,'slider');dom.addClass(this.__foreground,'slider-fg');function onMouseDown(e){dom.bind(window,'mousemove',onMouseDrag);dom.bind(window,'mouseup',onMouseUp);onMouseDrag(e);}function onMouseDrag(e){e.preventDefault();var offset=dom.getOffset(_this.__background);var width=dom.getWidth(_this.__background);_this.setValue(map(e.clientX,offset.left,offset.left + width,_this.__min,_this.__max));return false;}function onMouseUp(){dom.unbind(window,'mousemove',onMouseDrag);dom.unbind(window,'mouseup',onMouseUp);if(_this.__onFinishChange){_this.__onFinishChange.call(_this,_this.getValue());}}this.updateDisplay();this.__background.appendChild(this.__foreground);this.domElement.appendChild(this.__background);};NumberControllerSlider.superclass = NumberController; /**
+	   * Injects default stylesheet for slider elements.
+	   */NumberControllerSlider.useDefaultStyles = function(){css.inject(styleSheet);};common.extend(NumberControllerSlider.prototype,NumberController.prototype,{updateDisplay:function updateDisplay(){var pct=(this.getValue() - this.__min) / (this.__max - this.__min);this.__foreground.style.width = pct * 100 + '%';return NumberControllerSlider.superclass.prototype.updateDisplay.call(this);}});function map(v,i1,i2,o1,o2){return o1 + (o2 - o1) * ((v - i1) / (i2 - i1));}return NumberControllerSlider;})(dat.controllers.NumberController,dat.dom.dom,dat.utils.css,dat.utils.common,"/**\n * dat-gui JavaScript Controller Library\n * http://code.google.com/p/dat-gui\n *\n * Copyright 2011 Data Arts Team, Google Creative Lab\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n * http://www.apache.org/licenses/LICENSE-2.0\n */\n\n.slider {\n  box-shadow: inset 0 2px 4px rgba(0,0,0,0.15);\n  height: 1em;\n  border-radius: 1em;\n  background-color: #eee;\n  padding: 0 0.5em;\n  overflow: hidden;\n}\n\n.slider-fg {\n  padding: 1px 0 2px 0;\n  background-color: #aaa;\n  height: 1em;\n  margin-left: -0.5em;\n  padding-right: 0.5em;\n  border-radius: 1em 0 0 1em;\n}\n\n.slider-fg:after {\n  display: inline-block;\n  border-radius: 1em;\n  background-color: #fff;\n  border:  1px solid #aaa;\n  content: '';\n  float: right;\n  margin-right: -1em;\n  margin-top: -1px;\n  height: 0.9em;\n  width: 0.9em;\n}");dat.controllers.FunctionController = (function(Controller,dom,common){ /**
+	   * @class Provides a GUI interface to fire a specified method, a property of an object.
+	   *
+	   * @extends dat.controllers.Controller
+	   *
+	   * @param {Object} object The object to be manipulated
+	   * @param {string} property The name of the property to be manipulated
+	   *
+	   * @member dat.controllers
+	   */var FunctionController=function FunctionController(object,property,text){FunctionController.superclass.call(this,object,property);var _this=this;this.__button = document.createElement('div');this.__button.innerHTML = text === undefined?'Fire':text;dom.bind(this.__button,'click',function(e){e.preventDefault();_this.fire();return false;});dom.addClass(this.__button,'button');this.domElement.appendChild(this.__button);};FunctionController.superclass = Controller;common.extend(FunctionController.prototype,Controller.prototype,{fire:function fire(){if(this.__onChange){this.__onChange.call(this);}this.getValue().call(this.object);if(this.__onFinishChange){this.__onFinishChange.call(this,this.getValue());}}});return FunctionController;})(dat.controllers.Controller,dat.dom.dom,dat.utils.common);dat.controllers.BooleanController = (function(Controller,dom,common){ /**
+	   * @class Provides a checkbox input to alter the boolean property of an object.
+	   * @extends dat.controllers.Controller
+	   *
+	   * @param {Object} object The object to be manipulated
+	   * @param {string} property The name of the property to be manipulated
+	   *
+	   * @member dat.controllers
+	   */var BooleanController=function BooleanController(object,property){BooleanController.superclass.call(this,object,property);var _this=this;this.__prev = this.getValue();this.__checkbox = document.createElement('input');this.__checkbox.setAttribute('type','checkbox');dom.bind(this.__checkbox,'change',onChange,false);this.domElement.appendChild(this.__checkbox); // Match original value
+	this.updateDisplay();function onChange(){_this.setValue(!_this.__prev);}};BooleanController.superclass = Controller;common.extend(BooleanController.prototype,Controller.prototype,{setValue:function setValue(v){var toReturn=BooleanController.superclass.prototype.setValue.call(this,v);if(this.__onFinishChange){this.__onFinishChange.call(this,this.getValue());}this.__prev = this.getValue();return toReturn;},updateDisplay:function updateDisplay(){if(this.getValue() === true){this.__checkbox.setAttribute('checked','checked');this.__checkbox.checked = true;}else {this.__checkbox.checked = false;}return BooleanController.superclass.prototype.updateDisplay.call(this);}});return BooleanController;})(dat.controllers.Controller,dat.dom.dom,dat.utils.common);dat.color.toString = (function(common){return function(color){if(color.a == 1 || common.isUndefined(color.a)){var s=color.hex.toString(16);while(s.length < 6) {s = '0' + s;}return '#' + s;}else {return 'rgba(' + Math.round(color.r) + ',' + Math.round(color.g) + ',' + Math.round(color.b) + ',' + color.a + ')';}};})(dat.utils.common);dat.color.interpret = (function(toString,common){var result,toReturn;var interpret=function interpret(){toReturn = false;var original=arguments.length > 1?common.toArray(arguments):arguments[0];common.each(INTERPRETATIONS,function(family){if(family.litmus(original)){common.each(family.conversions,function(conversion,conversionName){result = conversion.read(original);if(toReturn === false && result !== false){toReturn = result;result.conversionName = conversionName;result.conversion = conversion;return common.BREAK;}});return common.BREAK;}});return toReturn;};var INTERPRETATIONS=[ // Strings
+	{litmus:common.isString,conversions:{THREE_CHAR_HEX:{read:function read(original){var test=original.match(/^#([A-F0-9])([A-F0-9])([A-F0-9])$/i);if(test === null)return false;return {space:'HEX',hex:parseInt('0x' + test[1].toString() + test[1].toString() + test[2].toString() + test[2].toString() + test[3].toString() + test[3].toString())};},write:toString},SIX_CHAR_HEX:{read:function read(original){var test=original.match(/^#([A-F0-9]{6})$/i);if(test === null)return false;return {space:'HEX',hex:parseInt('0x' + test[1].toString())};},write:toString},CSS_RGB:{read:function read(original){var test=original.match(/^rgb\(\s*(.+)\s*,\s*(.+)\s*,\s*(.+)\s*\)/);if(test === null)return false;return {space:'RGB',r:parseFloat(test[1]),g:parseFloat(test[2]),b:parseFloat(test[3])};},write:toString},CSS_RGBA:{read:function read(original){var test=original.match(/^rgba\(\s*(.+)\s*,\s*(.+)\s*,\s*(.+)\s*\,\s*(.+)\s*\)/);if(test === null)return false;return {space:'RGB',r:parseFloat(test[1]),g:parseFloat(test[2]),b:parseFloat(test[3]),a:parseFloat(test[4])};},write:toString}}}, // Numbers
+	{litmus:common.isNumber,conversions:{HEX:{read:function read(original){return {space:'HEX',hex:original,conversionName:'HEX'};},write:function write(color){return color.hex;}}}}, // Arrays
+	{litmus:common.isArray,conversions:{RGB_ARRAY:{read:function read(original){if(original.length != 3)return false;return {space:'RGB',r:original[0],g:original[1],b:original[2]};},write:function write(color){return [color.r,color.g,color.b];}},RGBA_ARRAY:{read:function read(original){if(original.length != 4)return false;return {space:'RGB',r:original[0],g:original[1],b:original[2],a:original[3]};},write:function write(color){return [color.r,color.g,color.b,color.a];}}}}, // Objects
+	{litmus:common.isObject,conversions:{RGBA_OBJ:{read:function read(original){if(common.isNumber(original.r) && common.isNumber(original.g) && common.isNumber(original.b) && common.isNumber(original.a)){return {space:'RGB',r:original.r,g:original.g,b:original.b,a:original.a};}return false;},write:function write(color){return {r:color.r,g:color.g,b:color.b,a:color.a};}},RGB_OBJ:{read:function read(original){if(common.isNumber(original.r) && common.isNumber(original.g) && common.isNumber(original.b)){return {space:'RGB',r:original.r,g:original.g,b:original.b};}return false;},write:function write(color){return {r:color.r,g:color.g,b:color.b};}},HSVA_OBJ:{read:function read(original){if(common.isNumber(original.h) && common.isNumber(original.s) && common.isNumber(original.v) && common.isNumber(original.a)){return {space:'HSV',h:original.h,s:original.s,v:original.v,a:original.a};}return false;},write:function write(color){return {h:color.h,s:color.s,v:color.v,a:color.a};}},HSV_OBJ:{read:function read(original){if(common.isNumber(original.h) && common.isNumber(original.s) && common.isNumber(original.v)){return {space:'HSV',h:original.h,s:original.s,v:original.v};}return false;},write:function write(color){return {h:color.h,s:color.s,v:color.v};}}}}];return interpret;})(dat.color.toString,dat.utils.common);dat.GUI = dat.gui.GUI = (function(css,saveDialogueContents,styleSheet,controllerFactory,Controller,BooleanController,FunctionController,NumberControllerBox,NumberControllerSlider,OptionController,ColorController,requestAnimationFrame,CenteredDiv,dom,common){css.inject(styleSheet); /** Outer-most className for GUI's */var CSS_NAMESPACE='dg';var HIDE_KEY_CODE=72; /** The only value shared between the JS and SCSS. Use caution. */var CLOSE_BUTTON_HEIGHT=20;var DEFAULT_DEFAULT_PRESET_NAME='Default';var SUPPORTS_LOCAL_STORAGE=(function(){try{return 'localStorage' in window && window['localStorage'] !== null;}catch(e) {return false;}})();var SAVE_DIALOGUE; /** Have we yet to create an autoPlace GUI? */var auto_place_virgin=true; /** Fixed position div that auto place GUI's go inside */var auto_place_container; /** Are we hiding the GUI's ? */var hide=false; /** GUI's which should be hidden */var hideable_guis=[]; /**
+	   * A lightweight controller library for JavaScript. It allows you to easily
+	   * manipulate variables and fire functions on the fly.
+	   * @class
+	   *
+	   * @member dat.gui
+	   *
+	   * @param {Object} [params]
+	   * @param {String} [params.name] The name of this GUI.
+	   * @param {Object} [params.load] JSON object representing the saved state of
+	   * this GUI.
+	   * @param {Boolean} [params.auto=true]
+	   * @param {dat.gui.GUI} [params.parent] The GUI I'm nested in.
+	   * @param {Boolean} [params.closed] If true, starts closed
+	   */var GUI=function GUI(params){var _this=this; /**
+	     * Outermost DOM Element
+	     * @type DOMElement
+	     */this.domElement = document.createElement('div');this.__ul = document.createElement('ul');this.domElement.appendChild(this.__ul);dom.addClass(this.domElement,CSS_NAMESPACE); /**
+	     * Nested GUI's by name
+	     * @ignore
+	     */this.__folders = {};this.__controllers = []; /**
+	     * List of objects I'm remembering for save, only used in top level GUI
+	     * @ignore
+	     */this.__rememberedObjects = []; /**
+	     * Maps the index of remembered objects to a map of controllers, only used
+	     * in top level GUI.
+	     *
+	     * @private
+	     * @ignore
+	     *
+	     * @example
+	     * [
+	     *  {
+	     *    propertyName: Controller,
+	     *    anotherPropertyName: Controller
+	     *  },
+	     *  {
+	     *    propertyName: Controller
+	     *  }
+	     * ]
+	     */this.__rememberedObjectIndecesToControllers = [];this.__listening = [];params = params || {}; // Default parameters
+	params = common.defaults(params,{autoPlace:true,width:GUI.DEFAULT_WIDTH});params = common.defaults(params,{resizable:params.autoPlace,hideable:params.autoPlace});if(!common.isUndefined(params.load)){ // Explicit preset
+	if(params.preset)params.load.preset = params.preset;}else {params.load = {preset:DEFAULT_DEFAULT_PRESET_NAME};}if(common.isUndefined(params.parent) && params.hideable){hideable_guis.push(this);} // Only root level GUI's are resizable.
+	params.resizable = common.isUndefined(params.parent) && params.resizable;if(params.autoPlace && common.isUndefined(params.scrollable)){params.scrollable = true;} //    params.scrollable = common.isUndefined(params.parent) && params.scrollable === true;
+	// Not part of params because I don't want people passing this in via
+	// constructor. Should be a 'remembered' value.
+	var use_local_storage=SUPPORTS_LOCAL_STORAGE && localStorage.getItem(getLocalStorageHash(this,'isLocal')) === 'true';var saveToLocalStorage;_Object$defineProperties(this, /** @lends dat.gui.GUI.prototype */{ /**
+	           * The parent <code>GUI</code>
+	           * @type dat.gui.GUI
+	           */parent:{get:function get(){return params.parent;}},scrollable:{get:function get(){return params.scrollable;}}, /**
+	           * Handles <code>GUI</code>'s element placement for you
+	           * @type Boolean
+	           */autoPlace:{get:function get(){return params.autoPlace;}}, /**
+	           * The identifier for a set of saved values
+	           * @type String
+	           */preset:{get:function get(){if(_this.parent){return _this.getRoot().preset;}else {return params.load.preset;}},set:function set(v){if(_this.parent){_this.getRoot().preset = v;}else {params.load.preset = v;}setPresetSelectIndex(this);_this.revert();}}, /**
+	           * The width of <code>GUI</code> element
+	           * @type Number
+	           */width:{get:function get(){return params.width;},set:function set(v){params.width = v;setWidth(_this,v);}}, /**
+	           * The name of <code>GUI</code>. Used for folders. i.e
+	           * a folder's name
+	           * @type String
+	           */name:{get:function get(){return params.name;},set:function set(v){ // TODO Check for collisions among sibling folders
+	params.name = v;if(title_row_name){title_row_name.innerHTML = params.name;}}}, /**
+	           * Whether the <code>GUI</code> is collapsed or not
+	           * @type Boolean
+	           */closed:{get:function get(){return params.closed;},set:function set(v){params.closed = v;if(params.closed){dom.addClass(_this.__ul,GUI.CLASS_CLOSED);}else {dom.removeClass(_this.__ul,GUI.CLASS_CLOSED);} // For browsers that aren't going to respect the CSS transition,
+	// Lets just check our height against the window height right off
+	// the bat.
+	this.onResize();if(_this.__closeButton){_this.__closeButton.innerHTML = v?GUI.TEXT_OPEN:GUI.TEXT_CLOSED;}}}, /**
+	           * Contains all presets
+	           * @type Object
+	           */load:{get:function get(){return params.load;}}, /**
+	           * Determines whether or not to use <a href="https://developer.mozilla.org/en/DOM/Storage#localStorage">localStorage</a> as the means for
+	           * <code>remember</code>ing
+	           * @type Boolean
+	           */useLocalStorage:{get:function get(){return use_local_storage;},set:function set(bool){if(SUPPORTS_LOCAL_STORAGE){use_local_storage = bool;if(bool){dom.bind(window,'unload',saveToLocalStorage);}else {dom.unbind(window,'unload',saveToLocalStorage);}localStorage.setItem(getLocalStorageHash(_this,'isLocal'),bool);}}}}); // Are we a root level GUI?
+	if(common.isUndefined(params.parent)){params.closed = false;dom.addClass(this.domElement,GUI.CLASS_MAIN);dom.makeSelectable(this.domElement,false); // Are we supposed to be loading locally?
+	if(SUPPORTS_LOCAL_STORAGE){if(use_local_storage){_this.useLocalStorage = true;var saved_gui=localStorage.getItem(getLocalStorageHash(this,'gui'));if(saved_gui){params.load = JSON.parse(saved_gui);}}}this.__closeButton = document.createElement('div');this.__closeButton.innerHTML = GUI.TEXT_CLOSED;dom.addClass(this.__closeButton,GUI.CLASS_CLOSE_BUTTON);this.domElement.appendChild(this.__closeButton);dom.bind(this.__closeButton,'click',function(){_this.closed = !_this.closed;}); // Oh, you're a nested GUI!
+	}else {if(params.closed === undefined){params.closed = true;}var title_row_name=document.createTextNode(params.name);dom.addClass(title_row_name,'controller-name');var title_row=addRow(_this,title_row_name);var on_click_title=function on_click_title(e){e.preventDefault();_this.closed = !_this.closed;return false;};dom.addClass(this.__ul,GUI.CLASS_CLOSED);dom.addClass(title_row,'title');dom.bind(title_row,'click',on_click_title);if(!params.closed){this.closed = false;}}if(params.autoPlace){if(common.isUndefined(params.parent)){if(auto_place_virgin){auto_place_container = document.createElement('div');dom.addClass(auto_place_container,CSS_NAMESPACE);dom.addClass(auto_place_container,GUI.CLASS_AUTO_PLACE_CONTAINER);document.body.appendChild(auto_place_container);auto_place_virgin = false;} // Put it in the dom for you.
+	auto_place_container.appendChild(this.domElement); // Apply the auto styles
+	dom.addClass(this.domElement,GUI.CLASS_AUTO_PLACE);} // Make it not elastic.
+	if(!this.parent)setWidth(_this,params.width);}dom.bind(window,'resize',function(){_this.onResize();});dom.bind(this.__ul,'webkitTransitionEnd',function(){_this.onResize();});dom.bind(this.__ul,'transitionend',function(){_this.onResize();});dom.bind(this.__ul,'oTransitionEnd',function(){_this.onResize();});this.onResize();if(params.resizable){addResizeHandle(this);}saveToLocalStorage = function(){if(SUPPORTS_LOCAL_STORAGE && localStorage.getItem(getLocalStorageHash(_this,'isLocal')) === 'true'){localStorage.setItem(getLocalStorageHash(_this,'gui'),JSON.stringify(_this.getSaveObject()));}}; // expose this method publicly
+	this.saveToLocalStorageIfPossible = saveToLocalStorage;var root=_this.getRoot();function resetWidth(){var root=_this.getRoot();root.width += 1;common.defer(function(){root.width -= 1;});}if(!params.parent){resetWidth();}};GUI.toggleHide = function(){hide = !hide;common.each(hideable_guis,function(gui){gui.domElement.style.zIndex = hide?-999:999;gui.domElement.style.opacity = hide?0:1;});};GUI.CLASS_AUTO_PLACE = 'a';GUI.CLASS_AUTO_PLACE_CONTAINER = 'ac';GUI.CLASS_MAIN = 'main';GUI.CLASS_CONTROLLER_ROW = 'cr';GUI.CLASS_TOO_TALL = 'taller-than-window';GUI.CLASS_CLOSED = 'closed';GUI.CLASS_CLOSE_BUTTON = 'close-button';GUI.CLASS_DRAG = 'drag';GUI.DEFAULT_WIDTH = 245;GUI.TEXT_CLOSED = 'Close Controls';GUI.TEXT_OPEN = 'Open Controls';dom.bind(window,'keydown',function(e){if(document.activeElement.type !== 'text' && (e.which === HIDE_KEY_CODE || e.keyCode == HIDE_KEY_CODE)){GUI.toggleHide();}},false);common.extend(GUI.prototype, /** @lends dat.gui.GUI */{ /**
+	         * @param object
+	         * @param property
+	         * @returns {dat.controllers.Controller} The new controller that was added.
+	         * @instance
+	         */add:function add(object,property){return _add(this,object,property,{factoryArgs:Array.prototype.slice.call(arguments,2)});}, /**
+	         * @param object
+	         * @param property
+	         * @returns {dat.controllers.ColorController} The new controller that was added.
+	         * @instance
+	         */addColor:function addColor(object,property){return _add(this,object,property,{color:true});}, /**
+	         * @param controller
+	         * @instance
+	         */remove:function remove(controller){ // TODO listening?
+	this.__ul.removeChild(controller.__li);this.__controllers.splice(this.__controllers.indexOf(controller),1);var _this=this;common.defer(function(){_this.onResize();});},destroy:function destroy(){if(this.autoPlace){auto_place_container.removeChild(this.domElement);}}, /**
+	         * @param name
+	         * @returns {dat.gui.GUI} The new folder.
+	         * @throws {Error} if this GUI already has a folder by the specified
+	         * name
+	         * @instance
+	         */addFolder:function addFolder(name){ // We have to prevent collisions on names in order to have a key
+	// by which to remember saved values
+	if(this.__folders[name] !== undefined){throw new Error('You already have a folder in this GUI by the' + ' name "' + name + '"');}var new_gui_params={name:name,parent:this}; // We need to pass down the autoPlace trait so that we can
+	// attach event listeners to open/close folder actions to
+	// ensure that a scrollbar appears if the window is too short.
+	new_gui_params.autoPlace = this.autoPlace; // Do we have saved appearance data for this folder?
+	if(this.load &&  // Anything loaded?
+	this.load.folders &&  // Was my parent a dead-end?
+	this.load.folders[name]){ // Did daddy remember me?
+	// Start me closed if I was closed
+	new_gui_params.closed = this.load.folders[name].closed; // Pass down the loaded data
+	new_gui_params.load = this.load.folders[name];}var gui=new GUI(new_gui_params);this.__folders[name] = gui;var li=addRow(this,gui.domElement);dom.addClass(li,'folder');return gui;},open:function open(){this.closed = false;},close:function close(){this.closed = true;},onResize:function onResize(){var root=this.getRoot();if(root.scrollable){var top=dom.getOffset(root.__ul).top;var h=0;common.each(root.__ul.childNodes,function(node){if(!(root.autoPlace && node === root.__save_row))h += dom.getHeight(node);});if(window.innerHeight - top - CLOSE_BUTTON_HEIGHT < h){dom.addClass(root.domElement,GUI.CLASS_TOO_TALL);root.__ul.style.height = window.innerHeight - top - CLOSE_BUTTON_HEIGHT + 'px';}else {dom.removeClass(root.domElement,GUI.CLASS_TOO_TALL);root.__ul.style.height = 'auto';}}if(root.__resize_handle){common.defer(function(){root.__resize_handle.style.height = root.__ul.offsetHeight + 'px';});}if(root.__closeButton){root.__closeButton.style.width = root.width + 'px';}}, /**
+	         * Mark objects for saving. The order of these objects cannot change as
+	         * the GUI grows. When remembering new objects, append them to the end
+	         * of the list.
+	         *
+	         * @param {Object...} objects
+	         * @throws {Error} if not called on a top level GUI.
+	         * @instance
+	         */remember:function remember(){if(common.isUndefined(SAVE_DIALOGUE)){SAVE_DIALOGUE = new CenteredDiv();SAVE_DIALOGUE.domElement.innerHTML = saveDialogueContents;}if(this.parent){throw new Error("You can only call remember on a top level GUI.");}var _this=this;common.each(Array.prototype.slice.call(arguments),function(object){if(_this.__rememberedObjects.length == 0){addSaveMenu(_this);}if(_this.__rememberedObjects.indexOf(object) == -1){_this.__rememberedObjects.push(object);}});if(this.autoPlace){ // Set save row width
+	setWidth(this,this.width);}}, /**
+	         * @returns {dat.gui.GUI} the topmost parent GUI of a nested GUI.
+	         * @instance
+	         */getRoot:function getRoot(){var gui=this;while(gui.parent) {gui = gui.parent;}return gui;}, /**
+	         * @returns {Object} a JSON object representing the current state of
+	         * this GUI as well as its remembered properties.
+	         * @instance
+	         */getSaveObject:function getSaveObject(){var toReturn=this.load;toReturn.closed = this.closed; // Am I remembering any values?
+	if(this.__rememberedObjects.length > 0){toReturn.preset = this.preset;if(!toReturn.remembered){toReturn.remembered = {};}toReturn.remembered[this.preset] = getCurrentPreset(this);}toReturn.folders = {};common.each(this.__folders,function(element,key){toReturn.folders[key] = element.getSaveObject();});return toReturn;},save:function save(){if(!this.load.remembered){this.load.remembered = {};}this.load.remembered[this.preset] = getCurrentPreset(this);markPresetModified(this,false);this.saveToLocalStorageIfPossible();},saveAs:function saveAs(presetName){if(!this.load.remembered){ // Retain default values upon first save
+	this.load.remembered = {};this.load.remembered[DEFAULT_DEFAULT_PRESET_NAME] = getCurrentPreset(this,true);}this.load.remembered[presetName] = getCurrentPreset(this);this.preset = presetName;addPresetOption(this,presetName,true);this.saveToLocalStorageIfPossible();},revert:function revert(gui){common.each(this.__controllers,function(controller){ // Make revert work on Default.
+	if(!this.getRoot().load.remembered){controller.setValue(controller.initialValue);}else {recallSavedValue(gui || this.getRoot(),controller);}},this);common.each(this.__folders,function(folder){folder.revert(folder);});if(!gui){markPresetModified(this.getRoot(),false);}},listen:function listen(controller){var init=this.__listening.length == 0;this.__listening.push(controller);if(init)updateDisplays(this.__listening);}});function _add(gui,object,property,params){if(object[property] === undefined){throw new Error("Object " + object + " has no property \"" + property + "\"");}var controller;if(params.color){controller = new ColorController(object,property);}else {var factoryArgs=[object,property].concat(params.factoryArgs);controller = controllerFactory.apply(gui,factoryArgs);}if(params.before instanceof Controller){params.before = params.before.__li;}recallSavedValue(gui,controller);dom.addClass(controller.domElement,'c');var name=document.createElement('span');dom.addClass(name,'property-name');name.innerHTML = controller.property;var container=document.createElement('div');container.appendChild(name);container.appendChild(controller.domElement);var li=addRow(gui,container,params.before);dom.addClass(li,GUI.CLASS_CONTROLLER_ROW);dom.addClass(li,typeof controller.getValue());augmentController(gui,li,controller);gui.__controllers.push(controller);return controller;} /**
+	   * Add a row to the end of the GUI or before another row.
+	   *
+	   * @param gui
+	   * @param [dom] If specified, inserts the dom content in the new row
+	   * @param [liBefore] If specified, places the new row before another row
+	   */function addRow(gui,dom,liBefore){var li=document.createElement('li');if(dom)li.appendChild(dom);if(liBefore){gui.__ul.insertBefore(li,params.before);}else {gui.__ul.appendChild(li);}gui.onResize();return li;}function augmentController(gui,li,controller){controller.__li = li;controller.__gui = gui;common.extend(controller,{options:function options(_options){if(arguments.length > 1){controller.remove();return _add(gui,controller.object,controller.property,{before:controller.__li.nextElementSibling,factoryArgs:[common.toArray(arguments)]});}if(common.isArray(_options) || common.isObject(_options)){controller.remove();return _add(gui,controller.object,controller.property,{before:controller.__li.nextElementSibling,factoryArgs:[_options]});}},name:function name(v){controller.__li.firstElementChild.firstElementChild.innerHTML = v;return controller;},listen:function listen(){controller.__gui.listen(controller);return controller;},remove:function remove(){controller.__gui.remove(controller);return controller;}}); // All sliders should be accompanied by a box.
+	if(controller instanceof NumberControllerSlider){var box=new NumberControllerBox(controller.object,controller.property,{min:controller.__min,max:controller.__max,step:controller.__step});common.each(['updateDisplay','onChange','onFinishChange'],function(method){var pc=controller[method];var pb=box[method];controller[method] = box[method] = function(){var args=Array.prototype.slice.call(arguments);pc.apply(controller,args);return pb.apply(box,args);};});dom.addClass(li,'has-slider');controller.domElement.insertBefore(box.domElement,controller.domElement.firstElementChild);}else if(controller instanceof NumberControllerBox){var r=function r(returned){ // Have we defined both boundaries?
+	if(common.isNumber(controller.__min) && common.isNumber(controller.__max)){ // Well, then lets just replace this with a slider.
+	controller.remove();return _add(gui,controller.object,controller.property,{before:controller.__li.nextElementSibling,factoryArgs:[controller.__min,controller.__max,controller.__step]});}return returned;};controller.min = common.compose(r,controller.min);controller.max = common.compose(r,controller.max);}else if(controller instanceof BooleanController){dom.bind(li,'click',function(){dom.fakeEvent(controller.__checkbox,'click');});dom.bind(controller.__checkbox,'click',function(e){e.stopPropagation(); // Prevents double-toggle
+	});}else if(controller instanceof FunctionController){dom.bind(li,'click',function(){dom.fakeEvent(controller.__button,'click');});dom.bind(li,'mouseover',function(){dom.addClass(controller.__button,'hover');});dom.bind(li,'mouseout',function(){dom.removeClass(controller.__button,'hover');});}else if(controller instanceof ColorController){dom.addClass(li,'color');controller.updateDisplay = common.compose(function(r){li.style.borderLeftColor = controller.__color.toString();return r;},controller.updateDisplay);controller.updateDisplay();}controller.setValue = common.compose(function(r){if(gui.getRoot().__preset_select && controller.isModified()){markPresetModified(gui.getRoot(),true);}return r;},controller.setValue);}function recallSavedValue(gui,controller){ // Find the topmost GUI, that's where remembered objects live.
+	var root=gui.getRoot(); // Does the object we're controlling match anything we've been told to
+	// remember?
+	var matched_index=root.__rememberedObjects.indexOf(controller.object); // Why yes, it does!
+	if(matched_index != -1){ // Let me fetch a map of controllers for thcommon.isObject.
+	var controller_map=root.__rememberedObjectIndecesToControllers[matched_index]; // Ohp, I believe this is the first controller we've created for this
+	// object. Lets make the map fresh.
+	if(controller_map === undefined){controller_map = {};root.__rememberedObjectIndecesToControllers[matched_index] = controller_map;} // Keep track of this controller
+	controller_map[controller.property] = controller; // Okay, now have we saved any values for this controller?
+	if(root.load && root.load.remembered){var preset_map=root.load.remembered; // Which preset are we trying to load?
+	var preset;if(preset_map[gui.preset]){preset = preset_map[gui.preset];}else if(preset_map[DEFAULT_DEFAULT_PRESET_NAME]){ // Uhh, you can have the default instead?
+	preset = preset_map[DEFAULT_DEFAULT_PRESET_NAME];}else { // Nada.
+	return;} // Did the loaded object remember thcommon.isObject?
+	if(preset[matched_index] &&  // Did we remember this particular property?
+	preset[matched_index][controller.property] !== undefined){ // We did remember something for this guy ...
+	var value=preset[matched_index][controller.property]; // And that's what it is.
+	controller.initialValue = value;controller.setValue(value);}}}}function getLocalStorageHash(gui,key){ // TODO how does this deal with multiple GUI's?
+	return document.location.href + '.' + key;}function addSaveMenu(gui){var div=gui.__save_row = document.createElement('li');dom.addClass(gui.domElement,'has-save');gui.__ul.insertBefore(div,gui.__ul.firstChild);dom.addClass(div,'save-row');var gears=document.createElement('span');gears.innerHTML = '&nbsp;';dom.addClass(gears,'button gears'); // TODO replace with FunctionController
+	var button=document.createElement('span');button.innerHTML = 'Save';dom.addClass(button,'button');dom.addClass(button,'save');var button2=document.createElement('span');button2.innerHTML = 'New';dom.addClass(button2,'button');dom.addClass(button2,'save-as');var button3=document.createElement('span');button3.innerHTML = 'Revert';dom.addClass(button3,'button');dom.addClass(button3,'revert');var select=gui.__preset_select = document.createElement('select');if(gui.load && gui.load.remembered){common.each(gui.load.remembered,function(value,key){addPresetOption(gui,key,key == gui.preset);});}else {addPresetOption(gui,DEFAULT_DEFAULT_PRESET_NAME,false);}dom.bind(select,'change',function(){for(var index=0;index < gui.__preset_select.length;index++) {gui.__preset_select[index].innerHTML = gui.__preset_select[index].value;}gui.preset = this.value;});div.appendChild(select);div.appendChild(gears);div.appendChild(button);div.appendChild(button2);div.appendChild(button3);if(SUPPORTS_LOCAL_STORAGE){var saveLocally;var explain;var localStorageCheckBox;(function(){var showHideExplain=function showHideExplain(){explain.style.display = gui.useLocalStorage?'block':'none';};saveLocally = document.getElementById('dg-save-locally');explain = document.getElementById('dg-local-explain');saveLocally.style.display = 'block';localStorageCheckBox = document.getElementById('dg-local-storage');if(localStorage.getItem(getLocalStorageHash(gui,'isLocal')) === 'true'){localStorageCheckBox.setAttribute('checked','checked');}showHideExplain(); // TODO: Use a boolean controller, fool!
+	dom.bind(localStorageCheckBox,'change',function(){gui.useLocalStorage = !gui.useLocalStorage;showHideExplain();});})();}var newConstructorTextArea=document.getElementById('dg-new-constructor');dom.bind(newConstructorTextArea,'keydown',function(e){if(e.metaKey && (e.which === 67 || e.keyCode == 67)){SAVE_DIALOGUE.hide();}});dom.bind(gears,'click',function(){newConstructorTextArea.innerHTML = JSON.stringify(gui.getSaveObject(),undefined,2);SAVE_DIALOGUE.show();newConstructorTextArea.focus();newConstructorTextArea.select();});dom.bind(button,'click',function(){gui.save();});dom.bind(button2,'click',function(){var presetName=prompt('Enter a new preset name.');if(presetName)gui.saveAs(presetName);});dom.bind(button3,'click',function(){gui.revert();}); //    div.appendChild(button2);
+	}function addResizeHandle(gui){gui.__resize_handle = document.createElement('div');common.extend(gui.__resize_handle.style,{width:'6px',marginLeft:'-3px',height:'200px',cursor:'ew-resize',position:'absolute' //      border: '1px solid blue'
+	});var pmouseX;dom.bind(gui.__resize_handle,'mousedown',dragStart);dom.bind(gui.__closeButton,'mousedown',dragStart);gui.domElement.insertBefore(gui.__resize_handle,gui.domElement.firstElementChild);function dragStart(e){e.preventDefault();pmouseX = e.clientX;dom.addClass(gui.__closeButton,GUI.CLASS_DRAG);dom.bind(window,'mousemove',drag);dom.bind(window,'mouseup',dragStop);return false;}function drag(e){e.preventDefault();gui.width += pmouseX - e.clientX;gui.onResize();pmouseX = e.clientX;return false;}function dragStop(){dom.removeClass(gui.__closeButton,GUI.CLASS_DRAG);dom.unbind(window,'mousemove',drag);dom.unbind(window,'mouseup',dragStop);}}function setWidth(gui,w){gui.domElement.style.width = w + 'px'; // Auto placed save-rows are position fixed, so we have to
+	// set the width manually if we want it to bleed to the edge
+	if(gui.__save_row && gui.autoPlace){gui.__save_row.style.width = w + 'px';}if(gui.__closeButton){gui.__closeButton.style.width = w + 'px';}}function getCurrentPreset(gui,useInitialValues){var toReturn={}; // For each object I'm remembering
+	common.each(gui.__rememberedObjects,function(val,index){var saved_values={}; // The controllers I've made for thcommon.isObject by property
+	var controller_map=gui.__rememberedObjectIndecesToControllers[index]; // Remember each value for each property
+	common.each(controller_map,function(controller,property){saved_values[property] = useInitialValues?controller.initialValue:controller.getValue();}); // Save the values for thcommon.isObject
+	toReturn[index] = saved_values;});return toReturn;}function addPresetOption(gui,name,setSelected){var opt=document.createElement('option');opt.innerHTML = name;opt.value = name;gui.__preset_select.appendChild(opt);if(setSelected){gui.__preset_select.selectedIndex = gui.__preset_select.length - 1;}}function setPresetSelectIndex(gui){for(var index=0;index < gui.__preset_select.length;index++) {if(gui.__preset_select[index].value == gui.preset){gui.__preset_select.selectedIndex = index;}}}function markPresetModified(gui,modified){var opt=gui.__preset_select[gui.__preset_select.selectedIndex]; //    console.log('mark', modified, opt);
+	if(modified){opt.innerHTML = opt.value + "*";}else {opt.innerHTML = opt.value;}}function updateDisplays(controllerArray){if(controllerArray.length != 0){requestAnimationFrame(function(){updateDisplays(controllerArray);});}common.each(controllerArray,function(c){c.updateDisplay();});}return GUI;})(dat.utils.css,"<div id=\"dg-save\" class=\"dg dialogue\">\n\n  Here's the new load parameter for your <code>GUI</code>'s constructor:\n\n  <textarea id=\"dg-new-constructor\"></textarea>\n\n  <div id=\"dg-save-locally\">\n\n    <input id=\"dg-local-storage\" type=\"checkbox\"/> Automatically save\n    values to <code>localStorage</code> on exit.\n\n    <div id=\"dg-local-explain\">The values saved to <code>localStorage</code> will\n      override those passed to <code>dat.GUI</code>'s constructor. This makes it\n      easier to work incrementally, but <code>localStorage</code> is fragile,\n      and your friends may not see the same values you do.\n      \n    </div>\n    \n  </div>\n\n</div>",".dg {\n  /** Clear list styles */\n  /* Auto-place container */\n  /* Auto-placed GUI's */\n  /* Line items that don't contain folders. */\n  /** Folder names */\n  /** Hides closed items */\n  /** Controller row */\n  /** Name-half (left) */\n  /** Controller-half (right) */\n  /** Controller placement */\n  /** Shorter number boxes when slider is present. */\n  /** Ensure the entire boolean and function row shows a hand */ }\n  .dg ul {\n    list-style: none;\n    margin: 0;\n    padding: 0;\n    width: 100%;\n    clear: both; }\n  .dg.ac {\n    position: fixed;\n    top: 0;\n    left: 0;\n    right: 0;\n    height: 0;\n    z-index: 0; }\n  .dg:not(.ac) .main {\n    /** Exclude mains in ac so that we don't hide close button */\n    overflow: hidden; }\n  .dg.main {\n    -webkit-transition: opacity 0.1s linear;\n    -o-transition: opacity 0.1s linear;\n    -moz-transition: opacity 0.1s linear;\n    transition: opacity 0.1s linear; }\n    .dg.main.taller-than-window {\n      overflow-y: auto; }\n      .dg.main.taller-than-window .close-button {\n        opacity: 1;\n        /* TODO, these are style notes */\n        margin-top: -1px;\n        border-top: 1px solid #2c2c2c; }\n    .dg.main ul.closed .close-button {\n      opacity: 1 !important; }\n    .dg.main:hover .close-button,\n    .dg.main .close-button.drag {\n      opacity: 1; }\n    .dg.main .close-button {\n      /*opacity: 0;*/\n      -webkit-transition: opacity 0.1s linear;\n      -o-transition: opacity 0.1s linear;\n      -moz-transition: opacity 0.1s linear;\n      transition: opacity 0.1s linear;\n      border: 0;\n      position: absolute;\n      line-height: 19px;\n      height: 20px;\n      /* TODO, these are style notes */\n      cursor: pointer;\n      text-align: center;\n      background-color: #000; }\n      .dg.main .close-button:hover {\n        background-color: #111; }\n  .dg.a {\n    float: right;\n    margin-right: 15px;\n    overflow-x: hidden; }\n    .dg.a.has-save > ul {\n      margin-top: 27px; }\n      .dg.a.has-save > ul.closed {\n        margin-top: 0; }\n    .dg.a .save-row {\n      position: fixed;\n      top: 0;\n      z-index: 1002; }\n  .dg li {\n    -webkit-transition: height 0.1s ease-out;\n    -o-transition: height 0.1s ease-out;\n    -moz-transition: height 0.1s ease-out;\n    transition: height 0.1s ease-out; }\n  .dg li:not(.folder) {\n    cursor: auto;\n    height: 27px;\n    line-height: 27px;\n    overflow: hidden;\n    padding: 0 4px 0 5px; }\n  .dg li.folder {\n    padding: 0;\n    border-left: 4px solid rgba(0, 0, 0, 0); }\n  .dg li.title {\n    cursor: pointer;\n    margin-left: -4px; }\n  .dg .closed li:not(.title),\n  .dg .closed ul li,\n  .dg .closed ul li > * {\n    height: 0;\n    overflow: hidden;\n    border: 0; }\n  .dg .cr {\n    clear: both;\n    padding-left: 3px;\n    height: 27px; }\n  .dg .property-name {\n    cursor: default;\n    float: left;\n    clear: left;\n    width: 40%;\n    overflow: hidden;\n    text-overflow: ellipsis; }\n  .dg .c {\n    float: left;\n    width: 60%; }\n  .dg .c input[type=text] {\n    border: 0;\n    margin-top: 4px;\n    padding: 3px;\n    width: 100%;\n    float: right; }\n  .dg .has-slider input[type=text] {\n    width: 30%;\n    /*display: none;*/\n    margin-left: 0; }\n  .dg .slider {\n    float: left;\n    width: 66%;\n    margin-left: -5px;\n    margin-right: 0;\n    height: 19px;\n    margin-top: 4px; }\n  .dg .slider-fg {\n    height: 100%; }\n  .dg .c input[type=checkbox] {\n    margin-top: 9px; }\n  .dg .c select {\n    margin-top: 5px; }\n  .dg .cr.function,\n  .dg .cr.function .property-name,\n  .dg .cr.function *,\n  .dg .cr.boolean,\n  .dg .cr.boolean * {\n    cursor: pointer; }\n  .dg .selector {\n    display: none;\n    position: absolute;\n    margin-left: -9px;\n    margin-top: 23px;\n    z-index: 10; }\n  .dg .c:hover .selector,\n  .dg .selector.drag {\n    display: block; }\n  .dg li.save-row {\n    padding: 0; }\n    .dg li.save-row .button {\n      display: inline-block;\n      padding: 0px 6px; }\n  .dg.dialogue {\n    background-color: #222;\n    width: 460px;\n    padding: 15px;\n    font-size: 13px;\n    line-height: 15px; }\n\n/* TODO Separate style and structure */\n#dg-new-constructor {\n  padding: 10px;\n  color: #222;\n  font-family: Monaco, monospace;\n  font-size: 10px;\n  border: 0;\n  resize: none;\n  box-shadow: inset 1px 1px 1px #888;\n  word-wrap: break-word;\n  margin: 12px 0;\n  display: block;\n  width: 440px;\n  overflow-y: scroll;\n  height: 100px;\n  position: relative; }\n\n#dg-local-explain {\n  display: none;\n  font-size: 11px;\n  line-height: 17px;\n  border-radius: 3px;\n  background-color: #333;\n  padding: 8px;\n  margin-top: 10px; }\n  #dg-local-explain code {\n    font-size: 10px; }\n\n#dat-gui-save-locally {\n  display: none; }\n\n/** Main type */\n.dg {\n  color: #eee;\n  font: 11px 'Lucida Grande', sans-serif;\n  text-shadow: 0 -1px 0 #111;\n  /** Auto place */\n  /* Controller row, <li> */\n  /** Controllers */ }\n  .dg.main {\n    /** Scrollbar */ }\n    .dg.main::-webkit-scrollbar {\n      width: 5px;\n      background: #1a1a1a; }\n    .dg.main::-webkit-scrollbar-corner {\n      height: 0;\n      display: none; }\n    .dg.main::-webkit-scrollbar-thumb {\n      border-radius: 5px;\n      background: #676767; }\n  .dg li:not(.folder) {\n    background: #1a1a1a;\n    border-bottom: 1px solid #2c2c2c; }\n  .dg li.save-row {\n    line-height: 25px;\n    background: #dad5cb;\n    border: 0; }\n    .dg li.save-row select {\n      margin-left: 5px;\n      width: 108px; }\n    .dg li.save-row .button {\n      margin-left: 5px;\n      margin-top: 1px;\n      border-radius: 2px;\n      font-size: 9px;\n      line-height: 7px;\n      padding: 4px 4px 5px 4px;\n      background: #c5bdad;\n      color: #fff;\n      text-shadow: 0 1px 0 #b0a58f;\n      box-shadow: 0 -1px 0 #b0a58f;\n      cursor: pointer; }\n      .dg li.save-row .button.gears {\n        background: #c5bdad url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAANCAYAAAB/9ZQ7AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAQJJREFUeNpiYKAU/P//PwGIC/ApCABiBSAW+I8AClAcgKxQ4T9hoMAEUrxx2QSGN6+egDX+/vWT4e7N82AMYoPAx/evwWoYoSYbACX2s7KxCxzcsezDh3evFoDEBYTEEqycggWAzA9AuUSQQgeYPa9fPv6/YWm/Acx5IPb7ty/fw+QZblw67vDs8R0YHyQhgObx+yAJkBqmG5dPPDh1aPOGR/eugW0G4vlIoTIfyFcA+QekhhHJhPdQxbiAIguMBTQZrPD7108M6roWYDFQiIAAv6Aow/1bFwXgis+f2LUAynwoIaNcz8XNx3Dl7MEJUDGQpx9gtQ8YCueB+D26OECAAQDadt7e46D42QAAAABJRU5ErkJggg==) 2px 1px no-repeat;\n        height: 7px;\n        width: 8px; }\n      .dg li.save-row .button:hover {\n        background-color: #bab19e;\n        box-shadow: 0 -1px 0 #b0a58f; }\n  .dg li.folder {\n    border-bottom: 0; }\n  .dg li.title {\n    padding-left: 16px;\n    background: black url(data:image/gif;base64,R0lGODlhBQAFAJEAAP////Pz8////////yH5BAEAAAIALAAAAAAFAAUAAAIIlI+hKgFxoCgAOw==) 6px 10px no-repeat;\n    cursor: pointer;\n    border-bottom: 1px solid rgba(255, 255, 255, 0.2); }\n  .dg .closed li.title {\n    background-image: url(data:image/gif;base64,R0lGODlhBQAFAJEAAP////Pz8////////yH5BAEAAAIALAAAAAAFAAUAAAIIlGIWqMCbWAEAOw==); }\n  .dg .cr.boolean {\n    border-left: 3px solid #806787; }\n  .dg .cr.function {\n    border-left: 3px solid #e61d5f; }\n  .dg .cr.number {\n    border-left: 3px solid #2fa1d6; }\n    .dg .cr.number input[type=text] {\n      color: #2fa1d6; }\n  .dg .cr.string {\n    border-left: 3px solid #1ed36f; }\n    .dg .cr.string input[type=text] {\n      color: #1ed36f; }\n  .dg .cr.function:hover, .dg .cr.boolean:hover {\n    background: #111; }\n  .dg .c input[type=text] {\n    background: #303030;\n    outline: none; }\n    .dg .c input[type=text]:hover {\n      background: #3c3c3c; }\n    .dg .c input[type=text]:focus {\n      background: #494949;\n      color: #fff; }\n  .dg .c .slider {\n    background: #303030;\n    cursor: ew-resize; }\n  .dg .c .slider-fg {\n    background: #2fa1d6; }\n  .dg .c .slider:hover {\n    background: #3c3c3c; }\n    .dg .c .slider:hover .slider-fg {\n      background: #44abda; }\n",dat.controllers.factory = (function(OptionController,NumberControllerBox,NumberControllerSlider,StringController,FunctionController,BooleanController,common){return function(object,property){var initialValue=object[property]; // Providing options?
+	if(common.isArray(arguments[2]) || common.isObject(arguments[2])){return new OptionController(object,property,arguments[2]);} // Providing a map?
+	if(common.isNumber(initialValue)){if(common.isNumber(arguments[2]) && common.isNumber(arguments[3])){ // Has min and max.
+	return new NumberControllerSlider(object,property,arguments[2],arguments[3]);}else {return new NumberControllerBox(object,property,{min:arguments[2],max:arguments[3]});}}if(common.isString(initialValue)){return new StringController(object,property);}if(common.isFunction(initialValue)){return new FunctionController(object,property,'');}if(common.isBoolean(initialValue)){return new BooleanController(object,property);}};})(dat.controllers.OptionController,dat.controllers.NumberControllerBox,dat.controllers.NumberControllerSlider,dat.controllers.StringController = (function(Controller,dom,common){ /**
+	   * @class Provides a text input to alter the string property of an object.
+	   *
+	   * @extends dat.controllers.Controller
+	   *
+	   * @param {Object} object The object to be manipulated
+	   * @param {string} property The name of the property to be manipulated
+	   *
+	   * @member dat.controllers
+	   */var StringController=function StringController(object,property){StringController.superclass.call(this,object,property);var _this=this;this.__input = document.createElement('input');this.__input.setAttribute('type','text');dom.bind(this.__input,'keyup',onChange);dom.bind(this.__input,'change',onChange);dom.bind(this.__input,'blur',onBlur);dom.bind(this.__input,'keydown',function(e){if(e.keyCode === 13){this.blur();}});function onChange(){_this.setValue(_this.__input.value);}function onBlur(){if(_this.__onFinishChange){_this.__onFinishChange.call(_this,_this.getValue());}}this.updateDisplay();this.domElement.appendChild(this.__input);};StringController.superclass = Controller;common.extend(StringController.prototype,Controller.prototype,{updateDisplay:function updateDisplay(){ // Stops the caret from moving on account of:
+	// keyup -> setValue -> updateDisplay
+	if(!dom.isActive(this.__input)){this.__input.value = this.getValue();}return StringController.superclass.prototype.updateDisplay.call(this);}});return StringController;})(dat.controllers.Controller,dat.dom.dom,dat.utils.common),dat.controllers.FunctionController,dat.controllers.BooleanController,dat.utils.common),dat.controllers.Controller,dat.controllers.BooleanController,dat.controllers.FunctionController,dat.controllers.NumberControllerBox,dat.controllers.NumberControllerSlider,dat.controllers.OptionController,dat.controllers.ColorController = (function(Controller,dom,Color,interpret,common){var ColorController=function ColorController(object,property){ColorController.superclass.call(this,object,property);this.__color = new Color(this.getValue());this.__temp = new Color(0);var _this=this;this.domElement = document.createElement('div');dom.makeSelectable(this.domElement,false);this.__selector = document.createElement('div');this.__selector.className = 'selector';this.__saturation_field = document.createElement('div');this.__saturation_field.className = 'saturation-field';this.__field_knob = document.createElement('div');this.__field_knob.className = 'field-knob';this.__field_knob_border = '2px solid ';this.__hue_knob = document.createElement('div');this.__hue_knob.className = 'hue-knob';this.__hue_field = document.createElement('div');this.__hue_field.className = 'hue-field';this.__input = document.createElement('input');this.__input.type = 'text';this.__input_textShadow = '0 1px 1px ';dom.bind(this.__input,'keydown',function(e){if(e.keyCode === 13){ // on enter
+	onBlur.call(this);}});dom.bind(this.__input,'blur',onBlur);dom.bind(this.__selector,'mousedown',function(e){dom.addClass(this,'drag').bind(window,'mouseup',function(e){dom.removeClass(_this.__selector,'drag');});});var value_field=document.createElement('div');common.extend(this.__selector.style,{width:'122px',height:'102px',padding:'3px',backgroundColor:'#222',boxShadow:'0px 1px 3px rgba(0,0,0,0.3)'});common.extend(this.__field_knob.style,{position:'absolute',width:'12px',height:'12px',border:this.__field_knob_border + (this.__color.v < .5?'#fff':'#000'),boxShadow:'0px 1px 3px rgba(0,0,0,0.5)',borderRadius:'12px',zIndex:1});common.extend(this.__hue_knob.style,{position:'absolute',width:'15px',height:'2px',borderRight:'4px solid #fff',zIndex:1});common.extend(this.__saturation_field.style,{width:'100px',height:'100px',border:'1px solid #555',marginRight:'3px',display:'inline-block',cursor:'pointer'});common.extend(value_field.style,{width:'100%',height:'100%',background:'none'});linearGradient(value_field,'top','rgba(0,0,0,0)','#000');common.extend(this.__hue_field.style,{width:'15px',height:'100px',display:'inline-block',border:'1px solid #555',cursor:'ns-resize'});hueGradient(this.__hue_field);common.extend(this.__input.style,{outline:'none', //      width: '120px',
+	textAlign:'center', //      padding: '4px',
+	//      marginBottom: '6px',
+	color:'#fff',border:0,fontWeight:'bold',textShadow:this.__input_textShadow + 'rgba(0,0,0,0.7)'});dom.bind(this.__saturation_field,'mousedown',fieldDown);dom.bind(this.__field_knob,'mousedown',fieldDown);dom.bind(this.__hue_field,'mousedown',function(e){setH(e);dom.bind(window,'mousemove',setH);dom.bind(window,'mouseup',unbindH);});function fieldDown(e){setSV(e); // document.body.style.cursor = 'none';
+	dom.bind(window,'mousemove',setSV);dom.bind(window,'mouseup',unbindSV);}function unbindSV(){dom.unbind(window,'mousemove',setSV);dom.unbind(window,'mouseup',unbindSV); // document.body.style.cursor = 'default';
+	}function onBlur(){var i=interpret(this.value);if(i !== false){_this.__color.__state = i;_this.setValue(_this.__color.toOriginal());}else {this.value = _this.__color.toString();}}function unbindH(){dom.unbind(window,'mousemove',setH);dom.unbind(window,'mouseup',unbindH);}this.__saturation_field.appendChild(value_field);this.__selector.appendChild(this.__field_knob);this.__selector.appendChild(this.__saturation_field);this.__selector.appendChild(this.__hue_field);this.__hue_field.appendChild(this.__hue_knob);this.domElement.appendChild(this.__input);this.domElement.appendChild(this.__selector);this.updateDisplay();function setSV(e){e.preventDefault();var w=dom.getWidth(_this.__saturation_field);var o=dom.getOffset(_this.__saturation_field);var s=(e.clientX - o.left + document.body.scrollLeft) / w;var v=1 - (e.clientY - o.top + document.body.scrollTop) / w;if(v > 1)v = 1;else if(v < 0)v = 0;if(s > 1)s = 1;else if(s < 0)s = 0;_this.__color.v = v;_this.__color.s = s;_this.setValue(_this.__color.toOriginal());return false;}function setH(e){e.preventDefault();var s=dom.getHeight(_this.__hue_field);var o=dom.getOffset(_this.__hue_field);var h=1 - (e.clientY - o.top + document.body.scrollTop) / s;if(h > 1)h = 1;else if(h < 0)h = 0;_this.__color.h = h * 360;_this.setValue(_this.__color.toOriginal());return false;}};ColorController.superclass = Controller;common.extend(ColorController.prototype,Controller.prototype,{updateDisplay:function updateDisplay(){var i=interpret(this.getValue());if(i !== false){var mismatch=false; // Check for mismatch on the interpreted value.
+	common.each(Color.COMPONENTS,function(component){if(!common.isUndefined(i[component]) && !common.isUndefined(this.__color.__state[component]) && i[component] !== this.__color.__state[component]){mismatch = true;return {}; // break
+	}},this); // If nothing diverges, we keep our previous values
+	// for statefulness, otherwise we recalculate fresh
+	if(mismatch){common.extend(this.__color.__state,i);}}common.extend(this.__temp.__state,this.__color.__state);this.__temp.a = 1;var flip=this.__color.v < .5 || this.__color.s > .5?255:0;var _flip=255 - flip;common.extend(this.__field_knob.style,{marginLeft:100 * this.__color.s - 7 + 'px',marginTop:100 * (1 - this.__color.v) - 7 + 'px',backgroundColor:this.__temp.toString(),border:this.__field_knob_border + 'rgb(' + flip + ',' + flip + ',' + flip + ')'});this.__hue_knob.style.marginTop = (1 - this.__color.h / 360) * 100 + 'px';this.__temp.s = 1;this.__temp.v = 1;linearGradient(this.__saturation_field,'left','#fff',this.__temp.toString());common.extend(this.__input.style,{backgroundColor:this.__input.value = this.__color.toString(),color:'rgb(' + flip + ',' + flip + ',' + flip + ')',textShadow:this.__input_textShadow + 'rgba(' + _flip + ',' + _flip + ',' + _flip + ',.7)'});}});var vendors=['-moz-','-o-','-webkit-','-ms-',''];function linearGradient(elem,x,a,b){elem.style.background = '';common.each(vendors,function(vendor){elem.style.cssText += 'background: ' + vendor + 'linear-gradient(' + x + ', ' + a + ' 0%, ' + b + ' 100%); ';});}function hueGradient(elem){elem.style.background = '';elem.style.cssText += 'background: -moz-linear-gradient(top,  #ff0000 0%, #ff00ff 17%, #0000ff 34%, #00ffff 50%, #00ff00 67%, #ffff00 84%, #ff0000 100%);';elem.style.cssText += 'background: -webkit-linear-gradient(top,  #ff0000 0%,#ff00ff 17%,#0000ff 34%,#00ffff 50%,#00ff00 67%,#ffff00 84%,#ff0000 100%);';elem.style.cssText += 'background: -o-linear-gradient(top,  #ff0000 0%,#ff00ff 17%,#0000ff 34%,#00ffff 50%,#00ff00 67%,#ffff00 84%,#ff0000 100%);';elem.style.cssText += 'background: -ms-linear-gradient(top,  #ff0000 0%,#ff00ff 17%,#0000ff 34%,#00ffff 50%,#00ff00 67%,#ffff00 84%,#ff0000 100%);';elem.style.cssText += 'background: linear-gradient(top,  #ff0000 0%,#ff00ff 17%,#0000ff 34%,#00ffff 50%,#00ff00 67%,#ffff00 84%,#ff0000 100%);';}return ColorController;})(dat.controllers.Controller,dat.dom.dom,dat.color.Color = (function(interpret,math,_toString,common){var Color=function Color(){this.__state = interpret.apply(this,arguments);if(this.__state === false){throw 'Failed to interpret color arguments';}this.__state.a = this.__state.a || 1;};Color.COMPONENTS = ['r','g','b','h','s','v','hex','a'];common.extend(Color.prototype,{toString:function toString(){return _toString(this);},toOriginal:function toOriginal(){return this.__state.conversion.write(this);}});defineRGBComponent(Color.prototype,'r',2);defineRGBComponent(Color.prototype,'g',1);defineRGBComponent(Color.prototype,'b',0);defineHSVComponent(Color.prototype,'h');defineHSVComponent(Color.prototype,'s');defineHSVComponent(Color.prototype,'v');Object.defineProperty(Color.prototype,'a',{get:function get(){return this.__state.a;},set:function set(v){this.__state.a = v;}});Object.defineProperty(Color.prototype,'hex',{get:function get(){if(!this.__state.space !== 'HEX'){this.__state.hex = math.rgb_to_hex(this.r,this.g,this.b);}return this.__state.hex;},set:function set(v){this.__state.space = 'HEX';this.__state.hex = v;}});function defineRGBComponent(target,component,componentHexIndex){_Object$defineProperty(target,component,{get:function get(){if(this.__state.space === 'RGB'){return this.__state[component];}recalculateRGB(this,component,componentHexIndex);return this.__state[component];},set:function set(v){if(this.__state.space !== 'RGB'){recalculateRGB(this,component,componentHexIndex);this.__state.space = 'RGB';}this.__state[component] = v;}});}function defineHSVComponent(target,component){_Object$defineProperty(target,component,{get:function get(){if(this.__state.space === 'HSV')return this.__state[component];recalculateHSV(this);return this.__state[component];},set:function set(v){if(this.__state.space !== 'HSV'){recalculateHSV(this);this.__state.space = 'HSV';}this.__state[component] = v;}});}function recalculateRGB(color,component,componentHexIndex){if(color.__state.space === 'HEX'){color.__state[component] = math.component_from_hex(color.__state.hex,componentHexIndex);}else if(color.__state.space === 'HSV'){common.extend(color.__state,math.hsv_to_rgb(color.__state.h,color.__state.s,color.__state.v));}else {throw 'Corrupted color state';}}function recalculateHSV(color){var result=math.rgb_to_hsv(color.r,color.g,color.b);common.extend(color.__state,{s:result.s,v:result.v});if(!common.isNaN(result.h)){color.__state.h = result.h;}else if(common.isUndefined(color.__state.h)){color.__state.h = 0;}}return Color;})(dat.color.interpret,dat.color.math = (function(){var tmpComponent;return {hsv_to_rgb:function hsv_to_rgb(h,s,v){var hi=Math.floor(h / 60) % 6;var f=h / 60 - Math.floor(h / 60);var p=v * (1.0 - s);var q=v * (1.0 - f * s);var t=v * (1.0 - (1.0 - f) * s);var c=[[v,t,p],[q,v,p],[p,v,t],[p,q,v],[t,p,v],[v,p,q]][hi];return {r:c[0] * 255,g:c[1] * 255,b:c[2] * 255};},rgb_to_hsv:function rgb_to_hsv(r,g,b){var min=Math.min(r,g,b),max=Math.max(r,g,b),delta=max - min,h,s;if(max != 0){s = delta / max;}else {return {h:NaN,s:0,v:0};}if(r == max){h = (g - b) / delta;}else if(g == max){h = 2 + (b - r) / delta;}else {h = 4 + (r - g) / delta;}h /= 6;if(h < 0){h += 1;}return {h:h * 360,s:s,v:max / 255};},rgb_to_hex:function rgb_to_hex(r,g,b){var hex=this.hex_with_component(0,2,r);hex = this.hex_with_component(hex,1,g);hex = this.hex_with_component(hex,0,b);return hex;},component_from_hex:function component_from_hex(hex,componentIndex){return hex >> componentIndex * 8 & 0xFF;},hex_with_component:function hex_with_component(hex,componentIndex,value){return value << (tmpComponent = componentIndex * 8) | hex & ~(0xFF << tmpComponent);}};})(),dat.color.toString,dat.utils.common),dat.color.interpret,dat.utils.common),dat.utils.requestAnimationFrame = (function(){ /**
+	   * requirejs version of Paul Irish's RequestAnimationFrame
+	   * http://paulirish.com/2011/requestanimationframe-for-smart-animating/
+	   */return window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || window.msRequestAnimationFrame || function(callback,element){window.setTimeout(callback,1000 / 60);};})(),dat.dom.CenteredDiv = (function(dom,common){var CenteredDiv=function CenteredDiv(){this.backgroundElement = document.createElement('div');common.extend(this.backgroundElement.style,{backgroundColor:'rgba(0,0,0,0.8)',top:0,left:0,display:'none',zIndex:'1000',opacity:0,WebkitTransition:'opacity 0.2s linear',transition:'opacity 0.2s linear'});dom.makeFullscreen(this.backgroundElement);this.backgroundElement.style.position = 'fixed';this.domElement = document.createElement('div');common.extend(this.domElement.style,{position:'fixed',display:'none',zIndex:'1001',opacity:0,WebkitTransition:'-webkit-transform 0.2s ease-out, opacity 0.2s linear',transition:'transform 0.2s ease-out, opacity 0.2s linear'});document.body.appendChild(this.backgroundElement);document.body.appendChild(this.domElement);var _this=this;dom.bind(this.backgroundElement,'click',function(){_this.hide();});};CenteredDiv.prototype.show = function(){var _this=this;this.backgroundElement.style.display = 'block';this.domElement.style.display = 'block';this.domElement.style.opacity = 0; //    this.domElement.style.top = '52%';
+	this.domElement.style.webkitTransform = 'scale(1.1)';this.layout();common.defer(function(){_this.backgroundElement.style.opacity = 1;_this.domElement.style.opacity = 1;_this.domElement.style.webkitTransform = 'scale(1)';});};CenteredDiv.prototype.hide = function(){var _this=this;var hide=function hide(){_this.domElement.style.display = 'none';_this.backgroundElement.style.display = 'none';dom.unbind(_this.domElement,'webkitTransitionEnd',hide);dom.unbind(_this.domElement,'transitionend',hide);dom.unbind(_this.domElement,'oTransitionEnd',hide);};dom.bind(this.domElement,'webkitTransitionEnd',hide);dom.bind(this.domElement,'transitionend',hide);dom.bind(this.domElement,'oTransitionEnd',hide);this.backgroundElement.style.opacity = 0; //    this.domElement.style.top = '48%';
+	this.domElement.style.opacity = 0;this.domElement.style.webkitTransform = 'scale(1.1)';};CenteredDiv.prototype.layout = function(){this.domElement.style.left = window.innerWidth / 2 - dom.getWidth(this.domElement) / 2 + 'px';this.domElement.style.top = window.innerHeight / 2 - dom.getHeight(this.domElement) / 2 + 'px';};function lockScroll(e){console.log(e);}return CenteredDiv;})(dat.dom.dom,dat.utils.common),dat.dom.dom,dat.utils.common);module.exports = dat;
+
+/***/ },
+/* 215 */
+/*!*************************************************************!*\
+  !*** ./~/babel-runtime/core-js/object/define-properties.js ***!
+  \*************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = { "default": __webpack_require__(/*! core-js/library/fn/object/define-properties */ 216), __esModule: true };
+
+/***/ },
+/* 216 */
+/*!**************************************************************************!*\
+  !*** ./~/babel-runtime/~/core-js/library/fn/object/define-properties.js ***!
+  \**************************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var $ = __webpack_require__(/*! ../../modules/$ */ 217);
+	module.exports = function defineProperties(T, D){
+	  return $.setDescs(T, D);
+	};
+
+/***/ },
+/* 217 */
+/*!********************************************************!*\
+  !*** ./~/babel-runtime/~/core-js/library/modules/$.js ***!
+  \********************************************************/
+/***/ function(module, exports) {
+
+	var $Object = Object;
+	module.exports = {
+	  create:     $Object.create,
+	  getProto:   $Object.getPrototypeOf,
+	  isEnum:     {}.propertyIsEnumerable,
+	  getDesc:    $Object.getOwnPropertyDescriptor,
+	  setDesc:    $Object.defineProperty,
+	  setDescs:   $Object.defineProperties,
+	  getKeys:    $Object.keys,
+	  getNames:   $Object.getOwnPropertyNames,
+	  getSymbols: $Object.getOwnPropertySymbols,
+	  each:       [].forEach
+	};
+
+/***/ },
+/* 218 */
+/*!***********************************************************!*\
+  !*** ./~/babel-runtime/core-js/object/define-property.js ***!
+  \***********************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = { "default": __webpack_require__(/*! core-js/library/fn/object/define-property */ 219), __esModule: true };
+
+/***/ },
+/* 219 */
+/*!************************************************************************!*\
+  !*** ./~/babel-runtime/~/core-js/library/fn/object/define-property.js ***!
+  \************************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var $ = __webpack_require__(/*! ../../modules/$ */ 217);
+	module.exports = function defineProperty(it, key, desc){
+	  return $.setDesc(it, key, desc);
+	};
+
+/***/ },
+/* 220 */
 /*!*****************************************!*\
   !*** ./static/js/procedural/terrain.js ***!
   \*****************************************/
@@ -37036,250 +57806,387 @@
 
 	exports.__esModule = true;
 
-	var _three = __webpack_require__(/*! three */ 5);
+	var _engine = __webpack_require__(/*! engine */ 194);
 
-	var _three2 = _interopRequireDefault(_three);
+	var _proceduralNoise = __webpack_require__(/*! procedural/noise */ 221);
 
-	var _proceduralNoise = __webpack_require__(/*! procedural/noise */ 10);
+	var _utilNdarray = __webpack_require__(/*! util/ndarray */ 223);
 
-	var _proceduralNoise2 = _interopRequireDefault(_proceduralNoise);
+	var _utilNdarray2 = _interopRequireDefault(_utilNdarray);
 
-	_proceduralNoise2["default"].seed(Math.random());
+	var _constMaterial = __webpack_require__(/*! const/material */ 212);
 
-	function configToGeometry(world_size, config) {
-	  var size = world_size / config.tile_size;
+	var _constMaterial2 = _interopRequireDefault(_constMaterial);
 
-	  var map = new Array(size);
-	  for (var i = 0; i < size; i++) {
-	    map[i] = new Array(size);
-	    for (var j = 0; j < size; j++) {
-	      var z = 0;
-	      for (var k = 0; k < config.layers.length; k++) {
-	        if (!config.layers[k].enabled) continue;
+	function generateHeightmap(chunkSize, tileSize, chunkX, chunkY, func) {
+	    var size = chunkSize / tileSize + 1;
+	    var mid = size / 2 | 0;
 
-	        var frequency = config.layers[k].frequency;
-	        var post_compute = config.layers[k].post_compute;
-	        z += post_compute(_proceduralNoise2["default"].perlin(frequency * i, frequency * j));
-	      }
+	    var data = _utilNdarray2["default"].fill(size, size, function (i, j) {
+	        var x = i + chunkX * (size - 1);
+	        var y = j + chunkY * (size - 1);
+	        var z = func(x, y);
 
-	      map[i][j] = new _three2["default"].Vector3((i - size / 2) * config.tile_size, (j - size / 2) * config.tile_size, z);
-	    }
-	  }
+	        return new _engine.THREE.Vector3((i - mid) * tileSize, z, (j - mid) * tileSize);
+	    });
 
-	  var geometry = new _three2["default"].Geometry();
-
-	  var c = 0;
-	  for (var i = 0; i < size - 1; i++) {
-	    for (var j = 0; j < size - 1; j++) {
-	      var v1 = map[i][j];
-	      var v2 = map[i + 1][j];
-	      var v3 = map[i][j + 1];
-	      var v4 = map[i + 1][j + 1];
-
-	      //TODO dont double push vertices
-	      //TODO dont alternate face sides
-	      geometry.vertices.push(v1, v2, v3, v4);
-	      geometry.faces.push(new _three2["default"].Face3(c, c + 1, c + 2), new _three2["default"].Face3(c + 1, c + 2, c + 3));
-	      c = c + 4;
-	    }
-	  }
-
-	  geometry.computeFaceNormals();
-	  return geometry;
+	    return data;
 	}
 
-	var ground_config = {
-	  tile_size: 1,
-	  material: new _three2["default"].MeshLambertMaterial({
-	    color: 0x882244,
-	    transparent: false,
-	    emissive: 0x002200,
-	    side: _three2["default"].DoubleSide
-	  }),
-	  layers: [{
-	    enabled: true,
-	    frequency: 0.01,
-	    post_compute: function post_compute(z) {
-	      z = z * 8;
-	      if (z < 0) {
-	        return -Math.pow(z, 2);
-	      } else {
-	        return Math.pow(z, 2);
-	      }
-	    }
-	  }, {
-	    enabled: true,
-	    frequency: 0.03,
-	    post_compute: function post_compute(z) {
-	      z = z * 5;
-	      if (z < 0) {
-	        return -Math.pow(z, 2);
-	      } else {
-	        return Math.pow(z, 2);
-	      }
-	    }
-	  }, {
-	    enabled: true,
-	    frequency: 0.1,
-	    post_compute: function post_compute(z) {
-	      z = 2 * z;
-	      if (z < 0) {
-	        return Math.pow(2, z) - 1;
-	      } else {
-	        return z;
-	      }
-	    }
-	  }, {
-	    enabled: true,
-	    frequency: 0.9,
-	    post_compute: function post_compute(z) {
-	      z = z * 0.2;
-	      if (z < 0) {
-	        return Math.pow(2, z) - 1;
-	      } else {
-	        return z;
-	      }
-	    }
-	  }]
-	};
+	function buildGeometry(data) {
+	    var sample = arguments.length <= 1 || arguments[1] === undefined ? 1 : arguments[1];
 
-	var water_config = {
-	  tile_size: 5,
-	  material: new _three2["default"].MeshLambertMaterial({
-	    color: 0xFF4488,
-	    transparent: true,
-	    opacity: 0.9,
-	    emissive: 0x004488,
-	    side: _three2["default"].DoubleSide
-	  }),
-	  layers: [{
-	    enabled: true,
-	    frequency: 0.3,
-	    post_compute: function post_compute(z) {
-	      return 2 * Math.pow(z, 2);
+	    var size = Math.sqrt(data.size);
+	    var mid = (size - 1) / 2 | 0;
+	    var geometry = new _engine.THREE.Geometry();
+
+	    var c = 0;
+	    for (var i = 0; i < size - 1; i += sample) {
+	        for (var j = 0; j < size - 1; j += sample) {
+	            var i2 = Math.min(i + sample, size - 1);
+	            var j2 = Math.min(j + sample, size - 1);
+
+	            var v1 = data.get(i, j);
+	            var v2 = data.get(i2, j);
+	            var v3 = data.get(i, j2);
+	            var v4 = data.get(i2, j2);
+
+	            //TODO dont alternate face sides
+	            geometry.vertices.push(v1, v2, v3, v4);
+	            geometry.faces.push(new _engine.THREE.Face3(c, c + 1, c + 2), new _engine.THREE.Face3(c + 1, c + 2, c + 3));
+	            c += 4;
+	        }
 	    }
-	  }, {
-	    enabled: true,
-	    frequency: 0.9,
-	    post_compute: function post_compute(z) {
-	      return 0.2 * z;
+
+	    geometry.mergeVertices();
+	    geometry.computeFaceNormals();
+	    return geometry;
+	}
+
+	function buildLOD(data, material, distance, samples) {
+	    var lod = new _engine.THREE.LOD();
+
+	    for (var i = 0; i < samples; i++) {
+	        var geometry = buildGeometry(data, Math.pow(2, i));
+	        var mesh = new _engine.THREE.Mesh(geometry, material);
+	        lod.addLevel(mesh, distance * i * 2);
 	    }
-	  }]
-	};
+
+	    return lod;
+	}
 
 	exports["default"] = {
-	  Ground: function Ground(world_size) {
-	    var geometry = configToGeometry(world_size, ground_config);
-	    var mesh = new _three2["default"].Mesh(geometry, ground_config.material);
-	    mesh.rotation.x = -90 * Math.PI / 180;
-	    return mesh;
-	  },
-	  Water: function Water(world_size) {
-	    var geometry = configToGeometry(world_size, water_config);
-	    var mesh = new _three2["default"].Mesh(geometry, water_config.material);
-	    mesh.rotation.x = -90 * Math.PI / 180;
-	    return mesh;
-	  }
+	    Ground: function Ground(chunkSize, chunkX, chunkY) {
+	        var tileSize = 1;
+	        var data = generateHeightmap(chunkSize, tileSize, chunkX, chunkY, function (x, y) {
+	            var z = 0;
+
+	            var p0 = 8 * _proceduralNoise.noise.perlin2(x * 0.01, y * 0.01);
+	            var p1 = 5 * _proceduralNoise.noise.perlin2(x * 0.03, y * 0.03);
+	            var p2 = 2 * _proceduralNoise.noise.perlin2(x * 0.1, y * 0.1);
+	            var p3 = 0.2 * _proceduralNoise.noise.perlin2(x * 0.9, y * 0.9);
+
+	            z += (p0 > 0 ? 1 : -1) * Math.pow(p0, 2);
+	            z += (p1 > 0 ? 1 : -1) * Math.pow(p1, 2);
+	            z += p2 > 0 ? p2 : Math.pow(2, p2) - 1;
+	            z += p3 > 0 ? p3 : Math.pow(2, p3) - 1;
+
+	            return z;
+	        });
+
+	        var lod = buildLOD(data, _constMaterial2["default"].GROUND, chunkSize, 7);
+	        lod.position.x = chunkX * chunkSize;
+	        lod.position.z = chunkY * chunkSize;
+	        lod.updateMatrixWorld();
+
+	        return lod;
+	    },
+
+	    Water: function Water(chunkSize, chunkX, chunkY) {
+	        var tileSize = 4;
+	        var data = generateHeightmap(chunkSize, tileSize, chunkX, chunkY, function (x, y) {
+	            return 2 * Math.pow(_proceduralNoise.noise.perlin2(0.3 * x, 0.3 * y));
+	        });
+	        var geometry = buildGeometry(data);
+	        var mesh = new _engine.THREE.Mesh(geometry, _constMaterial2["default"].WATER);
+	        mesh.position.x = chunkX * chunkSize;
+	        mesh.position.y = -5;
+	        mesh.position.z = chunkY * chunkSize;
+	        return mesh;
+	    },
+
+	    DiamondSquare: function DiamondSquare(chunkSize, chunkX, chunkY, initializer) {
+	        var size = chunkSize + 1;
+	        var mid = size / 2 | 0;
+	        var data = _utilNdarray2["default"].array(size, size);
+
+	        if (initializer) {
+	            initializer(data, size);
+	        } else {
+	            data.set(0, 0, new _engine.THREE.Vector3(0, size / 2 * (Math.random() - 0.5), 0));
+	            data.set(size - 1, 0, new _engine.THREE.Vector3(size - 1, size / 2 * (Math.random() - 0.5), 0));
+	            data.set(0, size - 1, new _engine.THREE.Vector3(0, size / 2 * (Math.random() - 0.5), size - 1));
+	            data.set(size - 1, size - 1, new _engine.THREE.Vector3(size - 1, size / 2 * (Math.random() - 0.5), size - 1));
+	        }
+
+	        var q = [];
+	        q.enqueue = function (x, y, iter) {
+	            //TODO do this efficiently
+	            var s = size >>> 1 + (iter >>> 1);
+	            if (x >= 0 && x < size && y >= 0 && y < size && s >= 1) {
+	                var seen = false;
+	                for (var i = 0; i < q.length; i++) {
+	                    if (q[i].x === x && q[i].y === y && q[i].iter === iter) {
+	                        seen = true;
+	                        break;
+	                    }
+	                }
+
+	                if (!seen) {
+	                    this.push({ x: x, y: y, iter: iter });
+	                }
+	            }
+	        };
+
+	        q.enqueue(size >>> 1, size >>> 1, 0);
+
+	        while (q.length > 0) {
+	            var length = q.length;
+	            for (var l = 0; l < length; l++) {
+	                var ctx = q.shift();
+	                var x = ctx.x,
+	                    y = ctx.y,
+	                    iter = ctx.iter;
+	                var s = size >>> 1 + (iter >>> 1);
+
+	                if (iter % 2 == 0) {
+	                    if (data.get(x, y) === undefined) {
+	                        var z1 = data.get(x - s, y - s).y;
+	                        var z2 = data.get(x + s, y - s).y;
+	                        var z3 = data.get(x - s, y + s).y;
+	                        var z4 = data.get(x + s, y + s).y;
+
+	                        var z = (z1 + z2 + z3 + z4) / 4 + 2 * s * (Math.random() - 0.5);
+	                        data.set(x, y, new _engine.THREE.Vector3(x, z, y));
+	                    }
+
+	                    q.enqueue(x - s, y, iter + 1);
+	                    q.enqueue(x + s, y, iter + 1);
+	                    q.enqueue(x, y - s, iter + 1);
+	                    q.enqueue(x, y + s, iter + 1);
+	                } else {
+	                    if (data.get(x, y) === undefined) {
+	                        var zs = 0;
+	                        var zc = 0;
+
+	                        if (x - s >= 0) {
+	                            zs += data.get(x - s, y).y;zc++;
+	                        }
+	                        if (x + s < size) {
+	                            zs += data.get(x + s, y).y;zc++;
+	                        }
+	                        if (y - s >= 0) {
+	                            zs += data.get(x, y - s).y;zc++;
+	                        }
+	                        if (y + s < size) {
+	                            zs += data.get(x, y + s).y;zc++;
+	                        }
+
+	                        var z = zs / zc + (s >>> 0) * (Math.random() - 0.5);
+	                        data.set(x, y, new _engine.THREE.Vector3(x, z, y));
+	                    }
+
+	                    var s2 = s >>> 1;
+	                    q.enqueue(x + s2, y + s2, iter + 1);
+	                    q.enqueue(x + s2, y - s2, iter + 1);
+	                    q.enqueue(x - s2, y + s2, iter + 1);
+	                    q.enqueue(x - s2, y - s2, iter + 1);
+	                }
+	            }
+	        }
+
+	        // now center the vertices
+	        data.data.forEach(function (v) {
+	            v.x -= mid;v.z -= mid;
+	        });
+
+	        var lod = buildLOD(data, _constMaterial2["default"].GROUND, chunkSize, 4);
+	        lod.position.x = chunkX * chunkSize;
+	        lod.position.z = chunkY * chunkSize;
+	        lod.updateMatrixWorld();
+
+	        return lod;
+	    }
 	};
 	module.exports = exports["default"];
 
 /***/ },
-/* 10 */
+/* 221 */
 /*!***************************************!*\
   !*** ./static/js/procedural/noise.js ***!
   \***************************************/
-/***/ function(module, exports) {
-
-	/**
-	 * Simplex and Perlin noise.
-	 *
-	 * Copied with small edits from https://github.com/josephg/noisejs which is
-	 * public domain. Originally by Stefan Gustavson (stegu@itn.liu.se) with
-	 * optimizations by Peter Eastman (peastman@drizzle.stanford.edu) and converted
-	 * to JavaScript by Joseph Gentle.
-	 */
+/***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 
-	exports.__esModule = true;
+	var _interopRequireDefault = __webpack_require__(/*! babel-runtime/helpers/interop-require-default */ 1)["default"];
 
-	exports["default"] = (function () {
-	  var module = {};
+	var _noisejs = __webpack_require__(/*! noisejs */ 222);
 
-	  function Grad(x, y, z) {
-	    this.x = x;
-	    this.y = y;
-	    this.z = z;
+	var _noisejs2 = _interopRequireDefault(_noisejs);
+
+	var noise = new _noisejs2["default"].Noise(Math.random());
+
+	function perlin(x, y) {
+	    var octaves = arguments.length <= 2 || arguments[2] === undefined ? 1 : arguments[2];
+
+	    var z = 0;
+	    var s = 0;
+	    for (var i = 0; i < octaves; i++) {
+	        var pp = 1 / (1 << i); // (1 << i) same as Math.pow(2,i)
+	        var e = Math.PI / 2 * pp; // rotate angle
+	        var ss = Math.sin(e);
+	        var cc = Math.cos(e);
+	        var xx = x * ss + y * cc; // rotation
+	        var yy = -x * cc + y * ss;
+	        s += pp; // total amplitude
+	        var res = pp * noise.perlin2(xx / pp, yy / pp);
+	        if (i < 4) {
+	            z += (res > 0 ? 1 : -1) * Math.pow(res, 2);
+	        } else {
+	            z += res;
+	        }
+	    }
+	    return 2 * z / s;
+	}
+
+	module.exports = {
+	    noise: noise,
+	    perlin: perlin
+	};
+
+/***/ },
+/* 222 */
+/*!****************************!*\
+  !*** ./~/noisejs/index.js ***!
+  \****************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	/*
+	 * A speed-improved perlin and simplex noise algorithms for 2D.
+	 *
+	 * Based on example code by Stefan Gustavson (stegu@itn.liu.se).
+	 * Optimisations by Peter Eastman (peastman@drizzle.stanford.edu).
+	 * Better rank ordering method by Stefan Gustavson in 2012.
+	 * Converted to Javascript by Joseph Gentle.
+	 *
+	 * Version 2012-03-09
+	 *
+	 * This code was placed in the public domain by its original author,
+	 * Stefan Gustavson. You may use it as you see fit, but
+	 * attribution is appreciated.
+	 *
+	 */
+
+	(function(global){
+
+	  // Passing in seed will seed this Noise instance
+	  function Noise(seed) {
+	    function Grad(x, y, z) {
+	      this.x = x; this.y = y; this.z = z;
+	    }
+
+	    Grad.prototype.dot2 = function(x, y) {
+	      return this.x*x + this.y*y;
+	    };
+
+	    Grad.prototype.dot3 = function(x, y, z) {
+	      return this.x*x + this.y*y + this.z*z;
+	    };
+
+	    this.grad3 = [new Grad(1,1,0),new Grad(-1,1,0),new Grad(1,-1,0),new Grad(-1,-1,0),
+	                 new Grad(1,0,1),new Grad(-1,0,1),new Grad(1,0,-1),new Grad(-1,0,-1),
+	                 new Grad(0,1,1),new Grad(0,-1,1),new Grad(0,1,-1),new Grad(0,-1,-1)];
+
+	    this.p = [151,160,137,91,90,15,
+	    131,13,201,95,96,53,194,233,7,225,140,36,103,30,69,142,8,99,37,240,21,10,23,
+	    190, 6,148,247,120,234,75,0,26,197,62,94,252,219,203,117,35,11,32,57,177,33,
+	    88,237,149,56,87,174,20,125,136,171,168, 68,175,74,165,71,134,139,48,27,166,
+	    77,146,158,231,83,111,229,122,60,211,133,230,220,105,92,41,55,46,245,40,244,
+	    102,143,54, 65,25,63,161, 1,216,80,73,209,76,132,187,208, 89,18,169,200,196,
+	    135,130,116,188,159,86,164,100,109,198,173,186, 3,64,52,217,226,250,124,123,
+	    5,202,38,147,118,126,255,82,85,212,207,206,59,227,47,16,58,17,182,189,28,42,
+	    223,183,170,213,119,248,152, 2,44,154,163, 70,221,153,101,155,167, 43,172,9,
+	    129,22,39,253, 19,98,108,110,79,113,224,232,178,185, 112,104,218,246,97,228,
+	    251,34,242,193,238,210,144,12,191,179,162,241, 81,51,145,235,249,14,239,107,
+	    49,192,214, 31,181,199,106,157,184, 84,204,176,115,121,50,45,127, 4,150,254,
+	    138,236,205,93,222,114,67,29,24,72,243,141,128,195,78,66,215,61,156,180];
+	    // To remove the need for index wrapping, double the permutation table length
+	    this.perm = new Array(512);
+	    this.gradP = new Array(512);
+
+	    this.seed(seed || 0);
 	  }
 
-	  Grad.prototype.dot2 = function (x, y) {
-	    return this.x * x + this.y * y;
-	  };
-
-	  Grad.prototype.dot3 = function (x, y, z) {
-	    return this.x * x + this.y * y + this.z * z;
-	  };
-
-	  var grad3 = [new Grad(1, 1, 0), new Grad(-1, 1, 0), new Grad(1, -1, 0), new Grad(-1, -1, 0), new Grad(1, 0, 1), new Grad(-1, 0, 1), new Grad(1, 0, -1), new Grad(-1, 0, -1), new Grad(0, 1, 1), new Grad(0, -1, 1), new Grad(0, 1, -1), new Grad(0, -1, -1)];
-
-	  var p = [151, 160, 137, 91, 90, 15, 131, 13, 201, 95, 96, 53, 194, 233, 7, 225, 140, 36, 103, 30, 69, 142, 8, 99, 37, 240, 21, 10, 23, 190, 6, 148, 247, 120, 234, 75, 0, 26, 197, 62, 94, 252, 219, 203, 117, 35, 11, 32, 57, 177, 33, 88, 237, 149, 56, 87, 174, 20, 125, 136, 171, 168, 68, 175, 74, 165, 71, 134, 139, 48, 27, 166, 77, 146, 158, 231, 83, 111, 229, 122, 60, 211, 133, 230, 220, 105, 92, 41, 55, 46, 245, 40, 244, 102, 143, 54, 65, 25, 63, 161, 1, 216, 80, 73, 209, 76, 132, 187, 208, 89, 18, 169, 200, 196, 135, 130, 116, 188, 159, 86, 164, 100, 109, 198, 173, 186, 3, 64, 52, 217, 226, 250, 124, 123, 5, 202, 38, 147, 118, 126, 255, 82, 85, 212, 207, 206, 59, 227, 47, 16, 58, 17, 182, 189, 28, 42, 223, 183, 170, 213, 119, 248, 152, 2, 44, 154, 163, 70, 221, 153, 101, 155, 167, 43, 172, 9, 129, 22, 39, 253, 19, 98, 108, 110, 79, 113, 224, 232, 178, 185, 112, 104, 218, 246, 97, 228, 251, 34, 242, 193, 238, 210, 144, 12, 191, 179, 162, 241, 81, 51, 145, 235, 249, 14, 239, 107, 49, 192, 214, 31, 181, 199, 106, 157, 184, 84, 204, 176, 115, 121, 50, 45, 127, 4, 150, 254, 138, 236, 205, 93, 222, 114, 67, 29, 24, 72, 243, 141, 128, 195, 78, 66, 215, 61, 156, 180];
-	  // To avoid the need for index wrapping, double the permutation table length
-	  var perm = new Array(512),
-	      gradP = new Array(512);
-
-	  // This isn't a very good seeding function, but it works okay. It supports
-	  // 2^16 different seed values. Write your own if you need more seeds.
-	  module.seed = function (seed) {
-	    if (seed > 0 && seed < 1) {
+	  // This isn't a very good seeding function, but it works ok. It supports 2^16
+	  // different seed values. Write something better if you need more seeds.
+	  Noise.prototype.seed = function(seed) {
+	    if(seed > 0 && seed < 1) {
 	      // Scale the seed out
 	      seed *= 65536;
 	    }
 
 	    seed = Math.floor(seed);
-	    if (seed < 256) {
+	    if(seed < 256) {
 	      seed |= seed << 8;
 	    }
 
-	    for (var i = 0; i < 256; i++) {
+	    var p = this.p;
+	    for(var i = 0; i < 256; i++) {
 	      var v;
 	      if (i & 1) {
-	        v = p[i] ^ seed & 255;
+	        v = p[i] ^ (seed & 255);
 	      } else {
-	        v = p[i] ^ seed >> 8 & 255;
+	        v = p[i] ^ ((seed>>8) & 255);
 	      }
 
+	      var perm = this.perm;
+	      var gradP = this.gradP;
 	      perm[i] = perm[i + 256] = v;
-	      gradP[i] = gradP[i + 256] = grad3[v % 12];
+	      gradP[i] = gradP[i + 256] = this.grad3[v % 12];
 	    }
 	  };
 
-	  module.seed(Math.random());
+	  /*
+	  for(var i=0; i<256; i++) {
+	    perm[i] = perm[i + 256] = p[i];
+	    gradP[i] = gradP[i + 256] = grad3[perm[i] % 12];
+	  }*/
 
-	  // Skewing and unskewing factors for 2 and 3 dimensions
-	  var F2 = 0.5 * (Math.sqrt(3) - 1),
-	      G2 = (3 - Math.sqrt(3)) / 6,
-	      F3 = 1 / 3,
-	      G3 = 1 / 6;
+	  // Skewing and unskewing factors for 2, 3, and 4 dimensions
+	  var F2 = 0.5*(Math.sqrt(3)-1);
+	  var G2 = (3-Math.sqrt(3))/6;
+
+	  var F3 = 1/3;
+	  var G3 = 1/6;
 
 	  // 2D simplex noise
-	  module.simplex = function (xin, yin) {
+	  Noise.prototype.simplex2 = function(xin, yin) {
 	    var n0, n1, n2; // Noise contributions from the three corners
 	    // Skew the input space to determine which simplex cell we're in
-	    var s = (xin + yin) * F2; // Hairy factor for 2D
-	    var i = Math.floor(xin + s);
-	    var j = Math.floor(yin + s);
-	    var t = (i + j) * G2;
-	    var x0 = xin - i + t; // The x,y distances from the cell origin, unskewed
-	    var y0 = yin - j + t;
+	    var s = (xin+yin)*F2; // Hairy factor for 2D
+	    var i = Math.floor(xin+s);
+	    var j = Math.floor(yin+s);
+	    var t = (i+j)*G2;
+	    var x0 = xin-i+t; // The x,y distances from the cell origin, unskewed.
+	    var y0 = yin-j+t;
 	    // For the 2D case, the simplex shape is an equilateral triangle.
 	    // Determine which simplex we are in.
 	    var i1, j1; // Offsets for second (middle) corner of simplex in (i,j) coords
-	    if (x0 > y0) {
-	      // Lower triangle, XY order: (0,0)->(1,0)->(1,1)
-	      i1 = 1;j1 = 0;
-	    } else {
-	      // Upper triangle, YX order: (0,0)->(0,1)->(1,1)
-	      i1 = 0;j1 = 1;
+	    if(x0>y0) { // lower triangle, XY order: (0,0)->(1,0)->(1,1)
+	      i1=1; j1=0;
+	    } else {    // upper triangle, YX order: (0,0)->(0,1)->(1,1)
+	      i1=0; j1=1;
 	    }
 	    // A step of (1,0) in (i,j) means a step of (1-c,-c) in (x,y), and
 	    // a step of (0,1) in (i,j) means a step of (-c,1-c) in (x,y), where
@@ -37291,26 +58198,29 @@
 	    // Work out the hashed gradient indices of the three simplex corners
 	    i &= 255;
 	    j &= 255;
-	    var gi0 = gradP[i + perm[j]];
-	    var gi1 = gradP[i + i1 + perm[j + j1]];
-	    var gi2 = gradP[i + 1 + perm[j + 1]];
+
+	    var perm = this.perm;
+	    var gradP = this.gradP;
+	    var gi0 = gradP[i+perm[j]];
+	    var gi1 = gradP[i+i1+perm[j+j1]];
+	    var gi2 = gradP[i+1+perm[j+1]];
 	    // Calculate the contribution from the three corners
-	    var t0 = 0.5 - x0 * x0 - y0 * y0;
-	    if (t0 < 0) {
+	    var t0 = 0.5 - x0*x0-y0*y0;
+	    if(t0<0) {
 	      n0 = 0;
 	    } else {
 	      t0 *= t0;
-	      n0 = t0 * t0 * gi0.dot2(x0, y0); // (x,y) of grad3 used for 2D gradient
+	      n0 = t0 * t0 * gi0.dot2(x0, y0);  // (x,y) of grad3 used for 2D gradient
 	    }
-	    var t1 = 0.5 - x1 * x1 - y1 * y1;
-	    if (t1 < 0) {
+	    var t1 = 0.5 - x1*x1-y1*y1;
+	    if(t1<0) {
 	      n1 = 0;
 	    } else {
 	      t1 *= t1;
 	      n1 = t1 * t1 * gi1.dot2(x1, y1);
 	    }
-	    var t2 = 0.5 - x2 * x2 - y2 * y2;
-	    if (t2 < 0) {
+	    var t2 = 0.5 - x2*x2-y2*y2;
+	    if(t2<0) {
 	      n2 = 0;
 	    } else {
 	      t2 *= t2;
@@ -37321,44 +58231,5889 @@
 	    return 70 * (n0 + n1 + n2);
 	  };
 
+	  // 3D simplex noise
+	  Noise.prototype.simplex3 = function(xin, yin, zin) {
+	    var n0, n1, n2, n3; // Noise contributions from the four corners
+
+	    // Skew the input space to determine which simplex cell we're in
+	    var s = (xin+yin+zin)*F3; // Hairy factor for 2D
+	    var i = Math.floor(xin+s);
+	    var j = Math.floor(yin+s);
+	    var k = Math.floor(zin+s);
+
+	    var t = (i+j+k)*G3;
+	    var x0 = xin-i+t; // The x,y distances from the cell origin, unskewed.
+	    var y0 = yin-j+t;
+	    var z0 = zin-k+t;
+
+	    // For the 3D case, the simplex shape is a slightly irregular tetrahedron.
+	    // Determine which simplex we are in.
+	    var i1, j1, k1; // Offsets for second corner of simplex in (i,j,k) coords
+	    var i2, j2, k2; // Offsets for third corner of simplex in (i,j,k) coords
+	    if(x0 >= y0) {
+	      if(y0 >= z0)      { i1=1; j1=0; k1=0; i2=1; j2=1; k2=0; }
+	      else if(x0 >= z0) { i1=1; j1=0; k1=0; i2=1; j2=0; k2=1; }
+	      else              { i1=0; j1=0; k1=1; i2=1; j2=0; k2=1; }
+	    } else {
+	      if(y0 < z0)      { i1=0; j1=0; k1=1; i2=0; j2=1; k2=1; }
+	      else if(x0 < z0) { i1=0; j1=1; k1=0; i2=0; j2=1; k2=1; }
+	      else             { i1=0; j1=1; k1=0; i2=1; j2=1; k2=0; }
+	    }
+	    // A step of (1,0,0) in (i,j,k) means a step of (1-c,-c,-c) in (x,y,z),
+	    // a step of (0,1,0) in (i,j,k) means a step of (-c,1-c,-c) in (x,y,z), and
+	    // a step of (0,0,1) in (i,j,k) means a step of (-c,-c,1-c) in (x,y,z), where
+	    // c = 1/6.
+	    var x1 = x0 - i1 + G3; // Offsets for second corner
+	    var y1 = y0 - j1 + G3;
+	    var z1 = z0 - k1 + G3;
+
+	    var x2 = x0 - i2 + 2 * G3; // Offsets for third corner
+	    var y2 = y0 - j2 + 2 * G3;
+	    var z2 = z0 - k2 + 2 * G3;
+
+	    var x3 = x0 - 1 + 3 * G3; // Offsets for fourth corner
+	    var y3 = y0 - 1 + 3 * G3;
+	    var z3 = z0 - 1 + 3 * G3;
+
+	    // Work out the hashed gradient indices of the four simplex corners
+	    i &= 255;
+	    j &= 255;
+	    k &= 255;
+
+	    var perm = this.perm;
+	    var gradP = this.gradP;
+	    var gi0 = gradP[i+   perm[j+   perm[k   ]]];
+	    var gi1 = gradP[i+i1+perm[j+j1+perm[k+k1]]];
+	    var gi2 = gradP[i+i2+perm[j+j2+perm[k+k2]]];
+	    var gi3 = gradP[i+ 1+perm[j+ 1+perm[k+ 1]]];
+
+	    // Calculate the contribution from the four corners
+	    var t0 = 0.5 - x0*x0-y0*y0-z0*z0;
+	    if(t0<0) {
+	      n0 = 0;
+	    } else {
+	      t0 *= t0;
+	      n0 = t0 * t0 * gi0.dot3(x0, y0, z0);  // (x,y) of grad3 used for 2D gradient
+	    }
+	    var t1 = 0.5 - x1*x1-y1*y1-z1*z1;
+	    if(t1<0) {
+	      n1 = 0;
+	    } else {
+	      t1 *= t1;
+	      n1 = t1 * t1 * gi1.dot3(x1, y1, z1);
+	    }
+	    var t2 = 0.5 - x2*x2-y2*y2-z2*z2;
+	    if(t2<0) {
+	      n2 = 0;
+	    } else {
+	      t2 *= t2;
+	      n2 = t2 * t2 * gi2.dot3(x2, y2, z2);
+	    }
+	    var t3 = 0.5 - x3*x3-y3*y3-z3*z3;
+	    if(t3<0) {
+	      n3 = 0;
+	    } else {
+	      t3 *= t3;
+	      n3 = t3 * t3 * gi3.dot3(x3, y3, z3);
+	    }
+	    // Add contributions from each corner to get the final noise value.
+	    // The result is scaled to return values in the interval [-1,1].
+	    return 32 * (n0 + n1 + n2 + n3);
+
+	  };
+
 	  // ##### Perlin noise stuff
 
 	  function fade(t) {
-	    return t * t * t * (t * (t * 6 - 15) + 10);
+	    return t*t*t*(t*(t*6-15)+10);
 	  }
 
 	  function lerp(a, b, t) {
-	    return (1 - t) * a + t * b;
+	    return (1-t)*a + t*b;
 	  }
 
 	  // 2D Perlin Noise
-	  module.perlin = function (x, y) {
+	  Noise.prototype.perlin2 = function(x, y) {
 	    // Find unit grid cell containing point
-	    var X = Math.floor(x),
-	        Y = Math.floor(y);
+	    var X = Math.floor(x), Y = Math.floor(y);
 	    // Get relative xy coordinates of point within that cell
-	    x = x - X;
-	    y = y - Y;
+	    x = x - X; y = y - Y;
 	    // Wrap the integer cells at 255 (smaller integer period can be introduced here)
-	    X = X & 255;
-	    Y = Y & 255;
+	    X = X & 255; Y = Y & 255;
 
 	    // Calculate noise contributions from each of the four corners
-	    var n00 = gradP[X + perm[Y]].dot2(x, y);
-	    var n01 = gradP[X + perm[Y + 1]].dot2(x, y - 1);
-	    var n10 = gradP[X + 1 + perm[Y]].dot2(x - 1, y);
-	    var n11 = gradP[X + 1 + perm[Y + 1]].dot2(x - 1, y - 1);
+	    var perm = this.perm;
+	    var gradP = this.gradP;
+	    var n00 = gradP[X+perm[Y]].dot2(x, y);
+	    var n01 = gradP[X+perm[Y+1]].dot2(x, y-1);
+	    var n10 = gradP[X+1+perm[Y]].dot2(x-1, y);
+	    var n11 = gradP[X+1+perm[Y+1]].dot2(x-1, y-1);
 
 	    // Compute the fade curve value for x
 	    var u = fade(x);
 
 	    // Interpolate the four results
-	    return lerp(lerp(n00, n10, u), lerp(n01, n11, u), fade(y));
+	    return lerp(
+	        lerp(n00, n10, u),
+	        lerp(n01, n11, u),
+	       fade(y));
 	  };
 
-	  return module;
+	  // 3D Perlin Noise
+	  Noise.prototype.perlin3 = function(x, y, z) {
+	    // Find unit grid cell containing point
+	    var X = Math.floor(x), Y = Math.floor(y), Z = Math.floor(z);
+	    // Get relative xyz coordinates of point within that cell
+	    x = x - X; y = y - Y; z = z - Z;
+	    // Wrap the integer cells at 255 (smaller integer period can be introduced here)
+	    X = X & 255; Y = Y & 255; Z = Z & 255;
+
+	    // Calculate noise contributions from each of the eight corners
+	    var perm = this.perm;
+	    var gradP = this.gradP;
+	    var n000 = gradP[X+  perm[Y+  perm[Z  ]]].dot3(x,   y,     z);
+	    var n001 = gradP[X+  perm[Y+  perm[Z+1]]].dot3(x,   y,   z-1);
+	    var n010 = gradP[X+  perm[Y+1+perm[Z  ]]].dot3(x,   y-1,   z);
+	    var n011 = gradP[X+  perm[Y+1+perm[Z+1]]].dot3(x,   y-1, z-1);
+	    var n100 = gradP[X+1+perm[Y+  perm[Z  ]]].dot3(x-1,   y,   z);
+	    var n101 = gradP[X+1+perm[Y+  perm[Z+1]]].dot3(x-1,   y, z-1);
+	    var n110 = gradP[X+1+perm[Y+1+perm[Z  ]]].dot3(x-1, y-1,   z);
+	    var n111 = gradP[X+1+perm[Y+1+perm[Z+1]]].dot3(x-1, y-1, z-1);
+
+	    // Compute the fade curve value for x, y, z
+	    var u = fade(x);
+	    var v = fade(y);
+	    var w = fade(z);
+
+	    // Interpolate
+	    return lerp(
+	        lerp(
+	          lerp(n000, n100, u),
+	          lerp(n001, n101, u), w),
+	        lerp(
+	          lerp(n010, n110, u),
+	          lerp(n011, n111, u), w),
+	       v);
+	  };
+
+	  global.Noise = Noise;
+
+	})( false ? this : module.exports);
+
+
+/***/ },
+/* 223 */
+/*!***********************************!*\
+  !*** ./static/js/util/ndarray.js ***!
+  \***********************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	var _interopRequireDefault = __webpack_require__(/*! babel-runtime/helpers/interop-require-default */ 1)["default"];
+
+	var _ndarray = __webpack_require__(/*! ndarray */ 224);
+
+	var _ndarray2 = _interopRequireDefault(_ndarray);
+
+	var _ndarrayFill = __webpack_require__(/*! ndarray-fill */ 227);
+
+	var _ndarrayFill2 = _interopRequireDefault(_ndarrayFill);
+
+	function array(width, height) {
+	    return _ndarray2["default"](new Array(width * height), [width, height]);
+	}
+
+	function fill(width, height, filler) {
+	    return _ndarrayFill2["default"](array(width, height), filler);
+	}
+
+	module.exports = { array: array, fill: fill };
+
+/***/ },
+/* 224 */
+/*!******************************!*\
+  !*** ./~/ndarray/ndarray.js ***!
+  \******************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var iota = __webpack_require__(/*! iota-array */ 225)
+	var isBuffer = __webpack_require__(/*! is-buffer */ 226)
+
+	var hasTypedArrays  = ((typeof Float64Array) !== "undefined")
+
+	function compare1st(a, b) {
+	  return a[0] - b[0]
+	}
+
+	function order() {
+	  var stride = this.stride
+	  var terms = new Array(stride.length)
+	  var i
+	  for(i=0; i<terms.length; ++i) {
+	    terms[i] = [Math.abs(stride[i]), i]
+	  }
+	  terms.sort(compare1st)
+	  var result = new Array(terms.length)
+	  for(i=0; i<result.length; ++i) {
+	    result[i] = terms[i][1]
+	  }
+	  return result
+	}
+
+	function compileConstructor(dtype, dimension) {
+	  var className = ["View", dimension, "d", dtype].join("")
+	  if(dimension < 0) {
+	    className = "View_Nil" + dtype
+	  }
+	  var useGetters = (dtype === "generic")
+
+	  if(dimension === -1) {
+	    //Special case for trivial arrays
+	    var code =
+	      "function "+className+"(a){this.data=a;};\
+	var proto="+className+".prototype;\
+	proto.dtype='"+dtype+"';\
+	proto.index=function(){return -1};\
+	proto.size=0;\
+	proto.dimension=-1;\
+	proto.shape=proto.stride=proto.order=[];\
+	proto.lo=proto.hi=proto.transpose=proto.step=\
+	function(){return new "+className+"(this.data);};\
+	proto.get=proto.set=function(){};\
+	proto.pick=function(){return null};\
+	return function construct_"+className+"(a){return new "+className+"(a);}"
+	    var procedure = new Function(code)
+	    return procedure()
+	  } else if(dimension === 0) {
+	    //Special case for 0d arrays
+	    var code =
+	      "function "+className+"(a,d) {\
+	this.data = a;\
+	this.offset = d\
+	};\
+	var proto="+className+".prototype;\
+	proto.dtype='"+dtype+"';\
+	proto.index=function(){return this.offset};\
+	proto.dimension=0;\
+	proto.size=1;\
+	proto.shape=\
+	proto.stride=\
+	proto.order=[];\
+	proto.lo=\
+	proto.hi=\
+	proto.transpose=\
+	proto.step=function "+className+"_copy() {\
+	return new "+className+"(this.data,this.offset)\
+	};\
+	proto.pick=function "+className+"_pick(){\
+	return TrivialArray(this.data);\
+	};\
+	proto.valueOf=proto.get=function "+className+"_get(){\
+	return "+(useGetters ? "this.data.get(this.offset)" : "this.data[this.offset]")+
+	"};\
+	proto.set=function "+className+"_set(v){\
+	return "+(useGetters ? "this.data.set(this.offset,v)" : "this.data[this.offset]=v")+"\
+	};\
+	return function construct_"+className+"(a,b,c,d){return new "+className+"(a,d)}"
+	    var procedure = new Function("TrivialArray", code)
+	    return procedure(CACHED_CONSTRUCTORS[dtype][0])
+	  }
+
+	  var code = ["'use strict'"]
+
+	  //Create constructor for view
+	  var indices = iota(dimension)
+	  var args = indices.map(function(i) { return "i"+i })
+	  var index_str = "this.offset+" + indices.map(function(i) {
+	        return "this.stride[" + i + "]*i" + i
+	      }).join("+")
+	  var shapeArg = indices.map(function(i) {
+	      return "b"+i
+	    }).join(",")
+	  var strideArg = indices.map(function(i) {
+	      return "c"+i
+	    }).join(",")
+	  code.push(
+	    "function "+className+"(a," + shapeArg + "," + strideArg + ",d){this.data=a",
+	      "this.shape=[" + shapeArg + "]",
+	      "this.stride=[" + strideArg + "]",
+	      "this.offset=d|0}",
+	    "var proto="+className+".prototype",
+	    "proto.dtype='"+dtype+"'",
+	    "proto.dimension="+dimension)
+
+	  //view.size:
+	  code.push("Object.defineProperty(proto,'size',{get:function "+className+"_size(){\
+	return "+indices.map(function(i) { return "this.shape["+i+"]" }).join("*"),
+	"}})")
+
+	  //view.order:
+	  if(dimension === 1) {
+	    code.push("proto.order=[0]")
+	  } else {
+	    code.push("Object.defineProperty(proto,'order',{get:")
+	    if(dimension < 4) {
+	      code.push("function "+className+"_order(){")
+	      if(dimension === 2) {
+	        code.push("return (Math.abs(this.stride[0])>Math.abs(this.stride[1]))?[1,0]:[0,1]}})")
+	      } else if(dimension === 3) {
+	        code.push(
+	"var s0=Math.abs(this.stride[0]),s1=Math.abs(this.stride[1]),s2=Math.abs(this.stride[2]);\
+	if(s0>s1){\
+	if(s1>s2){\
+	return [2,1,0];\
+	}else if(s0>s2){\
+	return [1,2,0];\
+	}else{\
+	return [1,0,2];\
+	}\
+	}else if(s0>s2){\
+	return [2,0,1];\
+	}else if(s2>s1){\
+	return [0,1,2];\
+	}else{\
+	return [0,2,1];\
+	}}})")
+	      }
+	    } else {
+	      code.push("ORDER})")
+	    }
+	  }
+
+	  //view.set(i0, ..., v):
+	  code.push(
+	"proto.set=function "+className+"_set("+args.join(",")+",v){")
+	  if(useGetters) {
+	    code.push("return this.data.set("+index_str+",v)}")
+	  } else {
+	    code.push("return this.data["+index_str+"]=v}")
+	  }
+
+	  //view.get(i0, ...):
+	  code.push("proto.get=function "+className+"_get("+args.join(",")+"){")
+	  if(useGetters) {
+	    code.push("return this.data.get("+index_str+")}")
+	  } else {
+	    code.push("return this.data["+index_str+"]}")
+	  }
+
+	  //view.index:
+	  code.push(
+	    "proto.index=function "+className+"_index(", args.join(), "){return "+index_str+"}")
+
+	  //view.hi():
+	  code.push("proto.hi=function "+className+"_hi("+args.join(",")+"){return new "+className+"(this.data,"+
+	    indices.map(function(i) {
+	      return ["(typeof i",i,"!=='number'||i",i,"<0)?this.shape[", i, "]:i", i,"|0"].join("")
+	    }).join(",")+","+
+	    indices.map(function(i) {
+	      return "this.stride["+i + "]"
+	    }).join(",")+",this.offset)}")
+
+	  //view.lo():
+	  var a_vars = indices.map(function(i) { return "a"+i+"=this.shape["+i+"]" })
+	  var c_vars = indices.map(function(i) { return "c"+i+"=this.stride["+i+"]" })
+	  code.push("proto.lo=function "+className+"_lo("+args.join(",")+"){var b=this.offset,d=0,"+a_vars.join(",")+","+c_vars.join(","))
+	  for(var i=0; i<dimension; ++i) {
+	    code.push(
+	"if(typeof i"+i+"==='number'&&i"+i+">=0){\
+	d=i"+i+"|0;\
+	b+=c"+i+"*d;\
+	a"+i+"-=d}")
+	  }
+	  code.push("return new "+className+"(this.data,"+
+	    indices.map(function(i) {
+	      return "a"+i
+	    }).join(",")+","+
+	    indices.map(function(i) {
+	      return "c"+i
+	    }).join(",")+",b)}")
+
+	  //view.step():
+	  code.push("proto.step=function "+className+"_step("+args.join(",")+"){var "+
+	    indices.map(function(i) {
+	      return "a"+i+"=this.shape["+i+"]"
+	    }).join(",")+","+
+	    indices.map(function(i) {
+	      return "b"+i+"=this.stride["+i+"]"
+	    }).join(",")+",c=this.offset,d=0,ceil=Math.ceil")
+	  for(var i=0; i<dimension; ++i) {
+	    code.push(
+	"if(typeof i"+i+"==='number'){\
+	d=i"+i+"|0;\
+	if(d<0){\
+	c+=b"+i+"*(a"+i+"-1);\
+	a"+i+"=ceil(-a"+i+"/d)\
+	}else{\
+	a"+i+"=ceil(a"+i+"/d)\
+	}\
+	b"+i+"*=d\
+	}")
+	  }
+	  code.push("return new "+className+"(this.data,"+
+	    indices.map(function(i) {
+	      return "a" + i
+	    }).join(",")+","+
+	    indices.map(function(i) {
+	      return "b" + i
+	    }).join(",")+",c)}")
+
+	  //view.transpose():
+	  var tShape = new Array(dimension)
+	  var tStride = new Array(dimension)
+	  for(var i=0; i<dimension; ++i) {
+	    tShape[i] = "a[i"+i+"]"
+	    tStride[i] = "b[i"+i+"]"
+	  }
+	  code.push("proto.transpose=function "+className+"_transpose("+args+"){"+
+	    args.map(function(n,idx) { return n + "=(" + n + "===undefined?" + idx + ":" + n + "|0)"}).join(";"),
+	    "var a=this.shape,b=this.stride;return new "+className+"(this.data,"+tShape.join(",")+","+tStride.join(",")+",this.offset)}")
+
+	  //view.pick():
+	  code.push("proto.pick=function "+className+"_pick("+args+"){var a=[],b=[],c=this.offset")
+	  for(var i=0; i<dimension; ++i) {
+	    code.push("if(typeof i"+i+"==='number'&&i"+i+">=0){c=(c+this.stride["+i+"]*i"+i+")|0}else{a.push(this.shape["+i+"]);b.push(this.stride["+i+"])}")
+	  }
+	  code.push("var ctor=CTOR_LIST[a.length+1];return ctor(this.data,a,b,c)}")
+
+	  //Add return statement
+	  code.push("return function construct_"+className+"(data,shape,stride,offset){return new "+className+"(data,"+
+	    indices.map(function(i) {
+	      return "shape["+i+"]"
+	    }).join(",")+","+
+	    indices.map(function(i) {
+	      return "stride["+i+"]"
+	    }).join(",")+",offset)}")
+
+	  //Compile procedure
+	  var procedure = new Function("CTOR_LIST", "ORDER", code.join("\n"))
+	  return procedure(CACHED_CONSTRUCTORS[dtype], order)
+	}
+
+	function arrayDType(data) {
+	  if(isBuffer(data)) {
+	    return "buffer"
+	  }
+	  if(hasTypedArrays) {
+	    switch(Object.prototype.toString.call(data)) {
+	      case "[object Float64Array]":
+	        return "float64"
+	      case "[object Float32Array]":
+	        return "float32"
+	      case "[object Int8Array]":
+	        return "int8"
+	      case "[object Int16Array]":
+	        return "int16"
+	      case "[object Int32Array]":
+	        return "int32"
+	      case "[object Uint8Array]":
+	        return "uint8"
+	      case "[object Uint16Array]":
+	        return "uint16"
+	      case "[object Uint32Array]":
+	        return "uint32"
+	      case "[object Uint8ClampedArray]":
+	        return "uint8_clamped"
+	    }
+	  }
+	  if(Array.isArray(data)) {
+	    return "array"
+	  }
+	  return "generic"
+	}
+
+	var CACHED_CONSTRUCTORS = {
+	  "float32":[],
+	  "float64":[],
+	  "int8":[],
+	  "int16":[],
+	  "int32":[],
+	  "uint8":[],
+	  "uint16":[],
+	  "uint32":[],
+	  "array":[],
+	  "uint8_clamped":[],
+	  "buffer":[],
+	  "generic":[]
+	}
+
+	;(function() {
+	  for(var id in CACHED_CONSTRUCTORS) {
+	    CACHED_CONSTRUCTORS[id].push(compileConstructor(id, -1))
+	  }
+	});
+
+	function wrappedNDArrayCtor(data, shape, stride, offset) {
+	  if(data === undefined) {
+	    var ctor = CACHED_CONSTRUCTORS.array[0]
+	    return ctor([])
+	  } else if(typeof data === "number") {
+	    data = [data]
+	  }
+	  if(shape === undefined) {
+	    shape = [ data.length ]
+	  }
+	  var d = shape.length
+	  if(stride === undefined) {
+	    stride = new Array(d)
+	    for(var i=d-1, sz=1; i>=0; --i) {
+	      stride[i] = sz
+	      sz *= shape[i]
+	    }
+	  }
+	  if(offset === undefined) {
+	    offset = 0
+	    for(var i=0; i<d; ++i) {
+	      if(stride[i] < 0) {
+	        offset -= (shape[i]-1)*stride[i]
+	      }
+	    }
+	  }
+	  var dtype = arrayDType(data)
+	  var ctor_list = CACHED_CONSTRUCTORS[dtype]
+	  while(ctor_list.length <= d+1) {
+	    ctor_list.push(compileConstructor(dtype, ctor_list.length-1))
+	  }
+	  var ctor = ctor_list[d+1]
+	  return ctor(data, shape, stride, offset)
+	}
+
+	module.exports = wrappedNDArrayCtor
+
+
+/***/ },
+/* 225 */
+/*!****************************************!*\
+  !*** ./~/ndarray/~/iota-array/iota.js ***!
+  \****************************************/
+/***/ function(module, exports) {
+
+	"use strict"
+
+	function iota(n) {
+	  var result = new Array(n)
+	  for(var i=0; i<n; ++i) {
+	    result[i] = i
+	  }
+	  return result
+	}
+
+	module.exports = iota
+
+/***/ },
+/* 226 */
+/*!****************************************!*\
+  !*** ./~/ndarray/~/is-buffer/index.js ***!
+  \****************************************/
+/***/ function(module, exports) {
+
+	/**
+	 * Determine if an object is Buffer
+	 *
+	 * Author:   Feross Aboukhadijeh <feross@feross.org> <http://feross.org>
+	 * License:  MIT
+	 *
+	 * `npm install is-buffer`
+	 */
+
+	module.exports = function (obj) {
+	  return !!(obj != null &&
+	    (obj._isBuffer || // For Safari 5-7 (missing Object.prototype.constructor)
+	      (obj.constructor &&
+	      typeof obj.constructor.isBuffer === 'function' &&
+	      obj.constructor.isBuffer(obj))
+	    ))
+	}
+
+
+/***/ },
+/* 227 */
+/*!*********************************!*\
+  !*** ./~/ndarray-fill/index.js ***!
+  \*********************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict"
+
+	var cwise = __webpack_require__(/*! cwise */ 228)
+
+	var fill = cwise({
+	  args: ["index", "array", "scalar"],
+	  body: function(idx, out, f) {
+	    out = f.apply(undefined, idx)
+	  }
+	})
+
+	module.exports = function(array, f) {
+	  fill(array, f)
+	  return array
+	}
+
+
+/***/ },
+/* 228 */
+/*!*****************************************************!*\
+  !*** ./~/ndarray-fill/~/cwise/lib/cwise-esprima.js ***!
+  \*****************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict"
+
+	var parse   = __webpack_require__(/*! cwise-parser */ 229)
+	var compile = __webpack_require__(/*! cwise-compiler */ 232)
+
+	var REQUIRED_FIELDS = [ "args", "body" ]
+	var OPTIONAL_FIELDS = [ "pre", "post", "printCode", "funcName", "blockSize" ]
+
+	function createCWise(user_args) {
+	  //Check parameters
+	  for(var id in user_args) {
+	    if(REQUIRED_FIELDS.indexOf(id) < 0 &&
+	       OPTIONAL_FIELDS.indexOf(id) < 0) {
+	      console.warn("cwise: Unknown argument '"+id+"' passed to expression compiler")
+	    }
+	  }
+	  for(var i=0; i<REQUIRED_FIELDS.length; ++i) {
+	    if(!user_args[REQUIRED_FIELDS[i]]) {
+	      throw new Error("cwise: Missing argument: " + REQUIRED_FIELDS[i])
+	    }
+	  }
+	  
+	  //Parse blocks
+	  return compile({
+	    args:       user_args.args,
+	    pre:        parse(user_args.pre || function(){}),
+	    body:       parse(user_args.body),
+	    post:       parse(user_args.post || function(){}),
+	    debug:      !!user_args.printCode,
+	    funcName:   user_args.funcName || user_args.body.name || "cwise",
+	    blockSize:  user_args.blockSize || 64
+	  })
+	}
+
+	module.exports = createCWise
+
+
+/***/ },
+/* 229 */
+/*!********************************************************!*\
+  !*** ./~/ndarray-fill/~/cwise/~/cwise-parser/index.js ***!
+  \********************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict"
+
+	var esprima = __webpack_require__(/*! esprima */ 230)
+	var uniq = __webpack_require__(/*! uniq */ 231)
+
+	var PREFIX_COUNTER = 0
+
+	function CompiledArgument(name, lvalue, rvalue) {
+	  this.name = name
+	  this.lvalue = lvalue
+	  this.rvalue = rvalue
+	  this.count = 0
+	}
+
+	function CompiledRoutine(body, args, thisVars, localVars) {
+	  this.body = body
+	  this.args = args
+	  this.thisVars = thisVars
+	  this.localVars = localVars
+	}
+
+	function isGlobal(identifier) {
+	  if(identifier === "eval") {
+	    throw new Error("cwise-parser: eval() not allowed")
+	  }
+	  if(typeof window !== "undefined") {
+	    return identifier in window
+	  } else if(typeof GLOBAL !== "undefined") {
+	    return identifier in GLOBAL
+	  } else if(typeof self !== "undefined") {
+	    return identifier in self
+	  } else {
+	    return false
+	  }
+	}
+
+	function getArgNames(ast) {
+	  var params = ast.body[0].expression.callee.params
+	  var names = new Array(params.length)
+	  for(var i=0; i<params.length; ++i) {
+	    names[i] = params[i].name
+	  }
+	  return names
+	}
+
+	function preprocess(func) {
+	  var src = ["(", func, ")()"].join("")
+	  var ast = esprima.parse(src, { range: true })
+	  
+	  //Compute new prefix
+	  var prefix = "_inline_" + (PREFIX_COUNTER++) + "_"
+	  
+	  //Parse out arguments
+	  var argNames = getArgNames(ast)
+	  var compiledArgs = new Array(argNames.length)
+	  for(var i=0; i<argNames.length; ++i) {
+	    compiledArgs[i] = new CompiledArgument([prefix, "arg", i, "_"].join(""), false, false)
+	  }
+	  
+	  //Create temporary data structure for source rewriting
+	  var exploded = new Array(src.length)
+	  for(var i=0, n=src.length; i<n; ++i) {
+	    exploded[i] = src.charAt(i)
+	  }
+	  
+	  //Local variables
+	  var localVars = []
+	  var thisVars = []
+	  var computedThis = false
+	  
+	  //Retrieves a local variable
+	  function createLocal(id) {
+	    var nstr = prefix + id.replace(/\_/g, "__")
+	    localVars.push(nstr)
+	    return nstr
+	  }
+	  
+	  //Creates a this variable
+	  function createThisVar(id) {
+	    var nstr = "this_" + id.replace(/\_/g, "__")
+	    thisVars.push(nstr)
+	    return nstr
+	  }
+	  
+	  //Rewrites an ast node
+	  function rewrite(node, nstr) {
+	    var lo = node.range[0], hi = node.range[1]
+	    for(var i=lo+1; i<hi; ++i) {
+	      exploded[i] = ""
+	    }
+	    exploded[lo] = nstr
+	  }
+	  
+	  //Remove any underscores
+	  function escapeString(str) {
+	    return "'"+(str.replace(/\_/g, "\\_").replace(/\'/g, "\'"))+"'"
+	  }
+	  
+	  //Returns the source of an identifier
+	  function source(node) {
+	    return exploded.slice(node.range[0], node.range[1]).join("")
+	  }
+	  
+	  //Computes the usage of a node
+	  var LVALUE = 1
+	  var RVALUE = 2
+	  function getUsage(node) {
+	    if(node.parent.type === "AssignmentExpression") {
+	      if(node.parent.left === node) {
+	        if(node.parent.operator === "=") {
+	          return LVALUE
+	        }
+	        return LVALUE|RVALUE
+	      }
+	    }
+	    if(node.parent.type === "UpdateExpression") {
+	      return LVALUE|RVALUE
+	    }
+	    return RVALUE
+	  }
+	  
+	  //Handle visiting a node
+	  (function visit(node, parent) {
+	    node.parent = parent
+	    if(node.type === "MemberExpression") {
+	      //Handle member expression
+	      if(node.computed) {
+	        visit(node.object, node)
+	        visit(node.property, node)
+	      } else if(node.object.type === "ThisExpression") {
+	        rewrite(node, createThisVar(node.property.name))
+	      } else {
+	        visit(node.object, node)
+	      }
+	    } else if(node.type === "ThisExpression") {
+	      throw new Error("cwise-parser: Computed this is not allowed")
+	    } else if(node.type === "Identifier") {
+	      //Handle identifier
+	      var name = node.name
+	      var argNo = argNames.indexOf(name)
+	      if(argNo >= 0) {
+	        var carg = compiledArgs[argNo]
+	        var usage = getUsage(node)
+	        if(usage & LVALUE) {
+	          carg.lvalue = true
+	        }
+	        if(usage & RVALUE) {
+	          carg.rvalue = true
+	        }
+	        ++carg.count
+	        rewrite(node, carg.name)
+	      } else if(isGlobal(name)) {
+	        //Don't rewrite globals
+	      } else {
+	        rewrite(node, createLocal(name))
+	      }
+	    } else if(node.type === "Literal") {
+	      if(typeof node.value === "string") {
+	        rewrite(node, escapeString(node.value))
+	      }
+	    } else if(node.type === "WithStatement") {
+	      throw new Error("cwise-parser: with() statements not allowed")
+	    } else {
+	      //Visit all children
+	      var keys = Object.keys(node)
+	      for(var i=0, n=keys.length; i<n; ++i) {
+	        if(keys[i] === "parent") {
+	          continue
+	        }
+	        var value = node[keys[i]]
+	        if(value) {
+	          if(value instanceof Array) {
+	            for(var j=0; j<value.length; ++j) {
+	              if(value[j] && typeof value[j].type === "string") {
+	                visit(value[j], node)
+	              }
+	            }
+	          } else if(typeof value.type === "string") {
+	            visit(value, node)
+	          }
+	        }
+	      }
+	    }
+	  })(ast.body[0].expression.callee.body, undefined)
+	  
+	  //Remove duplicate variables
+	  uniq(localVars)
+	  uniq(thisVars)
+	  
+	  //Return body
+	  var routine = new CompiledRoutine(source(ast.body[0].expression.callee.body), compiledArgs, thisVars, localVars)
+	  return routine
+	}
+
+	module.exports = preprocess
+
+/***/ },
+/* 230 */
+/*!********************************************************************!*\
+  !*** ./~/ndarray-fill/~/cwise/~/cwise-parser/~/esprima/esprima.js ***!
+  \********************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
+	  Copyright (C) 2013 Ariya Hidayat <ariya.hidayat@gmail.com>
+	  Copyright (C) 2013 Thaddee Tyl <thaddee.tyl@gmail.com>
+	  Copyright (C) 2013 Mathias Bynens <mathias@qiwi.be>
+	  Copyright (C) 2012 Ariya Hidayat <ariya.hidayat@gmail.com>
+	  Copyright (C) 2012 Mathias Bynens <mathias@qiwi.be>
+	  Copyright (C) 2012 Joost-Wim Boekesteijn <joost-wim@boekesteijn.nl>
+	  Copyright (C) 2012 Kris Kowal <kris.kowal@cixar.com>
+	  Copyright (C) 2012 Yusuke Suzuki <utatane.tea@gmail.com>
+	  Copyright (C) 2012 Arpad Borsos <arpad.borsos@googlemail.com>
+	  Copyright (C) 2011 Ariya Hidayat <ariya.hidayat@gmail.com>
+
+	  Redistribution and use in source and binary forms, with or without
+	  modification, are permitted provided that the following conditions are met:
+
+	    * Redistributions of source code must retain the above copyright
+	      notice, this list of conditions and the following disclaimer.
+	    * Redistributions in binary form must reproduce the above copyright
+	      notice, this list of conditions and the following disclaimer in the
+	      documentation and/or other materials provided with the distribution.
+
+	  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+	  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+	  IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+	  ARE DISCLAIMED. IN NO EVENT SHALL <COPYRIGHT HOLDER> BE LIABLE FOR ANY
+	  DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+	  (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+	  LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+	  ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+	  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
+	  THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+	*/
+
+	/*jslint bitwise:true plusplus:true */
+	/*global esprima:true, define:true, exports:true, window: true,
+	throwErrorTolerant: true,
+	throwError: true, generateStatement: true, peek: true,
+	parseAssignmentExpression: true, parseBlock: true, parseExpression: true,
+	parseFunctionDeclaration: true, parseFunctionExpression: true,
+	parseFunctionSourceElements: true, parseVariableIdentifier: true,
+	parseLeftHandSideExpression: true,
+	parseUnaryExpression: true,
+	parseStatement: true, parseSourceElement: true */
+
+	(function (root, factory) {
+	    'use strict';
+
+	    // Universal Module Definition (UMD) to support AMD, CommonJS/Node.js,
+	    // Rhino, and plain browser loading.
+
+	    /* istanbul ignore next */
+	    if (true) {
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [exports], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+	    } else if (typeof exports !== 'undefined') {
+	        factory(exports);
+	    } else {
+	        factory((root.esprima = {}));
+	    }
+	}(this, function (exports) {
+	    'use strict';
+
+	    var Token,
+	        TokenName,
+	        FnExprTokens,
+	        Syntax,
+	        PropertyKind,
+	        Messages,
+	        Regex,
+	        SyntaxTreeDelegate,
+	        source,
+	        strict,
+	        index,
+	        lineNumber,
+	        lineStart,
+	        length,
+	        delegate,
+	        lookahead,
+	        state,
+	        extra;
+
+	    Token = {
+	        BooleanLiteral: 1,
+	        EOF: 2,
+	        Identifier: 3,
+	        Keyword: 4,
+	        NullLiteral: 5,
+	        NumericLiteral: 6,
+	        Punctuator: 7,
+	        StringLiteral: 8,
+	        RegularExpression: 9
+	    };
+
+	    TokenName = {};
+	    TokenName[Token.BooleanLiteral] = 'Boolean';
+	    TokenName[Token.EOF] = '<end>';
+	    TokenName[Token.Identifier] = 'Identifier';
+	    TokenName[Token.Keyword] = 'Keyword';
+	    TokenName[Token.NullLiteral] = 'Null';
+	    TokenName[Token.NumericLiteral] = 'Numeric';
+	    TokenName[Token.Punctuator] = 'Punctuator';
+	    TokenName[Token.StringLiteral] = 'String';
+	    TokenName[Token.RegularExpression] = 'RegularExpression';
+
+	    // A function following one of those tokens is an expression.
+	    FnExprTokens = ['(', '{', '[', 'in', 'typeof', 'instanceof', 'new',
+	                    'return', 'case', 'delete', 'throw', 'void',
+	                    // assignment operators
+	                    '=', '+=', '-=', '*=', '/=', '%=', '<<=', '>>=', '>>>=',
+	                    '&=', '|=', '^=', ',',
+	                    // binary/unary operators
+	                    '+', '-', '*', '/', '%', '++', '--', '<<', '>>', '>>>', '&',
+	                    '|', '^', '!', '~', '&&', '||', '?', ':', '===', '==', '>=',
+	                    '<=', '<', '>', '!=', '!=='];
+
+	    Syntax = {
+	        AssignmentExpression: 'AssignmentExpression',
+	        ArrayExpression: 'ArrayExpression',
+	        BlockStatement: 'BlockStatement',
+	        BinaryExpression: 'BinaryExpression',
+	        BreakStatement: 'BreakStatement',
+	        CallExpression: 'CallExpression',
+	        CatchClause: 'CatchClause',
+	        ConditionalExpression: 'ConditionalExpression',
+	        ContinueStatement: 'ContinueStatement',
+	        DoWhileStatement: 'DoWhileStatement',
+	        DebuggerStatement: 'DebuggerStatement',
+	        EmptyStatement: 'EmptyStatement',
+	        ExpressionStatement: 'ExpressionStatement',
+	        ForStatement: 'ForStatement',
+	        ForInStatement: 'ForInStatement',
+	        FunctionDeclaration: 'FunctionDeclaration',
+	        FunctionExpression: 'FunctionExpression',
+	        Identifier: 'Identifier',
+	        IfStatement: 'IfStatement',
+	        Literal: 'Literal',
+	        LabeledStatement: 'LabeledStatement',
+	        LogicalExpression: 'LogicalExpression',
+	        MemberExpression: 'MemberExpression',
+	        NewExpression: 'NewExpression',
+	        ObjectExpression: 'ObjectExpression',
+	        Program: 'Program',
+	        Property: 'Property',
+	        ReturnStatement: 'ReturnStatement',
+	        SequenceExpression: 'SequenceExpression',
+	        SwitchStatement: 'SwitchStatement',
+	        SwitchCase: 'SwitchCase',
+	        ThisExpression: 'ThisExpression',
+	        ThrowStatement: 'ThrowStatement',
+	        TryStatement: 'TryStatement',
+	        UnaryExpression: 'UnaryExpression',
+	        UpdateExpression: 'UpdateExpression',
+	        VariableDeclaration: 'VariableDeclaration',
+	        VariableDeclarator: 'VariableDeclarator',
+	        WhileStatement: 'WhileStatement',
+	        WithStatement: 'WithStatement'
+	    };
+
+	    PropertyKind = {
+	        Data: 1,
+	        Get: 2,
+	        Set: 4
+	    };
+
+	    // Error messages should be identical to V8.
+	    Messages = {
+	        UnexpectedToken:  'Unexpected token %0',
+	        UnexpectedNumber:  'Unexpected number',
+	        UnexpectedString:  'Unexpected string',
+	        UnexpectedIdentifier:  'Unexpected identifier',
+	        UnexpectedReserved:  'Unexpected reserved word',
+	        UnexpectedEOS:  'Unexpected end of input',
+	        NewlineAfterThrow:  'Illegal newline after throw',
+	        InvalidRegExp: 'Invalid regular expression',
+	        UnterminatedRegExp:  'Invalid regular expression: missing /',
+	        InvalidLHSInAssignment:  'Invalid left-hand side in assignment',
+	        InvalidLHSInForIn:  'Invalid left-hand side in for-in',
+	        MultipleDefaultsInSwitch: 'More than one default clause in switch statement',
+	        NoCatchOrFinally:  'Missing catch or finally after try',
+	        UnknownLabel: 'Undefined label \'%0\'',
+	        Redeclaration: '%0 \'%1\' has already been declared',
+	        IllegalContinue: 'Illegal continue statement',
+	        IllegalBreak: 'Illegal break statement',
+	        IllegalReturn: 'Illegal return statement',
+	        StrictModeWith:  'Strict mode code may not include a with statement',
+	        StrictCatchVariable:  'Catch variable may not be eval or arguments in strict mode',
+	        StrictVarName:  'Variable name may not be eval or arguments in strict mode',
+	        StrictParamName:  'Parameter name eval or arguments is not allowed in strict mode',
+	        StrictParamDupe: 'Strict mode function may not have duplicate parameter names',
+	        StrictFunctionName:  'Function name may not be eval or arguments in strict mode',
+	        StrictOctalLiteral:  'Octal literals are not allowed in strict mode.',
+	        StrictDelete:  'Delete of an unqualified identifier in strict mode.',
+	        StrictDuplicateProperty:  'Duplicate data property in object literal not allowed in strict mode',
+	        AccessorDataProperty:  'Object literal may not have data and accessor property with the same name',
+	        AccessorGetSet:  'Object literal may not have multiple get/set accessors with the same name',
+	        StrictLHSAssignment:  'Assignment to eval or arguments is not allowed in strict mode',
+	        StrictLHSPostfix:  'Postfix increment/decrement may not have eval or arguments operand in strict mode',
+	        StrictLHSPrefix:  'Prefix increment/decrement may not have eval or arguments operand in strict mode',
+	        StrictReservedWord:  'Use of future reserved word in strict mode'
+	    };
+
+	    // See also tools/generate-unicode-regex.py.
+	    Regex = {
+	        NonAsciiIdentifierStart: new RegExp('[\xAA\xB5\xBA\xC0-\xD6\xD8-\xF6\xF8-\u02C1\u02C6-\u02D1\u02E0-\u02E4\u02EC\u02EE\u0370-\u0374\u0376\u0377\u037A-\u037D\u0386\u0388-\u038A\u038C\u038E-\u03A1\u03A3-\u03F5\u03F7-\u0481\u048A-\u0527\u0531-\u0556\u0559\u0561-\u0587\u05D0-\u05EA\u05F0-\u05F2\u0620-\u064A\u066E\u066F\u0671-\u06D3\u06D5\u06E5\u06E6\u06EE\u06EF\u06FA-\u06FC\u06FF\u0710\u0712-\u072F\u074D-\u07A5\u07B1\u07CA-\u07EA\u07F4\u07F5\u07FA\u0800-\u0815\u081A\u0824\u0828\u0840-\u0858\u08A0\u08A2-\u08AC\u0904-\u0939\u093D\u0950\u0958-\u0961\u0971-\u0977\u0979-\u097F\u0985-\u098C\u098F\u0990\u0993-\u09A8\u09AA-\u09B0\u09B2\u09B6-\u09B9\u09BD\u09CE\u09DC\u09DD\u09DF-\u09E1\u09F0\u09F1\u0A05-\u0A0A\u0A0F\u0A10\u0A13-\u0A28\u0A2A-\u0A30\u0A32\u0A33\u0A35\u0A36\u0A38\u0A39\u0A59-\u0A5C\u0A5E\u0A72-\u0A74\u0A85-\u0A8D\u0A8F-\u0A91\u0A93-\u0AA8\u0AAA-\u0AB0\u0AB2\u0AB3\u0AB5-\u0AB9\u0ABD\u0AD0\u0AE0\u0AE1\u0B05-\u0B0C\u0B0F\u0B10\u0B13-\u0B28\u0B2A-\u0B30\u0B32\u0B33\u0B35-\u0B39\u0B3D\u0B5C\u0B5D\u0B5F-\u0B61\u0B71\u0B83\u0B85-\u0B8A\u0B8E-\u0B90\u0B92-\u0B95\u0B99\u0B9A\u0B9C\u0B9E\u0B9F\u0BA3\u0BA4\u0BA8-\u0BAA\u0BAE-\u0BB9\u0BD0\u0C05-\u0C0C\u0C0E-\u0C10\u0C12-\u0C28\u0C2A-\u0C33\u0C35-\u0C39\u0C3D\u0C58\u0C59\u0C60\u0C61\u0C85-\u0C8C\u0C8E-\u0C90\u0C92-\u0CA8\u0CAA-\u0CB3\u0CB5-\u0CB9\u0CBD\u0CDE\u0CE0\u0CE1\u0CF1\u0CF2\u0D05-\u0D0C\u0D0E-\u0D10\u0D12-\u0D3A\u0D3D\u0D4E\u0D60\u0D61\u0D7A-\u0D7F\u0D85-\u0D96\u0D9A-\u0DB1\u0DB3-\u0DBB\u0DBD\u0DC0-\u0DC6\u0E01-\u0E30\u0E32\u0E33\u0E40-\u0E46\u0E81\u0E82\u0E84\u0E87\u0E88\u0E8A\u0E8D\u0E94-\u0E97\u0E99-\u0E9F\u0EA1-\u0EA3\u0EA5\u0EA7\u0EAA\u0EAB\u0EAD-\u0EB0\u0EB2\u0EB3\u0EBD\u0EC0-\u0EC4\u0EC6\u0EDC-\u0EDF\u0F00\u0F40-\u0F47\u0F49-\u0F6C\u0F88-\u0F8C\u1000-\u102A\u103F\u1050-\u1055\u105A-\u105D\u1061\u1065\u1066\u106E-\u1070\u1075-\u1081\u108E\u10A0-\u10C5\u10C7\u10CD\u10D0-\u10FA\u10FC-\u1248\u124A-\u124D\u1250-\u1256\u1258\u125A-\u125D\u1260-\u1288\u128A-\u128D\u1290-\u12B0\u12B2-\u12B5\u12B8-\u12BE\u12C0\u12C2-\u12C5\u12C8-\u12D6\u12D8-\u1310\u1312-\u1315\u1318-\u135A\u1380-\u138F\u13A0-\u13F4\u1401-\u166C\u166F-\u167F\u1681-\u169A\u16A0-\u16EA\u16EE-\u16F0\u1700-\u170C\u170E-\u1711\u1720-\u1731\u1740-\u1751\u1760-\u176C\u176E-\u1770\u1780-\u17B3\u17D7\u17DC\u1820-\u1877\u1880-\u18A8\u18AA\u18B0-\u18F5\u1900-\u191C\u1950-\u196D\u1970-\u1974\u1980-\u19AB\u19C1-\u19C7\u1A00-\u1A16\u1A20-\u1A54\u1AA7\u1B05-\u1B33\u1B45-\u1B4B\u1B83-\u1BA0\u1BAE\u1BAF\u1BBA-\u1BE5\u1C00-\u1C23\u1C4D-\u1C4F\u1C5A-\u1C7D\u1CE9-\u1CEC\u1CEE-\u1CF1\u1CF5\u1CF6\u1D00-\u1DBF\u1E00-\u1F15\u1F18-\u1F1D\u1F20-\u1F45\u1F48-\u1F4D\u1F50-\u1F57\u1F59\u1F5B\u1F5D\u1F5F-\u1F7D\u1F80-\u1FB4\u1FB6-\u1FBC\u1FBE\u1FC2-\u1FC4\u1FC6-\u1FCC\u1FD0-\u1FD3\u1FD6-\u1FDB\u1FE0-\u1FEC\u1FF2-\u1FF4\u1FF6-\u1FFC\u2071\u207F\u2090-\u209C\u2102\u2107\u210A-\u2113\u2115\u2119-\u211D\u2124\u2126\u2128\u212A-\u212D\u212F-\u2139\u213C-\u213F\u2145-\u2149\u214E\u2160-\u2188\u2C00-\u2C2E\u2C30-\u2C5E\u2C60-\u2CE4\u2CEB-\u2CEE\u2CF2\u2CF3\u2D00-\u2D25\u2D27\u2D2D\u2D30-\u2D67\u2D6F\u2D80-\u2D96\u2DA0-\u2DA6\u2DA8-\u2DAE\u2DB0-\u2DB6\u2DB8-\u2DBE\u2DC0-\u2DC6\u2DC8-\u2DCE\u2DD0-\u2DD6\u2DD8-\u2DDE\u2E2F\u3005-\u3007\u3021-\u3029\u3031-\u3035\u3038-\u303C\u3041-\u3096\u309D-\u309F\u30A1-\u30FA\u30FC-\u30FF\u3105-\u312D\u3131-\u318E\u31A0-\u31BA\u31F0-\u31FF\u3400-\u4DB5\u4E00-\u9FCC\uA000-\uA48C\uA4D0-\uA4FD\uA500-\uA60C\uA610-\uA61F\uA62A\uA62B\uA640-\uA66E\uA67F-\uA697\uA6A0-\uA6EF\uA717-\uA71F\uA722-\uA788\uA78B-\uA78E\uA790-\uA793\uA7A0-\uA7AA\uA7F8-\uA801\uA803-\uA805\uA807-\uA80A\uA80C-\uA822\uA840-\uA873\uA882-\uA8B3\uA8F2-\uA8F7\uA8FB\uA90A-\uA925\uA930-\uA946\uA960-\uA97C\uA984-\uA9B2\uA9CF\uAA00-\uAA28\uAA40-\uAA42\uAA44-\uAA4B\uAA60-\uAA76\uAA7A\uAA80-\uAAAF\uAAB1\uAAB5\uAAB6\uAAB9-\uAABD\uAAC0\uAAC2\uAADB-\uAADD\uAAE0-\uAAEA\uAAF2-\uAAF4\uAB01-\uAB06\uAB09-\uAB0E\uAB11-\uAB16\uAB20-\uAB26\uAB28-\uAB2E\uABC0-\uABE2\uAC00-\uD7A3\uD7B0-\uD7C6\uD7CB-\uD7FB\uF900-\uFA6D\uFA70-\uFAD9\uFB00-\uFB06\uFB13-\uFB17\uFB1D\uFB1F-\uFB28\uFB2A-\uFB36\uFB38-\uFB3C\uFB3E\uFB40\uFB41\uFB43\uFB44\uFB46-\uFBB1\uFBD3-\uFD3D\uFD50-\uFD8F\uFD92-\uFDC7\uFDF0-\uFDFB\uFE70-\uFE74\uFE76-\uFEFC\uFF21-\uFF3A\uFF41-\uFF5A\uFF66-\uFFBE\uFFC2-\uFFC7\uFFCA-\uFFCF\uFFD2-\uFFD7\uFFDA-\uFFDC]'),
+	        NonAsciiIdentifierPart: new RegExp('[\xAA\xB5\xBA\xC0-\xD6\xD8-\xF6\xF8-\u02C1\u02C6-\u02D1\u02E0-\u02E4\u02EC\u02EE\u0300-\u0374\u0376\u0377\u037A-\u037D\u0386\u0388-\u038A\u038C\u038E-\u03A1\u03A3-\u03F5\u03F7-\u0481\u0483-\u0487\u048A-\u0527\u0531-\u0556\u0559\u0561-\u0587\u0591-\u05BD\u05BF\u05C1\u05C2\u05C4\u05C5\u05C7\u05D0-\u05EA\u05F0-\u05F2\u0610-\u061A\u0620-\u0669\u066E-\u06D3\u06D5-\u06DC\u06DF-\u06E8\u06EA-\u06FC\u06FF\u0710-\u074A\u074D-\u07B1\u07C0-\u07F5\u07FA\u0800-\u082D\u0840-\u085B\u08A0\u08A2-\u08AC\u08E4-\u08FE\u0900-\u0963\u0966-\u096F\u0971-\u0977\u0979-\u097F\u0981-\u0983\u0985-\u098C\u098F\u0990\u0993-\u09A8\u09AA-\u09B0\u09B2\u09B6-\u09B9\u09BC-\u09C4\u09C7\u09C8\u09CB-\u09CE\u09D7\u09DC\u09DD\u09DF-\u09E3\u09E6-\u09F1\u0A01-\u0A03\u0A05-\u0A0A\u0A0F\u0A10\u0A13-\u0A28\u0A2A-\u0A30\u0A32\u0A33\u0A35\u0A36\u0A38\u0A39\u0A3C\u0A3E-\u0A42\u0A47\u0A48\u0A4B-\u0A4D\u0A51\u0A59-\u0A5C\u0A5E\u0A66-\u0A75\u0A81-\u0A83\u0A85-\u0A8D\u0A8F-\u0A91\u0A93-\u0AA8\u0AAA-\u0AB0\u0AB2\u0AB3\u0AB5-\u0AB9\u0ABC-\u0AC5\u0AC7-\u0AC9\u0ACB-\u0ACD\u0AD0\u0AE0-\u0AE3\u0AE6-\u0AEF\u0B01-\u0B03\u0B05-\u0B0C\u0B0F\u0B10\u0B13-\u0B28\u0B2A-\u0B30\u0B32\u0B33\u0B35-\u0B39\u0B3C-\u0B44\u0B47\u0B48\u0B4B-\u0B4D\u0B56\u0B57\u0B5C\u0B5D\u0B5F-\u0B63\u0B66-\u0B6F\u0B71\u0B82\u0B83\u0B85-\u0B8A\u0B8E-\u0B90\u0B92-\u0B95\u0B99\u0B9A\u0B9C\u0B9E\u0B9F\u0BA3\u0BA4\u0BA8-\u0BAA\u0BAE-\u0BB9\u0BBE-\u0BC2\u0BC6-\u0BC8\u0BCA-\u0BCD\u0BD0\u0BD7\u0BE6-\u0BEF\u0C01-\u0C03\u0C05-\u0C0C\u0C0E-\u0C10\u0C12-\u0C28\u0C2A-\u0C33\u0C35-\u0C39\u0C3D-\u0C44\u0C46-\u0C48\u0C4A-\u0C4D\u0C55\u0C56\u0C58\u0C59\u0C60-\u0C63\u0C66-\u0C6F\u0C82\u0C83\u0C85-\u0C8C\u0C8E-\u0C90\u0C92-\u0CA8\u0CAA-\u0CB3\u0CB5-\u0CB9\u0CBC-\u0CC4\u0CC6-\u0CC8\u0CCA-\u0CCD\u0CD5\u0CD6\u0CDE\u0CE0-\u0CE3\u0CE6-\u0CEF\u0CF1\u0CF2\u0D02\u0D03\u0D05-\u0D0C\u0D0E-\u0D10\u0D12-\u0D3A\u0D3D-\u0D44\u0D46-\u0D48\u0D4A-\u0D4E\u0D57\u0D60-\u0D63\u0D66-\u0D6F\u0D7A-\u0D7F\u0D82\u0D83\u0D85-\u0D96\u0D9A-\u0DB1\u0DB3-\u0DBB\u0DBD\u0DC0-\u0DC6\u0DCA\u0DCF-\u0DD4\u0DD6\u0DD8-\u0DDF\u0DF2\u0DF3\u0E01-\u0E3A\u0E40-\u0E4E\u0E50-\u0E59\u0E81\u0E82\u0E84\u0E87\u0E88\u0E8A\u0E8D\u0E94-\u0E97\u0E99-\u0E9F\u0EA1-\u0EA3\u0EA5\u0EA7\u0EAA\u0EAB\u0EAD-\u0EB9\u0EBB-\u0EBD\u0EC0-\u0EC4\u0EC6\u0EC8-\u0ECD\u0ED0-\u0ED9\u0EDC-\u0EDF\u0F00\u0F18\u0F19\u0F20-\u0F29\u0F35\u0F37\u0F39\u0F3E-\u0F47\u0F49-\u0F6C\u0F71-\u0F84\u0F86-\u0F97\u0F99-\u0FBC\u0FC6\u1000-\u1049\u1050-\u109D\u10A0-\u10C5\u10C7\u10CD\u10D0-\u10FA\u10FC-\u1248\u124A-\u124D\u1250-\u1256\u1258\u125A-\u125D\u1260-\u1288\u128A-\u128D\u1290-\u12B0\u12B2-\u12B5\u12B8-\u12BE\u12C0\u12C2-\u12C5\u12C8-\u12D6\u12D8-\u1310\u1312-\u1315\u1318-\u135A\u135D-\u135F\u1380-\u138F\u13A0-\u13F4\u1401-\u166C\u166F-\u167F\u1681-\u169A\u16A0-\u16EA\u16EE-\u16F0\u1700-\u170C\u170E-\u1714\u1720-\u1734\u1740-\u1753\u1760-\u176C\u176E-\u1770\u1772\u1773\u1780-\u17D3\u17D7\u17DC\u17DD\u17E0-\u17E9\u180B-\u180D\u1810-\u1819\u1820-\u1877\u1880-\u18AA\u18B0-\u18F5\u1900-\u191C\u1920-\u192B\u1930-\u193B\u1946-\u196D\u1970-\u1974\u1980-\u19AB\u19B0-\u19C9\u19D0-\u19D9\u1A00-\u1A1B\u1A20-\u1A5E\u1A60-\u1A7C\u1A7F-\u1A89\u1A90-\u1A99\u1AA7\u1B00-\u1B4B\u1B50-\u1B59\u1B6B-\u1B73\u1B80-\u1BF3\u1C00-\u1C37\u1C40-\u1C49\u1C4D-\u1C7D\u1CD0-\u1CD2\u1CD4-\u1CF6\u1D00-\u1DE6\u1DFC-\u1F15\u1F18-\u1F1D\u1F20-\u1F45\u1F48-\u1F4D\u1F50-\u1F57\u1F59\u1F5B\u1F5D\u1F5F-\u1F7D\u1F80-\u1FB4\u1FB6-\u1FBC\u1FBE\u1FC2-\u1FC4\u1FC6-\u1FCC\u1FD0-\u1FD3\u1FD6-\u1FDB\u1FE0-\u1FEC\u1FF2-\u1FF4\u1FF6-\u1FFC\u200C\u200D\u203F\u2040\u2054\u2071\u207F\u2090-\u209C\u20D0-\u20DC\u20E1\u20E5-\u20F0\u2102\u2107\u210A-\u2113\u2115\u2119-\u211D\u2124\u2126\u2128\u212A-\u212D\u212F-\u2139\u213C-\u213F\u2145-\u2149\u214E\u2160-\u2188\u2C00-\u2C2E\u2C30-\u2C5E\u2C60-\u2CE4\u2CEB-\u2CF3\u2D00-\u2D25\u2D27\u2D2D\u2D30-\u2D67\u2D6F\u2D7F-\u2D96\u2DA0-\u2DA6\u2DA8-\u2DAE\u2DB0-\u2DB6\u2DB8-\u2DBE\u2DC0-\u2DC6\u2DC8-\u2DCE\u2DD0-\u2DD6\u2DD8-\u2DDE\u2DE0-\u2DFF\u2E2F\u3005-\u3007\u3021-\u302F\u3031-\u3035\u3038-\u303C\u3041-\u3096\u3099\u309A\u309D-\u309F\u30A1-\u30FA\u30FC-\u30FF\u3105-\u312D\u3131-\u318E\u31A0-\u31BA\u31F0-\u31FF\u3400-\u4DB5\u4E00-\u9FCC\uA000-\uA48C\uA4D0-\uA4FD\uA500-\uA60C\uA610-\uA62B\uA640-\uA66F\uA674-\uA67D\uA67F-\uA697\uA69F-\uA6F1\uA717-\uA71F\uA722-\uA788\uA78B-\uA78E\uA790-\uA793\uA7A0-\uA7AA\uA7F8-\uA827\uA840-\uA873\uA880-\uA8C4\uA8D0-\uA8D9\uA8E0-\uA8F7\uA8FB\uA900-\uA92D\uA930-\uA953\uA960-\uA97C\uA980-\uA9C0\uA9CF-\uA9D9\uAA00-\uAA36\uAA40-\uAA4D\uAA50-\uAA59\uAA60-\uAA76\uAA7A\uAA7B\uAA80-\uAAC2\uAADB-\uAADD\uAAE0-\uAAEF\uAAF2-\uAAF6\uAB01-\uAB06\uAB09-\uAB0E\uAB11-\uAB16\uAB20-\uAB26\uAB28-\uAB2E\uABC0-\uABEA\uABEC\uABED\uABF0-\uABF9\uAC00-\uD7A3\uD7B0-\uD7C6\uD7CB-\uD7FB\uF900-\uFA6D\uFA70-\uFAD9\uFB00-\uFB06\uFB13-\uFB17\uFB1D-\uFB28\uFB2A-\uFB36\uFB38-\uFB3C\uFB3E\uFB40\uFB41\uFB43\uFB44\uFB46-\uFBB1\uFBD3-\uFD3D\uFD50-\uFD8F\uFD92-\uFDC7\uFDF0-\uFDFB\uFE00-\uFE0F\uFE20-\uFE26\uFE33\uFE34\uFE4D-\uFE4F\uFE70-\uFE74\uFE76-\uFEFC\uFF10-\uFF19\uFF21-\uFF3A\uFF3F\uFF41-\uFF5A\uFF66-\uFFBE\uFFC2-\uFFC7\uFFCA-\uFFCF\uFFD2-\uFFD7\uFFDA-\uFFDC]')
+	    };
+
+	    // Ensure the condition is true, otherwise throw an error.
+	    // This is only to have a better contract semantic, i.e. another safety net
+	    // to catch a logic error. The condition shall be fulfilled in normal case.
+	    // Do NOT use this to enforce a certain condition on any user input.
+
+	    function assert(condition, message) {
+	        /* istanbul ignore if */
+	        if (!condition) {
+	            throw new Error('ASSERT: ' + message);
+	        }
+	    }
+
+	    function isDecimalDigit(ch) {
+	        return (ch >= 48 && ch <= 57);   // 0..9
+	    }
+
+	    function isHexDigit(ch) {
+	        return '0123456789abcdefABCDEF'.indexOf(ch) >= 0;
+	    }
+
+	    function isOctalDigit(ch) {
+	        return '01234567'.indexOf(ch) >= 0;
+	    }
+
+
+	    // 7.2 White Space
+
+	    function isWhiteSpace(ch) {
+	        return (ch === 0x20) || (ch === 0x09) || (ch === 0x0B) || (ch === 0x0C) || (ch === 0xA0) ||
+	            (ch >= 0x1680 && [0x1680, 0x180E, 0x2000, 0x2001, 0x2002, 0x2003, 0x2004, 0x2005, 0x2006, 0x2007, 0x2008, 0x2009, 0x200A, 0x202F, 0x205F, 0x3000, 0xFEFF].indexOf(ch) >= 0);
+	    }
+
+	    // 7.3 Line Terminators
+
+	    function isLineTerminator(ch) {
+	        return (ch === 0x0A) || (ch === 0x0D) || (ch === 0x2028) || (ch === 0x2029);
+	    }
+
+	    // 7.6 Identifier Names and Identifiers
+
+	    function isIdentifierStart(ch) {
+	        return (ch === 0x24) || (ch === 0x5F) ||  // $ (dollar) and _ (underscore)
+	            (ch >= 0x41 && ch <= 0x5A) ||         // A..Z
+	            (ch >= 0x61 && ch <= 0x7A) ||         // a..z
+	            (ch === 0x5C) ||                      // \ (backslash)
+	            ((ch >= 0x80) && Regex.NonAsciiIdentifierStart.test(String.fromCharCode(ch)));
+	    }
+
+	    function isIdentifierPart(ch) {
+	        return (ch === 0x24) || (ch === 0x5F) ||  // $ (dollar) and _ (underscore)
+	            (ch >= 0x41 && ch <= 0x5A) ||         // A..Z
+	            (ch >= 0x61 && ch <= 0x7A) ||         // a..z
+	            (ch >= 0x30 && ch <= 0x39) ||         // 0..9
+	            (ch === 0x5C) ||                      // \ (backslash)
+	            ((ch >= 0x80) && Regex.NonAsciiIdentifierPart.test(String.fromCharCode(ch)));
+	    }
+
+	    // 7.6.1.2 Future Reserved Words
+
+	    function isFutureReservedWord(id) {
+	        switch (id) {
+	        case 'class':
+	        case 'enum':
+	        case 'export':
+	        case 'extends':
+	        case 'import':
+	        case 'super':
+	            return true;
+	        default:
+	            return false;
+	        }
+	    }
+
+	    function isStrictModeReservedWord(id) {
+	        switch (id) {
+	        case 'implements':
+	        case 'interface':
+	        case 'package':
+	        case 'private':
+	        case 'protected':
+	        case 'public':
+	        case 'static':
+	        case 'yield':
+	        case 'let':
+	            return true;
+	        default:
+	            return false;
+	        }
+	    }
+
+	    function isRestrictedWord(id) {
+	        return id === 'eval' || id === 'arguments';
+	    }
+
+	    // 7.6.1.1 Keywords
+
+	    function isKeyword(id) {
+	        if (strict && isStrictModeReservedWord(id)) {
+	            return true;
+	        }
+
+	        // 'const' is specialized as Keyword in V8.
+	        // 'yield' and 'let' are for compatiblity with SpiderMonkey and ES.next.
+	        // Some others are from future reserved words.
+
+	        switch (id.length) {
+	        case 2:
+	            return (id === 'if') || (id === 'in') || (id === 'do');
+	        case 3:
+	            return (id === 'var') || (id === 'for') || (id === 'new') ||
+	                (id === 'try') || (id === 'let');
+	        case 4:
+	            return (id === 'this') || (id === 'else') || (id === 'case') ||
+	                (id === 'void') || (id === 'with') || (id === 'enum');
+	        case 5:
+	            return (id === 'while') || (id === 'break') || (id === 'catch') ||
+	                (id === 'throw') || (id === 'const') || (id === 'yield') ||
+	                (id === 'class') || (id === 'super');
+	        case 6:
+	            return (id === 'return') || (id === 'typeof') || (id === 'delete') ||
+	                (id === 'switch') || (id === 'export') || (id === 'import');
+	        case 7:
+	            return (id === 'default') || (id === 'finally') || (id === 'extends');
+	        case 8:
+	            return (id === 'function') || (id === 'continue') || (id === 'debugger');
+	        case 10:
+	            return (id === 'instanceof');
+	        default:
+	            return false;
+	        }
+	    }
+
+	    // 7.4 Comments
+
+	    function addComment(type, value, start, end, loc) {
+	        var comment, attacher;
+
+	        assert(typeof start === 'number', 'Comment must have valid position');
+
+	        // Because the way the actual token is scanned, often the comments
+	        // (if any) are skipped twice during the lexical analysis.
+	        // Thus, we need to skip adding a comment if the comment array already
+	        // handled it.
+	        if (state.lastCommentStart >= start) {
+	            return;
+	        }
+	        state.lastCommentStart = start;
+
+	        comment = {
+	            type: type,
+	            value: value
+	        };
+	        if (extra.range) {
+	            comment.range = [start, end];
+	        }
+	        if (extra.loc) {
+	            comment.loc = loc;
+	        }
+	        extra.comments.push(comment);
+	        if (extra.attachComment) {
+	            extra.leadingComments.push(comment);
+	            extra.trailingComments.push(comment);
+	        }
+	    }
+
+	    function skipSingleLineComment(offset) {
+	        var start, loc, ch, comment;
+
+	        start = index - offset;
+	        loc = {
+	            start: {
+	                line: lineNumber,
+	                column: index - lineStart - offset
+	            }
+	        };
+
+	        while (index < length) {
+	            ch = source.charCodeAt(index);
+	            ++index;
+	            if (isLineTerminator(ch)) {
+	                if (extra.comments) {
+	                    comment = source.slice(start + offset, index - 1);
+	                    loc.end = {
+	                        line: lineNumber,
+	                        column: index - lineStart - 1
+	                    };
+	                    addComment('Line', comment, start, index - 1, loc);
+	                }
+	                if (ch === 13 && source.charCodeAt(index) === 10) {
+	                    ++index;
+	                }
+	                ++lineNumber;
+	                lineStart = index;
+	                return;
+	            }
+	        }
+
+	        if (extra.comments) {
+	            comment = source.slice(start + offset, index);
+	            loc.end = {
+	                line: lineNumber,
+	                column: index - lineStart
+	            };
+	            addComment('Line', comment, start, index, loc);
+	        }
+	    }
+
+	    function skipMultiLineComment() {
+	        var start, loc, ch, comment;
+
+	        if (extra.comments) {
+	            start = index - 2;
+	            loc = {
+	                start: {
+	                    line: lineNumber,
+	                    column: index - lineStart - 2
+	                }
+	            };
+	        }
+
+	        while (index < length) {
+	            ch = source.charCodeAt(index);
+	            if (isLineTerminator(ch)) {
+	                if (ch === 0x0D && source.charCodeAt(index + 1) === 0x0A) {
+	                    ++index;
+	                }
+	                ++lineNumber;
+	                ++index;
+	                lineStart = index;
+	                if (index >= length) {
+	                    throwError({}, Messages.UnexpectedToken, 'ILLEGAL');
+	                }
+	            } else if (ch === 0x2A) {
+	                // Block comment ends with '*/'.
+	                if (source.charCodeAt(index + 1) === 0x2F) {
+	                    ++index;
+	                    ++index;
+	                    if (extra.comments) {
+	                        comment = source.slice(start + 2, index - 2);
+	                        loc.end = {
+	                            line: lineNumber,
+	                            column: index - lineStart
+	                        };
+	                        addComment('Block', comment, start, index, loc);
+	                    }
+	                    return;
+	                }
+	                ++index;
+	            } else {
+	                ++index;
+	            }
+	        }
+
+	        throwError({}, Messages.UnexpectedToken, 'ILLEGAL');
+	    }
+
+	    function skipComment() {
+	        var ch, start;
+
+	        start = (index === 0);
+	        while (index < length) {
+	            ch = source.charCodeAt(index);
+
+	            if (isWhiteSpace(ch)) {
+	                ++index;
+	            } else if (isLineTerminator(ch)) {
+	                ++index;
+	                if (ch === 0x0D && source.charCodeAt(index) === 0x0A) {
+	                    ++index;
+	                }
+	                ++lineNumber;
+	                lineStart = index;
+	                start = true;
+	            } else if (ch === 0x2F) { // U+002F is '/'
+	                ch = source.charCodeAt(index + 1);
+	                if (ch === 0x2F) {
+	                    ++index;
+	                    ++index;
+	                    skipSingleLineComment(2);
+	                    start = true;
+	                } else if (ch === 0x2A) {  // U+002A is '*'
+	                    ++index;
+	                    ++index;
+	                    skipMultiLineComment();
+	                } else {
+	                    break;
+	                }
+	            } else if (start && ch === 0x2D) { // U+002D is '-'
+	                // U+003E is '>'
+	                if ((source.charCodeAt(index + 1) === 0x2D) && (source.charCodeAt(index + 2) === 0x3E)) {
+	                    // '-->' is a single-line comment
+	                    index += 3;
+	                    skipSingleLineComment(3);
+	                } else {
+	                    break;
+	                }
+	            } else if (ch === 0x3C) { // U+003C is '<'
+	                if (source.slice(index + 1, index + 4) === '!--') {
+	                    ++index; // `<`
+	                    ++index; // `!`
+	                    ++index; // `-`
+	                    ++index; // `-`
+	                    skipSingleLineComment(4);
+	                } else {
+	                    break;
+	                }
+	            } else {
+	                break;
+	            }
+	        }
+	    }
+
+	    function scanHexEscape(prefix) {
+	        var i, len, ch, code = 0;
+
+	        len = (prefix === 'u') ? 4 : 2;
+	        for (i = 0; i < len; ++i) {
+	            if (index < length && isHexDigit(source[index])) {
+	                ch = source[index++];
+	                code = code * 16 + '0123456789abcdef'.indexOf(ch.toLowerCase());
+	            } else {
+	                return '';
+	            }
+	        }
+	        return String.fromCharCode(code);
+	    }
+
+	    function getEscapedIdentifier() {
+	        var ch, id;
+
+	        ch = source.charCodeAt(index++);
+	        id = String.fromCharCode(ch);
+
+	        // '\u' (U+005C, U+0075) denotes an escaped character.
+	        if (ch === 0x5C) {
+	            if (source.charCodeAt(index) !== 0x75) {
+	                throwError({}, Messages.UnexpectedToken, 'ILLEGAL');
+	            }
+	            ++index;
+	            ch = scanHexEscape('u');
+	            if (!ch || ch === '\\' || !isIdentifierStart(ch.charCodeAt(0))) {
+	                throwError({}, Messages.UnexpectedToken, 'ILLEGAL');
+	            }
+	            id = ch;
+	        }
+
+	        while (index < length) {
+	            ch = source.charCodeAt(index);
+	            if (!isIdentifierPart(ch)) {
+	                break;
+	            }
+	            ++index;
+	            id += String.fromCharCode(ch);
+
+	            // '\u' (U+005C, U+0075) denotes an escaped character.
+	            if (ch === 0x5C) {
+	                id = id.substr(0, id.length - 1);
+	                if (source.charCodeAt(index) !== 0x75) {
+	                    throwError({}, Messages.UnexpectedToken, 'ILLEGAL');
+	                }
+	                ++index;
+	                ch = scanHexEscape('u');
+	                if (!ch || ch === '\\' || !isIdentifierPart(ch.charCodeAt(0))) {
+	                    throwError({}, Messages.UnexpectedToken, 'ILLEGAL');
+	                }
+	                id += ch;
+	            }
+	        }
+
+	        return id;
+	    }
+
+	    function getIdentifier() {
+	        var start, ch;
+
+	        start = index++;
+	        while (index < length) {
+	            ch = source.charCodeAt(index);
+	            if (ch === 0x5C) {
+	                // Blackslash (U+005C) marks Unicode escape sequence.
+	                index = start;
+	                return getEscapedIdentifier();
+	            }
+	            if (isIdentifierPart(ch)) {
+	                ++index;
+	            } else {
+	                break;
+	            }
+	        }
+
+	        return source.slice(start, index);
+	    }
+
+	    function scanIdentifier() {
+	        var start, id, type;
+
+	        start = index;
+
+	        // Backslash (U+005C) starts an escaped character.
+	        id = (source.charCodeAt(index) === 0x5C) ? getEscapedIdentifier() : getIdentifier();
+
+	        // There is no keyword or literal with only one character.
+	        // Thus, it must be an identifier.
+	        if (id.length === 1) {
+	            type = Token.Identifier;
+	        } else if (isKeyword(id)) {
+	            type = Token.Keyword;
+	        } else if (id === 'null') {
+	            type = Token.NullLiteral;
+	        } else if (id === 'true' || id === 'false') {
+	            type = Token.BooleanLiteral;
+	        } else {
+	            type = Token.Identifier;
+	        }
+
+	        return {
+	            type: type,
+	            value: id,
+	            lineNumber: lineNumber,
+	            lineStart: lineStart,
+	            start: start,
+	            end: index
+	        };
+	    }
+
+
+	    // 7.7 Punctuators
+
+	    function scanPunctuator() {
+	        var start = index,
+	            code = source.charCodeAt(index),
+	            code2,
+	            ch1 = source[index],
+	            ch2,
+	            ch3,
+	            ch4;
+
+	        switch (code) {
+
+	        // Check for most common single-character punctuators.
+	        case 0x2E:  // . dot
+	        case 0x28:  // ( open bracket
+	        case 0x29:  // ) close bracket
+	        case 0x3B:  // ; semicolon
+	        case 0x2C:  // , comma
+	        case 0x7B:  // { open curly brace
+	        case 0x7D:  // } close curly brace
+	        case 0x5B:  // [
+	        case 0x5D:  // ]
+	        case 0x3A:  // :
+	        case 0x3F:  // ?
+	        case 0x7E:  // ~
+	            ++index;
+	            if (extra.tokenize) {
+	                if (code === 0x28) {
+	                    extra.openParenToken = extra.tokens.length;
+	                } else if (code === 0x7B) {
+	                    extra.openCurlyToken = extra.tokens.length;
+	                }
+	            }
+	            return {
+	                type: Token.Punctuator,
+	                value: String.fromCharCode(code),
+	                lineNumber: lineNumber,
+	                lineStart: lineStart,
+	                start: start,
+	                end: index
+	            };
+
+	        default:
+	            code2 = source.charCodeAt(index + 1);
+
+	            // '=' (U+003D) marks an assignment or comparison operator.
+	            if (code2 === 0x3D) {
+	                switch (code) {
+	                case 0x2B:  // +
+	                case 0x2D:  // -
+	                case 0x2F:  // /
+	                case 0x3C:  // <
+	                case 0x3E:  // >
+	                case 0x5E:  // ^
+	                case 0x7C:  // |
+	                case 0x25:  // %
+	                case 0x26:  // &
+	                case 0x2A:  // *
+	                    index += 2;
+	                    return {
+	                        type: Token.Punctuator,
+	                        value: String.fromCharCode(code) + String.fromCharCode(code2),
+	                        lineNumber: lineNumber,
+	                        lineStart: lineStart,
+	                        start: start,
+	                        end: index
+	                    };
+
+	                case 0x21: // !
+	                case 0x3D: // =
+	                    index += 2;
+
+	                    // !== and ===
+	                    if (source.charCodeAt(index) === 0x3D) {
+	                        ++index;
+	                    }
+	                    return {
+	                        type: Token.Punctuator,
+	                        value: source.slice(start, index),
+	                        lineNumber: lineNumber,
+	                        lineStart: lineStart,
+	                        start: start,
+	                        end: index
+	                    };
+	                }
+	            }
+	        }
+
+	        // 4-character punctuator: >>>=
+
+	        ch4 = source.substr(index, 4);
+
+	        if (ch4 === '>>>=') {
+	            index += 4;
+	            return {
+	                type: Token.Punctuator,
+	                value: ch4,
+	                lineNumber: lineNumber,
+	                lineStart: lineStart,
+	                start: start,
+	                end: index
+	            };
+	        }
+
+	        // 3-character punctuators: === !== >>> <<= >>=
+
+	        ch3 = ch4.substr(0, 3);
+
+	        if (ch3 === '>>>' || ch3 === '<<=' || ch3 === '>>=') {
+	            index += 3;
+	            return {
+	                type: Token.Punctuator,
+	                value: ch3,
+	                lineNumber: lineNumber,
+	                lineStart: lineStart,
+	                start: start,
+	                end: index
+	            };
+	        }
+
+	        // Other 2-character punctuators: ++ -- << >> && ||
+	        ch2 = ch3.substr(0, 2);
+
+	        if ((ch1 === ch2[1] && ('+-<>&|'.indexOf(ch1) >= 0)) || ch2 === '=>') {
+	            index += 2;
+	            return {
+	                type: Token.Punctuator,
+	                value: ch2,
+	                lineNumber: lineNumber,
+	                lineStart: lineStart,
+	                start: start,
+	                end: index
+	            };
+	        }
+
+	        // 1-character punctuators: < > = ! + - * % & | ^ /
+	        if ('<>=!+-*%&|^/'.indexOf(ch1) >= 0) {
+	            ++index;
+	            return {
+	                type: Token.Punctuator,
+	                value: ch1,
+	                lineNumber: lineNumber,
+	                lineStart: lineStart,
+	                start: start,
+	                end: index
+	            };
+	        }
+
+	        throwError({}, Messages.UnexpectedToken, 'ILLEGAL');
+	    }
+
+	    // 7.8.3 Numeric Literals
+
+	    function scanHexLiteral(start) {
+	        var number = '';
+
+	        while (index < length) {
+	            if (!isHexDigit(source[index])) {
+	                break;
+	            }
+	            number += source[index++];
+	        }
+
+	        if (number.length === 0) {
+	            throwError({}, Messages.UnexpectedToken, 'ILLEGAL');
+	        }
+
+	        if (isIdentifierStart(source.charCodeAt(index))) {
+	            throwError({}, Messages.UnexpectedToken, 'ILLEGAL');
+	        }
+
+	        return {
+	            type: Token.NumericLiteral,
+	            value: parseInt('0x' + number, 16),
+	            lineNumber: lineNumber,
+	            lineStart: lineStart,
+	            start: start,
+	            end: index
+	        };
+	    }
+
+	    function scanOctalLiteral(start) {
+	        var number = '0' + source[index++];
+	        while (index < length) {
+	            if (!isOctalDigit(source[index])) {
+	                break;
+	            }
+	            number += source[index++];
+	        }
+
+	        if (isIdentifierStart(source.charCodeAt(index)) || isDecimalDigit(source.charCodeAt(index))) {
+	            throwError({}, Messages.UnexpectedToken, 'ILLEGAL');
+	        }
+
+	        return {
+	            type: Token.NumericLiteral,
+	            value: parseInt(number, 8),
+	            octal: true,
+	            lineNumber: lineNumber,
+	            lineStart: lineStart,
+	            start: start,
+	            end: index
+	        };
+	    }
+
+	    function isImplicitOctalLiteral() {
+	        var i, ch;
+
+	        // Implicit octal, unless there is a non-octal digit.
+	        // (Annex B.1.1 on Numeric Literals)
+	        for (i = index + 1; i < length; ++i) {
+	            ch = source[i];
+	            if (ch === '8' || ch === '9') {
+	                return false;
+	            }
+	            if (!isOctalDigit(ch)) {
+	                return true;
+	            }
+	        }
+
+	        return true;
+	    }
+
+	    function scanNumericLiteral() {
+	        var number, start, ch;
+
+	        ch = source[index];
+	        assert(isDecimalDigit(ch.charCodeAt(0)) || (ch === '.'),
+	            'Numeric literal must start with a decimal digit or a decimal point');
+
+	        start = index;
+	        number = '';
+	        if (ch !== '.') {
+	            number = source[index++];
+	            ch = source[index];
+
+	            // Hex number starts with '0x'.
+	            // Octal number starts with '0'.
+	            if (number === '0') {
+	                if (ch === 'x' || ch === 'X') {
+	                    ++index;
+	                    return scanHexLiteral(start);
+	                }
+	                if (isOctalDigit(ch)) {
+	                    if (isImplicitOctalLiteral()) {
+	                        return scanOctalLiteral(start);
+	                    }
+	                }
+	            }
+
+	            while (isDecimalDigit(source.charCodeAt(index))) {
+	                number += source[index++];
+	            }
+	            ch = source[index];
+	        }
+
+	        if (ch === '.') {
+	            number += source[index++];
+	            while (isDecimalDigit(source.charCodeAt(index))) {
+	                number += source[index++];
+	            }
+	            ch = source[index];
+	        }
+
+	        if (ch === 'e' || ch === 'E') {
+	            number += source[index++];
+
+	            ch = source[index];
+	            if (ch === '+' || ch === '-') {
+	                number += source[index++];
+	            }
+	            if (isDecimalDigit(source.charCodeAt(index))) {
+	                while (isDecimalDigit(source.charCodeAt(index))) {
+	                    number += source[index++];
+	                }
+	            } else {
+	                throwError({}, Messages.UnexpectedToken, 'ILLEGAL');
+	            }
+	        }
+
+	        if (isIdentifierStart(source.charCodeAt(index))) {
+	            throwError({}, Messages.UnexpectedToken, 'ILLEGAL');
+	        }
+
+	        return {
+	            type: Token.NumericLiteral,
+	            value: parseFloat(number),
+	            lineNumber: lineNumber,
+	            lineStart: lineStart,
+	            start: start,
+	            end: index
+	        };
+	    }
+
+	    // 7.8.4 String Literals
+
+	    function scanStringLiteral() {
+	        var str = '', quote, start, ch, code, unescaped, restore, octal = false, startLineNumber, startLineStart;
+	        startLineNumber = lineNumber;
+	        startLineStart = lineStart;
+
+	        quote = source[index];
+	        assert((quote === '\'' || quote === '"'),
+	            'String literal must starts with a quote');
+
+	        start = index;
+	        ++index;
+
+	        while (index < length) {
+	            ch = source[index++];
+
+	            if (ch === quote) {
+	                quote = '';
+	                break;
+	            } else if (ch === '\\') {
+	                ch = source[index++];
+	                if (!ch || !isLineTerminator(ch.charCodeAt(0))) {
+	                    switch (ch) {
+	                    case 'u':
+	                    case 'x':
+	                        restore = index;
+	                        unescaped = scanHexEscape(ch);
+	                        if (unescaped) {
+	                            str += unescaped;
+	                        } else {
+	                            index = restore;
+	                            str += ch;
+	                        }
+	                        break;
+	                    case 'n':
+	                        str += '\n';
+	                        break;
+	                    case 'r':
+	                        str += '\r';
+	                        break;
+	                    case 't':
+	                        str += '\t';
+	                        break;
+	                    case 'b':
+	                        str += '\b';
+	                        break;
+	                    case 'f':
+	                        str += '\f';
+	                        break;
+	                    case 'v':
+	                        str += '\x0B';
+	                        break;
+
+	                    default:
+	                        if (isOctalDigit(ch)) {
+	                            code = '01234567'.indexOf(ch);
+
+	                            // \0 is not octal escape sequence
+	                            if (code !== 0) {
+	                                octal = true;
+	                            }
+
+	                            if (index < length && isOctalDigit(source[index])) {
+	                                octal = true;
+	                                code = code * 8 + '01234567'.indexOf(source[index++]);
+
+	                                // 3 digits are only allowed when string starts
+	                                // with 0, 1, 2, 3
+	                                if ('0123'.indexOf(ch) >= 0 &&
+	                                        index < length &&
+	                                        isOctalDigit(source[index])) {
+	                                    code = code * 8 + '01234567'.indexOf(source[index++]);
+	                                }
+	                            }
+	                            str += String.fromCharCode(code);
+	                        } else {
+	                            str += ch;
+	                        }
+	                        break;
+	                    }
+	                } else {
+	                    ++lineNumber;
+	                    if (ch ===  '\r' && source[index] === '\n') {
+	                        ++index;
+	                    }
+	                    lineStart = index;
+	                }
+	            } else if (isLineTerminator(ch.charCodeAt(0))) {
+	                break;
+	            } else {
+	                str += ch;
+	            }
+	        }
+
+	        if (quote !== '') {
+	            throwError({}, Messages.UnexpectedToken, 'ILLEGAL');
+	        }
+
+	        return {
+	            type: Token.StringLiteral,
+	            value: str,
+	            octal: octal,
+	            startLineNumber: startLineNumber,
+	            startLineStart: startLineStart,
+	            lineNumber: lineNumber,
+	            lineStart: lineStart,
+	            start: start,
+	            end: index
+	        };
+	    }
+
+	    function testRegExp(pattern, flags) {
+	        var value;
+	        try {
+	            value = new RegExp(pattern, flags);
+	        } catch (e) {
+	            throwError({}, Messages.InvalidRegExp);
+	        }
+	        return value;
+	    }
+
+	    function scanRegExpBody() {
+	        var ch, str, classMarker, terminated, body;
+
+	        ch = source[index];
+	        assert(ch === '/', 'Regular expression literal must start with a slash');
+	        str = source[index++];
+
+	        classMarker = false;
+	        terminated = false;
+	        while (index < length) {
+	            ch = source[index++];
+	            str += ch;
+	            if (ch === '\\') {
+	                ch = source[index++];
+	                // ECMA-262 7.8.5
+	                if (isLineTerminator(ch.charCodeAt(0))) {
+	                    throwError({}, Messages.UnterminatedRegExp);
+	                }
+	                str += ch;
+	            } else if (isLineTerminator(ch.charCodeAt(0))) {
+	                throwError({}, Messages.UnterminatedRegExp);
+	            } else if (classMarker) {
+	                if (ch === ']') {
+	                    classMarker = false;
+	                }
+	            } else {
+	                if (ch === '/') {
+	                    terminated = true;
+	                    break;
+	                } else if (ch === '[') {
+	                    classMarker = true;
+	                }
+	            }
+	        }
+
+	        if (!terminated) {
+	            throwError({}, Messages.UnterminatedRegExp);
+	        }
+
+	        // Exclude leading and trailing slash.
+	        body = str.substr(1, str.length - 2);
+	        return {
+	            value: body,
+	            literal: str
+	        };
+	    }
+
+	    function scanRegExpFlags() {
+	        var ch, str, flags, restore;
+
+	        str = '';
+	        flags = '';
+	        while (index < length) {
+	            ch = source[index];
+	            if (!isIdentifierPart(ch.charCodeAt(0))) {
+	                break;
+	            }
+
+	            ++index;
+	            if (ch === '\\' && index < length) {
+	                ch = source[index];
+	                if (ch === 'u') {
+	                    ++index;
+	                    restore = index;
+	                    ch = scanHexEscape('u');
+	                    if (ch) {
+	                        flags += ch;
+	                        for (str += '\\u'; restore < index; ++restore) {
+	                            str += source[restore];
+	                        }
+	                    } else {
+	                        index = restore;
+	                        flags += 'u';
+	                        str += '\\u';
+	                    }
+	                    throwErrorTolerant({}, Messages.UnexpectedToken, 'ILLEGAL');
+	                } else {
+	                    str += '\\';
+	                    throwErrorTolerant({}, Messages.UnexpectedToken, 'ILLEGAL');
+	                }
+	            } else {
+	                flags += ch;
+	                str += ch;
+	            }
+	        }
+
+	        return {
+	            value: flags,
+	            literal: str
+	        };
+	    }
+
+	    function scanRegExp() {
+	        var start, body, flags, pattern, value;
+
+	        lookahead = null;
+	        skipComment();
+	        start = index;
+
+	        body = scanRegExpBody();
+	        flags = scanRegExpFlags();
+	        value = testRegExp(body.value, flags.value);
+
+	        if (extra.tokenize) {
+	            return {
+	                type: Token.RegularExpression,
+	                value: value,
+	                lineNumber: lineNumber,
+	                lineStart: lineStart,
+	                start: start,
+	                end: index
+	            };
+	        }
+
+	        return {
+	            literal: body.literal + flags.literal,
+	            value: value,
+	            start: start,
+	            end: index
+	        };
+	    }
+
+	    function collectRegex() {
+	        var pos, loc, regex, token;
+
+	        skipComment();
+
+	        pos = index;
+	        loc = {
+	            start: {
+	                line: lineNumber,
+	                column: index - lineStart
+	            }
+	        };
+
+	        regex = scanRegExp();
+	        loc.end = {
+	            line: lineNumber,
+	            column: index - lineStart
+	        };
+
+	        /* istanbul ignore next */
+	        if (!extra.tokenize) {
+	            // Pop the previous token, which is likely '/' or '/='
+	            if (extra.tokens.length > 0) {
+	                token = extra.tokens[extra.tokens.length - 1];
+	                if (token.range[0] === pos && token.type === 'Punctuator') {
+	                    if (token.value === '/' || token.value === '/=') {
+	                        extra.tokens.pop();
+	                    }
+	                }
+	            }
+
+	            extra.tokens.push({
+	                type: 'RegularExpression',
+	                value: regex.literal,
+	                range: [pos, index],
+	                loc: loc
+	            });
+	        }
+
+	        return regex;
+	    }
+
+	    function isIdentifierName(token) {
+	        return token.type === Token.Identifier ||
+	            token.type === Token.Keyword ||
+	            token.type === Token.BooleanLiteral ||
+	            token.type === Token.NullLiteral;
+	    }
+
+	    function advanceSlash() {
+	        var prevToken,
+	            checkToken;
+	        // Using the following algorithm:
+	        // https://github.com/mozilla/sweet.js/wiki/design
+	        prevToken = extra.tokens[extra.tokens.length - 1];
+	        if (!prevToken) {
+	            // Nothing before that: it cannot be a division.
+	            return collectRegex();
+	        }
+	        if (prevToken.type === 'Punctuator') {
+	            if (prevToken.value === ']') {
+	                return scanPunctuator();
+	            }
+	            if (prevToken.value === ')') {
+	                checkToken = extra.tokens[extra.openParenToken - 1];
+	                if (checkToken &&
+	                        checkToken.type === 'Keyword' &&
+	                        (checkToken.value === 'if' ||
+	                         checkToken.value === 'while' ||
+	                         checkToken.value === 'for' ||
+	                         checkToken.value === 'with')) {
+	                    return collectRegex();
+	                }
+	                return scanPunctuator();
+	            }
+	            if (prevToken.value === '}') {
+	                // Dividing a function by anything makes little sense,
+	                // but we have to check for that.
+	                if (extra.tokens[extra.openCurlyToken - 3] &&
+	                        extra.tokens[extra.openCurlyToken - 3].type === 'Keyword') {
+	                    // Anonymous function.
+	                    checkToken = extra.tokens[extra.openCurlyToken - 4];
+	                    if (!checkToken) {
+	                        return scanPunctuator();
+	                    }
+	                } else if (extra.tokens[extra.openCurlyToken - 4] &&
+	                        extra.tokens[extra.openCurlyToken - 4].type === 'Keyword') {
+	                    // Named function.
+	                    checkToken = extra.tokens[extra.openCurlyToken - 5];
+	                    if (!checkToken) {
+	                        return collectRegex();
+	                    }
+	                } else {
+	                    return scanPunctuator();
+	                }
+	                // checkToken determines whether the function is
+	                // a declaration or an expression.
+	                if (FnExprTokens.indexOf(checkToken.value) >= 0) {
+	                    // It is an expression.
+	                    return scanPunctuator();
+	                }
+	                // It is a declaration.
+	                return collectRegex();
+	            }
+	            return collectRegex();
+	        }
+	        if (prevToken.type === 'Keyword' && prevToken.value !== 'this') {
+	            return collectRegex();
+	        }
+	        return scanPunctuator();
+	    }
+
+	    function advance() {
+	        var ch;
+
+	        skipComment();
+
+	        if (index >= length) {
+	            return {
+	                type: Token.EOF,
+	                lineNumber: lineNumber,
+	                lineStart: lineStart,
+	                start: index,
+	                end: index
+	            };
+	        }
+
+	        ch = source.charCodeAt(index);
+
+	        if (isIdentifierStart(ch)) {
+	            return scanIdentifier();
+	        }
+
+	        // Very common: ( and ) and ;
+	        if (ch === 0x28 || ch === 0x29 || ch === 0x3B) {
+	            return scanPunctuator();
+	        }
+
+	        // String literal starts with single quote (U+0027) or double quote (U+0022).
+	        if (ch === 0x27 || ch === 0x22) {
+	            return scanStringLiteral();
+	        }
+
+
+	        // Dot (.) U+002E can also start a floating-point number, hence the need
+	        // to check the next character.
+	        if (ch === 0x2E) {
+	            if (isDecimalDigit(source.charCodeAt(index + 1))) {
+	                return scanNumericLiteral();
+	            }
+	            return scanPunctuator();
+	        }
+
+	        if (isDecimalDigit(ch)) {
+	            return scanNumericLiteral();
+	        }
+
+	        // Slash (/) U+002F can also start a regex.
+	        if (extra.tokenize && ch === 0x2F) {
+	            return advanceSlash();
+	        }
+
+	        return scanPunctuator();
+	    }
+
+	    function collectToken() {
+	        var loc, token, range, value;
+
+	        skipComment();
+	        loc = {
+	            start: {
+	                line: lineNumber,
+	                column: index - lineStart
+	            }
+	        };
+
+	        token = advance();
+	        loc.end = {
+	            line: lineNumber,
+	            column: index - lineStart
+	        };
+
+	        if (token.type !== Token.EOF) {
+	            value = source.slice(token.start, token.end);
+	            extra.tokens.push({
+	                type: TokenName[token.type],
+	                value: value,
+	                range: [token.start, token.end],
+	                loc: loc
+	            });
+	        }
+
+	        return token;
+	    }
+
+	    function lex() {
+	        var token;
+
+	        token = lookahead;
+	        index = token.end;
+	        lineNumber = token.lineNumber;
+	        lineStart = token.lineStart;
+
+	        lookahead = (typeof extra.tokens !== 'undefined') ? collectToken() : advance();
+
+	        index = token.end;
+	        lineNumber = token.lineNumber;
+	        lineStart = token.lineStart;
+
+	        return token;
+	    }
+
+	    function peek() {
+	        var pos, line, start;
+
+	        pos = index;
+	        line = lineNumber;
+	        start = lineStart;
+	        lookahead = (typeof extra.tokens !== 'undefined') ? collectToken() : advance();
+	        index = pos;
+	        lineNumber = line;
+	        lineStart = start;
+	    }
+
+	    function Position(line, column) {
+	        this.line = line;
+	        this.column = column;
+	    }
+
+	    function SourceLocation(startLine, startColumn, line, column) {
+	        this.start = new Position(startLine, startColumn);
+	        this.end = new Position(line, column);
+	    }
+
+	    SyntaxTreeDelegate = {
+
+	        name: 'SyntaxTree',
+
+	        processComment: function (node) {
+	            var lastChild, trailingComments;
+
+	            if (node.type === Syntax.Program) {
+	                if (node.body.length > 0) {
+	                    return;
+	                }
+	            }
+
+	            if (extra.trailingComments.length > 0) {
+	                if (extra.trailingComments[0].range[0] >= node.range[1]) {
+	                    trailingComments = extra.trailingComments;
+	                    extra.trailingComments = [];
+	                } else {
+	                    extra.trailingComments.length = 0;
+	                }
+	            } else {
+	                if (extra.bottomRightStack.length > 0 &&
+	                        extra.bottomRightStack[extra.bottomRightStack.length - 1].trailingComments &&
+	                        extra.bottomRightStack[extra.bottomRightStack.length - 1].trailingComments[0].range[0] >= node.range[1]) {
+	                    trailingComments = extra.bottomRightStack[extra.bottomRightStack.length - 1].trailingComments;
+	                    delete extra.bottomRightStack[extra.bottomRightStack.length - 1].trailingComments;
+	                }
+	            }
+
+	            // Eating the stack.
+	            while (extra.bottomRightStack.length > 0 && extra.bottomRightStack[extra.bottomRightStack.length - 1].range[0] >= node.range[0]) {
+	                lastChild = extra.bottomRightStack.pop();
+	            }
+
+	            if (lastChild) {
+	                if (lastChild.leadingComments && lastChild.leadingComments[lastChild.leadingComments.length - 1].range[1] <= node.range[0]) {
+	                    node.leadingComments = lastChild.leadingComments;
+	                    delete lastChild.leadingComments;
+	                }
+	            } else if (extra.leadingComments.length > 0 && extra.leadingComments[extra.leadingComments.length - 1].range[1] <= node.range[0]) {
+	                node.leadingComments = extra.leadingComments;
+	                extra.leadingComments = [];
+	            }
+
+
+	            if (trailingComments) {
+	                node.trailingComments = trailingComments;
+	            }
+
+	            extra.bottomRightStack.push(node);
+	        },
+
+	        markEnd: function (node, startToken) {
+	            if (extra.range) {
+	                node.range = [startToken.start, index];
+	            }
+	            if (extra.loc) {
+	                node.loc = new SourceLocation(
+	                    startToken.startLineNumber === undefined ?  startToken.lineNumber : startToken.startLineNumber,
+	                    startToken.start - (startToken.startLineStart === undefined ?  startToken.lineStart : startToken.startLineStart),
+	                    lineNumber,
+	                    index - lineStart
+	                );
+	                this.postProcess(node);
+	            }
+
+	            if (extra.attachComment) {
+	                this.processComment(node);
+	            }
+	            return node;
+	        },
+
+	        postProcess: function (node) {
+	            if (extra.source) {
+	                node.loc.source = extra.source;
+	            }
+	            return node;
+	        },
+
+	        createArrayExpression: function (elements) {
+	            return {
+	                type: Syntax.ArrayExpression,
+	                elements: elements
+	            };
+	        },
+
+	        createAssignmentExpression: function (operator, left, right) {
+	            return {
+	                type: Syntax.AssignmentExpression,
+	                operator: operator,
+	                left: left,
+	                right: right
+	            };
+	        },
+
+	        createBinaryExpression: function (operator, left, right) {
+	            var type = (operator === '||' || operator === '&&') ? Syntax.LogicalExpression :
+	                        Syntax.BinaryExpression;
+	            return {
+	                type: type,
+	                operator: operator,
+	                left: left,
+	                right: right
+	            };
+	        },
+
+	        createBlockStatement: function (body) {
+	            return {
+	                type: Syntax.BlockStatement,
+	                body: body
+	            };
+	        },
+
+	        createBreakStatement: function (label) {
+	            return {
+	                type: Syntax.BreakStatement,
+	                label: label
+	            };
+	        },
+
+	        createCallExpression: function (callee, args) {
+	            return {
+	                type: Syntax.CallExpression,
+	                callee: callee,
+	                'arguments': args
+	            };
+	        },
+
+	        createCatchClause: function (param, body) {
+	            return {
+	                type: Syntax.CatchClause,
+	                param: param,
+	                body: body
+	            };
+	        },
+
+	        createConditionalExpression: function (test, consequent, alternate) {
+	            return {
+	                type: Syntax.ConditionalExpression,
+	                test: test,
+	                consequent: consequent,
+	                alternate: alternate
+	            };
+	        },
+
+	        createContinueStatement: function (label) {
+	            return {
+	                type: Syntax.ContinueStatement,
+	                label: label
+	            };
+	        },
+
+	        createDebuggerStatement: function () {
+	            return {
+	                type: Syntax.DebuggerStatement
+	            };
+	        },
+
+	        createDoWhileStatement: function (body, test) {
+	            return {
+	                type: Syntax.DoWhileStatement,
+	                body: body,
+	                test: test
+	            };
+	        },
+
+	        createEmptyStatement: function () {
+	            return {
+	                type: Syntax.EmptyStatement
+	            };
+	        },
+
+	        createExpressionStatement: function (expression) {
+	            return {
+	                type: Syntax.ExpressionStatement,
+	                expression: expression
+	            };
+	        },
+
+	        createForStatement: function (init, test, update, body) {
+	            return {
+	                type: Syntax.ForStatement,
+	                init: init,
+	                test: test,
+	                update: update,
+	                body: body
+	            };
+	        },
+
+	        createForInStatement: function (left, right, body) {
+	            return {
+	                type: Syntax.ForInStatement,
+	                left: left,
+	                right: right,
+	                body: body,
+	                each: false
+	            };
+	        },
+
+	        createFunctionDeclaration: function (id, params, defaults, body) {
+	            return {
+	                type: Syntax.FunctionDeclaration,
+	                id: id,
+	                params: params,
+	                defaults: defaults,
+	                body: body,
+	                rest: null,
+	                generator: false,
+	                expression: false
+	            };
+	        },
+
+	        createFunctionExpression: function (id, params, defaults, body) {
+	            return {
+	                type: Syntax.FunctionExpression,
+	                id: id,
+	                params: params,
+	                defaults: defaults,
+	                body: body,
+	                rest: null,
+	                generator: false,
+	                expression: false
+	            };
+	        },
+
+	        createIdentifier: function (name) {
+	            return {
+	                type: Syntax.Identifier,
+	                name: name
+	            };
+	        },
+
+	        createIfStatement: function (test, consequent, alternate) {
+	            return {
+	                type: Syntax.IfStatement,
+	                test: test,
+	                consequent: consequent,
+	                alternate: alternate
+	            };
+	        },
+
+	        createLabeledStatement: function (label, body) {
+	            return {
+	                type: Syntax.LabeledStatement,
+	                label: label,
+	                body: body
+	            };
+	        },
+
+	        createLiteral: function (token) {
+	            return {
+	                type: Syntax.Literal,
+	                value: token.value,
+	                raw: source.slice(token.start, token.end)
+	            };
+	        },
+
+	        createMemberExpression: function (accessor, object, property) {
+	            return {
+	                type: Syntax.MemberExpression,
+	                computed: accessor === '[',
+	                object: object,
+	                property: property
+	            };
+	        },
+
+	        createNewExpression: function (callee, args) {
+	            return {
+	                type: Syntax.NewExpression,
+	                callee: callee,
+	                'arguments': args
+	            };
+	        },
+
+	        createObjectExpression: function (properties) {
+	            return {
+	                type: Syntax.ObjectExpression,
+	                properties: properties
+	            };
+	        },
+
+	        createPostfixExpression: function (operator, argument) {
+	            return {
+	                type: Syntax.UpdateExpression,
+	                operator: operator,
+	                argument: argument,
+	                prefix: false
+	            };
+	        },
+
+	        createProgram: function (body) {
+	            return {
+	                type: Syntax.Program,
+	                body: body
+	            };
+	        },
+
+	        createProperty: function (kind, key, value) {
+	            return {
+	                type: Syntax.Property,
+	                key: key,
+	                value: value,
+	                kind: kind
+	            };
+	        },
+
+	        createReturnStatement: function (argument) {
+	            return {
+	                type: Syntax.ReturnStatement,
+	                argument: argument
+	            };
+	        },
+
+	        createSequenceExpression: function (expressions) {
+	            return {
+	                type: Syntax.SequenceExpression,
+	                expressions: expressions
+	            };
+	        },
+
+	        createSwitchCase: function (test, consequent) {
+	            return {
+	                type: Syntax.SwitchCase,
+	                test: test,
+	                consequent: consequent
+	            };
+	        },
+
+	        createSwitchStatement: function (discriminant, cases) {
+	            return {
+	                type: Syntax.SwitchStatement,
+	                discriminant: discriminant,
+	                cases: cases
+	            };
+	        },
+
+	        createThisExpression: function () {
+	            return {
+	                type: Syntax.ThisExpression
+	            };
+	        },
+
+	        createThrowStatement: function (argument) {
+	            return {
+	                type: Syntax.ThrowStatement,
+	                argument: argument
+	            };
+	        },
+
+	        createTryStatement: function (block, guardedHandlers, handlers, finalizer) {
+	            return {
+	                type: Syntax.TryStatement,
+	                block: block,
+	                guardedHandlers: guardedHandlers,
+	                handlers: handlers,
+	                finalizer: finalizer
+	            };
+	        },
+
+	        createUnaryExpression: function (operator, argument) {
+	            if (operator === '++' || operator === '--') {
+	                return {
+	                    type: Syntax.UpdateExpression,
+	                    operator: operator,
+	                    argument: argument,
+	                    prefix: true
+	                };
+	            }
+	            return {
+	                type: Syntax.UnaryExpression,
+	                operator: operator,
+	                argument: argument,
+	                prefix: true
+	            };
+	        },
+
+	        createVariableDeclaration: function (declarations, kind) {
+	            return {
+	                type: Syntax.VariableDeclaration,
+	                declarations: declarations,
+	                kind: kind
+	            };
+	        },
+
+	        createVariableDeclarator: function (id, init) {
+	            return {
+	                type: Syntax.VariableDeclarator,
+	                id: id,
+	                init: init
+	            };
+	        },
+
+	        createWhileStatement: function (test, body) {
+	            return {
+	                type: Syntax.WhileStatement,
+	                test: test,
+	                body: body
+	            };
+	        },
+
+	        createWithStatement: function (object, body) {
+	            return {
+	                type: Syntax.WithStatement,
+	                object: object,
+	                body: body
+	            };
+	        }
+	    };
+
+	    // Return true if there is a line terminator before the next token.
+
+	    function peekLineTerminator() {
+	        var pos, line, start, found;
+
+	        pos = index;
+	        line = lineNumber;
+	        start = lineStart;
+	        skipComment();
+	        found = lineNumber !== line;
+	        index = pos;
+	        lineNumber = line;
+	        lineStart = start;
+
+	        return found;
+	    }
+
+	    // Throw an exception
+
+	    function throwError(token, messageFormat) {
+	        var error,
+	            args = Array.prototype.slice.call(arguments, 2),
+	            msg = messageFormat.replace(
+	                /%(\d)/g,
+	                function (whole, index) {
+	                    assert(index < args.length, 'Message reference must be in range');
+	                    return args[index];
+	                }
+	            );
+
+	        if (typeof token.lineNumber === 'number') {
+	            error = new Error('Line ' + token.lineNumber + ': ' + msg);
+	            error.index = token.start;
+	            error.lineNumber = token.lineNumber;
+	            error.column = token.start - lineStart + 1;
+	        } else {
+	            error = new Error('Line ' + lineNumber + ': ' + msg);
+	            error.index = index;
+	            error.lineNumber = lineNumber;
+	            error.column = index - lineStart + 1;
+	        }
+
+	        error.description = msg;
+	        throw error;
+	    }
+
+	    function throwErrorTolerant() {
+	        try {
+	            throwError.apply(null, arguments);
+	        } catch (e) {
+	            if (extra.errors) {
+	                extra.errors.push(e);
+	            } else {
+	                throw e;
+	            }
+	        }
+	    }
+
+
+	    // Throw an exception because of the token.
+
+	    function throwUnexpected(token) {
+	        if (token.type === Token.EOF) {
+	            throwError(token, Messages.UnexpectedEOS);
+	        }
+
+	        if (token.type === Token.NumericLiteral) {
+	            throwError(token, Messages.UnexpectedNumber);
+	        }
+
+	        if (token.type === Token.StringLiteral) {
+	            throwError(token, Messages.UnexpectedString);
+	        }
+
+	        if (token.type === Token.Identifier) {
+	            throwError(token, Messages.UnexpectedIdentifier);
+	        }
+
+	        if (token.type === Token.Keyword) {
+	            if (isFutureReservedWord(token.value)) {
+	                throwError(token, Messages.UnexpectedReserved);
+	            } else if (strict && isStrictModeReservedWord(token.value)) {
+	                throwErrorTolerant(token, Messages.StrictReservedWord);
+	                return;
+	            }
+	            throwError(token, Messages.UnexpectedToken, token.value);
+	        }
+
+	        // BooleanLiteral, NullLiteral, or Punctuator.
+	        throwError(token, Messages.UnexpectedToken, token.value);
+	    }
+
+	    // Expect the next token to match the specified punctuator.
+	    // If not, an exception will be thrown.
+
+	    function expect(value) {
+	        var token = lex();
+	        if (token.type !== Token.Punctuator || token.value !== value) {
+	            throwUnexpected(token);
+	        }
+	    }
+
+	    // Expect the next token to match the specified keyword.
+	    // If not, an exception will be thrown.
+
+	    function expectKeyword(keyword) {
+	        var token = lex();
+	        if (token.type !== Token.Keyword || token.value !== keyword) {
+	            throwUnexpected(token);
+	        }
+	    }
+
+	    // Return true if the next token matches the specified punctuator.
+
+	    function match(value) {
+	        return lookahead.type === Token.Punctuator && lookahead.value === value;
+	    }
+
+	    // Return true if the next token matches the specified keyword
+
+	    function matchKeyword(keyword) {
+	        return lookahead.type === Token.Keyword && lookahead.value === keyword;
+	    }
+
+	    // Return true if the next token is an assignment operator
+
+	    function matchAssign() {
+	        var op;
+
+	        if (lookahead.type !== Token.Punctuator) {
+	            return false;
+	        }
+	        op = lookahead.value;
+	        return op === '=' ||
+	            op === '*=' ||
+	            op === '/=' ||
+	            op === '%=' ||
+	            op === '+=' ||
+	            op === '-=' ||
+	            op === '<<=' ||
+	            op === '>>=' ||
+	            op === '>>>=' ||
+	            op === '&=' ||
+	            op === '^=' ||
+	            op === '|=';
+	    }
+
+	    function consumeSemicolon() {
+	        var line, oldIndex = index, oldLineNumber = lineNumber,
+	            oldLineStart = lineStart, oldLookahead = lookahead;
+
+	        // Catch the very common case first: immediately a semicolon (U+003B).
+	        if (source.charCodeAt(index) === 0x3B || match(';')) {
+	            lex();
+	            return;
+	        }
+
+	        line = lineNumber;
+	        skipComment();
+	        if (lineNumber !== line) {
+	            index = oldIndex;
+	            lineNumber = oldLineNumber;
+	            lineStart = oldLineStart;
+	            lookahead = oldLookahead;
+	            return;
+	        }
+
+	        if (lookahead.type !== Token.EOF && !match('}')) {
+	            throwUnexpected(lookahead);
+	        }
+	    }
+
+	    // Return true if provided expression is LeftHandSideExpression
+
+	    function isLeftHandSide(expr) {
+	        return expr.type === Syntax.Identifier || expr.type === Syntax.MemberExpression;
+	    }
+
+	    // 11.1.4 Array Initialiser
+
+	    function parseArrayInitialiser() {
+	        var elements = [], startToken;
+
+	        startToken = lookahead;
+	        expect('[');
+
+	        while (!match(']')) {
+	            if (match(',')) {
+	                lex();
+	                elements.push(null);
+	            } else {
+	                elements.push(parseAssignmentExpression());
+
+	                if (!match(']')) {
+	                    expect(',');
+	                }
+	            }
+	        }
+
+	        lex();
+
+	        return delegate.markEnd(delegate.createArrayExpression(elements), startToken);
+	    }
+
+	    // 11.1.5 Object Initialiser
+
+	    function parsePropertyFunction(param, first) {
+	        var previousStrict, body, startToken;
+
+	        previousStrict = strict;
+	        startToken = lookahead;
+	        body = parseFunctionSourceElements();
+	        if (first && strict && isRestrictedWord(param[0].name)) {
+	            throwErrorTolerant(first, Messages.StrictParamName);
+	        }
+	        strict = previousStrict;
+	        return delegate.markEnd(delegate.createFunctionExpression(null, param, [], body), startToken);
+	    }
+
+	    function parseObjectPropertyKey() {
+	        var token, startToken;
+
+	        startToken = lookahead;
+	        token = lex();
+
+	        // Note: This function is called only from parseObjectProperty(), where
+	        // EOF and Punctuator tokens are already filtered out.
+
+	        if (token.type === Token.StringLiteral || token.type === Token.NumericLiteral) {
+	            if (strict && token.octal) {
+	                throwErrorTolerant(token, Messages.StrictOctalLiteral);
+	            }
+	            return delegate.markEnd(delegate.createLiteral(token), startToken);
+	        }
+
+	        return delegate.markEnd(delegate.createIdentifier(token.value), startToken);
+	    }
+
+	    function parseObjectProperty() {
+	        var token, key, id, value, param, startToken;
+
+	        token = lookahead;
+	        startToken = lookahead;
+
+	        if (token.type === Token.Identifier) {
+
+	            id = parseObjectPropertyKey();
+
+	            // Property Assignment: Getter and Setter.
+
+	            if (token.value === 'get' && !match(':')) {
+	                key = parseObjectPropertyKey();
+	                expect('(');
+	                expect(')');
+	                value = parsePropertyFunction([]);
+	                return delegate.markEnd(delegate.createProperty('get', key, value), startToken);
+	            }
+	            if (token.value === 'set' && !match(':')) {
+	                key = parseObjectPropertyKey();
+	                expect('(');
+	                token = lookahead;
+	                if (token.type !== Token.Identifier) {
+	                    expect(')');
+	                    throwErrorTolerant(token, Messages.UnexpectedToken, token.value);
+	                    value = parsePropertyFunction([]);
+	                } else {
+	                    param = [ parseVariableIdentifier() ];
+	                    expect(')');
+	                    value = parsePropertyFunction(param, token);
+	                }
+	                return delegate.markEnd(delegate.createProperty('set', key, value), startToken);
+	            }
+	            expect(':');
+	            value = parseAssignmentExpression();
+	            return delegate.markEnd(delegate.createProperty('init', id, value), startToken);
+	        }
+	        if (token.type === Token.EOF || token.type === Token.Punctuator) {
+	            throwUnexpected(token);
+	        } else {
+	            key = parseObjectPropertyKey();
+	            expect(':');
+	            value = parseAssignmentExpression();
+	            return delegate.markEnd(delegate.createProperty('init', key, value), startToken);
+	        }
+	    }
+
+	    function parseObjectInitialiser() {
+	        var properties = [], property, name, key, kind, map = {}, toString = String, startToken;
+
+	        startToken = lookahead;
+
+	        expect('{');
+
+	        while (!match('}')) {
+	            property = parseObjectProperty();
+
+	            if (property.key.type === Syntax.Identifier) {
+	                name = property.key.name;
+	            } else {
+	                name = toString(property.key.value);
+	            }
+	            kind = (property.kind === 'init') ? PropertyKind.Data : (property.kind === 'get') ? PropertyKind.Get : PropertyKind.Set;
+
+	            key = '$' + name;
+	            if (Object.prototype.hasOwnProperty.call(map, key)) {
+	                if (map[key] === PropertyKind.Data) {
+	                    if (strict && kind === PropertyKind.Data) {
+	                        throwErrorTolerant({}, Messages.StrictDuplicateProperty);
+	                    } else if (kind !== PropertyKind.Data) {
+	                        throwErrorTolerant({}, Messages.AccessorDataProperty);
+	                    }
+	                } else {
+	                    if (kind === PropertyKind.Data) {
+	                        throwErrorTolerant({}, Messages.AccessorDataProperty);
+	                    } else if (map[key] & kind) {
+	                        throwErrorTolerant({}, Messages.AccessorGetSet);
+	                    }
+	                }
+	                map[key] |= kind;
+	            } else {
+	                map[key] = kind;
+	            }
+
+	            properties.push(property);
+
+	            if (!match('}')) {
+	                expect(',');
+	            }
+	        }
+
+	        expect('}');
+
+	        return delegate.markEnd(delegate.createObjectExpression(properties), startToken);
+	    }
+
+	    // 11.1.6 The Grouping Operator
+
+	    function parseGroupExpression() {
+	        var expr;
+
+	        expect('(');
+
+	        expr = parseExpression();
+
+	        expect(')');
+
+	        return expr;
+	    }
+
+
+	    // 11.1 Primary Expressions
+
+	    function parsePrimaryExpression() {
+	        var type, token, expr, startToken;
+
+	        if (match('(')) {
+	            return parseGroupExpression();
+	        }
+
+	        if (match('[')) {
+	            return parseArrayInitialiser();
+	        }
+
+	        if (match('{')) {
+	            return parseObjectInitialiser();
+	        }
+
+	        type = lookahead.type;
+	        startToken = lookahead;
+
+	        if (type === Token.Identifier) {
+	            expr =  delegate.createIdentifier(lex().value);
+	        } else if (type === Token.StringLiteral || type === Token.NumericLiteral) {
+	            if (strict && lookahead.octal) {
+	                throwErrorTolerant(lookahead, Messages.StrictOctalLiteral);
+	            }
+	            expr = delegate.createLiteral(lex());
+	        } else if (type === Token.Keyword) {
+	            if (matchKeyword('function')) {
+	                return parseFunctionExpression();
+	            }
+	            if (matchKeyword('this')) {
+	                lex();
+	                expr = delegate.createThisExpression();
+	            } else {
+	                throwUnexpected(lex());
+	            }
+	        } else if (type === Token.BooleanLiteral) {
+	            token = lex();
+	            token.value = (token.value === 'true');
+	            expr = delegate.createLiteral(token);
+	        } else if (type === Token.NullLiteral) {
+	            token = lex();
+	            token.value = null;
+	            expr = delegate.createLiteral(token);
+	        } else if (match('/') || match('/=')) {
+	            if (typeof extra.tokens !== 'undefined') {
+	                expr = delegate.createLiteral(collectRegex());
+	            } else {
+	                expr = delegate.createLiteral(scanRegExp());
+	            }
+	            peek();
+	        } else {
+	            throwUnexpected(lex());
+	        }
+
+	        return delegate.markEnd(expr, startToken);
+	    }
+
+	    // 11.2 Left-Hand-Side Expressions
+
+	    function parseArguments() {
+	        var args = [];
+
+	        expect('(');
+
+	        if (!match(')')) {
+	            while (index < length) {
+	                args.push(parseAssignmentExpression());
+	                if (match(')')) {
+	                    break;
+	                }
+	                expect(',');
+	            }
+	        }
+
+	        expect(')');
+
+	        return args;
+	    }
+
+	    function parseNonComputedProperty() {
+	        var token, startToken;
+
+	        startToken = lookahead;
+	        token = lex();
+
+	        if (!isIdentifierName(token)) {
+	            throwUnexpected(token);
+	        }
+
+	        return delegate.markEnd(delegate.createIdentifier(token.value), startToken);
+	    }
+
+	    function parseNonComputedMember() {
+	        expect('.');
+
+	        return parseNonComputedProperty();
+	    }
+
+	    function parseComputedMember() {
+	        var expr;
+
+	        expect('[');
+
+	        expr = parseExpression();
+
+	        expect(']');
+
+	        return expr;
+	    }
+
+	    function parseNewExpression() {
+	        var callee, args, startToken;
+
+	        startToken = lookahead;
+	        expectKeyword('new');
+	        callee = parseLeftHandSideExpression();
+	        args = match('(') ? parseArguments() : [];
+
+	        return delegate.markEnd(delegate.createNewExpression(callee, args), startToken);
+	    }
+
+	    function parseLeftHandSideExpressionAllowCall() {
+	        var expr, args, property, startToken, previousAllowIn = state.allowIn;
+
+	        startToken = lookahead;
+	        state.allowIn = true;
+	        expr = matchKeyword('new') ? parseNewExpression() : parsePrimaryExpression();
+
+	        for (;;) {
+	            if (match('.')) {
+	                property = parseNonComputedMember();
+	                expr = delegate.createMemberExpression('.', expr, property);
+	            } else if (match('(')) {
+	                args = parseArguments();
+	                expr = delegate.createCallExpression(expr, args);
+	            } else if (match('[')) {
+	                property = parseComputedMember();
+	                expr = delegate.createMemberExpression('[', expr, property);
+	            } else {
+	                break;
+	            }
+	            delegate.markEnd(expr, startToken);
+	        }
+	        state.allowIn = previousAllowIn;
+
+	        return expr;
+	    }
+
+	    function parseLeftHandSideExpression() {
+	        var expr, property, startToken;
+	        assert(state.allowIn, 'callee of new expression always allow in keyword.');
+
+	        startToken = lookahead;
+
+	        expr = matchKeyword('new') ? parseNewExpression() : parsePrimaryExpression();
+
+	        while (match('.') || match('[')) {
+	            if (match('[')) {
+	                property = parseComputedMember();
+	                expr = delegate.createMemberExpression('[', expr, property);
+	            } else {
+	                property = parseNonComputedMember();
+	                expr = delegate.createMemberExpression('.', expr, property);
+	            }
+	            delegate.markEnd(expr, startToken);
+	        }
+	        return expr;
+	    }
+
+	    // 11.3 Postfix Expressions
+
+	    function parsePostfixExpression() {
+	        var expr, token, startToken = lookahead;
+
+	        expr = parseLeftHandSideExpressionAllowCall();
+
+	        if (lookahead.type === Token.Punctuator) {
+	            if ((match('++') || match('--')) && !peekLineTerminator()) {
+	                // 11.3.1, 11.3.2
+	                if (strict && expr.type === Syntax.Identifier && isRestrictedWord(expr.name)) {
+	                    throwErrorTolerant({}, Messages.StrictLHSPostfix);
+	                }
+
+	                if (!isLeftHandSide(expr)) {
+	                    throwErrorTolerant({}, Messages.InvalidLHSInAssignment);
+	                }
+
+	                token = lex();
+	                expr = delegate.markEnd(delegate.createPostfixExpression(token.value, expr), startToken);
+	            }
+	        }
+
+	        return expr;
+	    }
+
+	    // 11.4 Unary Operators
+
+	    function parseUnaryExpression() {
+	        var token, expr, startToken;
+
+	        if (lookahead.type !== Token.Punctuator && lookahead.type !== Token.Keyword) {
+	            expr = parsePostfixExpression();
+	        } else if (match('++') || match('--')) {
+	            startToken = lookahead;
+	            token = lex();
+	            expr = parseUnaryExpression();
+	            // 11.4.4, 11.4.5
+	            if (strict && expr.type === Syntax.Identifier && isRestrictedWord(expr.name)) {
+	                throwErrorTolerant({}, Messages.StrictLHSPrefix);
+	            }
+
+	            if (!isLeftHandSide(expr)) {
+	                throwErrorTolerant({}, Messages.InvalidLHSInAssignment);
+	            }
+
+	            expr = delegate.createUnaryExpression(token.value, expr);
+	            expr = delegate.markEnd(expr, startToken);
+	        } else if (match('+') || match('-') || match('~') || match('!')) {
+	            startToken = lookahead;
+	            token = lex();
+	            expr = parseUnaryExpression();
+	            expr = delegate.createUnaryExpression(token.value, expr);
+	            expr = delegate.markEnd(expr, startToken);
+	        } else if (matchKeyword('delete') || matchKeyword('void') || matchKeyword('typeof')) {
+	            startToken = lookahead;
+	            token = lex();
+	            expr = parseUnaryExpression();
+	            expr = delegate.createUnaryExpression(token.value, expr);
+	            expr = delegate.markEnd(expr, startToken);
+	            if (strict && expr.operator === 'delete' && expr.argument.type === Syntax.Identifier) {
+	                throwErrorTolerant({}, Messages.StrictDelete);
+	            }
+	        } else {
+	            expr = parsePostfixExpression();
+	        }
+
+	        return expr;
+	    }
+
+	    function binaryPrecedence(token, allowIn) {
+	        var prec = 0;
+
+	        if (token.type !== Token.Punctuator && token.type !== Token.Keyword) {
+	            return 0;
+	        }
+
+	        switch (token.value) {
+	        case '||':
+	            prec = 1;
+	            break;
+
+	        case '&&':
+	            prec = 2;
+	            break;
+
+	        case '|':
+	            prec = 3;
+	            break;
+
+	        case '^':
+	            prec = 4;
+	            break;
+
+	        case '&':
+	            prec = 5;
+	            break;
+
+	        case '==':
+	        case '!=':
+	        case '===':
+	        case '!==':
+	            prec = 6;
+	            break;
+
+	        case '<':
+	        case '>':
+	        case '<=':
+	        case '>=':
+	        case 'instanceof':
+	            prec = 7;
+	            break;
+
+	        case 'in':
+	            prec = allowIn ? 7 : 0;
+	            break;
+
+	        case '<<':
+	        case '>>':
+	        case '>>>':
+	            prec = 8;
+	            break;
+
+	        case '+':
+	        case '-':
+	            prec = 9;
+	            break;
+
+	        case '*':
+	        case '/':
+	        case '%':
+	            prec = 11;
+	            break;
+
+	        default:
+	            break;
+	        }
+
+	        return prec;
+	    }
+
+	    // 11.5 Multiplicative Operators
+	    // 11.6 Additive Operators
+	    // 11.7 Bitwise Shift Operators
+	    // 11.8 Relational Operators
+	    // 11.9 Equality Operators
+	    // 11.10 Binary Bitwise Operators
+	    // 11.11 Binary Logical Operators
+
+	    function parseBinaryExpression() {
+	        var marker, markers, expr, token, prec, stack, right, operator, left, i;
+
+	        marker = lookahead;
+	        left = parseUnaryExpression();
+
+	        token = lookahead;
+	        prec = binaryPrecedence(token, state.allowIn);
+	        if (prec === 0) {
+	            return left;
+	        }
+	        token.prec = prec;
+	        lex();
+
+	        markers = [marker, lookahead];
+	        right = parseUnaryExpression();
+
+	        stack = [left, token, right];
+
+	        while ((prec = binaryPrecedence(lookahead, state.allowIn)) > 0) {
+
+	            // Reduce: make a binary expression from the three topmost entries.
+	            while ((stack.length > 2) && (prec <= stack[stack.length - 2].prec)) {
+	                right = stack.pop();
+	                operator = stack.pop().value;
+	                left = stack.pop();
+	                expr = delegate.createBinaryExpression(operator, left, right);
+	                markers.pop();
+	                marker = markers[markers.length - 1];
+	                delegate.markEnd(expr, marker);
+	                stack.push(expr);
+	            }
+
+	            // Shift.
+	            token = lex();
+	            token.prec = prec;
+	            stack.push(token);
+	            markers.push(lookahead);
+	            expr = parseUnaryExpression();
+	            stack.push(expr);
+	        }
+
+	        // Final reduce to clean-up the stack.
+	        i = stack.length - 1;
+	        expr = stack[i];
+	        markers.pop();
+	        while (i > 1) {
+	            expr = delegate.createBinaryExpression(stack[i - 1].value, stack[i - 2], expr);
+	            i -= 2;
+	            marker = markers.pop();
+	            delegate.markEnd(expr, marker);
+	        }
+
+	        return expr;
+	    }
+
+
+	    // 11.12 Conditional Operator
+
+	    function parseConditionalExpression() {
+	        var expr, previousAllowIn, consequent, alternate, startToken;
+
+	        startToken = lookahead;
+
+	        expr = parseBinaryExpression();
+
+	        if (match('?')) {
+	            lex();
+	            previousAllowIn = state.allowIn;
+	            state.allowIn = true;
+	            consequent = parseAssignmentExpression();
+	            state.allowIn = previousAllowIn;
+	            expect(':');
+	            alternate = parseAssignmentExpression();
+
+	            expr = delegate.createConditionalExpression(expr, consequent, alternate);
+	            delegate.markEnd(expr, startToken);
+	        }
+
+	        return expr;
+	    }
+
+	    // 11.13 Assignment Operators
+
+	    function parseAssignmentExpression() {
+	        var token, left, right, node, startToken;
+
+	        token = lookahead;
+	        startToken = lookahead;
+
+	        node = left = parseConditionalExpression();
+
+	        if (matchAssign()) {
+	            // LeftHandSideExpression
+	            if (!isLeftHandSide(left)) {
+	                throwErrorTolerant({}, Messages.InvalidLHSInAssignment);
+	            }
+
+	            // 11.13.1
+	            if (strict && left.type === Syntax.Identifier && isRestrictedWord(left.name)) {
+	                throwErrorTolerant(token, Messages.StrictLHSAssignment);
+	            }
+
+	            token = lex();
+	            right = parseAssignmentExpression();
+	            node = delegate.markEnd(delegate.createAssignmentExpression(token.value, left, right), startToken);
+	        }
+
+	        return node;
+	    }
+
+	    // 11.14 Comma Operator
+
+	    function parseExpression() {
+	        var expr, startToken = lookahead;
+
+	        expr = parseAssignmentExpression();
+
+	        if (match(',')) {
+	            expr = delegate.createSequenceExpression([ expr ]);
+
+	            while (index < length) {
+	                if (!match(',')) {
+	                    break;
+	                }
+	                lex();
+	                expr.expressions.push(parseAssignmentExpression());
+	            }
+
+	            delegate.markEnd(expr, startToken);
+	        }
+
+	        return expr;
+	    }
+
+	    // 12.1 Block
+
+	    function parseStatementList() {
+	        var list = [],
+	            statement;
+
+	        while (index < length) {
+	            if (match('}')) {
+	                break;
+	            }
+	            statement = parseSourceElement();
+	            if (typeof statement === 'undefined') {
+	                break;
+	            }
+	            list.push(statement);
+	        }
+
+	        return list;
+	    }
+
+	    function parseBlock() {
+	        var block, startToken;
+
+	        startToken = lookahead;
+	        expect('{');
+
+	        block = parseStatementList();
+
+	        expect('}');
+
+	        return delegate.markEnd(delegate.createBlockStatement(block), startToken);
+	    }
+
+	    // 12.2 Variable Statement
+
+	    function parseVariableIdentifier() {
+	        var token, startToken;
+
+	        startToken = lookahead;
+	        token = lex();
+
+	        if (token.type !== Token.Identifier) {
+	            throwUnexpected(token);
+	        }
+
+	        return delegate.markEnd(delegate.createIdentifier(token.value), startToken);
+	    }
+
+	    function parseVariableDeclaration(kind) {
+	        var init = null, id, startToken;
+
+	        startToken = lookahead;
+	        id = parseVariableIdentifier();
+
+	        // 12.2.1
+	        if (strict && isRestrictedWord(id.name)) {
+	            throwErrorTolerant({}, Messages.StrictVarName);
+	        }
+
+	        if (kind === 'const') {
+	            expect('=');
+	            init = parseAssignmentExpression();
+	        } else if (match('=')) {
+	            lex();
+	            init = parseAssignmentExpression();
+	        }
+
+	        return delegate.markEnd(delegate.createVariableDeclarator(id, init), startToken);
+	    }
+
+	    function parseVariableDeclarationList(kind) {
+	        var list = [];
+
+	        do {
+	            list.push(parseVariableDeclaration(kind));
+	            if (!match(',')) {
+	                break;
+	            }
+	            lex();
+	        } while (index < length);
+
+	        return list;
+	    }
+
+	    function parseVariableStatement() {
+	        var declarations;
+
+	        expectKeyword('var');
+
+	        declarations = parseVariableDeclarationList();
+
+	        consumeSemicolon();
+
+	        return delegate.createVariableDeclaration(declarations, 'var');
+	    }
+
+	    // kind may be `const` or `let`
+	    // Both are experimental and not in the specification yet.
+	    // see http://wiki.ecmascript.org/doku.php?id=harmony:const
+	    // and http://wiki.ecmascript.org/doku.php?id=harmony:let
+	    function parseConstLetDeclaration(kind) {
+	        var declarations, startToken;
+
+	        startToken = lookahead;
+
+	        expectKeyword(kind);
+
+	        declarations = parseVariableDeclarationList(kind);
+
+	        consumeSemicolon();
+
+	        return delegate.markEnd(delegate.createVariableDeclaration(declarations, kind), startToken);
+	    }
+
+	    // 12.3 Empty Statement
+
+	    function parseEmptyStatement() {
+	        expect(';');
+	        return delegate.createEmptyStatement();
+	    }
+
+	    // 12.4 Expression Statement
+
+	    function parseExpressionStatement() {
+	        var expr = parseExpression();
+	        consumeSemicolon();
+	        return delegate.createExpressionStatement(expr);
+	    }
+
+	    // 12.5 If statement
+
+	    function parseIfStatement() {
+	        var test, consequent, alternate;
+
+	        expectKeyword('if');
+
+	        expect('(');
+
+	        test = parseExpression();
+
+	        expect(')');
+
+	        consequent = parseStatement();
+
+	        if (matchKeyword('else')) {
+	            lex();
+	            alternate = parseStatement();
+	        } else {
+	            alternate = null;
+	        }
+
+	        return delegate.createIfStatement(test, consequent, alternate);
+	    }
+
+	    // 12.6 Iteration Statements
+
+	    function parseDoWhileStatement() {
+	        var body, test, oldInIteration;
+
+	        expectKeyword('do');
+
+	        oldInIteration = state.inIteration;
+	        state.inIteration = true;
+
+	        body = parseStatement();
+
+	        state.inIteration = oldInIteration;
+
+	        expectKeyword('while');
+
+	        expect('(');
+
+	        test = parseExpression();
+
+	        expect(')');
+
+	        if (match(';')) {
+	            lex();
+	        }
+
+	        return delegate.createDoWhileStatement(body, test);
+	    }
+
+	    function parseWhileStatement() {
+	        var test, body, oldInIteration;
+
+	        expectKeyword('while');
+
+	        expect('(');
+
+	        test = parseExpression();
+
+	        expect(')');
+
+	        oldInIteration = state.inIteration;
+	        state.inIteration = true;
+
+	        body = parseStatement();
+
+	        state.inIteration = oldInIteration;
+
+	        return delegate.createWhileStatement(test, body);
+	    }
+
+	    function parseForVariableDeclaration() {
+	        var token, declarations, startToken;
+
+	        startToken = lookahead;
+	        token = lex();
+	        declarations = parseVariableDeclarationList();
+
+	        return delegate.markEnd(delegate.createVariableDeclaration(declarations, token.value), startToken);
+	    }
+
+	    function parseForStatement() {
+	        var init, test, update, left, right, body, oldInIteration, previousAllowIn = state.allowIn;
+
+	        init = test = update = null;
+
+	        expectKeyword('for');
+
+	        expect('(');
+
+	        if (match(';')) {
+	            lex();
+	        } else {
+	            if (matchKeyword('var') || matchKeyword('let')) {
+	                state.allowIn = false;
+	                init = parseForVariableDeclaration();
+	                state.allowIn = previousAllowIn;
+
+	                if (init.declarations.length === 1 && matchKeyword('in')) {
+	                    lex();
+	                    left = init;
+	                    right = parseExpression();
+	                    init = null;
+	                }
+	            } else {
+	                state.allowIn = false;
+	                init = parseExpression();
+	                state.allowIn = previousAllowIn;
+
+	                if (matchKeyword('in')) {
+	                    // LeftHandSideExpression
+	                    if (!isLeftHandSide(init)) {
+	                        throwErrorTolerant({}, Messages.InvalidLHSInForIn);
+	                    }
+
+	                    lex();
+	                    left = init;
+	                    right = parseExpression();
+	                    init = null;
+	                }
+	            }
+
+	            if (typeof left === 'undefined') {
+	                expect(';');
+	            }
+	        }
+
+	        if (typeof left === 'undefined') {
+
+	            if (!match(';')) {
+	                test = parseExpression();
+	            }
+	            expect(';');
+
+	            if (!match(')')) {
+	                update = parseExpression();
+	            }
+	        }
+
+	        expect(')');
+
+	        oldInIteration = state.inIteration;
+	        state.inIteration = true;
+
+	        body = parseStatement();
+
+	        state.inIteration = oldInIteration;
+
+	        return (typeof left === 'undefined') ?
+	                delegate.createForStatement(init, test, update, body) :
+	                delegate.createForInStatement(left, right, body);
+	    }
+
+	    // 12.7 The continue statement
+
+	    function parseContinueStatement() {
+	        var label = null, key;
+
+	        expectKeyword('continue');
+
+	        // Optimize the most common form: 'continue;'.
+	        if (source.charCodeAt(index) === 0x3B) {
+	            lex();
+
+	            if (!state.inIteration) {
+	                throwError({}, Messages.IllegalContinue);
+	            }
+
+	            return delegate.createContinueStatement(null);
+	        }
+
+	        if (peekLineTerminator()) {
+	            if (!state.inIteration) {
+	                throwError({}, Messages.IllegalContinue);
+	            }
+
+	            return delegate.createContinueStatement(null);
+	        }
+
+	        if (lookahead.type === Token.Identifier) {
+	            label = parseVariableIdentifier();
+
+	            key = '$' + label.name;
+	            if (!Object.prototype.hasOwnProperty.call(state.labelSet, key)) {
+	                throwError({}, Messages.UnknownLabel, label.name);
+	            }
+	        }
+
+	        consumeSemicolon();
+
+	        if (label === null && !state.inIteration) {
+	            throwError({}, Messages.IllegalContinue);
+	        }
+
+	        return delegate.createContinueStatement(label);
+	    }
+
+	    // 12.8 The break statement
+
+	    function parseBreakStatement() {
+	        var label = null, key;
+
+	        expectKeyword('break');
+
+	        // Catch the very common case first: immediately a semicolon (U+003B).
+	        if (source.charCodeAt(index) === 0x3B) {
+	            lex();
+
+	            if (!(state.inIteration || state.inSwitch)) {
+	                throwError({}, Messages.IllegalBreak);
+	            }
+
+	            return delegate.createBreakStatement(null);
+	        }
+
+	        if (peekLineTerminator()) {
+	            if (!(state.inIteration || state.inSwitch)) {
+	                throwError({}, Messages.IllegalBreak);
+	            }
+
+	            return delegate.createBreakStatement(null);
+	        }
+
+	        if (lookahead.type === Token.Identifier) {
+	            label = parseVariableIdentifier();
+
+	            key = '$' + label.name;
+	            if (!Object.prototype.hasOwnProperty.call(state.labelSet, key)) {
+	                throwError({}, Messages.UnknownLabel, label.name);
+	            }
+	        }
+
+	        consumeSemicolon();
+
+	        if (label === null && !(state.inIteration || state.inSwitch)) {
+	            throwError({}, Messages.IllegalBreak);
+	        }
+
+	        return delegate.createBreakStatement(label);
+	    }
+
+	    // 12.9 The return statement
+
+	    function parseReturnStatement() {
+	        var argument = null;
+
+	        expectKeyword('return');
+
+	        if (!state.inFunctionBody) {
+	            throwErrorTolerant({}, Messages.IllegalReturn);
+	        }
+
+	        // 'return' followed by a space and an identifier is very common.
+	        if (source.charCodeAt(index) === 0x20) {
+	            if (isIdentifierStart(source.charCodeAt(index + 1))) {
+	                argument = parseExpression();
+	                consumeSemicolon();
+	                return delegate.createReturnStatement(argument);
+	            }
+	        }
+
+	        if (peekLineTerminator()) {
+	            return delegate.createReturnStatement(null);
+	        }
+
+	        if (!match(';')) {
+	            if (!match('}') && lookahead.type !== Token.EOF) {
+	                argument = parseExpression();
+	            }
+	        }
+
+	        consumeSemicolon();
+
+	        return delegate.createReturnStatement(argument);
+	    }
+
+	    // 12.10 The with statement
+
+	    function parseWithStatement() {
+	        var object, body;
+
+	        if (strict) {
+	            // TODO(ikarienator): Should we update the test cases instead?
+	            skipComment();
+	            throwErrorTolerant({}, Messages.StrictModeWith);
+	        }
+
+	        expectKeyword('with');
+
+	        expect('(');
+
+	        object = parseExpression();
+
+	        expect(')');
+
+	        body = parseStatement();
+
+	        return delegate.createWithStatement(object, body);
+	    }
+
+	    // 12.10 The swith statement
+
+	    function parseSwitchCase() {
+	        var test, consequent = [], statement, startToken;
+
+	        startToken = lookahead;
+	        if (matchKeyword('default')) {
+	            lex();
+	            test = null;
+	        } else {
+	            expectKeyword('case');
+	            test = parseExpression();
+	        }
+	        expect(':');
+
+	        while (index < length) {
+	            if (match('}') || matchKeyword('default') || matchKeyword('case')) {
+	                break;
+	            }
+	            statement = parseStatement();
+	            consequent.push(statement);
+	        }
+
+	        return delegate.markEnd(delegate.createSwitchCase(test, consequent), startToken);
+	    }
+
+	    function parseSwitchStatement() {
+	        var discriminant, cases, clause, oldInSwitch, defaultFound;
+
+	        expectKeyword('switch');
+
+	        expect('(');
+
+	        discriminant = parseExpression();
+
+	        expect(')');
+
+	        expect('{');
+
+	        cases = [];
+
+	        if (match('}')) {
+	            lex();
+	            return delegate.createSwitchStatement(discriminant, cases);
+	        }
+
+	        oldInSwitch = state.inSwitch;
+	        state.inSwitch = true;
+	        defaultFound = false;
+
+	        while (index < length) {
+	            if (match('}')) {
+	                break;
+	            }
+	            clause = parseSwitchCase();
+	            if (clause.test === null) {
+	                if (defaultFound) {
+	                    throwError({}, Messages.MultipleDefaultsInSwitch);
+	                }
+	                defaultFound = true;
+	            }
+	            cases.push(clause);
+	        }
+
+	        state.inSwitch = oldInSwitch;
+
+	        expect('}');
+
+	        return delegate.createSwitchStatement(discriminant, cases);
+	    }
+
+	    // 12.13 The throw statement
+
+	    function parseThrowStatement() {
+	        var argument;
+
+	        expectKeyword('throw');
+
+	        if (peekLineTerminator()) {
+	            throwError({}, Messages.NewlineAfterThrow);
+	        }
+
+	        argument = parseExpression();
+
+	        consumeSemicolon();
+
+	        return delegate.createThrowStatement(argument);
+	    }
+
+	    // 12.14 The try statement
+
+	    function parseCatchClause() {
+	        var param, body, startToken;
+
+	        startToken = lookahead;
+	        expectKeyword('catch');
+
+	        expect('(');
+	        if (match(')')) {
+	            throwUnexpected(lookahead);
+	        }
+
+	        param = parseVariableIdentifier();
+	        // 12.14.1
+	        if (strict && isRestrictedWord(param.name)) {
+	            throwErrorTolerant({}, Messages.StrictCatchVariable);
+	        }
+
+	        expect(')');
+	        body = parseBlock();
+	        return delegate.markEnd(delegate.createCatchClause(param, body), startToken);
+	    }
+
+	    function parseTryStatement() {
+	        var block, handlers = [], finalizer = null;
+
+	        expectKeyword('try');
+
+	        block = parseBlock();
+
+	        if (matchKeyword('catch')) {
+	            handlers.push(parseCatchClause());
+	        }
+
+	        if (matchKeyword('finally')) {
+	            lex();
+	            finalizer = parseBlock();
+	        }
+
+	        if (handlers.length === 0 && !finalizer) {
+	            throwError({}, Messages.NoCatchOrFinally);
+	        }
+
+	        return delegate.createTryStatement(block, [], handlers, finalizer);
+	    }
+
+	    // 12.15 The debugger statement
+
+	    function parseDebuggerStatement() {
+	        expectKeyword('debugger');
+
+	        consumeSemicolon();
+
+	        return delegate.createDebuggerStatement();
+	    }
+
+	    // 12 Statements
+
+	    function parseStatement() {
+	        var type = lookahead.type,
+	            expr,
+	            labeledBody,
+	            key,
+	            startToken;
+
+	        if (type === Token.EOF) {
+	            throwUnexpected(lookahead);
+	        }
+
+	        if (type === Token.Punctuator && lookahead.value === '{') {
+	            return parseBlock();
+	        }
+
+	        startToken = lookahead;
+
+	        if (type === Token.Punctuator) {
+	            switch (lookahead.value) {
+	            case ';':
+	                return delegate.markEnd(parseEmptyStatement(), startToken);
+	            case '(':
+	                return delegate.markEnd(parseExpressionStatement(), startToken);
+	            default:
+	                break;
+	            }
+	        }
+
+	        if (type === Token.Keyword) {
+	            switch (lookahead.value) {
+	            case 'break':
+	                return delegate.markEnd(parseBreakStatement(), startToken);
+	            case 'continue':
+	                return delegate.markEnd(parseContinueStatement(), startToken);
+	            case 'debugger':
+	                return delegate.markEnd(parseDebuggerStatement(), startToken);
+	            case 'do':
+	                return delegate.markEnd(parseDoWhileStatement(), startToken);
+	            case 'for':
+	                return delegate.markEnd(parseForStatement(), startToken);
+	            case 'function':
+	                return delegate.markEnd(parseFunctionDeclaration(), startToken);
+	            case 'if':
+	                return delegate.markEnd(parseIfStatement(), startToken);
+	            case 'return':
+	                return delegate.markEnd(parseReturnStatement(), startToken);
+	            case 'switch':
+	                return delegate.markEnd(parseSwitchStatement(), startToken);
+	            case 'throw':
+	                return delegate.markEnd(parseThrowStatement(), startToken);
+	            case 'try':
+	                return delegate.markEnd(parseTryStatement(), startToken);
+	            case 'var':
+	                return delegate.markEnd(parseVariableStatement(), startToken);
+	            case 'while':
+	                return delegate.markEnd(parseWhileStatement(), startToken);
+	            case 'with':
+	                return delegate.markEnd(parseWithStatement(), startToken);
+	            default:
+	                break;
+	            }
+	        }
+
+	        expr = parseExpression();
+
+	        // 12.12 Labelled Statements
+	        if ((expr.type === Syntax.Identifier) && match(':')) {
+	            lex();
+
+	            key = '$' + expr.name;
+	            if (Object.prototype.hasOwnProperty.call(state.labelSet, key)) {
+	                throwError({}, Messages.Redeclaration, 'Label', expr.name);
+	            }
+
+	            state.labelSet[key] = true;
+	            labeledBody = parseStatement();
+	            delete state.labelSet[key];
+	            return delegate.markEnd(delegate.createLabeledStatement(expr, labeledBody), startToken);
+	        }
+
+	        consumeSemicolon();
+
+	        return delegate.markEnd(delegate.createExpressionStatement(expr), startToken);
+	    }
+
+	    // 13 Function Definition
+
+	    function parseFunctionSourceElements() {
+	        var sourceElement, sourceElements = [], token, directive, firstRestricted,
+	            oldLabelSet, oldInIteration, oldInSwitch, oldInFunctionBody, startToken;
+
+	        startToken = lookahead;
+	        expect('{');
+
+	        while (index < length) {
+	            if (lookahead.type !== Token.StringLiteral) {
+	                break;
+	            }
+	            token = lookahead;
+
+	            sourceElement = parseSourceElement();
+	            sourceElements.push(sourceElement);
+	            if (sourceElement.expression.type !== Syntax.Literal) {
+	                // this is not directive
+	                break;
+	            }
+	            directive = source.slice(token.start + 1, token.end - 1);
+	            if (directive === 'use strict') {
+	                strict = true;
+	                if (firstRestricted) {
+	                    throwErrorTolerant(firstRestricted, Messages.StrictOctalLiteral);
+	                }
+	            } else {
+	                if (!firstRestricted && token.octal) {
+	                    firstRestricted = token;
+	                }
+	            }
+	        }
+
+	        oldLabelSet = state.labelSet;
+	        oldInIteration = state.inIteration;
+	        oldInSwitch = state.inSwitch;
+	        oldInFunctionBody = state.inFunctionBody;
+
+	        state.labelSet = {};
+	        state.inIteration = false;
+	        state.inSwitch = false;
+	        state.inFunctionBody = true;
+
+	        while (index < length) {
+	            if (match('}')) {
+	                break;
+	            }
+	            sourceElement = parseSourceElement();
+	            if (typeof sourceElement === 'undefined') {
+	                break;
+	            }
+	            sourceElements.push(sourceElement);
+	        }
+
+	        expect('}');
+
+	        state.labelSet = oldLabelSet;
+	        state.inIteration = oldInIteration;
+	        state.inSwitch = oldInSwitch;
+	        state.inFunctionBody = oldInFunctionBody;
+
+	        return delegate.markEnd(delegate.createBlockStatement(sourceElements), startToken);
+	    }
+
+	    function parseParams(firstRestricted) {
+	        var param, params = [], token, stricted, paramSet, key, message;
+	        expect('(');
+
+	        if (!match(')')) {
+	            paramSet = {};
+	            while (index < length) {
+	                token = lookahead;
+	                param = parseVariableIdentifier();
+	                key = '$' + token.value;
+	                if (strict) {
+	                    if (isRestrictedWord(token.value)) {
+	                        stricted = token;
+	                        message = Messages.StrictParamName;
+	                    }
+	                    if (Object.prototype.hasOwnProperty.call(paramSet, key)) {
+	                        stricted = token;
+	                        message = Messages.StrictParamDupe;
+	                    }
+	                } else if (!firstRestricted) {
+	                    if (isRestrictedWord(token.value)) {
+	                        firstRestricted = token;
+	                        message = Messages.StrictParamName;
+	                    } else if (isStrictModeReservedWord(token.value)) {
+	                        firstRestricted = token;
+	                        message = Messages.StrictReservedWord;
+	                    } else if (Object.prototype.hasOwnProperty.call(paramSet, key)) {
+	                        firstRestricted = token;
+	                        message = Messages.StrictParamDupe;
+	                    }
+	                }
+	                params.push(param);
+	                paramSet[key] = true;
+	                if (match(')')) {
+	                    break;
+	                }
+	                expect(',');
+	            }
+	        }
+
+	        expect(')');
+
+	        return {
+	            params: params,
+	            stricted: stricted,
+	            firstRestricted: firstRestricted,
+	            message: message
+	        };
+	    }
+
+	    function parseFunctionDeclaration() {
+	        var id, params = [], body, token, stricted, tmp, firstRestricted, message, previousStrict, startToken;
+
+	        startToken = lookahead;
+
+	        expectKeyword('function');
+	        token = lookahead;
+	        id = parseVariableIdentifier();
+	        if (strict) {
+	            if (isRestrictedWord(token.value)) {
+	                throwErrorTolerant(token, Messages.StrictFunctionName);
+	            }
+	        } else {
+	            if (isRestrictedWord(token.value)) {
+	                firstRestricted = token;
+	                message = Messages.StrictFunctionName;
+	            } else if (isStrictModeReservedWord(token.value)) {
+	                firstRestricted = token;
+	                message = Messages.StrictReservedWord;
+	            }
+	        }
+
+	        tmp = parseParams(firstRestricted);
+	        params = tmp.params;
+	        stricted = tmp.stricted;
+	        firstRestricted = tmp.firstRestricted;
+	        if (tmp.message) {
+	            message = tmp.message;
+	        }
+
+	        previousStrict = strict;
+	        body = parseFunctionSourceElements();
+	        if (strict && firstRestricted) {
+	            throwError(firstRestricted, message);
+	        }
+	        if (strict && stricted) {
+	            throwErrorTolerant(stricted, message);
+	        }
+	        strict = previousStrict;
+
+	        return delegate.markEnd(delegate.createFunctionDeclaration(id, params, [], body), startToken);
+	    }
+
+	    function parseFunctionExpression() {
+	        var token, id = null, stricted, firstRestricted, message, tmp, params = [], body, previousStrict, startToken;
+
+	        startToken = lookahead;
+	        expectKeyword('function');
+
+	        if (!match('(')) {
+	            token = lookahead;
+	            id = parseVariableIdentifier();
+	            if (strict) {
+	                if (isRestrictedWord(token.value)) {
+	                    throwErrorTolerant(token, Messages.StrictFunctionName);
+	                }
+	            } else {
+	                if (isRestrictedWord(token.value)) {
+	                    firstRestricted = token;
+	                    message = Messages.StrictFunctionName;
+	                } else if (isStrictModeReservedWord(token.value)) {
+	                    firstRestricted = token;
+	                    message = Messages.StrictReservedWord;
+	                }
+	            }
+	        }
+
+	        tmp = parseParams(firstRestricted);
+	        params = tmp.params;
+	        stricted = tmp.stricted;
+	        firstRestricted = tmp.firstRestricted;
+	        if (tmp.message) {
+	            message = tmp.message;
+	        }
+
+	        previousStrict = strict;
+	        body = parseFunctionSourceElements();
+	        if (strict && firstRestricted) {
+	            throwError(firstRestricted, message);
+	        }
+	        if (strict && stricted) {
+	            throwErrorTolerant(stricted, message);
+	        }
+	        strict = previousStrict;
+
+	        return delegate.markEnd(delegate.createFunctionExpression(id, params, [], body), startToken);
+	    }
+
+	    // 14 Program
+
+	    function parseSourceElement() {
+	        if (lookahead.type === Token.Keyword) {
+	            switch (lookahead.value) {
+	            case 'const':
+	            case 'let':
+	                return parseConstLetDeclaration(lookahead.value);
+	            case 'function':
+	                return parseFunctionDeclaration();
+	            default:
+	                return parseStatement();
+	            }
+	        }
+
+	        if (lookahead.type !== Token.EOF) {
+	            return parseStatement();
+	        }
+	    }
+
+	    function parseSourceElements() {
+	        var sourceElement, sourceElements = [], token, directive, firstRestricted;
+
+	        while (index < length) {
+	            token = lookahead;
+	            if (token.type !== Token.StringLiteral) {
+	                break;
+	            }
+
+	            sourceElement = parseSourceElement();
+	            sourceElements.push(sourceElement);
+	            if (sourceElement.expression.type !== Syntax.Literal) {
+	                // this is not directive
+	                break;
+	            }
+	            directive = source.slice(token.start + 1, token.end - 1);
+	            if (directive === 'use strict') {
+	                strict = true;
+	                if (firstRestricted) {
+	                    throwErrorTolerant(firstRestricted, Messages.StrictOctalLiteral);
+	                }
+	            } else {
+	                if (!firstRestricted && token.octal) {
+	                    firstRestricted = token;
+	                }
+	            }
+	        }
+
+	        while (index < length) {
+	            sourceElement = parseSourceElement();
+	            /* istanbul ignore if */
+	            if (typeof sourceElement === 'undefined') {
+	                break;
+	            }
+	            sourceElements.push(sourceElement);
+	        }
+	        return sourceElements;
+	    }
+
+	    function parseProgram() {
+	        var body, startToken;
+
+	        skipComment();
+	        peek();
+	        startToken = lookahead;
+	        strict = false;
+
+	        body = parseSourceElements();
+	        return delegate.markEnd(delegate.createProgram(body), startToken);
+	    }
+
+	    function filterTokenLocation() {
+	        var i, entry, token, tokens = [];
+
+	        for (i = 0; i < extra.tokens.length; ++i) {
+	            entry = extra.tokens[i];
+	            token = {
+	                type: entry.type,
+	                value: entry.value
+	            };
+	            if (extra.range) {
+	                token.range = entry.range;
+	            }
+	            if (extra.loc) {
+	                token.loc = entry.loc;
+	            }
+	            tokens.push(token);
+	        }
+
+	        extra.tokens = tokens;
+	    }
+
+	    function tokenize(code, options) {
+	        var toString,
+	            token,
+	            tokens;
+
+	        toString = String;
+	        if (typeof code !== 'string' && !(code instanceof String)) {
+	            code = toString(code);
+	        }
+
+	        delegate = SyntaxTreeDelegate;
+	        source = code;
+	        index = 0;
+	        lineNumber = (source.length > 0) ? 1 : 0;
+	        lineStart = 0;
+	        length = source.length;
+	        lookahead = null;
+	        state = {
+	            allowIn: true,
+	            labelSet: {},
+	            inFunctionBody: false,
+	            inIteration: false,
+	            inSwitch: false,
+	            lastCommentStart: -1
+	        };
+
+	        extra = {};
+
+	        // Options matching.
+	        options = options || {};
+
+	        // Of course we collect tokens here.
+	        options.tokens = true;
+	        extra.tokens = [];
+	        extra.tokenize = true;
+	        // The following two fields are necessary to compute the Regex tokens.
+	        extra.openParenToken = -1;
+	        extra.openCurlyToken = -1;
+
+	        extra.range = (typeof options.range === 'boolean') && options.range;
+	        extra.loc = (typeof options.loc === 'boolean') && options.loc;
+
+	        if (typeof options.comment === 'boolean' && options.comment) {
+	            extra.comments = [];
+	        }
+	        if (typeof options.tolerant === 'boolean' && options.tolerant) {
+	            extra.errors = [];
+	        }
+
+	        try {
+	            peek();
+	            if (lookahead.type === Token.EOF) {
+	                return extra.tokens;
+	            }
+
+	            token = lex();
+	            while (lookahead.type !== Token.EOF) {
+	                try {
+	                    token = lex();
+	                } catch (lexError) {
+	                    token = lookahead;
+	                    if (extra.errors) {
+	                        extra.errors.push(lexError);
+	                        // We have to break on the first error
+	                        // to avoid infinite loops.
+	                        break;
+	                    } else {
+	                        throw lexError;
+	                    }
+	                }
+	            }
+
+	            filterTokenLocation();
+	            tokens = extra.tokens;
+	            if (typeof extra.comments !== 'undefined') {
+	                tokens.comments = extra.comments;
+	            }
+	            if (typeof extra.errors !== 'undefined') {
+	                tokens.errors = extra.errors;
+	            }
+	        } catch (e) {
+	            throw e;
+	        } finally {
+	            extra = {};
+	        }
+	        return tokens;
+	    }
+
+	    function parse(code, options) {
+	        var program, toString;
+
+	        toString = String;
+	        if (typeof code !== 'string' && !(code instanceof String)) {
+	            code = toString(code);
+	        }
+
+	        delegate = SyntaxTreeDelegate;
+	        source = code;
+	        index = 0;
+	        lineNumber = (source.length > 0) ? 1 : 0;
+	        lineStart = 0;
+	        length = source.length;
+	        lookahead = null;
+	        state = {
+	            allowIn: true,
+	            labelSet: {},
+	            inFunctionBody: false,
+	            inIteration: false,
+	            inSwitch: false,
+	            lastCommentStart: -1
+	        };
+
+	        extra = {};
+	        if (typeof options !== 'undefined') {
+	            extra.range = (typeof options.range === 'boolean') && options.range;
+	            extra.loc = (typeof options.loc === 'boolean') && options.loc;
+	            extra.attachComment = (typeof options.attachComment === 'boolean') && options.attachComment;
+
+	            if (extra.loc && options.source !== null && options.source !== undefined) {
+	                extra.source = toString(options.source);
+	            }
+
+	            if (typeof options.tokens === 'boolean' && options.tokens) {
+	                extra.tokens = [];
+	            }
+	            if (typeof options.comment === 'boolean' && options.comment) {
+	                extra.comments = [];
+	            }
+	            if (typeof options.tolerant === 'boolean' && options.tolerant) {
+	                extra.errors = [];
+	            }
+	            if (extra.attachComment) {
+	                extra.range = true;
+	                extra.comments = [];
+	                extra.bottomRightStack = [];
+	                extra.trailingComments = [];
+	                extra.leadingComments = [];
+	            }
+	        }
+
+	        try {
+	            program = parseProgram();
+	            if (typeof extra.comments !== 'undefined') {
+	                program.comments = extra.comments;
+	            }
+	            if (typeof extra.tokens !== 'undefined') {
+	                filterTokenLocation();
+	                program.tokens = extra.tokens;
+	            }
+	            if (typeof extra.errors !== 'undefined') {
+	                program.errors = extra.errors;
+	            }
+	        } catch (e) {
+	            throw e;
+	        } finally {
+	            extra = {};
+	        }
+
+	        return program;
+	    }
+
+	    // Sync with *.json manifests.
+	    exports.version = '1.2.5';
+
+	    exports.tokenize = tokenize;
+
+	    exports.parse = parse;
+
+	    // Deep copy.
+	   /* istanbul ignore next */
+	    exports.Syntax = (function () {
+	        var name, types = {};
+
+	        if (typeof Object.create === 'function') {
+	            types = Object.create(null);
+	        }
+
+	        for (name in Syntax) {
+	            if (Syntax.hasOwnProperty(name)) {
+	                types[name] = Syntax[name];
+	            }
+	        }
+
+	        if (typeof Object.freeze === 'function') {
+	            Object.freeze(types);
+	        }
+
+	        return types;
+	    }());
+
+	}));
+	/* vim: set sw=4 ts=4 et tw=80 : */
+
+
+/***/ },
+/* 231 */
+/*!**************************************************************!*\
+  !*** ./~/ndarray-fill/~/cwise/~/cwise-parser/~/uniq/uniq.js ***!
+  \**************************************************************/
+/***/ function(module, exports) {
+
+	"use strict"
+
+	function unique_pred(list, compare) {
+	  var ptr = 1
+	    , len = list.length
+	    , a=list[0], b=list[0]
+	  for(var i=1; i<len; ++i) {
+	    b = a
+	    a = list[i]
+	    if(compare(a, b)) {
+	      if(i === ptr) {
+	        ptr++
+	        continue
+	      }
+	      list[ptr++] = a
+	    }
+	  }
+	  list.length = ptr
+	  return list
+	}
+
+	function unique_eq(list) {
+	  var ptr = 1
+	    , len = list.length
+	    , a=list[0], b = list[0]
+	  for(var i=1; i<len; ++i, b=a) {
+	    b = a
+	    a = list[i]
+	    if(a !== b) {
+	      if(i === ptr) {
+	        ptr++
+	        continue
+	      }
+	      list[ptr++] = a
+	    }
+	  }
+	  list.length = ptr
+	  return list
+	}
+
+	function unique(list, compare, sorted) {
+	  if(list.length === 0) {
+	    return list
+	  }
+	  if(compare) {
+	    if(!sorted) {
+	      list.sort(compare)
+	    }
+	    return unique_pred(list, compare)
+	  }
+	  if(!sorted) {
+	    list.sort()
+	  }
+	  return unique_eq(list)
+	}
+
+	module.exports = unique
+
+
+/***/ },
+/* 232 */
+/*!*************************************************************!*\
+  !*** ./~/ndarray-fill/~/cwise/~/cwise-compiler/compiler.js ***!
+  \*************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict"
+
+	var createThunk = __webpack_require__(/*! ./lib/thunk.js */ 233)
+
+	function Procedure() {
+	  this.argTypes = []
+	  this.shimArgs = []
+	  this.arrayArgs = []
+	  this.arrayBlockIndices = []
+	  this.scalarArgs = []
+	  this.offsetArgs = []
+	  this.offsetArgIndex = []
+	  this.indexArgs = []
+	  this.shapeArgs = []
+	  this.funcName = ""
+	  this.pre = null
+	  this.body = null
+	  this.post = null
+	  this.debug = false
+	}
+
+	function compileCwise(user_args) {
+	  //Create procedure
+	  var proc = new Procedure()
+	  
+	  //Parse blocks
+	  proc.pre    = user_args.pre
+	  proc.body   = user_args.body
+	  proc.post   = user_args.post
+
+	  //Parse arguments
+	  var proc_args = user_args.args.slice(0)
+	  proc.argTypes = proc_args
+	  for(var i=0; i<proc_args.length; ++i) {
+	    var arg_type = proc_args[i]
+	    if(arg_type === "array" || (typeof arg_type === "object" && arg_type.blockIndices)) {
+	      proc.argTypes[i] = "array"
+	      proc.arrayArgs.push(i)
+	      proc.arrayBlockIndices.push(arg_type.blockIndices ? arg_type.blockIndices : 0)
+	      proc.shimArgs.push("array" + i)
+	      if(i < proc.pre.args.length && proc.pre.args[i].count>0) {
+	        throw new Error("cwise: pre() block may not reference array args")
+	      }
+	      if(i < proc.post.args.length && proc.post.args[i].count>0) {
+	        throw new Error("cwise: post() block may not reference array args")
+	      }
+	    } else if(arg_type === "scalar") {
+	      proc.scalarArgs.push(i)
+	      proc.shimArgs.push("scalar" + i)
+	    } else if(arg_type === "index") {
+	      proc.indexArgs.push(i)
+	      if(i < proc.pre.args.length && proc.pre.args[i].count > 0) {
+	        throw new Error("cwise: pre() block may not reference array index")
+	      }
+	      if(i < proc.body.args.length && proc.body.args[i].lvalue) {
+	        throw new Error("cwise: body() block may not write to array index")
+	      }
+	      if(i < proc.post.args.length && proc.post.args[i].count > 0) {
+	        throw new Error("cwise: post() block may not reference array index")
+	      }
+	    } else if(arg_type === "shape") {
+	      proc.shapeArgs.push(i)
+	      if(i < proc.pre.args.length && proc.pre.args[i].lvalue) {
+	        throw new Error("cwise: pre() block may not write to array shape")
+	      }
+	      if(i < proc.body.args.length && proc.body.args[i].lvalue) {
+	        throw new Error("cwise: body() block may not write to array shape")
+	      }
+	      if(i < proc.post.args.length && proc.post.args[i].lvalue) {
+	        throw new Error("cwise: post() block may not write to array shape")
+	      }
+	    } else if(typeof arg_type === "object" && arg_type.offset) {
+	      proc.argTypes[i] = "offset"
+	      proc.offsetArgs.push({ array: arg_type.array, offset:arg_type.offset })
+	      proc.offsetArgIndex.push(i)
+	    } else {
+	      throw new Error("cwise: Unknown argument type " + proc_args[i])
+	    }
+	  }
+	  
+	  //Make sure at least one array argument was specified
+	  if(proc.arrayArgs.length <= 0) {
+	    throw new Error("cwise: No array arguments specified")
+	  }
+	  
+	  //Make sure arguments are correct
+	  if(proc.pre.args.length > proc_args.length) {
+	    throw new Error("cwise: Too many arguments in pre() block")
+	  }
+	  if(proc.body.args.length > proc_args.length) {
+	    throw new Error("cwise: Too many arguments in body() block")
+	  }
+	  if(proc.post.args.length > proc_args.length) {
+	    throw new Error("cwise: Too many arguments in post() block")
+	  }
+
+	  //Check debug flag
+	  proc.debug = !!user_args.printCode || !!user_args.debug
+	  
+	  //Retrieve name
+	  proc.funcName = user_args.funcName || "cwise"
+	  
+	  //Read in block size
+	  proc.blockSize = user_args.blockSize || 64
+
+	  return createThunk(proc)
+	}
+
+	module.exports = compileCwise
+
+
+/***/ },
+/* 233 */
+/*!**************************************************************!*\
+  !*** ./~/ndarray-fill/~/cwise/~/cwise-compiler/lib/thunk.js ***!
+  \**************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict"
+
+	// The function below is called when constructing a cwise function object, and does the following:
+	// A function object is constructed which accepts as argument a compilation function and returns another function.
+	// It is this other function that is eventually returned by createThunk, and this function is the one that actually
+	// checks whether a certain pattern of arguments has already been used before and compiles new loops as needed.
+	// The compilation passed to the first function object is used for compiling new functions.
+	// Once this function object is created, it is called with compile as argument, where the first argument of compile
+	// is bound to "proc" (essentially containing a preprocessed version of the user arguments to cwise).
+	// So createThunk roughly works like this:
+	// function createThunk(proc) {
+	//   var thunk = function(compileBound) {
+	//     var CACHED = {}
+	//     return function(arrays and scalars) {
+	//       if (dtype and order of arrays in CACHED) {
+	//         var func = CACHED[dtype and order of arrays]
+	//       } else {
+	//         var func = CACHED[dtype and order of arrays] = compileBound(dtype and order of arrays)
+	//       }
+	//       return func(arrays and scalars)
+	//     }
+	//   }
+	//   return thunk(compile.bind1(proc))
+	// }
+
+	var compile = __webpack_require__(/*! ./compile.js */ 234)
+
+	function createThunk(proc) {
+	  var code = ["'use strict'", "var CACHED={}"]
+	  var vars = []
+	  var thunkName = proc.funcName + "_cwise_thunk"
+	  
+	  //Build thunk
+	  code.push(["return function ", thunkName, "(", proc.shimArgs.join(","), "){"].join(""))
+	  var typesig = []
+	  var string_typesig = []
+	  var proc_args = [["array",proc.arrayArgs[0],".shape.slice(", // Slice shape so that we only retain the shape over which we iterate (which gets passed to the cwise operator as SS).
+	                    Math.max(0,proc.arrayBlockIndices[0]),proc.arrayBlockIndices[0]<0?(","+proc.arrayBlockIndices[0]+")"):")"].join("")]
+	  var shapeLengthConditions = [], shapeConditions = []
+	  // Process array arguments
+	  for(var i=0; i<proc.arrayArgs.length; ++i) {
+	    var j = proc.arrayArgs[i]
+	    vars.push(["t", j, "=array", j, ".dtype,",
+	               "r", j, "=array", j, ".order"].join(""))
+	    typesig.push("t" + j)
+	    typesig.push("r" + j)
+	    string_typesig.push("t"+j)
+	    string_typesig.push("r"+j+".join()")
+	    proc_args.push("array" + j + ".data")
+	    proc_args.push("array" + j + ".stride")
+	    proc_args.push("array" + j + ".offset|0")
+	    if (i>0) { // Gather conditions to check for shape equality (ignoring block indices)
+	      shapeLengthConditions.push("array" + proc.arrayArgs[0] + ".shape.length===array" + j + ".shape.length+" + (Math.abs(proc.arrayBlockIndices[0])-Math.abs(proc.arrayBlockIndices[i])))
+	      shapeConditions.push("array" + proc.arrayArgs[0] + ".shape[shapeIndex+" + Math.max(0,proc.arrayBlockIndices[0]) + "]===array" + j + ".shape[shapeIndex+" + Math.max(0,proc.arrayBlockIndices[i]) + "]")
+	    }
+	  }
+	  // Check for shape equality
+	  if (proc.arrayArgs.length > 1) {
+	    code.push("if (!(" + shapeLengthConditions.join(" && ") + ")) throw new Error('cwise: Arrays do not all have the same dimensionality!')")
+	    code.push("for(var shapeIndex=array" + proc.arrayArgs[0] + ".shape.length-" + Math.abs(proc.arrayBlockIndices[0]) + "; shapeIndex-->0;) {")
+	    code.push("if (!(" + shapeConditions.join(" && ") + ")) throw new Error('cwise: Arrays do not all have the same shape!')")
+	    code.push("}")
+	  }
+	  // Process scalar arguments
+	  for(var i=0; i<proc.scalarArgs.length; ++i) {
+	    proc_args.push("scalar" + proc.scalarArgs[i])
+	  }
+	  // Check for cached function (and if not present, generate it)
+	  vars.push(["type=[", string_typesig.join(","), "].join()"].join(""))
+	  vars.push("proc=CACHED[type]")
+	  code.push("var " + vars.join(","))
+	  
+	  code.push(["if(!proc){",
+	             "CACHED[type]=proc=compile([", typesig.join(","), "])}",
+	             "return proc(", proc_args.join(","), ")}"].join(""))
+
+	  if(proc.debug) {
+	    console.log("-----Generated thunk:\n" + code.join("\n") + "\n----------")
+	  }
+	  
+	  //Compile thunk
+	  var thunk = new Function("compile", code.join("\n"))
+	  return thunk(compile.bind(undefined, proc))
+	}
+
+	module.exports = createThunk
+
+
+/***/ },
+/* 234 */
+/*!****************************************************************!*\
+  !*** ./~/ndarray-fill/~/cwise/~/cwise-compiler/lib/compile.js ***!
+  \****************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict"
+
+	var uniq = __webpack_require__(/*! uniq */ 235)
+
+	// This function generates very simple loops analogous to how you typically traverse arrays (the outermost loop corresponds to the slowest changing index, the innermost loop to the fastest changing index)
+	// TODO: If two arrays have the same strides (and offsets) there is potential for decreasing the number of "pointers" and related variables. The drawback is that the type signature would become more specific and that there would thus be less potential for caching, but it might still be worth it, especially when dealing with large numbers of arguments.
+	function innerFill(order, proc, body) {
+	  var dimension = order.length
+	    , nargs = proc.arrayArgs.length
+	    , has_index = proc.indexArgs.length>0
+	    , code = []
+	    , vars = []
+	    , idx=0, pidx=0, i, j
+	  for(i=0; i<dimension; ++i) { // Iteration variables
+	    vars.push(["i",i,"=0"].join(""))
+	  }
+	  //Compute scan deltas
+	  for(j=0; j<nargs; ++j) {
+	    for(i=0; i<dimension; ++i) {
+	      pidx = idx
+	      idx = order[i]
+	      if(i === 0) { // The innermost/fastest dimension's delta is simply its stride
+	        vars.push(["d",j,"s",i,"=t",j,"p",idx].join(""))
+	      } else { // For other dimensions the delta is basically the stride minus something which essentially "rewinds" the previous (more inner) dimension
+	        vars.push(["d",j,"s",i,"=(t",j,"p",idx,"-s",pidx,"*t",j,"p",pidx,")"].join(""))
+	      }
+	    }
+	  }
+	  code.push("var " + vars.join(","))
+	  //Scan loop
+	  for(i=dimension-1; i>=0; --i) { // Start at largest stride and work your way inwards
+	    idx = order[i]
+	    code.push(["for(i",i,"=0;i",i,"<s",idx,";++i",i,"){"].join(""))
+	  }
+	  //Push body of inner loop
+	  code.push(body)
+	  //Advance scan pointers
+	  for(i=0; i<dimension; ++i) {
+	    pidx = idx
+	    idx = order[i]
+	    for(j=0; j<nargs; ++j) {
+	      code.push(["p",j,"+=d",j,"s",i].join(""))
+	    }
+	    if(has_index) {
+	      if(i > 0) {
+	        code.push(["index[",pidx,"]-=s",pidx].join(""))
+	      }
+	      code.push(["++index[",idx,"]"].join(""))
+	    }
+	    code.push("}")
+	  }
+	  return code.join("\n")
+	}
+
+	// Generate "outer" loops that loop over blocks of data, applying "inner" loops to the blocks by manipulating the local variables in such a way that the inner loop only "sees" the current block.
+	// TODO: If this is used, then the previous declaration (done by generateCwiseOp) of s* is essentially unnecessary.
+	//       I believe the s* are not used elsewhere (in particular, I don't think they're used in the pre/post parts and "shape" is defined independently), so it would be possible to make defining the s* dependent on what loop method is being used.
+	function outerFill(matched, order, proc, body) {
+	  var dimension = order.length
+	    , nargs = proc.arrayArgs.length
+	    , blockSize = proc.blockSize
+	    , has_index = proc.indexArgs.length > 0
+	    , code = []
+	  for(var i=0; i<nargs; ++i) {
+	    code.push(["var offset",i,"=p",i].join(""))
+	  }
+	  //Generate loops for unmatched dimensions
+	  // The order in which these dimensions are traversed is fairly arbitrary (from small stride to large stride, for the first argument)
+	  // TODO: It would be nice if the order in which these loops are placed would also be somehow "optimal" (at the very least we should check that it really doesn't hurt us if they're not).
+	  for(var i=matched; i<dimension; ++i) {
+	    code.push(["for(var j"+i+"=SS[", order[i], "]|0;j", i, ">0;){"].join("")) // Iterate back to front
+	    code.push(["if(j",i,"<",blockSize,"){"].join("")) // Either decrease j by blockSize (s = blockSize), or set it to zero (after setting s = j).
+	    code.push(["s",order[i],"=j",i].join(""))
+	    code.push(["j",i,"=0"].join(""))
+	    code.push(["}else{s",order[i],"=",blockSize].join(""))
+	    code.push(["j",i,"-=",blockSize,"}"].join(""))
+	    if(has_index) {
+	      code.push(["index[",order[i],"]=j",i].join(""))
+	    }
+	  }
+	  for(var i=0; i<nargs; ++i) {
+	    var indexStr = ["offset"+i]
+	    for(var j=matched; j<dimension; ++j) {
+	      indexStr.push(["j",j,"*t",i,"p",order[j]].join(""))
+	    }
+	    code.push(["p",i,"=(",indexStr.join("+"),")"].join(""))
+	  }
+	  code.push(innerFill(order, proc, body))
+	  for(var i=matched; i<dimension; ++i) {
+	    code.push("}")
+	  }
+	  return code.join("\n")
+	}
+
+	//Count the number of compatible inner orders
+	// This is the length of the longest common prefix of the arrays in orders.
+	// Each array in orders lists the dimensions of the correspond ndarray in order of increasing stride.
+	// This is thus the maximum number of dimensions that can be efficiently traversed by simple nested loops for all arrays.
+	function countMatches(orders) {
+	  var matched = 0, dimension = orders[0].length
+	  while(matched < dimension) {
+	    for(var j=1; j<orders.length; ++j) {
+	      if(orders[j][matched] !== orders[0][matched]) {
+	        return matched
+	      }
+	    }
+	    ++matched
+	  }
+	  return matched
+	}
+
+	//Processes a block according to the given data types
+	// Replaces variable names by different ones, either "local" ones (that are then ferried in and out of the given array) or ones matching the arguments that the function performing the ultimate loop will accept.
+	function processBlock(block, proc, dtypes) {
+	  var code = block.body
+	  var pre = []
+	  var post = []
+	  for(var i=0; i<block.args.length; ++i) {
+	    var carg = block.args[i]
+	    if(carg.count <= 0) {
+	      continue
+	    }
+	    var re = new RegExp(carg.name, "g")
+	    var ptrStr = ""
+	    var arrNum = proc.arrayArgs.indexOf(i)
+	    switch(proc.argTypes[i]) {
+	      case "offset":
+	        var offArgIndex = proc.offsetArgIndex.indexOf(i)
+	        var offArg = proc.offsetArgs[offArgIndex]
+	        arrNum = offArg.array
+	        ptrStr = "+q" + offArgIndex // Adds offset to the "pointer" in the array
+	      case "array":
+	        ptrStr = "p" + arrNum + ptrStr
+	        var localStr = "l" + i
+	        var arrStr = "a" + arrNum
+	        if (proc.arrayBlockIndices[arrNum] === 0) { // Argument to body is just a single value from this array
+	          if(carg.count === 1) { // Argument/array used only once(?)
+	            if(dtypes[arrNum] === "generic") {
+	              if(carg.lvalue) {
+	                pre.push(["var ", localStr, "=", arrStr, ".get(", ptrStr, ")"].join("")) // Is this necessary if the argument is ONLY used as an lvalue? (keep in mind that we can have a += something, so we would actually need to check carg.rvalue)
+	                code = code.replace(re, localStr)
+	                post.push([arrStr, ".set(", ptrStr, ",", localStr,")"].join(""))
+	              } else {
+	                code = code.replace(re, [arrStr, ".get(", ptrStr, ")"].join(""))
+	              }
+	            } else {
+	              code = code.replace(re, [arrStr, "[", ptrStr, "]"].join(""))
+	            }
+	          } else if(dtypes[arrNum] === "generic") {
+	            pre.push(["var ", localStr, "=", arrStr, ".get(", ptrStr, ")"].join("")) // TODO: Could we optimize by checking for carg.rvalue?
+	            code = code.replace(re, localStr)
+	            if(carg.lvalue) {
+	              post.push([arrStr, ".set(", ptrStr, ",", localStr,")"].join(""))
+	            }
+	          } else {
+	            pre.push(["var ", localStr, "=", arrStr, "[", ptrStr, "]"].join("")) // TODO: Could we optimize by checking for carg.rvalue?
+	            code = code.replace(re, localStr)
+	            if(carg.lvalue) {
+	              post.push([arrStr, "[", ptrStr, "]=", localStr].join(""))
+	            }
+	          }
+	        } else { // Argument to body is a "block"
+	          var reStrArr = [carg.name], ptrStrArr = [ptrStr]
+	          for(var j=0; j<Math.abs(proc.arrayBlockIndices[arrNum]); j++) {
+	            reStrArr.push("\\s*\\[([^\\]]+)\\]")
+	            ptrStrArr.push("$" + (j+1) + "*t" + arrNum + "b" + j) // Matched index times stride
+	          }
+	          re = new RegExp(reStrArr.join(""), "g")
+	          ptrStr = ptrStrArr.join("+")
+	          if(dtypes[arrNum] === "generic") {
+	            /*if(carg.lvalue) {
+	              pre.push(["var ", localStr, "=", arrStr, ".get(", ptrStr, ")"].join("")) // Is this necessary if the argument is ONLY used as an lvalue? (keep in mind that we can have a += something, so we would actually need to check carg.rvalue)
+	              code = code.replace(re, localStr)
+	              post.push([arrStr, ".set(", ptrStr, ",", localStr,")"].join(""))
+	            } else {
+	              code = code.replace(re, [arrStr, ".get(", ptrStr, ")"].join(""))
+	            }*/
+	            throw new Error("cwise: Generic arrays not supported in combination with blocks!")
+	          } else {
+	            // This does not produce any local variables, even if variables are used multiple times. It would be possible to do so, but it would complicate things quite a bit.
+	            code = code.replace(re, [arrStr, "[", ptrStr, "]"].join(""))
+	          }
+	        }
+	      break
+	      case "scalar":
+	        code = code.replace(re, "Y" + proc.scalarArgs.indexOf(i))
+	      break
+	      case "index":
+	        code = code.replace(re, "index")
+	      break
+	      case "shape":
+	        code = code.replace(re, "shape")
+	      break
+	    }
+	  }
+	  return [pre.join("\n"), code, post.join("\n")].join("\n").trim()
+	}
+
+	function typeSummary(dtypes) {
+	  var summary = new Array(dtypes.length)
+	  var allEqual = true
+	  for(var i=0; i<dtypes.length; ++i) {
+	    var t = dtypes[i]
+	    var digits = t.match(/\d+/)
+	    if(!digits) {
+	      digits = ""
+	    } else {
+	      digits = digits[0]
+	    }
+	    if(t.charAt(0) === 0) {
+	      summary[i] = "u" + t.charAt(1) + digits
+	    } else {
+	      summary[i] = t.charAt(0) + digits
+	    }
+	    if(i > 0) {
+	      allEqual = allEqual && summary[i] === summary[i-1]
+	    }
+	  }
+	  if(allEqual) {
+	    return summary[0]
+	  }
+	  return summary.join("")
+	}
+
+	//Generates a cwise operator
+	function generateCWiseOp(proc, typesig) {
+
+	  //Compute dimension
+	  // Arrays get put first in typesig, and there are two entries per array (dtype and order), so this gets the number of dimensions in the first array arg.
+	  var dimension = (typesig[1].length - Math.abs(proc.arrayBlockIndices[0]))|0
+	  var orders = new Array(proc.arrayArgs.length)
+	  var dtypes = new Array(proc.arrayArgs.length)
+	  for(var i=0; i<proc.arrayArgs.length; ++i) {
+	    dtypes[i] = typesig[2*i]
+	    orders[i] = typesig[2*i+1]
+	  }
+	  
+	  //Determine where block and loop indices start and end
+	  var blockBegin = [], blockEnd = [] // These indices are exposed as blocks
+	  var loopBegin = [], loopEnd = [] // These indices are iterated over
+	  var loopOrders = [] // orders restricted to the loop indices
+	  for(var i=0; i<proc.arrayArgs.length; ++i) {
+	    if (proc.arrayBlockIndices[i]<0) {
+	      loopBegin.push(0)
+	      loopEnd.push(dimension)
+	      blockBegin.push(dimension)
+	      blockEnd.push(dimension+proc.arrayBlockIndices[i])
+	    } else {
+	      loopBegin.push(proc.arrayBlockIndices[i]) // Non-negative
+	      loopEnd.push(proc.arrayBlockIndices[i]+dimension)
+	      blockBegin.push(0)
+	      blockEnd.push(proc.arrayBlockIndices[i])
+	    }
+	    var newOrder = []
+	    for(var j=0; j<orders[i].length; j++) {
+	      if (loopBegin[i]<=orders[i][j] && orders[i][j]<loopEnd[i]) {
+	        newOrder.push(orders[i][j]-loopBegin[i]) // If this is a loop index, put it in newOrder, subtracting loopBegin, to make sure that all loopOrders are using a common set of indices.
+	      }
+	    }
+	    loopOrders.push(newOrder)
+	  }
+
+	  //First create arguments for procedure
+	  var arglist = ["SS"] // SS is the overall shape over which we iterate
+	  var code = ["'use strict'"]
+	  var vars = []
+	  
+	  for(var j=0; j<dimension; ++j) {
+	    vars.push(["s", j, "=SS[", j, "]"].join("")) // The limits for each dimension.
+	  }
+	  for(var i=0; i<proc.arrayArgs.length; ++i) {
+	    arglist.push("a"+i) // Actual data array
+	    arglist.push("t"+i) // Strides
+	    arglist.push("p"+i) // Offset in the array at which the data starts (also used for iterating over the data)
+	    
+	    for(var j=0; j<dimension; ++j) { // Unpack the strides into vars for looping
+	      vars.push(["t",i,"p",j,"=t",i,"[",loopBegin[i]+j,"]"].join(""))
+	    }
+	    
+	    for(var j=0; j<Math.abs(proc.arrayBlockIndices[i]); ++j) { // Unpack the strides into vars for block iteration
+	      vars.push(["t",i,"b",j,"=t",i,"[",blockBegin[i]+j,"]"].join(""))
+	    }
+	  }
+	  for(var i=0; i<proc.scalarArgs.length; ++i) {
+	    arglist.push("Y" + i)
+	  }
+	  if(proc.shapeArgs.length > 0) {
+	    vars.push("shape=SS.slice(0)") // Makes the shape over which we iterate available to the user defined functions (so you can use width/height for example)
+	  }
+	  if(proc.indexArgs.length > 0) {
+	    // Prepare an array to keep track of the (logical) indices, initialized to dimension zeroes.
+	    var zeros = new Array(dimension)
+	    for(var i=0; i<dimension; ++i) {
+	      zeros[i] = "0"
+	    }
+	    vars.push(["index=[", zeros.join(","), "]"].join(""))
+	  }
+	  for(var i=0; i<proc.offsetArgs.length; ++i) { // Offset arguments used for stencil operations
+	    var off_arg = proc.offsetArgs[i]
+	    var init_string = []
+	    for(var j=0; j<off_arg.offset.length; ++j) {
+	      if(off_arg.offset[j] === 0) {
+	        continue
+	      } else if(off_arg.offset[j] === 1) {
+	        init_string.push(["t", off_arg.array, "p", j].join(""))      
+	      } else {
+	        init_string.push([off_arg.offset[j], "*t", off_arg.array, "p", j].join(""))
+	      }
+	    }
+	    if(init_string.length === 0) {
+	      vars.push("q" + i + "=0")
+	    } else {
+	      vars.push(["q", i, "=", init_string.join("+")].join(""))
+	    }
+	  }
+
+	  //Prepare this variables
+	  var thisVars = uniq([].concat(proc.pre.thisVars)
+	                      .concat(proc.body.thisVars)
+	                      .concat(proc.post.thisVars))
+	  vars = vars.concat(thisVars)
+	  code.push("var " + vars.join(","))
+	  for(var i=0; i<proc.arrayArgs.length; ++i) {
+	    code.push("p"+i+"|=0")
+	  }
+	  
+	  //Inline prelude
+	  if(proc.pre.body.length > 3) {
+	    code.push(processBlock(proc.pre, proc, dtypes))
+	  }
+
+	  //Process body
+	  var body = processBlock(proc.body, proc, dtypes)
+	  var matched = countMatches(loopOrders)
+	  if(matched < dimension) {
+	    code.push(outerFill(matched, loopOrders[0], proc, body)) // TODO: Rather than passing loopOrders[0], it might be interesting to look at passing an order that represents the majority of the arguments for example.
+	  } else {
+	    code.push(innerFill(loopOrders[0], proc, body))
+	  }
+
+	  //Inline epilog
+	  if(proc.post.body.length > 3) {
+	    code.push(processBlock(proc.post, proc, dtypes))
+	  }
+	  
+	  if(proc.debug) {
+	    console.log("-----Generated cwise routine for ", typesig, ":\n" + code.join("\n") + "\n----------")
+	  }
+	  
+	  var loopName = [(proc.funcName||"unnamed"), "_cwise_loop_", orders[0].join("s"),"m",matched,typeSummary(dtypes)].join("")
+	  var f = new Function(["function ",loopName,"(", arglist.join(","),"){", code.join("\n"),"} return ", loopName].join(""))
+	  return f()
+	}
+	module.exports = generateCWiseOp
+
+
+/***/ },
+/* 235 */
+/*!****************************************************************!*\
+  !*** ./~/ndarray-fill/~/cwise/~/cwise-compiler/~/uniq/uniq.js ***!
+  \****************************************************************/
+/***/ function(module, exports) {
+
+	"use strict"
+
+	function unique_pred(list, compare) {
+	  var ptr = 1
+	    , len = list.length
+	    , a=list[0], b=list[0]
+	  for(var i=1; i<len; ++i) {
+	    b = a
+	    a = list[i]
+	    if(compare(a, b)) {
+	      if(i === ptr) {
+	        ptr++
+	        continue
+	      }
+	      list[ptr++] = a
+	    }
+	  }
+	  list.length = ptr
+	  return list
+	}
+
+	function unique_eq(list) {
+	  var ptr = 1
+	    , len = list.length
+	    , a=list[0], b = list[0]
+	  for(var i=1; i<len; ++i, b=a) {
+	    b = a
+	    a = list[i]
+	    if(a !== b) {
+	      if(i === ptr) {
+	        ptr++
+	        continue
+	      }
+	      list[ptr++] = a
+	    }
+	  }
+	  list.length = ptr
+	  return list
+	}
+
+	function unique(list, compare, sorted) {
+	  if(list.length === 0) {
+	    return list
+	  }
+	  if(compare) {
+	    if(!sorted) {
+	      list.sort(compare)
+	    }
+	    return unique_pred(list, compare)
+	  }
+	  if(!sorted) {
+	    list.sort()
+	  }
+	  return unique_eq(list)
+	}
+
+	module.exports = unique
+
+
+/***/ },
+/* 236 */
+/*!***************************************!*\
+  !*** ./static/js/procedural/biome.js ***!
+  \***************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	var _interopRequireDefault = __webpack_require__(/*! babel-runtime/helpers/interop-require-default */ 1)["default"];
+
+	exports.__esModule = true;
+
+	var _threeJs = __webpack_require__(/*! three.js */ 195);
+
+	var _threeJs2 = _interopRequireDefault(_threeJs);
+
+	var _proceduralNoise = __webpack_require__(/*! procedural/noise */ 221);
+
+	var Biome = function Biome() {
+	    this.chunks = {};
+
+	    this.put = function (x, y, chunk) {
+	        if (!(x in this.chunks)) {
+	            this.chunks[x] = {};
+	        }
+
+	        this.chunks[x][y] = chunk;
+	    };
+
+	    this.get = function (x, y) {
+	        if (!(x in this.chunks)) {
+	            return undefined;
+	        }
+
+	        return this.chunks[x][y];
+	    };
+
+	    this.cull = function (cb) {
+	        for (var xc in this.chunks) {
+	            for (var yc in this.chunks[xc]) {
+	                if (cb(xc, yc, this.chunks[xc][yc])) {
+	                    delete this.chunks[xc][yc];
+	                }
+	            }
+	        }
+	    };
+	};
+
+	var BiomeChunk = function BiomeChunk(terrain, water) {
+	    this.terrain = terrain;
+	    this.water = water;
+	};
+
+	var BiomeMap = function BiomeMap(size) {
+	    var data = new Uint8Array(3 * size * size);
+	    for (var i = 0; i < size; i++) {
+	        for (var j = 0; j < size; j++) {
+	            var z1 = 255 * _proceduralNoise.perlin(i / size, j / size, 4) | 0;
+	            var z2 = 255 * _proceduralNoise.perlin(i / size, j / size, 8) | 0;
+
+	            if (z1 < 64) {
+	                data[0 + 3 * (i + size * j)] = 255;
+	            } else if (z1 < 128) {
+	                data[0 + 3 * (i + size * j)] = 128;
+	            } else {
+	                data[0 + 3 * (i + size * j)] = 0;
+	            }
+
+	            if (z2 < 64) {
+	                data[1 + 3 * (i + size * j)] = 255;
+	            } else if (z2 < 128) {
+	                data[1 + 3 * (i + size * j)] = 128;
+	            } else {
+	                data[1 + 3 * (i + size * j)] = 0;
+	            }
+	        }
+	    }
+
+	    var texture = new _threeJs2["default"].DataTexture(data, size, size, _threeJs2["default"].RGBFormat);
+	    texture.needsUpdate = true;
+	    var geometry = new _threeJs2["default"].PlaneGeometry(size, size);
+	    var material = new _threeJs2["default"].MeshBasicMaterial({
+	        map: texture,
+	        side: _threeJs2["default"].DoubleSide,
+	        transparent: true,
+	        opacity: 0.5
+	    });
+
+	    var mesh = new _threeJs2["default"].Mesh(geometry, material);
+	    mesh.rotation.x = -90 * Math.PI / 180;
+	    return mesh;
+	};
+
+	exports["default"] = { BiomeMap: BiomeMap, Biome: Biome, BiomeChunk: BiomeChunk };
+	module.exports = exports["default"];
+
+/***/ },
+/* 237 */
+/*!****************************************!*\
+  !*** ./static/js/procedural/nebula.js ***!
+  \****************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	var _Math$log2 = __webpack_require__(/*! babel-runtime/core-js/math/log2 */ 238)["default"];
+
+	exports.__esModule = true;
+
+	var _engine = __webpack_require__(/*! engine */ 194);
+
+	var _proceduralNoise = __webpack_require__(/*! procedural/noise */ 221);
+
+	function shuffle(o) {
+	    for (var j, x, i = o.length; i; j = Math.floor(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
+	    return o;
+	}
+
+	var PerlinMaterial = function PerlinMaterial(width, height, side) {
+	    var opacity = arguments.length <= 3 || arguments[3] === undefined ? 1 : arguments[3];
+
+	    var canvas = document.createElement("canvas");
+	    var context = canvas.getContext("2d");
+
+	    canvas.width = width;
+	    canvas.height = height;
+
+	    var imageData = context.createImageData(width, height);
+
+	    var offsetX = Math.random() * 100;
+	    var offsetY = Math.random() * 100;
+
+	    var rgb = [0, 1, 2];
+	    shuffle(rgb);
+
+	    var p0 = rgb[0];
+	    var cx0 = Math.random() * 0.0051;
+	    var cy0 = Math.random() * 0.0048;
+
+	    var p1 = rgb[1];
+	    var cx1 = Math.random() * 0.0024;
+	    var cy1 = Math.random() * 0.0019;
+
+	    var p2 = rgb[2];
+	    var cx2 = Math.random() * 0.038;
+	    var cy2 = Math.random() * 0.054;
+
+	    for (var i = 0; i < width; i++) {
+	        for (var j = 0; j < height; j++) {
+	            var x = i + offsetX;
+	            var y = j + offsetY;
+
+	            // set opacity
+	            var r = Math.sqrt(Math.pow((i - width / 2) / width, 2) + Math.pow((j - height / 2) / height, 2)) * Math.sqrt(2);
+	            imageData.data[3 + 4 * (i + width * j)] = 255 * opacity * Math.pow(1 - r, 3);
+
+	            imageData.data[p0 + 4 * (i + width * j)] = 2048 * Math.abs(_proceduralNoise.perlin(x * cx0, y * cy0, 3));
+	            imageData.data[p1 + 4 * (i + width * j)] = 1024 * Math.abs(_proceduralNoise.perlin(x * cx1, y * cy1, 5));
+	            imageData.data[p2 + 4 * (i + width * j)] = 256 * Math.abs(_proceduralNoise.perlin(x * cx2, y * cy2, 7));
+	        }
+	    }
+
+	    context.putImageData(imageData, 0, 0);
+
+	    var texture = new _engine.THREE.Texture(canvas);
+	    texture.needsUpdate = true;
+
+	    var material = new _engine.THREE.MeshBasicMaterial({
+	        map: texture,
+	        transparent: true,
+	        depthWrite: false
+	    });
+
+	    if (side !== undefined) {
+	        material.side = side;
+	    }
+	    return material;
+	};
+
+	var Nebula = function Nebula(scale) {
+	    var nebula = new _engine.THREE.Object3D();
+
+	    var area = scale * scale;
+
+	    var R = 500 * Math.floor(100 * Math.random()) + 5000;
+	    var theta = 2 * Math.PI * Math.random();
+	    var phi = Math.acos(2 * Math.random() - 1);
+
+	    // add some perlin textured sphere segments at close range
+	    var nSpheres = Math.floor(Math.random() * 4) + 3;
+	    for (var i = 0; i < nSpheres; i++) {
+	        var width = Math.pow(2, Math.floor(Math.random() + _Math$log2(scale) - 1 + 0.5));
+	        var height = area / width;
+
+	        var material = PerlinMaterial(width, height, _engine.THREE.DoubleSide, Math.random() * 0.2 + 0.5);
+
+	        var phiStart = Math.random() * 2 * Math.PI;
+	        var phiLength = Math.random() * Math.PI / 3 + Math.PI / 3;
+	        var thetaStart = Math.random() * Math.PI / 2 + Math.PI / 12;
+	        var thetaLength = Math.random() * (Math.PI - thetaStart - Math.PI / 6) + Math.PI / 4;
+
+	        var segment = new _engine.THREE.Mesh(new _engine.THREE.SphereGeometry(R, 32, 32, phiStart, phiLength, thetaStart, thetaLength), material);
+	        segment.rotation.z = Math.random() * Math.PI;
+
+	        nebula.add(segment);
+
+	        R = 500 * Math.floor(100 * Math.random()) + 5000;
+	        theta += Math.PI + Math.PI / 3 * Math.random();
+	        phi += Math.PI + Math.PI / 3 * Math.random();
+	    }
+
+	    // add some perlin textured planes really far away for dat sweet parallax
+	    R = 500 * Math.floor(100 * Math.random()) + 50000;
+	    theta = 2 * Math.PI * Math.random();
+	    phi = Math.acos(2 * Math.random() - 1);
+
+	    var nPlanes = Math.floor(Math.random() * 3) + 3;
+	    for (var i = 0; i < nPlanes; i++) {
+	        var x = R * Math.cos(theta) * Math.sin(phi);
+	        var y = R * Math.sin(theta) * Math.sin(phi);
+	        var z = R * Math.cos(phi);
+
+	        var width = Math.pow(2, Math.floor(Math.random() + _Math$log2(scale) - 1 + 0.5));
+	        var height = area / width;
+	        var material = PerlinMaterial(width, height, _engine.THREE.DoubleSide, Math.random() * 0.2 + 0.6);
+
+	        var aura = new _engine.THREE.Mesh(new _engine.THREE.PlaneGeometry(width * scale, height * scale), material);
+	        aura.position.set(x, y, z);
+	        aura.lookAt(new _engine.THREE.Vector3());
+	        aura.rotation.z = Math.random() * Math.PI * 2;
+	        nebula.add(aura);
+
+	        R = 500 * Math.floor(100 * Math.random()) + 50000;
+	        theta += Math.PI + 0.2 * Math.random();
+	        phi += Math.PI + 0.2 * Math.random();
+	    }
+
+	    return nebula;
+	};
+	exports.Nebula = Nebula;
+
+/***/ },
+/* 238 */
+/*!**********************************************!*\
+  !*** ./~/babel-runtime/core-js/math/log2.js ***!
+  \**********************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = { "default": __webpack_require__(/*! core-js/library/fn/math/log2 */ 239), __esModule: true };
+
+/***/ },
+/* 239 */
+/*!***********************************************************!*\
+  !*** ./~/babel-runtime/~/core-js/library/fn/math/log2.js ***!
+  \***********************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	__webpack_require__(/*! ../../modules/es6.math.log2 */ 240);
+	module.exports = __webpack_require__(/*! ../../modules/$.core */ 207).Math.log2;
+
+/***/ },
+/* 240 */
+/*!********************************************************************!*\
+  !*** ./~/babel-runtime/~/core-js/library/modules/es6.math.log2.js ***!
+  \********************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// 20.2.2.22 Math.log2(x)
+	var $def = __webpack_require__(/*! ./$.def */ 205);
+
+	$def($def.S, 'Math', {
+	  log2: function log2(x){
+	    return Math.log(x) / Math.LN2;
+	  }
+	});
+
+/***/ },
+/* 241 */
+/*!*********************************!*\
+  !*** ./static/js/util/plane.js ***!
+  \*********************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	exports.__esModule = true;
+
+	var _engine = __webpack_require__(/*! engine */ 194);
+
+	var _materials = __webpack_require__(/*! materials */ 210);
+
+	var _proceduralNoise = __webpack_require__(/*! procedural/noise */ 221);
+
+	function makeTerrain(size) {
+	    var data = new Uint8Array(size * size);
+	    for (var i = 0; i < size; i++) {
+	        for (var j = 0; j < size; j++) {
+	            data[i + size * j] = 255 * _proceduralNoise.perlin(i / size, j / size, 8) | 0;
+	        }
+	    }
+
+	    return data;
+	}
+
+	exports["default"] = function (world_size, world, scene) {
+	    var data = makeTerrain(world_size);
+
+	    var size = Math.sqrt(data.length);
+	    var geometry = new _engine.THREE.Geometry();
+
+	    var seen = {};
+	    function makePolygonMesh(x, y, z) {
+	        var index = seen[x + " " + y + " " + z];
+	        if (index !== undefined) {
+	            return index;
+	        }
+
+	        var newIndex = geometry.vertices.length;
+	        seen[x + " " + y + " " + z] = newIndex;
+	        geometry.vertices.push(new _engine.THREE.Vector3(x, y, z));
+	        return newIndex;
+	    }
+
+	    var w = 50;
+	    for (var i = 0; i < size - 1; i++) {
+	        for (var j = 0; j < size - 1; j++) {
+	            var v1 = makePolygonMesh(w * (i - size / 2), w * (j - size / 2), data[i + size * j]);
+	            var v2 = makePolygonMesh(w * (i + 1 - size / 2), w * (j - size / 2), data[i + 1 + size * j]);
+	            var v3 = makePolygonMesh(w * (i - size / 2), w * (j + 1 - size / 2), data[i + size * (j + 1)]);
+	            var v4 = makePolygonMesh(w * (i + 1 - size / 2), w * (j + 1 - size / 2), data[i + 1 + size * (j + 1)]);
+
+	            //TODO dont alternate face sides
+	            geometry.faces.push(new _engine.THREE.Face3(v1, v2, v3), new _engine.THREE.Face3(v2, v4, v3));
+	        }
+	    }
+
+	    geometry.computeFaceNormals();
+
+	    var mat = new _engine.THREE.MeshLambertMaterial({
+	        color: 0x44DD88,
+	        emissive: 0x002255,
+	        side: _engine.THREE.DoubleSide
+	    });
+	    var mesh = new _engine.THREE.Mesh(geometry, mat);
+	    mesh.receiveShadow = true;
+	    mesh.castShadow = true;
+	    mesh.rotation.x = -90 * Math.PI / 180;
+
+	    var shape = new _engine.CANNON.ConvexPolyhedron(geometry.vertices.map(function (x) {
+	        return new _engine.CANNON.Vec3(x.x, x.y, x.z);
+	    }), geometry.faces.map(function (x) {
+	        return [x.a, x.b, x.c];
+	    }));
+	    var body = new _engine.CANNON.Body({ mass: 0, material: _materials.NORMAL });
+	    body.addShape(shape);
+	    body.quaternion.setFromAxisAngle(new _engine.CANNON.Vec3(1, 0.2, 0), -Math.PI / 2);
+	    body.position.set(0, 0, 0);
+
+	    mesh.position.copy(body.position);
+	    mesh.quaternion.copy(body.quaternion);
+
+	    scene.add(mesh);
+	    world.addBody(body);
+	};
+
+	module.exports = exports["default"];
+
+/***/ },
+/* 242 */
+/*!*****************************!*\
+  !*** ./static/js/amoeba.js ***!
+  \*****************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	var _classCallCheck = __webpack_require__(/*! babel-runtime/helpers/class-call-check */ 193)["default"];
+
+	exports.__esModule = true;
+
+	var _engine = __webpack_require__(/*! engine */ 194);
+
+	var _materials = __webpack_require__(/*! materials */ 210);
+
+	var Amoeba = (function () {
+	    function Amoeba(world, scene) {
+	        var radius = arguments.length <= 2 || arguments[2] === undefined ? 20 : arguments[2];
+	        var segments = arguments.length <= 3 || arguments[3] === undefined ? 4 : arguments[3];
+
+	        _classCallCheck(this, Amoeba);
+
+	        var geo = new _engine.THREE.SphereGeometry(radius, segments, segments);
+	        var mat = new _engine.THREE.MeshLambertMaterial({ color: 0xffff00, emissive: 0xaa0033 });
+	        this.mesh = new _engine.THREE.Mesh(geo, mat);
+	        this.mesh.castShadow = true;
+
+	        var shape = new _engine.CANNON.Sphere(radius);
+	        this.body = new _engine.CANNON.Body({ mass: 0.1, material: _materials.NORMAL });
+	        this.body.addShape(shape);
+
+	        scene.add(this.mesh);
+	        world.addBody(this.body);
+
+	        this.update();
+	    }
+
+	    Amoeba.prototype.update = function update() {
+	        this.mesh.position.copy(this.body.position);
+	        this.mesh.quaternion.copy(this.body.quaternion);
+	    };
+
+	    return Amoeba;
 	})();
 
+	exports["default"] = Amoeba;
+	module.exports = exports["default"];
+
+/***/ },
+/* 243 */
+/*!****************************************!*\
+  !*** ./static/js/amoeba_simulation.js ***!
+  \****************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	var _classCallCheck = __webpack_require__(/*! babel-runtime/helpers/class-call-check */ 193)["default"];
+
+	var _interopRequireDefault = __webpack_require__(/*! babel-runtime/helpers/interop-require-default */ 1)["default"];
+
+	exports.__esModule = true;
+
+	var _engine = __webpack_require__(/*! engine */ 194);
+
+	var _props = __webpack_require__(/*! props */ 211);
+
+	var _utilPlane = __webpack_require__(/*! util/plane */ 241);
+
+	var _utilPlane2 = _interopRequireDefault(_utilPlane);
+
+	var _amoeba = __webpack_require__(/*! amoeba */ 242);
+
+	var _amoeba2 = _interopRequireDefault(_amoeba);
+
+	var AmoebaSimulation = (function () {
+	    function AmoebaSimulation(container_id) {
+	        var _this = this;
+
+	        var world_size = arguments.length <= 1 || arguments[1] === undefined ? 32 : arguments[1];
+
+	        _classCallCheck(this, AmoebaSimulation);
+
+	        this.width = window.innerWidth;
+	        this.height = window.innerHeight;
+	        this.view_angle = 45;
+	        this.aspect = this.width / this.height;
+	        this.near = 0.1;
+	        this.far = 10000;
+	        this.world_size = world_size;
+
+	        this.world = new _engine.CANNON.World();
+	        this.world.gravity.set(0, -9.82, 0);
+
+	        this.renderer = new _engine.THREE.WebGLRenderer({ alpha: true });
+	        this.renderer.setSize(this.width, this.height);
+	        this.renderer.setClearColor(0x000000, 1);
+	        this.renderer.shadowMap.enabled = true;
+	        this.renderer.shadowMap.soft = true;
+
+	        this.camera = new _engine.THREE.PerspectiveCamera(this.view_angle, this.aspect, this.near, this.far);
+	        this.camera.position.x = 500;
+	        this.camera.position.y = 750;
+	        this.camera.position.z = 500;
+
+	        this.controls = new _engine.OrbitControls(this.camera, this.renderer.domElement);
+
+	        this.scene = new _engine.THREE.Scene();
+
+	        document.getElementById(container_id).appendChild(this.renderer.domElement);
+	        window.addEventListener("resize", function () {
+	            return _this.resize();
+	        });
+	    }
+
+	    AmoebaSimulation.prototype.init = function init() {
+	        this.scene.add(this.camera);
+	        this.scene.add(_props.Axes(this.width));
+
+	        var pointLight = new _engine.THREE.DirectionalLight(0xFFFF00, 0.8, 100);
+	        pointLight.castShadow = true;
+	        pointLight.position.set(this.world_size / 2, 50, -this.world_size / 2);
+	        this.scene.add(pointLight);
+
+	        _utilPlane2["default"](this.world_size, this.world, this.scene);
+
+	        this.amoeba = new _amoeba2["default"](this.world, this.scene);
+	        this.amoeba.body.position.set(1, 275, 0);
+
+	        this.world.solver.iterations = 10;
+	    };
+
+	    AmoebaSimulation.prototype.resize = function resize() {
+	        this.width = window.innerWidth;
+	        this.height = window.innerHeight;
+	        this.renderer.setSize(this.width, this.height);
+	        this.camera.aspect = this.width / this.height;
+	        this.camera.updateProjectionMatrix();
+	    };
+
+	    AmoebaSimulation.prototype.update = function update() {
+
+	        // step physics
+	        this.world.step(1 / 35);
+
+	        // update based on physics
+	        this.amoeba.update();
+	    };
+
+	    AmoebaSimulation.prototype.render = function render() {
+	        this.renderer.render(this.scene, this.camera);
+	    };
+
+	    return AmoebaSimulation;
+	})();
+
+	exports["default"] = AmoebaSimulation;
 	module.exports = exports["default"];
 
 /***/ }
