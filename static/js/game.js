@@ -5,12 +5,13 @@ import Axes from "util/axes";
 import SkySphere from "util/skysphere";
 
 import Terrain from "procedural/terrain";
+import { perlin } from "procedural/noise";
 
 import Plane from "util/plane";
 import Amoeba from "amoeba";
 
 export default class Game {
-    constructor(container_id, world_size=16) {
+    constructor(container_id, world_size=32) {
         this.width = window.innerWidth;
         this.height = window.innerHeight;
         this.view_angle = 45;
@@ -59,7 +60,8 @@ export default class Game {
         this.scene.add(ground);
 
         var block_size = 7;
-        //this.scene.add(Terrain.Water(this.world_size * block_size));
+        this.water = Terrain.Water(this.world_size * block_size);
+        this.scene.add(this.water);
 
         function *spiral() {
             for (let r = 1; r <= block_size / 2; r++) {
@@ -108,7 +110,19 @@ export default class Game {
         this.camera.updateProjectionMatrix();
     }
 
-    update() {
+    update(timestamp) {
+        var size = Math.sqrt(this.water.geometry.vertices.length);
+        var Fanimate = 0.0023;
+        var Pa = 100;
+        var A = 0.2;
+        for (let i = 0; i < this.water.geometry.vertices.length; i++) {
+            var v = this.water.geometry.vertices[i];
+            var Fo = 2 * Math.PI / 3 * (Math.pow(v.x - v.y, 2) % 3) + Pa * perlin(v.x / Fanimate, v.y / Fanimate);
+            v.z = A * Math.sin(Fanimate * timestamp + Fo);
+        }
+
+        this.water.geometry.verticesNeedUpdate = true;
+        this.water.geometry.computeFaceNormals();
     }
 
     render() {

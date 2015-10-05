@@ -61,7 +61,7 @@ export default class AmoebaSimulation {
         this.camera.updateProjectionMatrix();
     }
 
-    update() {
+    update(timestamp) {
 
         // step physics
         this.world.step(1/35);

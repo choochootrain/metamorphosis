@@ -27,19 +27,29 @@ function dataToGeometry(data) {
     const size = Math.sqrt(data.length);
     const geometry = new THREE.Geometry();
 
-    var c = 0;
+    var vertices = {};
+    function getVectorIndex(vector) {
+        var key = vector.toArray().join(",");
+        var index = vertices[key];
+        if (index !== undefined) {
+            return index;
+        }
+
+        var newIndex = geometry.vertices.length;
+        vertices[key] = newIndex;
+        geometry.vertices.push(vector);
+        return newIndex;
+    }
+
     for (let i = 0; i < size - 1; i++) {
         for (let j = 0; j < size - 1; j++) {
-            const v1 = data[i + size * j];
-            const v2 = data[i + 1 + size * j];
-            const v3 = data[i + size * (j + 1)];
-            const v4 = data[i + 1 + size * (j + 1)];
+            const v1 = getVectorIndex(data[i     + size *  j]);
+            const v2 = getVectorIndex(data[i + 1 + size *  j]);
+            const v3 = getVectorIndex(data[i     + size * (j + 1)]);
+            const v4 = getVectorIndex(data[i + 1 + size * (j + 1)]);
 
-            //TODO dont double push vertices
             //TODO dont alternate face sides
-            geometry.vertices.push(v1, v2, v3, v4);
-            geometry.faces.push(new THREE.Face3(c, c + 1, c + 2), new THREE.Face3(c + 1, c + 2, c + 3));
-            c = c + 4;
+            geometry.faces.push(new THREE.Face3(v1, v2, v3), new THREE.Face3(v2, v4, v3));
         }
     }
 
@@ -133,7 +143,6 @@ var water_config = {
         }
     ]
 };
-
 
 export default {
     Ground: function(world_size) {
