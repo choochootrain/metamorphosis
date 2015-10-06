@@ -11,7 +11,7 @@ import Plane from "util/plane";
 import Amoeba from "amoeba";
 
 export default class Game {
-    constructor(container_id, world_size=32) {
+    constructor(container_id, world_size=128) {
         this.width = window.innerWidth;
         this.height = window.innerHeight;
         this.view_angle = 45;
@@ -59,7 +59,7 @@ export default class Game {
         ground.position.set(-this.world_size / 2, 0, this.world_size / 2);
         this.scene.add(ground);
 
-        var block_size = 7;
+        var block_size = 1;
         this.water = Terrain.Water(this.world_size * block_size);
         this.scene.add(this.water);
 
@@ -122,6 +122,7 @@ export default class Game {
         }
 
         this.water.geometry.verticesNeedUpdate = true;
+        this.water.geometry.normalsNeedUpdate = true;
         this.water.geometry.computeFaceNormals();
     }
 
