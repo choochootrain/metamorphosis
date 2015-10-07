@@ -46,20 +46,13 @@ export default class Game {
         this.scene.add(Axes(this.width));
 
         const pointLight = new THREE.PointLight(0xFFFF00, 0.8, 10000);
-        //pointLight.castShadow = true;
         pointLight.position.set(this.world_size/2, this.world_size, -this.world_size/2);
         this.scene.add(pointLight);
 
-        var ground = Terrain.DiamondSquare(this.world_size, (data, size) => {
-            data[0 + size * 0] =                   new THREE.Vector3(0,        0,        0);
-            data[(size - 1) + size * 0] =          new THREE.Vector3(size - 1, 0,        0);
-            data[0 + size * (size - 1)] =          new THREE.Vector3(0,        size - 1, 0);
-            data[(size - 1) + size * (size - 1)] = new THREE.Vector3(size - 1, size - 1, 0);
-        });
-        ground.position.set(-this.world_size / 2, 0, this.world_size / 2);
+        var ground = Terrain.Ground(this.world_size, 0, 0);
         this.scene.add(ground);
 
-        var block_size = 1;
+        var block_size = 3;
         this.water = Terrain.Water(this.world_size * block_size);
         this.scene.add(this.water);
 
@@ -79,20 +72,7 @@ export default class Game {
                 var x, y;
                 [x,y] = gen.value;
 
-                var ground = Terrain.DiamondSquare(this.world_size, (data, size) => {
-                    data[0 + size * 0] =                   new THREE.Vector3(0,        0,        0);
-                    data[(size - 1) + size * 0] =          new THREE.Vector3(size - 1, 0,        0);
-                    data[0 + size * (size - 1)] =          new THREE.Vector3(0,        size - 1, 0);
-                    data[(size - 1) + size * (size - 1)] = new THREE.Vector3(size - 1, size - 1, 0);
-
-                    for (let i = 1; i < size - 1; i++) {
-                        data[i        + size *  0] =         new THREE.Vector3(i,        0,        0);
-                        data[i        + size * (size - 1)] = new THREE.Vector3(i,        size - 1, 0);
-                        data[0        + size *  i] =         new THREE.Vector3(0,        i,        0);
-                        data[size - 1 + size *  i] =         new THREE.Vector3(size - 1, i,        0);
-                    }
-                });
-                ground.position.set(x * this.world_size - this.world_size / 2, 0, y * this.world_size + this.world_size / 2);
+                var ground = Terrain.Ground(this.world_size, x, y);
                 this.scene.add(ground);
 
                 setTimeout(add, 100);

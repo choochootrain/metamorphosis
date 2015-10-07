@@ -1,22 +1,24 @@
 import { THREE } from "engine";
 import { noise, perlin } from "procedural/noise";
 
-function configToData(world_size, config) {
+function configToData(world_size, config, chunkX=0, chunkY=0) {
     const size = world_size/config.tile_size;
 
     const data = new Array(size*size);
     for (let i = 0; i < size; i++) {
         for (let j = 0; j < size; j++) {
+            var x = i + chunkX * size;
+            var y = j + chunkY * size;
             var z = 0;
             for (let k = 0; k < config.layers.length; k++) {
                 if (!config.layers[k].enabled) { continue; }
 
                 const frequency = config.layers[k].frequency;
                 const post_compute = config.layers[k].post_compute;
-                z += post_compute(noise.perlin2(frequency*i, frequency*j));
+                z += post_compute(noise.perlin2(frequency * x, frequency * y));
             }
 
-            data[i + size * j] = new THREE.Vector3((i-size/2)*config.tile_size, (j-size/2)*config.tile_size, z);
+            data[i + size * j] = new THREE.Vector3((x - size / 2) * config.tile_size, (y - size / 2) * config.tile_size, z);
         }
     }
 
@@ -135,8 +137,8 @@ var water_config = {
 };
 
 export default {
-    Ground: function(world_size) {
-        const data = configToData(world_size, ground_config);
+    Ground: function(world_size, chunkX, chunkY) {
+        const data = configToData(world_size, ground_config, chunkX, chunkY);
         const geometry = dataToGeometry(data);
         const mesh = new THREE.Mesh(geometry, ground_config.material);
         mesh.rotation.x = -90*Math.PI/180;
