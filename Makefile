@@ -14,3 +14,7 @@ server:
 .PHONY: watch
 watch:
 	npm run watch
+
+.PHONY: lint
+lint:
+	npm run lint
