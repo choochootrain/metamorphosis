@@ -7,8 +7,8 @@ function configToData(world_size, config, chunkX=0, chunkY=0) {
     const data = new Array(size*size);
     for (let i = 0; i < size; i++) {
         for (let j = 0; j < size; j++) {
-            var x = i + chunkX * size;
-            var y = j + chunkY * size;
+            var x = i + chunkX * (size - 1);
+            var y = j + chunkY * (size - 1);
             var z = 0;
             for (let k = 0; k < config.layers.length; k++) {
                 if (!config.layers[k].enabled) { continue; }
@@ -153,7 +153,7 @@ export default {
     },
     DiamondSquare: function(world_size, initializer) {
         var size = world_size + 1;
-        window.data = new Array(size*size);
+        var data = new Array(size*size);
 
         if (initializer) {
             initializer(data, size);

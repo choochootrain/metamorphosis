@@ -11,7 +11,7 @@ import Plane from "util/plane";
 import Amoeba from "amoeba";
 
 export default class Game {
-    constructor(container_id, world_size=128) {
+    constructor(container_id, world_size=32) {
         this.width = window.innerWidth;
         this.height = window.innerHeight;
         this.view_angle = 45;
