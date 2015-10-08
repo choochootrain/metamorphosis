@@ -240,7 +240,6 @@ export default {
                 const v3 = data[i +     size * (j + 1)];
                 const v4 = data[i + 1 + size * (j + 1)];
 
-                //TODO dont double push vertices
                 //TODO dont alternate face sides
                 geometry.vertices.push(v1, v2, v3, v4);
                 geometry.faces.push(new THREE.Face3(c, c + 1, c + 2), new THREE.Face3(c + 1, c + 2, c + 3));
@@ -248,6 +247,7 @@ export default {
             }
         }
 
+        geometry.mergeVertices();
         geometry.computeFaceNormals();
         var material = new THREE.MeshLambertMaterial({
           color: 0x882244,
