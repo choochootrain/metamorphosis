@@ -1,7 +1,37 @@
 import THREE from "three.js";
 import { perlin } from "procedural/noise";
 
-export default function(size) {
+var Biome = function() {
+    this.chunks = {};
+
+    this.put = function(x, y, chunk) {
+        if (!(x in this.chunks)) {
+            this.chunks[x] = {};
+        }
+
+        this.chunks[x][y] = chunk;
+    };
+
+    this.get = function(x, y) {
+        if (!(x in this.chunks)) {
+            return undefined;
+        }
+
+        return this.chunks[x][y];
+    };
+
+    this.cull = function(x, y, cb) {
+        for (var xc in this.chunks) {
+            for (var yc in this.chunks[xc]) {
+                if (cb(xc, yc, this.chunks[xc][yc])) {
+                    delete this.chunks[xc][yc];
+                }
+            }
+        }
+    }
+}
+
+var BiomeMap = function(size) {
     const data = new Uint8Array(3*size*size);
     for (let i = 0; i < size; i++) {
         for (let j = 0; j < size; j++) {
@@ -40,3 +70,5 @@ export default function(size) {
     mesh.rotation.x = -90*Math.PI/180;
     return mesh;
 };
+
+export default { BiomeMap, Biome };

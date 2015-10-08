@@ -29,7 +29,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const animate = () => {
         stats.begin();
 
-        game.update(Date.now());
+        game.update();
         game.render();
 
         stats.end();

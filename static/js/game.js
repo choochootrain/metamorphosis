@@ -6,6 +6,7 @@ import SkySphere from "util/skysphere";
 
 import Terrain from "procedural/terrain";
 import { perlin } from "procedural/noise";
+import { Biome } from "procedural/biome";
 
 import Plane from "util/plane";
 import Amoeba from "amoeba";
@@ -20,6 +21,7 @@ export default class Game {
         this.far = 10000;
         this.world_size = world_size;
 
+        this.clock = new THREE.Clock();
         this.renderer = new THREE.WebGLRenderer({ alpha: true });
         this.renderer.setSize(this.width, this.height);
         this.renderer.setClearColor(0x000000, 1);
@@ -27,14 +29,14 @@ export default class Game {
         this.renderer.shadowMap.soft = true;
 
         this.camera = new THREE.PerspectiveCamera(this.view_angle, this.aspect, this.near, this.far);
-        this.camera.position.x = 100;
-        this.camera.position.y = 150;
-        this.camera.position.z = 100;
+        this.camera.position.y = 50;
+        this.camera.lookAt(new THREE.Vector3(0, 0, 50));
 
         this.controls = new OrbitControls(this.camera, this.renderer.domElement);
         this.keyboard = new KeyboardState();
 
         this.scene = new THREE.Scene();
+        this.biome = new Biome();
 
         document.getElementById(container_id).appendChild(this.renderer.domElement);
         window.addEventListener("resize", () => this.resize());
@@ -49,37 +51,14 @@ export default class Game {
         pointLight.position.set(this.world_size/2, this.world_size, -this.world_size/2);
         this.scene.add(pointLight);
 
-        var ground = Terrain.Ground(this.world_size, 0, 0);
-        this.scene.add(ground);
+        var chunk = Terrain.Ground(this.world_size, 0, 0);
+        chunk.name = "terrain(0,0)";
+        this.scene.add(chunk);
+        this.biome.put(0, 0, chunk);
 
-        var block_size = 3;
+        var block_size = 5;
         this.water = Terrain.Water(this.world_size * block_size);
         this.scene.add(this.water);
-
-        function *spiral() {
-            for (let r = 1; r <= block_size / 2; r++) {
-                for (let i = -r; i <= r; i++) { yield [i, r]; }
-                for (let j = r - 1; j >= -r; j--) { yield [r, j]; }
-                for (let i = r - 1; i >= -r; i--) { yield [i, -r]; }
-                for (let j = -r + 1; j < r; j++) { yield [-r, j]; }
-            }
-        }
-
-        var generator = spiral();
-        var add = () => {
-            var gen = generator.next();
-            if (!gen.done) {
-                var x, y;
-                [x,y] = gen.value;
-
-                var ground = Terrain.Ground(this.world_size, x, y);
-                this.scene.add(ground);
-
-                setTimeout(add, 100);
-            }
-        };
-
-        setTimeout(add, 5000);
     }
 
     resize() {
@@ -90,9 +69,12 @@ export default class Game {
         this.camera.updateProjectionMatrix();
     }
 
-    update(timestamp) {
+    update() {
+        var delta = this.clock.getDelta();
+        var timestamp = this.clock.getElapsedTime();
+
         var size = Math.sqrt(this.water.geometry.vertices.length);
-        var Fanimate = 0.0023;
+        var Fanimate = 2.3;
         var Pa = 100;
         var A = 0.2;
         for (let i = 0; i < this.water.geometry.vertices.length; i++) {
@@ -104,6 +86,40 @@ export default class Game {
         this.water.geometry.verticesNeedUpdate = true;
         this.water.geometry.normalsNeedUpdate = true;
         this.water.geometry.computeFaceNormals();
+
+        this.controls.update(delta);
+
+        var chunkX = this.camera.position.x / this.world_size | 0;
+        var chunkY = -this.camera.position.z / this.world_size | 0;
+        var r = 2;
+        var max = 10;
+        for (let i = -r; i <= r; i++) {
+            for (let j = -r; j <= r; j++) {
+                var x = chunkX + i;
+                var y = chunkY + j;
+                if (Math.abs(x) > 10 || Math.abs(y) > 10) continue;
+                if (!this.biome.get(x, y)) {
+                    var chunk = Terrain.Ground(this.world_size, x, y);
+                    chunk.name = `terrain(${x},${y})`;
+                    this.scene.add(chunk);
+                    this.biome.put(x, y, chunk);
+                }
+            }
+        }
+
+        var visibility = 3;
+        //TODO move culling logic into biome
+        //TODO add a universal dispose method
+        this.biome.cull(chunkX, chunkY, (x, y, chunk) => {
+            if (Math.abs(chunkX - x) <= visibility && Math.abs(chunkY - y) <= visibility) {
+                return false;
+            }
+
+            this.scene.remove(chunk);
+            chunk.geometry.dispose();
+            chunk.material.dispose();
+            return true;
+        });
     }
 
     render() {
