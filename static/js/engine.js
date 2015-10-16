@@ -6,4 +6,6 @@ const OrbitControls = _OrbitControls(THREE);
 
 import KeyboardState from "vendor/keyboard_state";
 
-export default { THREE, OrbitControls, CANNON, KeyboardState };
+import ECS from "util/ecs";
+
+export default { THREE, OrbitControls, CANNON, KeyboardState, ECS };
