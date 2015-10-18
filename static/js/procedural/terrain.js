@@ -149,6 +149,7 @@ export default {
         const geometry = dataToGeometry(data);
         const mesh = new THREE.Mesh(geometry, water_config.material);
         mesh.rotation.x = -90*Math.PI/180;
+        mesh.position.y = -10;
         return mesh;
     },
     DiamondSquare: function(world_size, initializer) {

@@ -29,8 +29,8 @@ export default class Game {
         this.renderer.shadowMap.soft = true;
 
         this.camera = new THREE.PerspectiveCamera(this.view_angle, this.aspect, this.near, this.far);
-        this.camera.position.y = 50;
-        this.camera.lookAt(new THREE.Vector3(0, 0, 50));
+        this.camera.position.y = 0.5;
+        this.camera.position.x = -2;
 
         this.controls = new OrbitControls(this.camera, this.renderer.domElement);
         this.keyboard = new KeyboardState();
@@ -43,9 +43,11 @@ export default class Game {
     }
 
     init() {
-        this.scene.add(this.camera);
-        this.scene.add(SkySphere("/static/images/galaxy_starfield.png", 8 * this.world_size));
+        this.scene.add(SkySphere("/static/images/galaxy_starfield.png", 128 * this.world_size));
         this.scene.add(Axes(this.width));
+
+        const ambientLight = new THREE.AmbientLight(0x4F2F2F);
+        this.scene.add(ambientLight);
 
         const pointLight = new THREE.PointLight(0xFFFF00, 0.8, 10000);
         pointLight.position.set(this.world_size/2, this.world_size, -this.world_size/2);
@@ -59,6 +61,10 @@ export default class Game {
         var block_size = 5;
         this.water = Terrain.Water(this.world_size * block_size);
         this.scene.add(this.water);
+
+        this.amoeba = new THREE.Mesh(new THREE.SphereGeometry(0.1, 8, 8), new THREE.MeshLambertMaterial({ color: 0xffff00, emissive: 0xaa0033 }));
+        this.amoeba.add(this.camera);
+        this.scene.add(this.amoeba);
     }
 
     resize() {
@@ -72,6 +78,30 @@ export default class Game {
     update() {
         var delta = this.clock.getDelta();
         var timestamp = this.clock.getElapsedTime();
+
+        if (this.keyboard.pressed("a")) {
+            this.amoeba.rotation.y += 0.05;
+        }
+        if (this.keyboard.pressed("d")) {
+            this.amoeba.rotation.y -= 0.05;
+        }
+
+        var n = new THREE.Vector3(1, 0, 0).applyEuler(this.amoeba.rotation);
+        if (this.keyboard.pressed("w")) {
+            this.amoeba.position.add(n);
+        }
+        if (this.keyboard.pressed("s")) {
+            this.amoeba.position.add(n.negate());
+        }
+
+        if (this.keyboard.pressed("e")) {
+            this.amoeba.position.y += 1;
+        }
+        if (this.keyboard.pressed("q")) {
+            this.amoeba.position.y -= 1;
+        }
+
+        this.controls.update(delta);
 
         var size = Math.sqrt(this.water.geometry.vertices.length);
         var Fanimate = 2.3;
@@ -87,17 +117,15 @@ export default class Game {
         this.water.geometry.normalsNeedUpdate = true;
         this.water.geometry.computeFaceNormals();
 
-        this.controls.update(delta);
-
-        var chunkX = this.camera.position.x / this.world_size | 0;
-        var chunkY = -this.camera.position.z / this.world_size | 0;
+        var chunkX = Math.floor(this.amoeba.position.x / this.world_size + 0.5);
+        var chunkY = -Math.floor(this.amoeba.position.z / this.world_size + 0.5);
         var r = 2;
-        var max = 10;
+        var max = 96;
         for (let i = -r; i <= r; i++) {
             for (let j = -r; j <= r; j++) {
                 var x = chunkX + i;
                 var y = chunkY + j;
-                if (Math.abs(x) > 10 || Math.abs(y) > 10) continue;
+                if (Math.abs(x) > max || Math.abs(y) > max) continue;
                 if (!this.biome.get(x, y)) {
                     var chunk = Terrain.Ground(this.world_size, x, y);
                     chunk.name = `terrain(${x},${y})`;

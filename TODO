@@ -4,3 +4,7 @@ refactor:
 use entity/component system
 move culling logic into biome
 add a universal dispose method
+
+features:
+generate more terrain features
+add LOD rendering
