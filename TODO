@@ -1,0 +1,6 @@
+use planegeometry instead of manually creating faces
+
+refactor:
+use entity/component system
+move culling logic into biome
+add a universal dispose method
