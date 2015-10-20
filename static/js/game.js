@@ -109,8 +109,8 @@ export default class Game {
         var A = 0.2;
         for (let i = 0; i < this.water.geometry.vertices.length; i++) {
             var v = this.water.geometry.vertices[i];
-            var Fo = 2 * Math.PI / 3 * (Math.pow(v.x - v.y, 2) % 3) + Pa * perlin(v.x / Fanimate, v.y / Fanimate);
-            v.z = A * Math.sin(Fanimate * timestamp + Fo);
+            var Fo = 2 * Math.PI / 3 * (Math.pow(v.x - v.z, 2) % 3) + Pa * perlin(v.x / Fanimate, v.z / Fanimate);
+            v.y = A * Math.sin(Fanimate * timestamp + Fo);
         }
 
         this.water.geometry.verticesNeedUpdate = true;
@@ -118,11 +118,11 @@ export default class Game {
         this.water.geometry.computeFaceNormals();
 
         var chunkX = Math.floor(this.amoeba.position.x / this.world_size + 0.5);
-        var chunkY = -Math.floor(this.amoeba.position.z / this.world_size + 0.5);
-        var r = 2;
+        var chunkY = Math.floor(this.amoeba.position.z / this.world_size + 0.5);
+        var visibility = 5;
         var max = 96;
-        for (let i = -r; i <= r; i++) {
-            for (let j = -r; j <= r; j++) {
+        for (let i = -visibility; i <= visibility; i++) {
+            for (let j = -visibility; j <= visibility; j++) {
                 var x = chunkX + i;
                 var y = chunkY + j;
                 if (Math.abs(x) > max || Math.abs(y) > max) continue;
@@ -132,10 +132,13 @@ export default class Game {
                     this.scene.add(chunk);
                     this.biome.put(x, y, chunk);
                 }
+
+                var chunk = this.biome.get(x, y);
+                chunk.update(this.camera);
             }
         }
 
-        var visibility = 3;
+
         //TODO move culling logic into biome
         //TODO add a universal dispose method
         this.biome.cull(chunkX, chunkY, (x, y, chunk) => {
@@ -144,8 +147,10 @@ export default class Game {
             }
 
             this.scene.remove(chunk);
-            chunk.geometry.dispose();
-            chunk.material.dispose();
+            for (let i = 0; i < chunk.levels.length; i++) {
+                chunk.levels[i].object.geometry.dispose();
+                chunk.levels[i].object.material.dispose();
+            }
             return true;
         });
     }

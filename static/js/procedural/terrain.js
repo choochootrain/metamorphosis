@@ -1,8 +1,17 @@
 import { THREE } from "engine";
 import { noise, perlin } from "procedural/noise";
 
+const COLORS = [
+    0x00FF00,
+    0x00FFFF,
+    0x00FFFF,
+    0xFF00FF,
+    0xFFFFFF
+];
+
 function configToData(world_size, config, chunkX=0, chunkY=0) {
-    const size = world_size/config.tile_size;
+    const size = world_size/config.tile_size + 1;
+    const mid = size / 2 | 0;
 
     const data = new Array(size*size);
     for (let i = 0; i < size; i++) {
@@ -18,24 +27,26 @@ function configToData(world_size, config, chunkX=0, chunkY=0) {
                 z += post_compute(noise.perlin2(frequency * x, frequency * y));
             }
 
-            data[i + size * j] = new THREE.Vector3((x - size / 2) * config.tile_size, (y - size / 2) * config.tile_size, z);
+            data[i + size * j] = new THREE.Vector3((i - mid) * config.tile_size, z, (j - mid) * config.tile_size);
         }
     }
 
     return data;
 }
 
-function dataToGeometry(data) {
+function dataToGeometry(data, sample=1) {
     const size = Math.sqrt(data.length);
     const geometry = new THREE.Geometry();
 
     var c = 0;
-    for (let i = 0; i < size - 1; i++) {
-        for (let j = 0; j < size - 1; j++) {
-            const v1 = data[i     + size *  j];
-            const v2 = data[i + 1 + size *  j];
-            const v3 = data[i     + size * (j + 1)];
-            const v4 = data[i + 1 + size * (j + 1)];
+    for (let i = 0; i < size - 1; i += sample) {
+        for (let j = 0; j < size - 1; j += sample) {
+            var i2 = Math.min(i + sample, size - 1);
+            var j2 = Math.min(j + sample, size - 1)
+            const v1 = data[i  + size *  j];
+            const v2 = data[i2 + size *  j];
+            const v3 = data[i  + size * j2];
+            const v4 = data[i2 + size * j2];
 
             //TODO dont alternate face sides
             geometry.vertices.push(v1, v2, v3, v4);
@@ -139,16 +150,23 @@ var water_config = {
 export default {
     Ground: function(world_size, chunkX, chunkY) {
         const data = configToData(world_size, ground_config, chunkX, chunkY);
-        const geometry = dataToGeometry(data);
-        const mesh = new THREE.Mesh(geometry, ground_config.material);
-        mesh.rotation.x = -90*Math.PI/180;
+        var mesh = new THREE.LOD();
+        for (let i = 0; i < 6; i++) {
+            const geometry = dataToGeometry(data, Math.pow(2, i));
+            var mat = ground_config.material.clone();
+            mat.color = new THREE.Color(COLORS[i]);
+            const m = new THREE.Mesh(geometry, mat);
+            mesh.addLevel(m, world_size * i);
+        }
+        mesh.position.x = chunkX * world_size;
+        mesh.position.z = chunkY * world_size;
+        mesh.updateMatrixWorld();
         return mesh;
     },
     Water: function(world_size) {
         const data = configToData(world_size, water_config);
         const geometry = dataToGeometry(data);
         const mesh = new THREE.Mesh(geometry, water_config.material);
-        mesh.rotation.x = -90*Math.PI/180;
         mesh.position.y = -10;
         return mesh;
     },
