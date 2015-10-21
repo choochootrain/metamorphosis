@@ -62,11 +62,11 @@ function dataToGeometry(data, sample=1) {
 
 const ground_config = {
     tile_size: 1,
-    material: new THREE.MeshLambertMaterial({
+    material: new THREE.MeshPhongMaterial({
         color: 0x882244,
         transparent: false,
         emissive: 0x002200,
-        side: THREE.DoubleSide
+        side: THREE.DoubleSide,
     }),
     layers: [
         {
@@ -122,10 +122,10 @@ const ground_config = {
 
 var water_config = {
     tile_size: 2,
-    material: new THREE.MeshLambertMaterial({
+    material: new THREE.MeshPhongMaterial({
         color: 0xFF4488,
         transparent: true,
-        opacity: 0.9,
+        opacity: 0.7,
         emissive: 0x004488,
         side: THREE.DoubleSide,
     }),
@@ -154,7 +154,9 @@ export default {
         for (let i = 0; i < 6; i++) {
             const geometry = dataToGeometry(data, Math.pow(2, i));
             var mat = ground_config.material.clone();
-            mat.color = new THREE.Color(COLORS[i]);
+            //mat.color = new THREE.Color(COLORS[i]);
+            mat.shininess = 10;
+            mat.shading = THREE.FlatShading;
             const m = new THREE.Mesh(geometry, mat);
             mesh.addLevel(m, world_size * i);
         }

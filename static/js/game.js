@@ -117,6 +117,11 @@ export default class Game {
         this.water.geometry.normalsNeedUpdate = true;
         this.water.geometry.computeFaceNormals();
 
+        var lodTarget = this.camera;
+        if (this.keyboard.pressed("shift")) {
+            lodTarget = this.amoeba;
+        }
+
         var chunkX = Math.floor(this.amoeba.position.x / this.world_size + 0.5);
         var chunkY = Math.floor(this.amoeba.position.z / this.world_size + 0.5);
         var visibility = 5;
@@ -134,7 +139,7 @@ export default class Game {
                 }
 
                 var chunk = this.biome.get(x, y);
-                chunk.update(this.camera);
+                chunk.update(lodTarget);
             }
         }
 
