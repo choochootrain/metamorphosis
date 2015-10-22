@@ -14,6 +14,8 @@
   "dependencies": {
     "cannon": "0.6.2",
     "es6-promise": "3.0.2",
+    "ndarray": "1.0.18",
+    "ndarray-fill": "1.0.1",
     "noisejs": "2.1.0",
     "react": "0.13.3",
     "stats.js": "1.0.0",

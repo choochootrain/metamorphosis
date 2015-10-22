@@ -1,41 +1,27 @@
 import { THREE } from "engine";
 import { noise, perlin } from "procedural/noise";
+import ndarray from "util/ndarray";
 
-const COLORS = [
-    0x00FF00,
-    0x00FFFF,
-    0x00FFFF,
-    0xFF00FF,
-    0xFFFFFF
-];
+import material from "const/material";
 
-function configToData(world_size, config, chunkX=0, chunkY=0) {
-    const size = world_size/config.tile_size + 1;
+function generateHeightmap(worldSize, tileSize, chunkX, chunkY, func) {
+    const size = worldSize / tileSize + 1;
     const mid = size / 2 | 0;
 
-    const data = new Array(size*size);
-    for (let i = 0; i < size; i++) {
-        for (let j = 0; j < size; j++) {
-            var x = i + chunkX * (size - 1);
-            var y = j + chunkY * (size - 1);
-            var z = 0;
-            for (let k = 0; k < config.layers.length; k++) {
-                if (!config.layers[k].enabled) { continue; }
+    var data = new ndarray.fill(size, size, (i, j) => {
+        var x = i + chunkX * (size - 1);
+        var y = j + chunkY * (size - 1);
+        var z = func(x, y);
 
-                const frequency = config.layers[k].frequency;
-                const post_compute = config.layers[k].post_compute;
-                z += post_compute(noise.perlin2(frequency * x, frequency * y));
-            }
-
-            data[i + size * j] = new THREE.Vector3((i - mid) * config.tile_size, z, (j - mid) * config.tile_size);
-        }
-    }
+        return new THREE.Vector3((i  - mid) * tileSize, z, (j  - mid) * tileSize);
+    });
 
     return data;
 }
 
-function dataToGeometry(data, sample=1) {
-    const size = Math.sqrt(data.length);
+function buildGeometry(data, sample=1) {
+    const size = Math.sqrt(data.size);
+    const mid = (size - 1) / 2 | 0;
     const geometry = new THREE.Geometry();
 
     var c = 0;
@@ -43,10 +29,11 @@ function dataToGeometry(data, sample=1) {
         for (let j = 0; j < size - 1; j += sample) {
             var i2 = Math.min(i + sample, size - 1);
             var j2 = Math.min(j + sample, size - 1)
-            const v1 = data[i  + size *  j];
-            const v2 = data[i2 + size *  j];
-            const v3 = data[i  + size * j2];
-            const v4 = data[i2 + size * j2];
+
+            var v1 = data.get(i , j );
+            var v2 = data.get(i2, j );
+            var v3 = data.get(i , j2);
+            var v4 = data.get(i2, j2);
 
             //TODO dont alternate face sides
             geometry.vertices.push(v1, v2, v3, v4);
@@ -60,120 +47,49 @@ function dataToGeometry(data, sample=1) {
     return geometry;
 }
 
-const ground_config = {
-    tile_size: 1,
-    material: new THREE.MeshPhongMaterial({
-        color: 0x882244,
-        transparent: false,
-        emissive: 0x002200,
-        side: THREE.DoubleSide,
-    }),
-    layers: [
-        {
-            enabled: true,
-            frequency: 0.01,
-            post_compute: function(z) {
-                z = z * 8;
-                if (z < 0) {
-                    return -Math.pow(z, 2);
-                } else {
-                    return Math.pow(z, 2);
-                }
-            }
-        },
-        {
-            enabled: true,
-            frequency: 0.03,
-            post_compute: function(z) {
-                z = z * 5;
-                if (z < 0) {
-                    return -Math.pow(z, 2);
-                } else {
-                    return Math.pow(z, 2);
-                }
-            }
-        },
-        {
-            enabled: true,
-            frequency: 0.1,
-            post_compute: function(z) {
-                z = 2 * z;
-                if (z < 0) {
-                    return Math.pow(2, z) - 1;
-                } else {
-                    return z;
-                }
-            }
-        },
-        {
-            enabled: true,
-            frequency: 0.9,
-            post_compute: function(z) {
-                z = z * 0.2;
-                if (z < 0) {
-                    return Math.pow(2, z) - 1;
-                } else {
-                    return z;
-                }
-            }
-        }
-    ]
-};
-
-var water_config = {
-    tile_size: 2,
-    material: new THREE.MeshPhongMaterial({
-        color: 0xFF4488,
-        transparent: true,
-        opacity: 0.7,
-        emissive: 0x004488,
-        side: THREE.DoubleSide,
-    }),
-    layers: [
-        {
-            enabled: true,
-            frequency: 0.3,
-            post_compute: function(z) {
-                return 2*Math.pow(z, 2);
-            }
-        },
-        {
-            enabled: true,
-            frequency: 0.9,
-            post_compute: function(z) {
-                return 0.2*z;
-            }
-        }
-    ]
-};
-
 export default {
-    Ground: function(world_size, chunkX, chunkY) {
-        const data = configToData(world_size, ground_config, chunkX, chunkY);
-        var mesh = new THREE.LOD();
+    Ground: function(worldSize, chunkX, chunkY) {
+        const tileSize = 1;
+        const data = generateHeightmap(worldSize, tileSize, chunkX, chunkY, (x, y) => {
+            var z = 0;
+
+            var p0 = 8   * noise.perlin2(x * 0.01, y * 0.01);
+            var p1 = 5   * noise.perlin2(x * 0.03, y * 0.03);
+            var p2 = 2   * noise.perlin2(x * 0.1 , y * 0.1 );
+            var p3 = 0.2 * noise.perlin2(x * 0.9 , y * 0.9 );
+
+            z += (p0 > 0 ? 1 : -1) * Math.pow(p0, 2);
+            z += (p1 > 0 ? 1 : -1) * Math.pow(p1, 2);
+            z += (p2 > 0 ? p2 : Math.pow(2, p2) - 1);
+            z += (p3 > 0 ? p3 : Math.pow(2, p3) - 1);
+
+            return z;
+        });
+
+        var lod = new THREE.LOD();
         for (let i = 0; i < 6; i++) {
-            const geometry = dataToGeometry(data, Math.pow(2, i));
-            var mat = ground_config.material.clone();
-            //mat.color = new THREE.Color(COLORS[i]);
-            mat.shininess = 10;
-            mat.shading = THREE.FlatShading;
-            const m = new THREE.Mesh(geometry, mat);
-            mesh.addLevel(m, world_size * i);
+            var geometry = buildGeometry(data, Math.pow(2, i));
+            var mesh = new THREE.Mesh(geometry, material.GROUND);
+            lod.addLevel(mesh, worldSize * i);
         }
-        mesh.position.x = chunkX * world_size;
-        mesh.position.z = chunkY * world_size;
-        mesh.updateMatrixWorld();
+        lod.position.x = chunkX * worldSize;
+        lod.position.z = chunkY * worldSize;
+        lod.updateMatrixWorld();
+
+        return lod;
+    },
+
+    Water: function(worldSize) {
+        const tileSize = 2;
+        const data = generateHeightmap(worldSize, tileSize, 0, 0, (x, y) => 2 * Math.pow(noise.perlin2(0.3 * x, 0.3 * y)));
+        const geometry = buildGeometry(data);
+        const mesh = new THREE.Mesh(geometry, material.WATER);
+        mesh.position.y = -5;
         return mesh;
     },
-    Water: function(world_size) {
-        const data = configToData(world_size, water_config);
-        const geometry = dataToGeometry(data);
-        const mesh = new THREE.Mesh(geometry, water_config.material);
-        mesh.position.y = -10;
-        return mesh;
-    },
-    DiamondSquare: function(world_size, initializer) {
-        var size = world_size + 1;
+
+    DiamondSquare: function(worldSize, initializer) {
+        const size = worldSize + 1;
         var data = new Array(size*size);
 
         if (initializer) {
@@ -251,15 +167,15 @@ export default {
             }
         }
 
-        const geometry = new THREE.Geometry();
+        var geometry = new THREE.Geometry();
 
         var c = 0;
         for (let i = 0; i < size - 1; i++) {
             for (let j = 0; j < size - 1; j++) {
-                const v1 = data[i +     size *  j];
-                const v2 = data[i + 1 + size *  j];
-                const v3 = data[i +     size * (j + 1)];
-                const v4 = data[i + 1 + size * (j + 1)];
+                var v1 = data[i +     size *  j];
+                var v2 = data[i + 1 + size *  j];
+                var v3 = data[i +     size * (j + 1)];
+                var v4 = data[i + 1 + size * (j + 1)];
 
                 //TODO dont alternate face sides
                 geometry.vertices.push(v1, v2, v3, v4);
@@ -270,13 +186,7 @@ export default {
 
         geometry.mergeVertices();
         geometry.computeFaceNormals();
-        var material = new THREE.MeshLambertMaterial({
-          color: 0x882244,
-          transparent: false,
-          emissive: 0x002200,
-          side: THREE.DoubleSide
-        });
-        const mesh = new THREE.Mesh(geometry, material);
+        var mesh = new THREE.Mesh(geometry, material.GROUND);
         mesh.rotation.x = -90*Math.PI/180;
         return mesh;
     }
