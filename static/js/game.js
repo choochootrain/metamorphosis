@@ -123,13 +123,13 @@ export default class Game {
 
         var chunkX = Math.floor(this.amoeba.position.x / this.worldSize + 0.5);
         var chunkY = Math.floor(this.amoeba.position.z / this.worldSize + 0.5);
-        var visibility = 5;
+        var visibility = 20;
         var max = 96;
         for (let i = -visibility; i <= visibility; i++) {
             for (let j = -visibility; j <= visibility; j++) {
                 var x = chunkX + i;
                 var y = chunkY + j;
-                if (Math.abs(x) > max || Math.abs(y) > max) continue;
+                if (Math.pow(chunkX - x, 2) + Math.pow(chunkY - y, 2) > visibility) continue;
                 if (!this.biome.get(x, y)) {
                     var chunk = Terrain.Ground(this.worldSize, x, y);
                     this.scene.add(chunk);
@@ -145,7 +145,7 @@ export default class Game {
         //TODO move culling logic into biome
         //TODO add a universal dispose method
         this.biome.cull(chunkX, chunkY, (x, y, chunk) => {
-            if (Math.abs(chunkX - x) <= visibility && Math.abs(chunkY - y) <= visibility) {
+            if (Math.pow(chunkX - x, 2) + Math.pow(chunkY - y, 2) <= visibility) {
                 return false;
             }
 

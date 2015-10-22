@@ -52,8 +52,8 @@ function buildLOD(data, material, distance, samples) {
 
     for (let i = 0; i < samples; i++) {
         var geometry = buildGeometry(data, Math.pow(2, i));
-        var mesh = new THREE.Mesh(geometry, material);
-        lod.addLevel(mesh, distance * i);
+        var mesh = new THREE.Mesh(geometry, material.clone());
+        lod.addLevel(mesh, distance * i * 2);
     }
 
     return lod;
@@ -78,7 +78,7 @@ export default {
             return z;
         });
 
-        const lod = buildLOD(data, MATERIAL.GROUND, chunkSize, 4);
+        const lod = buildLOD(data, MATERIAL.GROUND, chunkSize, 7);
         lod.position.x = chunkX * chunkSize;
         lod.position.z = chunkY * chunkSize;
         lod.updateMatrixWorld();
