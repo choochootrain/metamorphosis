@@ -1,4 +1,5 @@
 use planegeometry instead of manually creating faces
+render lod based on camera direction
 
 refactor:
 use entity/component system
@@ -7,4 +8,4 @@ add a universal dispose method
 
 features:
 generate more terrain features
-add LOD rendering
+add better LOD rendering
