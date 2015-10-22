@@ -12,14 +12,14 @@ import Plane from "util/plane";
 import Amoeba from "amoeba";
 
 export default class Game {
-    constructor(container_id, world_size=32) {
+    constructor(container_id, worldSize=32) {
         this.width = window.innerWidth;
         this.height = window.innerHeight;
         this.view_angle = 45;
         this.aspect = this.width / this.height;
         this.near = 0.1;
         this.far = 10000;
-        this.world_size = world_size;
+        this.worldSize = worldSize;
 
         this.clock = new THREE.Clock();
         this.renderer = new THREE.WebGLRenderer({ alpha: true });
@@ -43,23 +43,22 @@ export default class Game {
     }
 
     init() {
-        this.scene.add(SkySphere("/static/images/galaxy_starfield.png", 128 * this.world_size));
+        this.scene.add(SkySphere("/static/images/galaxy_starfield.png", 128 * this.worldSize));
         this.scene.add(Axes(this.width));
 
         const ambientLight = new THREE.AmbientLight(0x4F2F2F);
         this.scene.add(ambientLight);
 
         const pointLight = new THREE.PointLight(0xFFFF00, 0.8, 10000);
-        pointLight.position.set(this.world_size/2, this.world_size, -this.world_size/2);
+        pointLight.position.set(this.worldSize/2, this.worldSize, -this.worldSize/2);
         this.scene.add(pointLight);
 
-        var chunk = Terrain.Ground(this.world_size, 0, 0);
-        chunk.name = "terrain(0,0)";
+        var chunk = Terrain.Ground(this.worldSize, 0, 0);
         this.scene.add(chunk);
         this.biome.put(0, 0, chunk);
 
         var block_size = 5;
-        this.water = Terrain.Water(this.world_size * block_size);
+        this.water = Terrain.Water(this.worldSize * block_size);
         this.scene.add(this.water);
 
         this.amoeba = new THREE.Mesh(new THREE.SphereGeometry(0.1, 8, 8), new THREE.MeshLambertMaterial({ color: 0xffff00, emissive: 0xaa0033 }));
@@ -122,8 +121,8 @@ export default class Game {
             lodTarget = this.amoeba;
         }
 
-        var chunkX = Math.floor(this.amoeba.position.x / this.world_size + 0.5);
-        var chunkY = Math.floor(this.amoeba.position.z / this.world_size + 0.5);
+        var chunkX = Math.floor(this.amoeba.position.x / this.worldSize + 0.5);
+        var chunkY = Math.floor(this.amoeba.position.z / this.worldSize + 0.5);
         var visibility = 5;
         var max = 96;
         for (let i = -visibility; i <= visibility; i++) {
@@ -132,8 +131,7 @@ export default class Game {
                 var y = chunkY + j;
                 if (Math.abs(x) > max || Math.abs(y) > max) continue;
                 if (!this.biome.get(x, y)) {
-                    var chunk = Terrain.Ground(this.world_size, x, y);
-                    chunk.name = `terrain(${x},${y})`;
+                    var chunk = Terrain.Ground(this.worldSize, x, y);
                     this.scene.add(chunk);
                     this.biome.put(x, y, chunk);
                 }

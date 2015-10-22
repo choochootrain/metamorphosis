@@ -2,13 +2,13 @@ import { THREE } from "engine";
 import { noise, perlin } from "procedural/noise";
 import ndarray from "util/ndarray";
 
-import material from "const/material";
+import MATERIAL from "const/material";
 
-function generateHeightmap(worldSize, tileSize, chunkX, chunkY, func) {
-    const size = worldSize / tileSize + 1;
+function generateHeightmap(chunkSize, tileSize, chunkX, chunkY, func) {
+    const size = chunkSize / tileSize + 1;
     const mid = size / 2 | 0;
 
-    var data = new ndarray.fill(size, size, (i, j) => {
+    var data = ndarray.fill(size, size, (i, j) => {
         var x = i + chunkX * (size - 1);
         var y = j + chunkY * (size - 1);
         var z = func(x, y);
@@ -47,10 +47,22 @@ function buildGeometry(data, sample=1) {
     return geometry;
 }
 
+function buildLOD(data, material, distance, samples) {
+    var lod = new THREE.LOD();
+
+    for (let i = 0; i < samples; i++) {
+        var geometry = buildGeometry(data, Math.pow(2, i));
+        var mesh = new THREE.Mesh(geometry, material);
+        lod.addLevel(mesh, distance * i);
+    }
+
+    return lod;
+}
+
 export default {
-    Ground: function(worldSize, chunkX, chunkY) {
+    Ground: function(chunkSize, chunkX, chunkY) {
         const tileSize = 1;
-        const data = generateHeightmap(worldSize, tileSize, chunkX, chunkY, (x, y) => {
+        const data = generateHeightmap(chunkSize, tileSize, chunkX, chunkY, (x, y) => {
             var z = 0;
 
             var p0 = 8   * noise.perlin2(x * 0.01, y * 0.01);
@@ -66,39 +78,35 @@ export default {
             return z;
         });
 
-        var lod = new THREE.LOD();
-        for (let i = 0; i < 6; i++) {
-            var geometry = buildGeometry(data, Math.pow(2, i));
-            var mesh = new THREE.Mesh(geometry, material.GROUND);
-            lod.addLevel(mesh, worldSize * i);
-        }
-        lod.position.x = chunkX * worldSize;
-        lod.position.z = chunkY * worldSize;
+        const lod = buildLOD(data, MATERIAL.GROUND, chunkSize, 4);
+        lod.position.x = chunkX * chunkSize;
+        lod.position.z = chunkY * chunkSize;
         lod.updateMatrixWorld();
 
         return lod;
     },
 
-    Water: function(worldSize) {
+    Water: function(chunkSize) {
         const tileSize = 2;
-        const data = generateHeightmap(worldSize, tileSize, 0, 0, (x, y) => 2 * Math.pow(noise.perlin2(0.3 * x, 0.3 * y)));
+        const data = generateHeightmap(chunkSize, tileSize, 0, 0, (x, y) => 2 * Math.pow(noise.perlin2(0.3 * x, 0.3 * y)));
         const geometry = buildGeometry(data);
-        const mesh = new THREE.Mesh(geometry, material.WATER);
+        const mesh = new THREE.Mesh(geometry, MATERIAL.WATER);
         mesh.position.y = -5;
         return mesh;
     },
 
-    DiamondSquare: function(worldSize, initializer) {
-        const size = worldSize + 1;
-        var data = new Array(size*size);
+    DiamondSquare: function(chunkSize, chunkX, chunkY, initializer) {
+        const size = chunkSize + 1;
+        const mid = size / 2 | 0;
+        const data = ndarray.array(size, size);
 
         if (initializer) {
             initializer(data, size);
         } else {
-            data[0 + size * 0] =                   new THREE.Vector3(0,        0,        size / 2 * (Math.random() - 0.5));
-            data[(size - 1) + size * 0] =          new THREE.Vector3(size - 1, 0,        size / 2 * (Math.random() - 0.5));
-            data[0 + size * (size - 1)] =          new THREE.Vector3(0,        size - 1, size / 2 * (Math.random() - 0.5));
-            data[(size - 1) + size * (size - 1)] = new THREE.Vector3(size - 1, size - 1, size / 2 * (Math.random() - 0.5));
+            data.set(0       , 0       , new THREE.Vector3(0       , size / 2 * (Math.random() - 0.5), 0       ));
+            data.set(size - 1, 0       , new THREE.Vector3(size - 1, size / 2 * (Math.random() - 0.5), 0       ));
+            data.set(0       , size - 1, new THREE.Vector3(0       , size / 2 * (Math.random() - 0.5), size - 1));
+            data.set(size - 1, size - 1, new THREE.Vector3(size - 1, size / 2 * (Math.random() - 0.5), size - 1));
         }
 
         var q = [];
@@ -130,14 +138,14 @@ export default {
                 var s = size >>> (1 + (iter >>> 1));
 
                 if (iter % 2 == 0) {
-                    if (!data[x + size * y]) {
-                        var z1 = data[x - s + size * (y - s)].z;
-                        var z2 = data[x + s + size * (y - s)].z;
-                        var z3 = data[x - s + size * (y + s)].z;
-                        var z4 = data[x + s + size * (y + s)].z;
+                    if (data.get(x, y) === undefined) {
+                        var z1 = data.get(x - s, y - s).y;
+                        var z2 = data.get(x + s, y - s).y;
+                        var z3 = data.get(x - s, y + s).y;
+                        var z4 = data.get(x + s, y + s).y;
 
-                        var z = (z1 + z2 + z3 + z4) / 4 + 2*s * (Math.random() - 0.5);
-                        data[x + size * y] = new THREE.Vector3(x, y, z);
+                        var z = (z1 + z2 + z3 + z4) / 4 + 2 * s * (Math.random() - 0.5);
+                        data.set(x, y, new THREE.Vector3(x, z, y));
                     }
 
                     q.enqueue(x - s, y,     iter + 1);
@@ -145,17 +153,17 @@ export default {
                     q.enqueue(x,     y - s, iter + 1);
                     q.enqueue(x,     y + s, iter + 1);
                 } else {
-                    if (!data[x + size * y]) {
+                    if (data.get(x, y) === undefined) {
                         var zs = 0;
                         var zc = 0;
 
-                        if (x - s >= 0)   { zs += data[x - s + size *  y     ].z; zc++ }
-                        if (x + s < size) { zs += data[x + s + size *  y     ].z; zc++ }
-                        if (y - s >= 0)   { zs += data[x     + size * (y - s)].z; zc++ }
-                        if (y + s < size) { zs += data[x     + size * (y + s)].z; zc++ }
+                        if (x - s >= 0)   { zs += data.get(x - s, y    ).y; zc++ }
+                        if (x + s < size) { zs += data.get(x + s, y    ).y; zc++ }
+                        if (y - s >= 0)   { zs += data.get(x    , y - s).y; zc++ }
+                        if (y + s < size) { zs += data.get(x    , y + s).y; zc++ }
 
                         var z = zs / zc + (s >>> 0) * (Math.random() - 0.5);
-                        data[x + size * y] = new THREE.Vector3(x, y, z);
+                        data.set(x, y, new THREE.Vector3(x, z, y));
                     }
 
                     var s2 = s >>> 1;
@@ -167,27 +175,14 @@ export default {
             }
         }
 
-        var geometry = new THREE.Geometry();
+        // now center the vertices
+        data.data.forEach((v) => { v.x -= mid; v.z -= mid; });
 
-        var c = 0;
-        for (let i = 0; i < size - 1; i++) {
-            for (let j = 0; j < size - 1; j++) {
-                var v1 = data[i +     size *  j];
-                var v2 = data[i + 1 + size *  j];
-                var v3 = data[i +     size * (j + 1)];
-                var v4 = data[i + 1 + size * (j + 1)];
+        const lod = buildLOD(data, MATERIAL.GROUND, chunkSize, 4);
+        lod.position.x = chunkX * chunkSize;
+        lod.position.z = chunkY * chunkSize;
+        lod.updateMatrixWorld();
 
-                //TODO dont alternate face sides
-                geometry.vertices.push(v1, v2, v3, v4);
-                geometry.faces.push(new THREE.Face3(c, c + 1, c + 2), new THREE.Face3(c + 1, c + 2, c + 3));
-                c = c + 4;
-            }
-        }
-
-        geometry.mergeVertices();
-        geometry.computeFaceNormals();
-        var mesh = new THREE.Mesh(geometry, material.GROUND);
-        mesh.rotation.x = -90*Math.PI/180;
-        return mesh;
+        return lod;
     }
 };
