@@ -6,7 +6,7 @@ import SkySphere from "util/skysphere";
 
 import Terrain from "procedural/terrain";
 import { perlin } from "procedural/noise";
-import { Biome } from "procedural/biome";
+import { Biome, BiomeChunk } from "procedural/biome";
 
 import Plane from "util/plane";
 import Amoeba from "amoeba";
@@ -29,8 +29,8 @@ export default class Game {
         this.renderer.shadowMap.soft = true;
 
         this.camera = new THREE.PerspectiveCamera(this.view_angle, this.aspect, this.near, this.far);
-        this.camera.position.y = 0.5;
-        this.camera.position.x = -2;
+        this.camera.position.y = 5;
+        this.camera.position.x = -20;
 
         this.controls = new OrbitControls(this.camera, this.renderer.domElement);
         this.keyboard = new KeyboardState();
@@ -52,14 +52,6 @@ export default class Game {
         const pointLight = new THREE.PointLight(0xFFFF00, 0.8, 10000);
         pointLight.position.set(this.worldSize/2, this.worldSize, -this.worldSize/2);
         this.scene.add(pointLight);
-
-        var chunk = Terrain.Ground(this.worldSize, 0, 0);
-        this.scene.add(chunk);
-        this.biome.put(0, 0, chunk);
-
-        var block_size = 5;
-        this.water = Terrain.Water(this.worldSize * block_size);
-        this.scene.add(this.water);
 
         this.amoeba = new THREE.Mesh(new THREE.SphereGeometry(0.1, 8, 8), new THREE.MeshLambertMaterial({ color: 0xffff00, emissive: 0xaa0033 }));
         this.amoeba.add(this.camera);
@@ -102,20 +94,6 @@ export default class Game {
 
         this.controls.update(delta);
 
-        var size = Math.sqrt(this.water.geometry.vertices.length);
-        var Fanimate = 2.3;
-        var Pa = 100;
-        var A = 0.2;
-        for (let i = 0; i < this.water.geometry.vertices.length; i++) {
-            var v = this.water.geometry.vertices[i];
-            var Fo = 2 * Math.PI / 3 * (Math.pow(v.x - v.z, 2) % 3) + Pa * perlin(v.x / Fanimate, v.z / Fanimate);
-            v.y = A * Math.sin(Fanimate * timestamp + Fo);
-        }
-
-        this.water.geometry.verticesNeedUpdate = true;
-        this.water.geometry.normalsNeedUpdate = true;
-        this.water.geometry.computeFaceNormals();
-
         var lodTarget = this.camera;
         if (this.keyboard.pressed("shift")) {
             lodTarget = this.amoeba;
@@ -131,13 +109,31 @@ export default class Game {
                 var y = chunkY + j;
                 if (Math.pow(chunkX - x, 2) + Math.pow(chunkY - y, 2) > visibility) continue;
                 if (!this.biome.get(x, y)) {
-                    var chunk = Terrain.Ground(this.worldSize, x, y);
-                    this.scene.add(chunk);
-                    this.biome.put(x, y, chunk);
+                    var terrainChunk = Terrain.Ground(this.worldSize, x, y);
+                    this.scene.add(terrainChunk);
+                    var waterChunk = Terrain.Water(this.worldSize, x, y);
+                    this.scene.add(waterChunk);
+                    this.biome.put(x, y, new BiomeChunk(terrainChunk, waterChunk));
                 }
 
                 var chunk = this.biome.get(x, y);
-                chunk.update(lodTarget);
+                chunk.terrain.update(lodTarget);
+
+                var size = Math.sqrt(chunk.water.geometry.vertices.length);
+                var Fanimate = 2.3;
+                var Pa = 100;
+                var A = 0.2;
+                for (let i = 0; i < chunk.water.geometry.vertices.length; i++) {
+                    var v = chunk.water.geometry.vertices[i];
+                    var x0 = this.worldSize * x + v.x;
+                    var y0 = this.worldSize * y + v.z;
+                    var Fo = 2 * Math.PI / 3 * (Math.pow(x0 - y0, 2) % 3) + Pa * perlin(x0 / Fanimate, y0 / Fanimate);
+                    v.y = A * Math.sin(Fanimate * timestamp + Fo);
+                }
+
+                chunk.water.geometry.verticesNeedUpdate = true;
+                chunk.water.geometry.normalsNeedUpdate = true;
+                chunk.water.geometry.computeFaceNormals();
             }
         }
 
@@ -149,11 +145,12 @@ export default class Game {
                 return false;
             }
 
-            this.scene.remove(chunk);
-            for (let i = 0; i < chunk.levels.length; i++) {
-                chunk.levels[i].object.geometry.dispose();
-                chunk.levels[i].object.material.dispose();
+            this.scene.remove(chunk.terrain);
+            for (let i = 0; i < chunk.terrain.levels.length; i++) {
+                chunk.terrain.levels[i].object.geometry.dispose();
             }
+            this.scene.remove(chunk.water);
+            chunk.water.geometry.dispose();
             return true;
         });
     }

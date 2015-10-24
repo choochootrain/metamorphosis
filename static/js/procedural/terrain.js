@@ -52,7 +52,7 @@ function buildLOD(data, material, distance, samples) {
 
     for (let i = 0; i < samples; i++) {
         var geometry = buildGeometry(data, Math.pow(2, i));
-        var mesh = new THREE.Mesh(geometry, material.clone());
+        var mesh = new THREE.Mesh(geometry, material);
         lod.addLevel(mesh, distance * i * 2);
     }
 
@@ -86,12 +86,14 @@ export default {
         return lod;
     },
 
-    Water: function(chunkSize) {
-        const tileSize = 2;
-        const data = generateHeightmap(chunkSize, tileSize, 0, 0, (x, y) => 2 * Math.pow(noise.perlin2(0.3 * x, 0.3 * y)));
+    Water: function(chunkSize, chunkX, chunkY) {
+        const tileSize = 4;
+        const data = generateHeightmap(chunkSize, tileSize, chunkX, chunkY, (x, y) => 2 * Math.pow(noise.perlin2(0.3 * x, 0.3 * y)));
         const geometry = buildGeometry(data);
         const mesh = new THREE.Mesh(geometry, MATERIAL.WATER);
+        mesh.position.x = chunkX * chunkSize;
         mesh.position.y = -5;
+        mesh.position.z = chunkY * chunkSize;
         return mesh;
     },
 

@@ -1,5 +1,5 @@
 import noisejs from "noisejs";
-const noise = new noisejs.Noise(0.2);
+const noise = new noisejs.Noise(Math.random());
 
 function perlin(x, y, octaves=1) {
     var z = 0;

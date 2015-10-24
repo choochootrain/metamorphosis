@@ -31,6 +31,11 @@ var Biome = function() {
     }
 }
 
+var BiomeChunk = function(terrain, water) {
+    this.terrain = terrain;
+    this.water = water;
+}
+
 var BiomeMap = function(size) {
     const data = new Uint8Array(3*size*size);
     for (let i = 0; i < size; i++) {
@@ -71,4 +76,4 @@ var BiomeMap = function(size) {
     return mesh;
 };
 
-export default { BiomeMap, Biome };
+export default { BiomeMap, Biome, BiomeChunk };
