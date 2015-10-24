@@ -43,7 +43,7 @@ export default class Game {
     }
 
     init() {
-        this.scene.add(SkySphere("/static/images/galaxy_starfield.png", 128 * this.worldSize));
+        this.scene.add(SkySphere("static/images/galaxy_starfield.png", 128 * this.worldSize));
         this.scene.add(Axes(this.width));
 
         const ambientLight = new THREE.AmbientLight(0x4F2F2F);
