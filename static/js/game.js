@@ -1,6 +1,6 @@
 import { THREE, OrbitControls, CANNON, KeyboardState } from "engine";
 import { NORMAL } from "materials";
-import { Axes, Sun, SkySphere } from "props";
+import { Axes, Grid, Sun, SkySphere } from "props";
 
 import Terrain from "procedural/terrain";
 import { perlin } from "procedural/noise";
@@ -42,7 +42,8 @@ export default class Game {
 
     init() {
         this.scene.add(SkySphere("static/images/galaxy_starfield.png", 128 * this.worldSize));
-        this.scene.add(Axes(this.width));
+        this.scene.add(Axes(this.worldSize));
+        this.scene.add(Grid(this.worldSize));
 
         var ambientLight = new THREE.AmbientLight(0x222222);
         this.scene.add(ambientLight);

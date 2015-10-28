@@ -1,7 +1,7 @@
 import { THREE } from "engine";
 import MATERIAL from "const/material";
 
-var SkySphere = function(texture, radius, segments=32) {
+export var SkySphere = function(texture, radius, segments=32) {
     const geometry = new THREE.SphereGeometry(radius, segments, segments);
     const material = new THREE.MeshBasicMaterial({
         map: THREE.ImageUtils.loadTexture(texture),
@@ -14,13 +14,19 @@ var SkySphere = function(texture, radius, segments=32) {
     return mesh;
 };
 
-var Sun = function(radius, segments=32) {
+export var Sun = function(radius, segments=32) {
     var light = new THREE.PointLight(0xFFFFAA, 0.8, 10000);
     const geometry = new THREE.SphereGeometry(radius, segments, segments);
     var mesh = new THREE.Mesh(geometry, MATERIAL.SUN);
     light.add(mesh);
     return light;
 };
+
+export var Grid = function(worldSize) {
+    var grid = new THREE.GridHelper(worldSize * 32, worldSize);
+    grid.position.set(-worldSize/2, 0, -worldSize/2);
+    return grid;
+}
 
 // adapted from http://soledadpenades.com/articles/three-js-tutorials/drawing-the-coordinate-axes/
 
@@ -43,7 +49,7 @@ function buildAxis(dest, hex, dashed=false) {
     return new THREE.Line(geometry, material, THREE.LineSegments);
 };
 
-var Axes = function(length) {
+export var Axes = function(length) {
     var axes = new THREE.Object3D();
     axes.add(buildAxis(new THREE.Vector3(length, 0, 0),  0xFF0000, false)); // +X
     axes.add(buildAxis(new THREE.Vector3(-length, 0, 0), 0xFF0000, true));  // -X
@@ -53,5 +59,3 @@ var Axes = function(length) {
     axes.add(buildAxis(new THREE.Vector3(0, 0, -length), 0x0000FF, true));  // -Z
     return axes;
 };
-
-module.exports = { Axes, SkySphere, Sun };
