@@ -15,7 +15,7 @@ export var SkySphere = function(texture, radius, segments=32) {
 };
 
 export var Sun = function(radius, segments=32) {
-    var light = new THREE.PointLight(0xFFFFAA, 0.8, 10000);
+    var light = new THREE.PointLight(MATERIAL.SUN.color.getHex(), 0.8, 10000);
     const geometry = new THREE.SphereGeometry(radius, segments, segments);
     var mesh = new THREE.Mesh(geometry, MATERIAL.SUN);
     light.add(mesh);

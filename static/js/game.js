@@ -63,6 +63,10 @@ export default class Game {
 
         this.lightConfig = {
             "ambientLightColor": 0x222222,
+            "sunColor": MATERIAL.SUN.color.getHex(),
+            "sunX": -this.worldSize * 16,
+            "sunY": this.worldSize * 8,
+            "sunZ": -this.worldSize * 16,
             "spotLightColor": 0xAA5533,
             "spotLightX": 0,
             "spotLightY": this.worldSize * 16,
@@ -73,9 +77,9 @@ export default class Game {
         var ambientLight = new THREE.AmbientLight(this.lightConfig.ambientLightColor);
         this.scene.add(ambientLight);
 
-        var sun = Sun(20);
-        sun.position.set(-this.worldSize * 16, this.worldSize * 8, this.worldSize * 16);
-        this.scene.add(sun);
+        this.sun = Sun(20);
+        this.sun.position.set(this.lightConfig.sunX, this.lightConfig.sunY, this.lightConfig.sunZ);
+        this.scene.add(this.sun);
 
         var spotLight = new THREE.SpotLight(0xAA5533);
         spotLight.position.set(this.lightConfig.spotLightX, this.lightConfig.spotLightY, this.lightConfig.spotLightZ);
@@ -83,6 +87,13 @@ export default class Game {
 
         var lights = this.gui.addFolder("Lights");
         lights.addColor(this.lightConfig, "ambientLightColor").onChange((color) => ambientLight.color = new THREE.Color(color));
+        lights.addColor(this.lightConfig, "sunColor").onChange((color) => {
+            MATERIAL.SUN.color = new THREE.Color(color);
+            this.sun.color = new THREE.Color(color);
+        });
+        lights.add(this.lightConfig, "sunX").onChange((x) => this.sun.position.x = x);
+        lights.add(this.lightConfig, "sunY").onChange((y) => this.sun.position.y = y);
+        lights.add(this.lightConfig, "sunZ").onChange((z) => this.sun.position.z = z);
         lights.addColor(this.lightConfig, "spotLightColor").onChange((color) => spotLight.color = new THREE.Color(color));
         lights.add(this.lightConfig, "spotLightX").onChange((x) => spotLight.position.x = x);
         lights.add(this.lightConfig, "spotLightY").onChange((y) => spotLight.position.y = y);
@@ -110,9 +121,12 @@ export default class Game {
             "waterShininess": MATERIAL.WATER.shininess,
             "waterOpacity": MATERIAL.WATER.opacity,
             "lod": "camera",
-            "visibility": 20
+            "visibility": 20,
+            "fogColor": 0x1E1C19,
+            "fogDensity": 0.0001
         };
 
+        this.scene.fog = new THREE.FogExp2(this.terrainConfig.fogColor, this.terrainConfig.fogDensity);
         this.terrainConfig.lodTarget = this.camera;
 
         var terrain = this.gui.addFolder("Terrain");
@@ -131,6 +145,8 @@ export default class Game {
             }
         });
         terrain.add(this.terrainConfig, "visibility").min(1).max(100).step(1);
+        terrain.addColor(this.terrainConfig, "fogColor").onChange((color) => this.scene.fog.color = new THREE.Color(color));
+        terrain.add(this.terrainConfig, "fogDensity").min(0).max(0.01).onChange((val) => this.scene.fog.density = val);
     }
 
     resize() {
