@@ -20,7 +20,7 @@ var Biome = function() {
         return this.chunks[x][y];
     };
 
-    this.cull = function(x, y, cb) {
+    this.cull = function(cb) {
         for (var xc in this.chunks) {
             for (var yc in this.chunks[xc]) {
                 if (cb(xc, yc, this.chunks[xc][yc])) {

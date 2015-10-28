@@ -22,9 +22,9 @@ export var Sun = function(radius, segments=32) {
     return light;
 };
 
-export var Grid = function(worldSize) {
-    var grid = new THREE.GridHelper(worldSize * 32, worldSize);
-    grid.position.set(-worldSize/2, 0, -worldSize/2);
+export var Grid = function(worldSize, stepSize) {
+    var grid = new THREE.GridHelper(worldSize, stepSize);
+    grid.position.set(-stepSize/2, 0, -stepSize/2);
     return grid;
 }
 

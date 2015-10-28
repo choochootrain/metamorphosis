@@ -2,6 +2,9 @@ import { THREE, OrbitControls, CANNON, KeyboardState } from "engine";
 import { NORMAL } from "materials";
 import { Axes, Grid, Sun, SkySphere } from "props";
 
+import { dat, toggleObject } from "util/gui";
+
+import MATERIAL from "const/material";
 import Terrain from "procedural/terrain";
 import { perlin } from "procedural/noise";
 import { Biome, BiomeChunk } from "procedural/biome";
@@ -41,11 +44,33 @@ export default class Game {
     }
 
     init() {
-        this.scene.add(SkySphere("static/images/galaxy_starfield.png", 128 * this.worldSize));
-        this.scene.add(Axes(this.worldSize));
-        this.scene.add(Grid(this.worldSize));
+        this.gui = new dat.GUI();
 
-        var ambientLight = new THREE.AmbientLight(0x222222);
+        this.propConfig = {
+            "skySphere": true,
+            "axes": true,
+            "grid": true
+        };
+
+        this.propConfig._skySphere = SkySphere("static/images/galaxy_starfield.png", 128 * this.worldSize);
+        this.propConfig._axes = Axes(16 * this.worldSize);
+        this.propConfig._grid = Grid(16 * this.worldSize, this.worldSize);
+
+        var props = this.gui.addFolder("Props");
+        props.add(this.propConfig, "skySphere").onChange(toggleObject("skySphere", this.propConfig, this.scene));
+        props.add(this.propConfig, "axes").onChange(toggleObject("axes", this.propConfig, this.scene));
+        props.add(this.propConfig, "grid").onChange(toggleObject("grid", this.propConfig, this.scene));
+
+        this.lightConfig = {
+            "ambientLightColor": 0x222222,
+            "spotLightColor": 0xAA5533,
+            "spotLightX": 0,
+            "spotLightY": this.worldSize * 16,
+            "spotLightZ": 0,
+            "spotLightHelper": false
+        };
+
+        var ambientLight = new THREE.AmbientLight(this.lightConfig.ambientLightColor);
         this.scene.add(ambientLight);
 
         var sun = Sun(20);
@@ -53,12 +78,59 @@ export default class Game {
         this.scene.add(sun);
 
         var spotLight = new THREE.SpotLight(0xAA5533);
-        spotLight.position.set(0, this.worldSize * 64, 0);
+        spotLight.position.set(this.lightConfig.spotLightX, this.lightConfig.spotLightY, this.lightConfig.spotLightZ);
         this.scene.add(spotLight);
+
+        var lights = this.gui.addFolder("Lights");
+        lights.addColor(this.lightConfig, "ambientLightColor").onChange((color) => ambientLight.color = new THREE.Color(color));
+        lights.addColor(this.lightConfig, "spotLightColor").onChange((color) => spotLight.color = new THREE.Color(color));
+        lights.add(this.lightConfig, "spotLightX").onChange((x) => spotLight.position.x = x);
+        lights.add(this.lightConfig, "spotLightY").onChange((y) => spotLight.position.y = y);
+        lights.add(this.lightConfig, "spotLightZ").onChange((z) => spotLight.position.z = z);
+        lights.add(this.lightConfig, "spotLightHelper").onChange((enabled) => {
+            if (enabled) {
+                this.lightConfig._spotLightHelper = new THREE.SpotLightHelper(spotLight);
+                this.scene.add(this.lightConfig._spotLightHelper);
+            } else {
+                this.scene.remove(this.lightConfig._spotLightHelper);
+                delete this.lightConfig._spotLightHelper;
+            }
+        });
 
         this.amoeba = new THREE.Mesh(new THREE.SphereGeometry(0.1, 8, 8), new THREE.MeshLambertMaterial({ color: 0xFFFF00, emissive: 0xAA0033 }));
         this.amoeba.add(this.camera);
         this.scene.add(this.amoeba);
+
+        this.terrainConfig = {
+            "groundColor": MATERIAL.GROUND.color.getHex(),
+            "groundEmissive": MATERIAL.GROUND.emissive.getHex(),
+            "groundShininess": MATERIAL.GROUND.shininess,
+            "waterColor": MATERIAL.WATER.color.getHex(),
+            "waterEmissive": MATERIAL.WATER.emissive.getHex(),
+            "waterShininess": MATERIAL.WATER.shininess,
+            "waterOpacity": MATERIAL.WATER.opacity,
+            "lod": "camera",
+            "visibility": 20
+        };
+
+        this.terrainConfig.lodTarget = this.camera;
+
+        var terrain = this.gui.addFolder("Terrain");
+        terrain.addColor(this.terrainConfig, "groundColor").onChange((color) => MATERIAL.GROUND.color = new THREE.Color(color));
+        terrain.addColor(this.terrainConfig, "groundEmissive").onChange((color) => MATERIAL.GROUND.emissive = new THREE.Color(color));
+        terrain.add(this.terrainConfig, "groundShininess").min(0).max(100).onChange((val) => MATERIAL.GROUND.shininess = val);
+        terrain.addColor(this.terrainConfig, "waterColor").onChange((color) => MATERIAL.WATER.color = new THREE.Color(color));
+        terrain.addColor(this.terrainConfig, "waterEmissive").onChange((color) => MATERIAL.WATER.emissive = new THREE.Color(color));
+        terrain.add(this.terrainConfig, "waterShininess").min(0).max(255).onChange((val) => MATERIAL.WATER.shininess = val);
+        terrain.add(this.terrainConfig, "waterOpacity", 0, 1).onChange((val) => MATERIAL.WATER.opacity = val);
+        terrain.add(this.terrainConfig, "lod").options(["camera", "amoeba"]).onChange((val) => {
+            if (val === "camera") {
+                this.terrainConfig.lodTarget = this.camera;
+            } else {
+                this.terrainConfig.lodTarget = this.amoeba;
+            }
+        });
+        terrain.add(this.terrainConfig, "visibility").min(1).max(100).step(1);
     }
 
     resize() {
@@ -96,16 +168,10 @@ export default class Game {
         }
 
         this.controls.update(delta);
-
-        var lodTarget = this.camera;
-        if (this.keyboard.pressed("shift")) {
-            lodTarget = this.amoeba;
-        }
-
         var chunkX = Math.floor(this.amoeba.position.x / this.worldSize + 0.5);
         var chunkY = Math.floor(this.amoeba.position.z / this.worldSize + 0.5);
-        var visibility = 20;
-        var max = 96;
+        var visibility = this.terrainConfig.visibility;
+
         for (let i = -visibility; i <= visibility; i++) {
             for (let j = -visibility; j <= visibility; j++) {
                 var x = chunkX + i;
@@ -120,7 +186,7 @@ export default class Game {
                 }
 
                 var chunk = this.biome.get(x, y);
-                chunk.terrain.update(lodTarget);
+                chunk.terrain.update(this.terrainConfig.lodTarget);
 
                 var size = Math.sqrt(chunk.water.geometry.vertices.length);
                 var Fanimate = 2.3;
@@ -140,10 +206,9 @@ export default class Game {
             }
         }
 
-
         //TODO move culling logic into biome
         //TODO add a universal dispose method
-        this.biome.cull(chunkX, chunkY, (x, y, chunk) => {
+        this.biome.cull((x, y, chunk) => {
             if (Math.pow(chunkX - x, 2) + Math.pow(chunkY - y, 2) <= visibility) {
                 return false;
             }
