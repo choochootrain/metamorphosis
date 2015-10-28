@@ -1,6 +1,6 @@
 import { THREE, CANNON, OrbitControls } from "engine";
 
-import Axes from "util/axes";
+import { Axes } from "props";
 import Plane from "util/plane";
 import Amoeba from "amoeba";
 

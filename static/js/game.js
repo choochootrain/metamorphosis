@@ -1,8 +1,6 @@
 import { THREE, OrbitControls, CANNON, KeyboardState } from "engine";
 import { NORMAL } from "materials";
-
-import Axes from "util/axes";
-import SkySphere from "util/skysphere";
+import { Axes, Sun, SkySphere } from "props";
 
 import Terrain from "procedural/terrain";
 import { perlin } from "procedural/noise";
@@ -46,14 +44,18 @@ export default class Game {
         this.scene.add(SkySphere("static/images/galaxy_starfield.png", 128 * this.worldSize));
         this.scene.add(Axes(this.width));
 
-        const ambientLight = new THREE.AmbientLight(0x4F2F2F);
+        var ambientLight = new THREE.AmbientLight(0x222222);
         this.scene.add(ambientLight);
 
-        const pointLight = new THREE.PointLight(0xFFFF00, 0.8, 10000);
-        pointLight.position.set(this.worldSize/2, this.worldSize, -this.worldSize/2);
-        this.scene.add(pointLight);
+        var sun = Sun(20);
+        sun.position.set(-this.worldSize * 16, this.worldSize * 8, this.worldSize * 16);
+        this.scene.add(sun);
 
-        this.amoeba = new THREE.Mesh(new THREE.SphereGeometry(0.1, 8, 8), new THREE.MeshLambertMaterial({ color: 0xffff00, emissive: 0xaa0033 }));
+        var spotLight = new THREE.SpotLight(0xAA5533);
+        spotLight.position.set(0, this.worldSize * 64, 0);
+        this.scene.add(spotLight);
+
+        this.amoeba = new THREE.Mesh(new THREE.SphereGeometry(0.1, 8, 8), new THREE.MeshLambertMaterial({ color: 0xFFFF00, emissive: 0xAA0033 }));
         this.amoeba.add(this.camera);
         this.scene.add(this.amoeba);
     }
