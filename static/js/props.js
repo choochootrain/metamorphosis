@@ -1,17 +1,36 @@
 import { THREE } from "engine";
 import MATERIAL from "const/material";
 
-export var SkySphere = function(texture, radius, segments=32) {
-    const geometry = new THREE.SphereGeometry(radius, segments, segments);
-    const material = new THREE.MeshBasicMaterial({
-        map: THREE.ImageUtils.loadTexture(texture),
-        side: THREE.FrontSide
+export var Starfield = function(num, radius, filter) {
+    var starsGeometry = new THREE.Geometry();
+    var starMaterial = new THREE.MeshBasicMaterial({
+        color: 0xDDDDFF
     });
-    const mesh = new THREE.Mesh(geometry, material);
-    mesh.renderOrder = 1000.0;
-    mesh.scale.set(-1, 1, 1);
-    mesh.rotation.order = 'XZY';
-    return mesh;
+    for (let i = 0; i < num; i++) {
+        var phi = Math.random() * 2 * Math.PI;
+        var costheta = Math.random() * 2 - 1;
+        var u = Math.random();
+
+        var theta = Math.acos(costheta);
+        // generate some more stars near the center for exaggerated parallax effect
+        var R = radius * Math.pow(u, 0.5);
+
+        var x = R * Math.sin(theta) * Math.cos(phi);
+        var y = R * Math.sin(theta) * Math.sin(phi);
+        var z = R * Math.cos(theta);
+
+        if (filter(x, y, z, R)) continue;
+
+        var r = 0.5 + 2 * R / radius * Math.random();
+
+        var starGeometry = new THREE.SphereGeometry(r);
+        var starMesh = new THREE.Mesh(starGeometry, starMaterial);
+        starMesh.position.set(x, y, z);
+        starMesh.updateMatrix();
+        starsGeometry.merge(starGeometry, starMesh.matrix);
+    }
+
+    return new THREE.Mesh(starsGeometry, starMaterial);
 };
 
 export var Sun = function(radius, segments=32) {

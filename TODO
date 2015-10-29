@@ -1,5 +1,7 @@
-use planegeometry instead of manually creating faces
+add procedurally generated nebulas and space objects
 render lod based on camera direction
+see http://callumprentice.github.io/apps/webgl_terrain/index.html for proper face pointing
+use planegeometry instead of manually creating faces
 
 refactor:
 use entity/component system

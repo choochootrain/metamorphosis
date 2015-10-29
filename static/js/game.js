@@ -1,6 +1,6 @@
 import { THREE, OrbitControls, CANNON, KeyboardState } from "engine";
 import { NORMAL } from "materials";
-import { Axes, Grid, Sun, SkySphere } from "props";
+import { Axes, Grid, Sun, Starfield } from "props";
 
 import { dat, toggleObject } from "util/gui";
 
@@ -19,15 +19,13 @@ export default class Game {
         this.view_angle = 45;
         this.aspect = this.width / this.height;
         this.near = 0.1;
-        this.far = 10000;
+        this.far = 100000;
         this.worldSize = worldSize;
 
         this.clock = new THREE.Clock();
         this.renderer = new THREE.WebGLRenderer({ alpha: true });
         this.renderer.setSize(this.width, this.height);
         this.renderer.setClearColor(0x000000, 1);
-        this.renderer.shadowMap.enabled = true;
-        this.renderer.shadowMap.soft = true;
 
         this.camera = new THREE.PerspectiveCamera(this.view_angle, this.aspect, this.near, this.far);
         this.camera.position.y = 5;
@@ -47,26 +45,27 @@ export default class Game {
         this.gui = new dat.GUI();
 
         this.propConfig = {
-            "skySphere": true,
+            "starfield": true,
             "axes": true,
             "grid": true
         };
 
-        this.propConfig._skySphere = SkySphere("static/images/galaxy_starfield.png", 128 * this.worldSize);
+        // don't put stars too close to the terrain
+        this.propConfig._starfield = Starfield(1500, this.worldSize * 64, (x, y, z, R) => Math.abs(y) < this.worldSize * 4 && R < this.worldSize * 48);
         this.propConfig._axes = Axes(16 * this.worldSize);
         this.propConfig._grid = Grid(16 * this.worldSize, this.worldSize);
 
         var props = this.gui.addFolder("Props");
-        props.add(this.propConfig, "skySphere").onChange(toggleObject("skySphere", this.propConfig, this.scene));
+        props.add(this.propConfig, "starfield").onChange(toggleObject("starfield", this.propConfig, this.scene));
         props.add(this.propConfig, "axes").onChange(toggleObject("axes", this.propConfig, this.scene));
         props.add(this.propConfig, "grid").onChange(toggleObject("grid", this.propConfig, this.scene));
 
         this.lightConfig = {
             "ambientLightColor": 0x222222,
             "sunColor": MATERIAL.SUN.color.getHex(),
-            "sunX": -this.worldSize * 16,
+            "sunX": this.worldSize * 16,
             "sunY": this.worldSize * 8,
-            "sunZ": -this.worldSize * 16,
+            "sunZ": 0,
             "spotLightColor": 0xAA5533,
             "spotLightX": 0,
             "spotLightY": this.worldSize * 16,
@@ -110,6 +109,7 @@ export default class Game {
 
         this.amoeba = new THREE.Mesh(new THREE.SphereGeometry(0.1, 8, 8), new THREE.MeshLambertMaterial({ color: 0xFFFF00, emissive: 0xAA0033 }));
         this.amoeba.add(this.camera);
+        this.amoeba.position.y = this.worldSize / 2;
         this.scene.add(this.amoeba);
 
         this.terrainConfig = {
