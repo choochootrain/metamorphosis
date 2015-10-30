@@ -8,6 +8,7 @@ import MATERIAL from "const/material";
 import Terrain from "procedural/terrain";
 import { perlin } from "procedural/noise";
 import { Biome, BiomeChunk } from "procedural/biome";
+import { Cloud } from "procedural/nebula";
 
 import Plane from "util/plane";
 import Amoeba from "amoeba";
@@ -46,8 +47,8 @@ export default class Game {
 
         this.propConfig = {
             "starfield": true,
-            "axes": true,
-            "grid": true
+            "axes": false,
+            "grid": false
         };
 
         // don't put stars too close to the terrain
@@ -56,9 +57,9 @@ export default class Game {
         this.propConfig._grid = Grid(16 * this.worldSize, this.worldSize);
 
         var props = this.gui.addFolder("Props");
-        props.add(this.propConfig, "starfield").onChange(toggleObject("starfield", this.propConfig, this.scene));
-        props.add(this.propConfig, "axes").onChange(toggleObject("axes", this.propConfig, this.scene));
-        props.add(this.propConfig, "grid").onChange(toggleObject("grid", this.propConfig, this.scene));
+        props.add(this.propConfig, "starfield").onChange(toggleObject("starfield", this.propConfig, this.scene, this.propConfig.starfield));
+        props.add(this.propConfig, "axes").onChange(toggleObject("axes", this.propConfig, this.scene, this.propConfig.axes));
+        props.add(this.propConfig, "grid").onChange(toggleObject("grid", this.propConfig, this.scene, this.propConfig.grid));
 
         this.lightConfig = {
             "ambientLightColor": 0x222222,
@@ -75,6 +76,11 @@ export default class Game {
 
         var ambientLight = new THREE.AmbientLight(this.lightConfig.ambientLightColor);
         this.scene.add(ambientLight);
+
+        this.nebula = Cloud(256, 256, 32, 32);
+        this.nebula.rotation.y = -Math.PI / 2;
+        this.nebula.position.set(this.worldSize * 128, this.worldSize * 2, 0);
+        this.scene.add(this.nebula);
 
         this.sun = Sun(20);
         this.sun.position.set(this.lightConfig.sunX, this.lightConfig.sunY, this.lightConfig.sunZ);
@@ -109,7 +115,7 @@ export default class Game {
 
         this.amoeba = new THREE.Mesh(new THREE.SphereGeometry(0.1, 8, 8), new THREE.MeshLambertMaterial({ color: 0xFFFF00, emissive: 0xAA0033 }));
         this.amoeba.add(this.camera);
-        this.amoeba.position.y = this.worldSize / 2;
+        this.amoeba.position.y = this.worldSize * 5;
         this.scene.add(this.amoeba);
 
         this.terrainConfig = {
