@@ -13,15 +13,20 @@ export var Starfield = function(num, radius, filter) {
 
         var theta = Math.acos(costheta);
         // generate some more stars near the center for exaggerated parallax effect
-        var R = radius * Math.pow(u, 0.5);
+        var R, r;
+        if (u < 0.8) {
+            R = radius * Math.pow(u, 0.5);
+            r = 0.5 + 2 * R / radius * Math.random();
+        } else {
+            R = radius * 10 * u / 0.8;
+            r = 10 + 2 * R / radius * Math.random();
+        }
 
         var x = R * Math.sin(theta) * Math.cos(phi);
         var y = R * Math.sin(theta) * Math.sin(phi);
         var z = R * Math.cos(theta);
 
         if (filter(x, y, z, R)) continue;
-
-        var r = 0.5 + 2 * R / radius * Math.random();
 
         var starGeometry = new THREE.SphereGeometry(r);
         var starMesh = new THREE.Mesh(starGeometry, starMaterial);
