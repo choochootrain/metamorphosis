@@ -68,8 +68,8 @@ var PerlinMaterial = function(width, height, side, opacity=1) {
     return material;
 };
 
-export var Nebula = function(scale) {
-    var nebula = new THREE.Object3D();
+export var Nebulas = function(scale) {
+    var nebulas = new THREE.Object3D();
 
     var area = scale * scale;
 
@@ -93,7 +93,7 @@ export var Nebula = function(scale) {
         var segment = new THREE.Mesh(new THREE.SphereGeometry(R, 32, 32, phiStart, phiLength, thetaStart, thetaLength), material);
         segment.rotation.z = Math.random() * Math.PI;
 
-        nebula.add(segment);
+        nebulas.add(segment);
 
         R = 500 * Math.floor(100 * Math.random()) + 5000;
         theta += Math.PI + Math.PI / 3 * Math.random();
@@ -119,12 +119,12 @@ export var Nebula = function(scale) {
         aura.position.set(x, y, z);
         aura.lookAt(new THREE.Vector3());
         aura.rotation.z = Math.random() * Math.PI * 2;
-        nebula.add(aura);
+        nebulas.add(aura);
 
         R = 500 * Math.floor(100 * Math.random()) + 50000;
         theta += Math.PI + 0.2 * Math.random();
         phi += Math.PI + 0.2 * Math.random();
     }
 
-    return nebula;
+    return nebulas;
 };
