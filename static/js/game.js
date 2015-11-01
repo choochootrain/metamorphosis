@@ -8,7 +8,7 @@ import MATERIAL from "const/material";
 import Terrain from "procedural/terrain";
 import { perlin } from "procedural/noise";
 import { Biome, BiomeChunk } from "procedural/biome";
-import { Cloud } from "procedural/nebula";
+import { Nebula } from "procedural/nebula";
 
 import Plane from "util/plane";
 import Amoeba from "amoeba";
@@ -20,7 +20,7 @@ export default class Game {
         this.view_angle = 45;
         this.aspect = this.width / this.height;
         this.near = 0.1;
-        this.far = 100000;
+        this.far = 1000000;
         this.worldSize = worldSize;
 
         this.clock = new THREE.Clock();
@@ -77,9 +77,7 @@ export default class Game {
         var ambientLight = new THREE.AmbientLight(this.lightConfig.ambientLightColor);
         this.scene.add(ambientLight);
 
-        this.nebula = Cloud(256, 256, 32, 32);
-        this.nebula.rotation.y = -Math.PI / 2;
-        this.nebula.position.set(this.worldSize * 128, this.worldSize * 2, 0);
+        this.nebula = Nebula(256);
         this.scene.add(this.nebula);
 
         this.sun = Sun(20);
@@ -129,7 +127,7 @@ export default class Game {
             "lod": "camera",
             "visibility": 20,
             "fogColor": 0x1E1C19,
-            "fogDensity": 0.0001
+            "fogDensity": 0.0000
         };
 
         this.scene.fog = new THREE.FogExp2(this.terrainConfig.fogColor, this.terrainConfig.fogDensity);
