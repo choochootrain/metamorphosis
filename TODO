@@ -1,8 +1,6 @@
-add procedurally generated nebulas and space objects
 render lod based on camera direction
-see http://callumprentice.github.io/apps/webgl_terrain/index.html for proper face pointing
-see https://robertsspaceindustries.com/starmap for fancy effects
 use planegeometry instead of manually creating faces
+see https://robertsspaceindustries.com/starmap for fancy effects
 update deps
 
 refactor:
