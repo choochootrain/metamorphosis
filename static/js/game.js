@@ -15,14 +15,14 @@ import Plane from "util/plane";
 import Amoeba from "amoeba";
 
 export default class Game {
-    constructor(container_id, worldSize=32) {
+    constructor(container_id, chunkSize=32) {
         this.width = window.innerWidth;
         this.height = window.innerHeight;
         this.view_angle = 45;
         this.aspect = this.width / this.height;
         this.near = 0.1;
         this.far = 1000000;
-        this.worldSize = worldSize;
+        this.chunkSize = chunkSize;
 
         this.clock = new THREE.Clock();
         this.renderer = new THREE.WebGLRenderer({ alpha: true });
@@ -54,10 +54,10 @@ export default class Game {
         };
 
         // don't put stars too close to the terrain
-        this.propConfig._starfield = Starfield(1500, this.worldSize * 64, (x, y, z, R) => Math.abs(y) < this.worldSize * 4 && R < this.worldSize * 48);
-        this.propConfig._nebulas = Nebula(8 * this.worldSize);
-        this.propConfig._axes = Axes(16 * this.worldSize);
-        this.propConfig._grid = Grid(16 * this.worldSize, this.worldSize);
+        this.propConfig._starfield = Starfield(1500, this.chunkSize * 64, (x, y, z, R) => Math.abs(y) < this.chunkSize * 4 && R < this.chunkSize * 48);
+        this.propConfig._nebulas = Nebula(8 * this.chunkSize);
+        this.propConfig._axes = Axes(16 * this.chunkSize);
+        this.propConfig._grid = Grid(16 * this.chunkSize, this.chunkSize);
 
         var props = this.gui.addFolder("Props");
         props.add(this.propConfig, "starfield").onChange(toggleObject("starfield", this.propConfig, this.scene, this.propConfig.starfield));
@@ -68,12 +68,12 @@ export default class Game {
         this.lightConfig = {
             "ambientLightColor": 0x222222,
             "sunColor": MATERIAL.SUN.color.getHex(),
-            "sunX": this.worldSize * 16,
-            "sunY": this.worldSize * 8,
+            "sunX": this.chunkSize * 16,
+            "sunY": this.chunkSize * 8,
             "sunZ": 0,
             "spotLightColor": 0xAA5533,
             "spotLightX": 0,
-            "spotLightY": this.worldSize * 16,
+            "spotLightY": this.chunkSize * 16,
             "spotLightZ": 0,
             "spotLightHelper": false
         };
@@ -114,7 +114,7 @@ export default class Game {
 
         this.amoeba = new THREE.Mesh(new THREE.SphereGeometry(0.1, 8, 8), new THREE.MeshLambertMaterial({ color: 0xFFFF00, emissive: 0xAA0033 }));
         this.amoeba.add(this.camera);
-        this.amoeba.position.y = this.worldSize;
+        this.amoeba.position.y = this.chunkSize;
         this.scene.add(this.amoeba);
 
         this.terrainConfig = {
@@ -189,8 +189,8 @@ export default class Game {
         }
 
         this.controls.update(delta);
-        var chunkX = Math.floor(this.amoeba.position.x / this.worldSize + 0.5);
-        var chunkY = Math.floor(this.amoeba.position.z / this.worldSize + 0.5);
+        var chunkX = Math.floor(this.amoeba.position.x / this.chunkSize + 0.5);
+        var chunkY = Math.floor(this.amoeba.position.z / this.chunkSize + 0.5);
         var visibility = this.terrainConfig.visibility;
 
         for (let i = -visibility; i <= visibility; i++) {
@@ -199,9 +199,9 @@ export default class Game {
                 var y = chunkY + j;
                 if (Math.pow(chunkX - x, 2) + Math.pow(chunkY - y, 2) > visibility) continue;
                 if (!this.biome.get(x, y)) {
-                    var terrainChunk = Terrain.Ground(this.worldSize, x, y);
+                    var terrainChunk = Terrain.Ground(this.chunkSize, x, y);
                     this.scene.add(terrainChunk);
-                    var waterChunk = Terrain.Water(this.worldSize, x, y);
+                    var waterChunk = Terrain.Water(this.chunkSize, x, y);
                     this.scene.add(waterChunk);
                     this.biome.put(x, y, new BiomeChunk(terrainChunk, waterChunk));
                 }
@@ -215,8 +215,8 @@ export default class Game {
                 var A = 0.2;
                 for (let i = 0; i < chunk.water.geometry.vertices.length; i++) {
                     var v = chunk.water.geometry.vertices[i];
-                    var x0 = this.worldSize * x + v.x;
-                    var y0 = this.worldSize * y + v.z;
+                    var x0 = this.chunkSize * x + v.x;
+                    var y0 = this.chunkSize * y + v.z;
                     var Fo = 2 * Math.PI / 3 * (Math.pow(x0 - y0, 2) % 3) + Pa * perlin(x0 / Fanimate, y0 / Fanimate);
                     v.y = A * Math.sin(Fanimate * timestamp + Fo);
                 }

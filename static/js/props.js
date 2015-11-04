@@ -9,8 +9,8 @@ export var Sun = function(radius, segments=32) {
     return light;
 };
 
-export var Grid = function(worldSize, stepSize) {
-    var grid = new THREE.GridHelper(worldSize, stepSize);
+export var Grid = function(chunkSize, stepSize) {
+    var grid = new THREE.GridHelper(chunkSize, stepSize);
     grid.position.set(-stepSize/2, 0, -stepSize/2);
     return grid;
 }

@@ -5,14 +5,14 @@ import Plane from "util/plane";
 import Amoeba from "amoeba";
 
 export default class AmoebaSimulation {
-    constructor(container_id, world_size=32) {
+    constructor(container_id, chunkSize=32) {
         this.width = window.innerWidth;
         this.height = window.innerHeight;
         this.view_angle = 45;
         this.aspect = this.width / this.height;
         this.near = 0.1;
         this.far = 10000;
-        this.world_size = world_size;
+        this.chunkSize = chunkSize;
 
         this.world = new CANNON.World();
         this.world.gravity.set(0, -9.82, 0);
@@ -42,10 +42,10 @@ export default class AmoebaSimulation {
 
         const pointLight = new THREE.DirectionalLight(0xFFFF00, 0.8, 100);
         pointLight.castShadow = true;
-        pointLight.position.set(this.world_size/2, 50, -this.world_size/2);
+        pointLight.position.set(this.chunkSize/2, 50, -this.chunkSize/2);
         this.scene.add(pointLight);
 
-        Plane(this.world_size, this.world, this.scene);
+        Plane(this.chunkSize, this.world, this.scene);
 
         this.amoeba = new Amoeba(this.world, this.scene);
         this.amoeba.body.position.set(1, 275, 0);
