@@ -68,7 +68,7 @@ var PerlinMaterial = function(width, height, side, opacity=1) {
     return material;
 };
 
-export var Nebulas = function(scale) {
+export var Nebula = function(scale) {
     var nebulas = new THREE.Object3D();
 
     var area = scale * scale;

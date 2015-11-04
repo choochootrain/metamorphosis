@@ -1,6 +1,6 @@
 import { THREE, OrbitControls, CANNON, KeyboardState } from "engine";
 import { NORMAL } from "materials";
-import { Axes, Grid, Sun, Starfield } from "props";
+import { Axes, Grid, Sun } from "props";
 
 import { dat, toggleObject } from "util/gui";
 
@@ -8,7 +8,8 @@ import MATERIAL from "const/material";
 import Terrain from "procedural/terrain";
 import { perlin } from "procedural/noise";
 import { Biome, BiomeChunk } from "procedural/biome";
-import { Nebulas } from "procedural/nebula";
+import { Nebula } from "procedural/nebula";
+import { Starfield } from "procedural/starfield";
 
 import Plane from "util/plane";
 import Amoeba from "amoeba";
@@ -54,7 +55,7 @@ export default class Game {
 
         // don't put stars too close to the terrain
         this.propConfig._starfield = Starfield(1500, this.worldSize * 64, (x, y, z, R) => Math.abs(y) < this.worldSize * 4 && R < this.worldSize * 48);
-        this.propConfig._nebulas = Nebulas(8 * this.worldSize);
+        this.propConfig._nebulas = Nebula(8 * this.worldSize);
         this.propConfig._axes = Axes(16 * this.worldSize);
         this.propConfig._grid = Grid(16 * this.worldSize, this.worldSize);
 

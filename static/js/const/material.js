@@ -20,5 +20,8 @@ module.exports = {
     SUN: new THREE.MeshLambertMaterial({
         color: 0xFFAA66,
         side: THREE.BackSide
+    }),
+    STAR: new THREE.MeshBasicMaterial({
+        color: 0xDDDDFF
     })
 }
