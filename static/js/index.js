@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     stats.domElement.style.position = "absolute";
     stats.domElement.style.left = "0px";
-    stats.domElement.style.top = "0px";
+    stats.domElement.style.bottom = "0px";
     document.body.appendChild(stats.domElement);
 
     var game;
