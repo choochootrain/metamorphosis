@@ -63,7 +63,7 @@
 
 	var _game2 = _interopRequireDefault(_game);
 
-	var _amoeba_simulation = __webpack_require__(/*! amoeba_simulation */ 239);
+	var _amoeba_simulation = __webpack_require__(/*! amoeba_simulation */ 251);
 
 	var _amoeba_simulation2 = _interopRequireDefault(_amoeba_simulation);
 
@@ -73,7 +73,7 @@
 
 	    stats.domElement.style.position = "absolute";
 	    stats.domElement.style.left = "0px";
-	    stats.domElement.style.top = "0px";
+	    stats.domElement.style.bottom = "0px";
 	    document.body.appendChild(stats.domElement);
 
 	    var game;
@@ -5982,29 +5982,33 @@
 
 	var _engine = __webpack_require__(/*! engine */ 194);
 
-	var _materials = __webpack_require__(/*! materials */ 210);
+	var _materials = __webpack_require__(/*! materials */ 217);
 
-	var _props = __webpack_require__(/*! props */ 211);
+	var _props = __webpack_require__(/*! props */ 218);
 
-	var _utilGui = __webpack_require__(/*! util/gui */ 213);
+	var _utilGui = __webpack_require__(/*! util/gui */ 220);
 
-	var _constMaterial = __webpack_require__(/*! const/material */ 212);
+	var _constMaterial = __webpack_require__(/*! const/material */ 219);
 
 	var _constMaterial2 = _interopRequireDefault(_constMaterial);
 
-	var _proceduralTerrain = __webpack_require__(/*! procedural/terrain */ 220);
+	var _proceduralTerrain = __webpack_require__(/*! procedural/terrain */ 227);
 
 	var _proceduralTerrain2 = _interopRequireDefault(_proceduralTerrain);
 
-	var _proceduralNoise = __webpack_require__(/*! procedural/noise */ 221);
+	var _proceduralNoise = __webpack_require__(/*! procedural/noise */ 228);
 
-	var _proceduralBiome = __webpack_require__(/*! procedural/biome */ 236);
+	var _proceduralBiome = __webpack_require__(/*! procedural/biome */ 243);
 
-	var _utilPlane = __webpack_require__(/*! util/plane */ 237);
+	var _proceduralNebula = __webpack_require__(/*! procedural/nebula */ 244);
+
+	var _proceduralStarfield = __webpack_require__(/*! procedural/starfield */ 248);
+
+	var _utilPlane = __webpack_require__(/*! util/plane */ 249);
 
 	var _utilPlane2 = _interopRequireDefault(_utilPlane);
 
-	var _amoeba = __webpack_require__(/*! amoeba */ 238);
+	var _amoeba = __webpack_require__(/*! amoeba */ 250);
 
 	var _amoeba2 = _interopRequireDefault(_amoeba);
 
@@ -6012,7 +6016,7 @@
 	    function Game(container_id) {
 	        var _this = this;
 
-	        var worldSize = arguments.length <= 1 || arguments[1] === undefined ? 32 : arguments[1];
+	        var chunkSize = arguments.length <= 1 || arguments[1] === undefined ? 32 : arguments[1];
 
 	        _classCallCheck(this, Game);
 
@@ -6021,22 +6025,30 @@
 	        this.view_angle = 45;
 	        this.aspect = this.width / this.height;
 	        this.near = 0.1;
-	        this.far = 100000;
-	        this.worldSize = worldSize;
+	        this.far = 1000000;
+	        this.chunkSize = chunkSize;
 
 	        this.clock = new _engine.THREE.Clock();
 	        this.renderer = new _engine.THREE.WebGLRenderer({ alpha: true });
 	        this.renderer.setSize(this.width, this.height);
 	        this.renderer.setClearColor(0x000000, 1);
 
+	        this.scene = new _engine.THREE.Scene();
+
 	        this.camera = new _engine.THREE.PerspectiveCamera(this.view_angle, this.aspect, this.near, this.far);
 	        this.camera.position.y = 5;
 	        this.camera.position.x = -20;
 
+	        this.composer = new _engine.THREE.EffectComposer(this.renderer);
+	        this.composer.addPass(new _engine.THREE.RenderPass(this.scene, this.camera));
+
+	        this.glitchPass = new _engine.THREE.GlitchPass();
+	        this.glitchPass.renderToScreen = true;
+	        this.composer.addPass(this.glitchPass);
+
 	        this.controls = new _engine.OrbitControls(this.camera, this.renderer.domElement);
 	        this.keyboard = new _engine.KeyboardState();
 
-	        this.scene = new _engine.THREE.Scene();
 	        this.biome = new _proceduralBiome.Biome();
 
 	        document.getElementById(container_id).appendChild(this.renderer.domElement);
@@ -6052,31 +6064,34 @@
 
 	        this.propConfig = {
 	            "starfield": true,
+	            "nebulas": true,
 	            "axes": true,
 	            "grid": true
 	        };
 
 	        // don't put stars too close to the terrain
-	        this.propConfig._starfield = _props.Starfield(1500, this.worldSize * 64, function (x, y, z, R) {
-	            return Math.abs(y) < _this2.worldSize * 4 && R < _this2.worldSize * 48;
+	        this.propConfig._starfield = _proceduralStarfield.Starfield(1500, this.chunkSize * 64, function (x, y, z, R) {
+	            return Math.abs(y) < _this2.chunkSize * 4 && R < _this2.chunkSize * 48;
 	        });
-	        this.propConfig._axes = _props.Axes(16 * this.worldSize);
-	        this.propConfig._grid = _props.Grid(16 * this.worldSize, this.worldSize);
+	        this.propConfig._nebulas = _proceduralNebula.Nebula(8 * this.chunkSize);
+	        this.propConfig._axes = _props.Axes(16 * this.chunkSize);
+	        this.propConfig._grid = _props.Grid(16 * this.chunkSize, this.chunkSize);
 
 	        var props = this.gui.addFolder("Props");
-	        props.add(this.propConfig, "starfield").onChange(_utilGui.toggleObject("starfield", this.propConfig, this.scene));
-	        props.add(this.propConfig, "axes").onChange(_utilGui.toggleObject("axes", this.propConfig, this.scene));
-	        props.add(this.propConfig, "grid").onChange(_utilGui.toggleObject("grid", this.propConfig, this.scene));
+	        props.add(this.propConfig, "starfield").onChange(_utilGui.toggleObject("starfield", this.propConfig, this.scene, this.propConfig.starfield));
+	        props.add(this.propConfig, "nebulas").onChange(_utilGui.toggleObject("nebulas", this.propConfig, this.scene, this.propConfig.nebulas));
+	        props.add(this.propConfig, "axes").onChange(_utilGui.toggleObject("axes", this.propConfig, this.scene, this.propConfig.axes));
+	        props.add(this.propConfig, "grid").onChange(_utilGui.toggleObject("grid", this.propConfig, this.scene, this.propConfig.grid));
 
 	        this.lightConfig = {
 	            "ambientLightColor": 0x222222,
 	            "sunColor": _constMaterial2["default"].SUN.color.getHex(),
-	            "sunX": this.worldSize * 16,
-	            "sunY": this.worldSize * 8,
+	            "sunX": this.chunkSize * 16,
+	            "sunY": this.chunkSize * 8,
 	            "sunZ": 0,
 	            "spotLightColor": 0xAA5533,
 	            "spotLightX": 0,
-	            "spotLightY": this.worldSize * 16,
+	            "spotLightY": this.chunkSize * 16,
 	            "spotLightZ": 0,
 	            "spotLightHelper": false
 	        };
@@ -6133,7 +6148,7 @@
 
 	        this.amoeba = new _engine.THREE.Mesh(new _engine.THREE.SphereGeometry(0.1, 8, 8), new _engine.THREE.MeshLambertMaterial({ color: 0xFFFF00, emissive: 0xAA0033 }));
 	        this.amoeba.add(this.camera);
-	        this.amoeba.position.y = this.worldSize / 2;
+	        this.amoeba.position.y = this.chunkSize;
 	        this.scene.add(this.amoeba);
 
 	        this.terrainConfig = {
@@ -6147,7 +6162,7 @@
 	            "lod": "camera",
 	            "visibility": 20,
 	            "fogColor": 0x1E1C19,
-	            "fogDensity": 0.0001
+	            "fogDensity": 0.0000
 	        };
 
 	        this.scene.fog = new _engine.THREE.FogExp2(this.terrainConfig.fogColor, this.terrainConfig.fogDensity);
@@ -6227,9 +6242,15 @@
 	            this.amoeba.position.y -= 1;
 	        }
 
+	        if (this.keyboard.pressed("g")) {
+	            this.glitchPass.goWild = true;
+	        } else {
+	            this.glitchPass.goWild = false;
+	        }
+
 	        this.controls.update(delta);
-	        var chunkX = Math.floor(this.amoeba.position.x / this.worldSize + 0.5);
-	        var chunkY = Math.floor(this.amoeba.position.z / this.worldSize + 0.5);
+	        var chunkX = Math.floor(this.amoeba.position.x / this.chunkSize + 0.5);
+	        var chunkY = Math.floor(this.amoeba.position.z / this.chunkSize + 0.5);
 	        var visibility = this.terrainConfig.visibility;
 
 	        for (var i = -visibility; i <= visibility; i++) {
@@ -6238,9 +6259,9 @@
 	                var y = chunkY + j;
 	                if (Math.pow(chunkX - x, 2) + Math.pow(chunkY - y, 2) > visibility) continue;
 	                if (!this.biome.get(x, y)) {
-	                    var terrainChunk = _proceduralTerrain2["default"].Ground(this.worldSize, x, y);
+	                    var terrainChunk = _proceduralTerrain2["default"].Ground(this.chunkSize, x, y);
 	                    this.scene.add(terrainChunk);
-	                    var waterChunk = _proceduralTerrain2["default"].Water(this.worldSize, x, y);
+	                    var waterChunk = _proceduralTerrain2["default"].Water(this.chunkSize, x, y);
 	                    this.scene.add(waterChunk);
 	                    this.biome.put(x, y, new _proceduralBiome.BiomeChunk(terrainChunk, waterChunk));
 	                }
@@ -6254,8 +6275,8 @@
 	                var A = 0.2;
 	                for (var _i = 0; _i < chunk.water.geometry.vertices.length; _i++) {
 	                    var v = chunk.water.geometry.vertices[_i];
-	                    var x0 = this.worldSize * x + v.x;
-	                    var y0 = this.worldSize * y + v.z;
+	                    var x0 = this.chunkSize * x + v.x;
+	                    var y0 = this.chunkSize * y + v.z;
 	                    var Fo = 2 * Math.PI / 3 * (Math.pow(x0 - y0, 2) % 3) + Pa * _proceduralNoise.perlin(x0 / Fanimate, y0 / Fanimate);
 	                    v.y = A * Math.sin(Fanimate * timestamp + Fo);
 	                }
@@ -6284,7 +6305,7 @@
 	    };
 
 	    Game.prototype.render = function render() {
-	        this.renderer.render(this.scene, this.camera);
+	        this.composer.render();
 	    };
 
 	    return Game;
@@ -6343,7 +6364,42 @@
 
 	var _utilEcs2 = _interopRequireDefault(_utilEcs);
 
+	var _vendorThreeCopyShader = __webpack_require__(/*! vendor/three/CopyShader */ 210);
+
+	var _vendorThreeCopyShader2 = _interopRequireDefault(_vendorThreeCopyShader);
+
+	var _vendorThreeDigitalGlitch = __webpack_require__(/*! vendor/three/DigitalGlitch */ 211);
+
+	var _vendorThreeDigitalGlitch2 = _interopRequireDefault(_vendorThreeDigitalGlitch);
+
+	var _vendorThreeEffectComposer = __webpack_require__(/*! vendor/three/EffectComposer */ 212);
+
+	var _vendorThreeEffectComposer2 = _interopRequireDefault(_vendorThreeEffectComposer);
+
+	var _vendorThreeRenderPass = __webpack_require__(/*! vendor/three/RenderPass */ 213);
+
+	var _vendorThreeRenderPass2 = _interopRequireDefault(_vendorThreeRenderPass);
+
+	var _vendorThreeMaskPass = __webpack_require__(/*! vendor/three/MaskPass */ 214);
+
+	var _vendorThreeShaderPass = __webpack_require__(/*! vendor/three/ShaderPass */ 215);
+
+	var _vendorThreeShaderPass2 = _interopRequireDefault(_vendorThreeShaderPass);
+
+	var _vendorThreeGlitchPass = __webpack_require__(/*! vendor/three/GlitchPass */ 216);
+
+	var _vendorThreeGlitchPass2 = _interopRequireDefault(_vendorThreeGlitchPass);
+
 	var OrbitControls = _threeOrbitControls2["default"](_threeJs2["default"]);
+
+	_threeJs2["default"].CopyShader = _vendorThreeCopyShader2["default"];
+	_threeJs2["default"].DigitalGlitch = _vendorThreeDigitalGlitch2["default"];
+	_threeJs2["default"].EffectComposer = _vendorThreeEffectComposer2["default"](_threeJs2["default"]);
+	_threeJs2["default"].RenderPass = _vendorThreeRenderPass2["default"](_threeJs2["default"]);
+	_threeJs2["default"].MaskPass = _vendorThreeMaskPass.MaskPass;
+	_threeJs2["default"].ClearMaskPass = _vendorThreeMaskPass.ClearMaskPass;
+	_threeJs2["default"].ShaderPass = _vendorThreeShaderPass2["default"](_threeJs2["default"]);
+	_threeJs2["default"].GlitchPass = _vendorThreeGlitchPass2["default"](_threeJs2["default"]);
 
 	exports["default"] = { THREE: _threeJs2["default"], OrbitControls: OrbitControls, CANNON: _cannon2["default"], KeyboardState: _vendorKeyboard_state2["default"], ECS: _utilEcs2["default"] };
 	module.exports = exports["default"];
@@ -57086,6 +57142,585 @@
 
 /***/ },
 /* 210 */
+/*!**********************************************!*\
+  !*** ./static/js/vendor/three/CopyShader.js ***!
+  \**********************************************/
+/***/ function(module, exports) {
+
+	/**
+	 * @author alteredq / http://alteredqualia.com/
+	 *
+	 * Full-screen textured quad shader
+	 */
+
+	"use strict";
+
+	exports.__esModule = true;
+	var CopyShader = {
+
+	    uniforms: {
+
+	        "tDiffuse": { type: "t", value: null },
+	        "opacity": { type: "f", value: 1.0 }
+
+	    },
+
+	    vertexShader: ["varying vec2 vUv;", "void main() {", "vUv = uv;", "gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );", "}"].join("\n"),
+
+	    fragmentShader: ["uniform float opacity;", "uniform sampler2D tDiffuse;", "varying vec2 vUv;", "void main() {", "vec4 texel = texture2D( tDiffuse, vUv );", "gl_FragColor = opacity * texel;", "}"].join("\n")
+
+	};
+
+	exports["default"] = CopyShader;
+	module.exports = exports["default"];
+
+/***/ },
+/* 211 */
+/*!*************************************************!*\
+  !*** ./static/js/vendor/three/DigitalGlitch.js ***!
+  \*************************************************/
+/***/ function(module, exports) {
+
+	/**
+	 * @author felixturner / http://airtight.cc/
+	 *
+	 * RGB Shift Shader
+	 * Shifts red and blue channels from center in opposite directions
+	 * Ported from http://kriss.cx/tom/2009/05/rgb-shift/
+	 * by Tom Butterworth / http://kriss.cx/tom/
+	 *
+	 * amount: shift distance (1 is width of input)
+	 * angle: shift angle in radians
+	 */
+
+	"use strict";
+
+	exports.__esModule = true;
+	var DigitalGlitch = {
+
+	    uniforms: {
+
+	        "tDiffuse": { type: "t", value: null }, //diffuse texture
+	        "tDisp": { type: "t", value: null }, //displacement texture for digital glitch squares
+	        "byp": { type: "i", value: 0 }, //apply the glitch ?
+	        "amount": { type: "f", value: 0.08 },
+	        "angle": { type: "f", value: 0.02 },
+	        "seed": { type: "f", value: 0.02 },
+	        "seed_x": { type: "f", value: 0.02 }, //-1,1
+	        "seed_y": { type: "f", value: 0.02 }, //-1,1
+	        "distortion_x": { type: "f", value: 0.5 },
+	        "distortion_y": { type: "f", value: 0.6 },
+	        "col_s": { type: "f", value: 0.05 }
+	    },
+
+	    vertexShader: ["varying vec2 vUv;", "void main() {", "vUv = uv;", "gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );", "}"].join("\n"),
+
+	    fragmentShader: ["uniform int byp;", //should we apply the glitch ?
+
+	    "uniform sampler2D tDiffuse;", "uniform sampler2D tDisp;", "uniform float amount;", "uniform float angle;", "uniform float seed;", "uniform float seed_x;", "uniform float seed_y;", "uniform float distortion_x;", "uniform float distortion_y;", "uniform float col_s;", "varying vec2 vUv;", "float rand(vec2 co){", "return fract(sin(dot(co.xy ,vec2(12.9898,78.233))) * 43758.5453);", "}", "void main() {", "if(byp<1) {", "vec2 p = vUv;", "float xs = floor(gl_FragCoord.x / 0.5);", "float ys = floor(gl_FragCoord.y / 0.5);",
+	    //based on staffantans glitch shader for unity https://github.com/staffantan/unityglitch
+	    "vec4 normal = texture2D (tDisp, p*seed*seed);", "if(p.y<distortion_x+col_s && p.y>distortion_x-col_s*seed) {", "if(seed_x>0.){", "p.y = 1. - (p.y + distortion_y);", "}", "else {", "p.y = distortion_y;", "}", "}", "if(p.x<distortion_y+col_s && p.x>distortion_y-col_s*seed) {", "if(seed_y>0.){", "p.x=distortion_x;", "}", "else {", "p.x = 1. - (p.x + distortion_x);", "}", "}", "p.x+=normal.x*seed_x*(seed/5.);", "p.y+=normal.y*seed_y*(seed/5.);",
+	    //base from RGB shift shader
+	    "vec2 offset = amount * vec2( cos(angle), sin(angle));", "vec4 cr = texture2D(tDiffuse, p + offset);", "vec4 cga = texture2D(tDiffuse, p);", "vec4 cb = texture2D(tDiffuse, p - offset);", "gl_FragColor = vec4(cr.r, cga.g, cb.b, cga.a);",
+	    //add noise
+	    "vec4 snow = 200.*amount*vec4(rand(vec2(xs * seed,ys * seed*50.))*0.2);", "gl_FragColor = gl_FragColor+ snow;", "}", "else {", "gl_FragColor=texture2D (tDiffuse, vUv);", "}", "}"].join("\n")
+
+	};
+
+	exports["default"] = DigitalGlitch;
+	module.exports = exports["default"];
+
+/***/ },
+/* 212 */
+/*!**************************************************!*\
+  !*** ./static/js/vendor/three/EffectComposer.js ***!
+  \**************************************************/
+/***/ function(module, exports) {
+
+	/**
+	 * @author alteredq / http://alteredqualia.com/
+	 */
+
+	"use strict";
+
+	exports.__esModule = true;
+	var _EffectComposer = function _EffectComposer(THREE) {
+	    var EffectComposer = function EffectComposer(renderer, renderTarget) {
+
+	        this.renderer = renderer;
+
+	        if (renderTarget === undefined) {
+
+	            var pixelRatio = renderer.getPixelRatio();
+
+	            var width = Math.floor(renderer.context.canvas.width / pixelRatio) || 1;
+	            var height = Math.floor(renderer.context.canvas.height / pixelRatio) || 1;
+	            var parameters = { minFilter: THREE.LinearFilter, magFilter: THREE.LinearFilter, format: THREE.RGBFormat, stencilBuffer: false };
+
+	            renderTarget = new THREE.WebGLRenderTarget(width, height, parameters);
+	        }
+
+	        this.renderTarget1 = renderTarget;
+	        this.renderTarget2 = renderTarget.clone();
+
+	        this.writeBuffer = this.renderTarget1;
+	        this.readBuffer = this.renderTarget2;
+
+	        this.passes = [];
+
+	        if (THREE.CopyShader === undefined) console.error("THREE.EffectComposer relies on THREE.CopyShader");
+
+	        this.copyPass = new THREE.ShaderPass(THREE.CopyShader);
+	    };
+
+	    EffectComposer.prototype = {
+
+	        swapBuffers: function swapBuffers() {
+
+	            var tmp = this.readBuffer;
+	            this.readBuffer = this.writeBuffer;
+	            this.writeBuffer = tmp;
+	        },
+
+	        addPass: function addPass(pass) {
+
+	            this.passes.push(pass);
+	        },
+
+	        insertPass: function insertPass(pass, index) {
+
+	            this.passes.splice(index, 0, pass);
+	        },
+
+	        render: function render(delta) {
+
+	            this.writeBuffer = this.renderTarget1;
+	            this.readBuffer = this.renderTarget2;
+
+	            var maskActive = false;
+
+	            var pass,
+	                i,
+	                il = this.passes.length;
+
+	            for (i = 0; i < il; i++) {
+
+	                pass = this.passes[i];
+
+	                if (!pass.enabled) continue;
+
+	                pass.render(this.renderer, this.writeBuffer, this.readBuffer, delta, maskActive);
+
+	                if (pass.needsSwap) {
+
+	                    if (maskActive) {
+
+	                        var context = this.renderer.context;
+
+	                        context.stencilFunc(context.NOTEQUAL, 1, 0xffffffff);
+
+	                        this.copyPass.render(this.renderer, this.writeBuffer, this.readBuffer, delta);
+
+	                        context.stencilFunc(context.EQUAL, 1, 0xffffffff);
+	                    }
+
+	                    this.swapBuffers();
+	                }
+
+	                if (pass instanceof THREE.MaskPass) {
+
+	                    maskActive = true;
+	                } else if (pass instanceof THREE.ClearMaskPass) {
+
+	                    maskActive = false;
+	                }
+	            }
+	        },
+
+	        reset: function reset(renderTarget) {
+
+	            if (renderTarget === undefined) {
+
+	                renderTarget = this.renderTarget1.clone();
+
+	                var pixelRatio = this.renderer.getPixelRatio();
+
+	                renderTarget.width = Math.floor(this.renderer.context.canvas.width / pixelRatio);
+	                renderTarget.height = Math.floor(this.renderer.context.canvas.height / pixelRatio);
+	            }
+
+	            this.renderTarget1.dispose();
+	            this.renderTarget1 = renderTarget;
+	            this.renderTarget2.dispose();
+	            this.renderTarget2 = renderTarget.clone();
+
+	            this.writeBuffer = this.renderTarget1;
+	            this.readBuffer = this.renderTarget2;
+	        },
+
+	        setSize: function setSize(width, height) {
+
+	            this.renderTarget1.setSize(width, height);
+	            this.renderTarget2.setSize(width, height);
+	        }
+
+	    };
+
+	    return EffectComposer;
+	};
+
+	exports["default"] = _EffectComposer;
+	module.exports = exports["default"];
+
+/***/ },
+/* 213 */
+/*!**********************************************!*\
+  !*** ./static/js/vendor/three/RenderPass.js ***!
+  \**********************************************/
+/***/ function(module, exports) {
+
+	/**
+	 * @author alteredq / http://alteredqualia.com/
+	 */
+
+	"use strict";
+
+	exports.__esModule = true;
+	var _RenderPass = function _RenderPass(THREE) {
+	    var RenderPass = function RenderPass(scene, camera, overrideMaterial, clearColor, clearAlpha) {
+
+	        this.scene = scene;
+	        this.camera = camera;
+
+	        this.overrideMaterial = overrideMaterial;
+
+	        this.clearColor = clearColor;
+	        this.clearAlpha = clearAlpha !== undefined ? clearAlpha : 1;
+
+	        this.oldClearColor = new THREE.Color();
+	        this.oldClearAlpha = 1;
+
+	        this.enabled = true;
+	        this.clear = true;
+	        this.needsSwap = false;
+	    };
+
+	    RenderPass.prototype = {
+
+	        render: function render(renderer, writeBuffer, readBuffer, delta) {
+
+	            this.scene.overrideMaterial = this.overrideMaterial;
+
+	            if (this.clearColor) {
+
+	                this.oldClearColor.copy(renderer.getClearColor());
+	                this.oldClearAlpha = renderer.getClearAlpha();
+
+	                renderer.setClearColor(this.clearColor, this.clearAlpha);
+	            }
+
+	            renderer.render(this.scene, this.camera, readBuffer, this.clear);
+
+	            if (this.clearColor) {
+
+	                renderer.setClearColor(this.oldClearColor, this.oldClearAlpha);
+	            }
+
+	            this.scene.overrideMaterial = null;
+	        }
+
+	    };
+
+	    return RenderPass;
+	};
+
+	exports["default"] = _RenderPass;
+	module.exports = exports["default"];
+
+/***/ },
+/* 214 */
+/*!********************************************!*\
+  !*** ./static/js/vendor/three/MaskPass.js ***!
+  \********************************************/
+/***/ function(module, exports) {
+
+	/**
+	 * @author alteredq / http://alteredqualia.com/
+	 */
+
+	"use strict";
+
+	exports.__esModule = true;
+	var MaskPass = function MaskPass(scene, camera) {
+
+	    this.scene = scene;
+	    this.camera = camera;
+
+	    this.enabled = true;
+	    this.clear = true;
+	    this.needsSwap = false;
+
+	    this.inverse = false;
+	};
+
+	MaskPass.prototype = {
+
+	    render: function render(renderer, writeBuffer, readBuffer, delta) {
+
+	        var context = renderer.context;
+
+	        // don't update color or depth
+
+	        context.colorMask(false, false, false, false);
+	        context.depthMask(false);
+
+	        // set up stencil
+
+	        var writeValue, clearValue;
+
+	        if (this.inverse) {
+
+	            writeValue = 0;
+	            clearValue = 1;
+	        } else {
+
+	            writeValue = 1;
+	            clearValue = 0;
+	        }
+
+	        context.enable(context.STENCIL_TEST);
+	        context.stencilOp(context.REPLACE, context.REPLACE, context.REPLACE);
+	        context.stencilFunc(context.ALWAYS, writeValue, 0xffffffff);
+	        context.clearStencil(clearValue);
+
+	        // draw into the stencil buffer
+
+	        renderer.render(this.scene, this.camera, readBuffer, this.clear);
+	        renderer.render(this.scene, this.camera, writeBuffer, this.clear);
+
+	        // re-enable update of color and depth
+
+	        context.colorMask(true, true, true, true);
+	        context.depthMask(true);
+
+	        // only render where stencil is set to 1
+
+	        context.stencilFunc(context.EQUAL, 1, 0xffffffff); // draw if == 1
+	        context.stencilOp(context.KEEP, context.KEEP, context.KEEP);
+	    }
+
+	};
+
+	var ClearMaskPass = function ClearMaskPass() {
+
+	    this.enabled = true;
+	};
+
+	ClearMaskPass.prototype = {
+
+	    render: function render(renderer, writeBuffer, readBuffer, delta) {
+
+	        var context = renderer.context;
+
+	        context.disable(context.STENCIL_TEST);
+	    }
+
+	};
+
+	exports["default"] = { MaskPass: MaskPass, ClearMaskPass: ClearMaskPass };
+	module.exports = exports["default"];
+
+/***/ },
+/* 215 */
+/*!**********************************************!*\
+  !*** ./static/js/vendor/three/ShaderPass.js ***!
+  \**********************************************/
+/***/ function(module, exports) {
+
+	/**
+	 * @author alteredq / http://alteredqualia.com/
+	 */
+
+	"use strict";
+
+	exports.__esModule = true;
+	var _ShaderPass = function _ShaderPass(THREE) {
+	    var ShaderPass = function ShaderPass(shader, textureID) {
+
+	        this.textureID = textureID !== undefined ? textureID : "tDiffuse";
+
+	        this.uniforms = THREE.UniformsUtils.clone(shader.uniforms);
+
+	        this.material = new THREE.ShaderMaterial({
+
+	            defines: shader.defines || {},
+	            uniforms: this.uniforms,
+	            vertexShader: shader.vertexShader,
+	            fragmentShader: shader.fragmentShader
+
+	        });
+
+	        this.renderToScreen = false;
+
+	        this.enabled = true;
+	        this.needsSwap = true;
+	        this.clear = false;
+
+	        this.camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+	        this.scene = new THREE.Scene();
+
+	        this.quad = new THREE.Mesh(new THREE.PlaneBufferGeometry(2, 2), null);
+	        this.scene.add(this.quad);
+	    };
+
+	    ShaderPass.prototype = {
+
+	        render: function render(renderer, writeBuffer, readBuffer, delta) {
+
+	            if (this.uniforms[this.textureID]) {
+
+	                this.uniforms[this.textureID].value = readBuffer;
+	            }
+
+	            this.quad.material = this.material;
+
+	            if (this.renderToScreen) {
+
+	                renderer.render(this.scene, this.camera);
+	            } else {
+
+	                renderer.render(this.scene, this.camera, writeBuffer, this.clear);
+	            }
+	        }
+
+	    };
+
+	    return ShaderPass;
+	};
+
+	exports["default"] = _ShaderPass;
+	module.exports = exports["default"];
+
+/***/ },
+/* 216 */
+/*!**********************************************!*\
+  !*** ./static/js/vendor/three/GlitchPass.js ***!
+  \**********************************************/
+/***/ function(module, exports) {
+
+	/**
+	 
+	 */
+
+	"use strict";
+
+	exports.__esModule = true;
+	var _GlitchPass = function _GlitchPass(THREE) {
+
+	    var GlitchPass = function GlitchPass(dt_size) {
+
+	        if (THREE.DigitalGlitch === undefined) console.error("THREE.GlitchPass relies on THREE.DigitalGlitch");
+
+	        var shader = THREE.DigitalGlitch;
+	        this.uniforms = THREE.UniformsUtils.clone(shader.uniforms);
+
+	        if (dt_size == undefined) dt_size = 64;
+
+	        this.uniforms["tDisp"].value = this.generateHeightmap(dt_size);
+
+	        this.material = new THREE.ShaderMaterial({
+	            uniforms: this.uniforms,
+	            vertexShader: shader.vertexShader,
+	            fragmentShader: shader.fragmentShader
+	        });
+
+	        this.enabled = true;
+	        this.renderToScreen = false;
+	        this.needsSwap = true;
+
+	        this.camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+	        this.scene = new THREE.Scene();
+
+	        this.quad = new THREE.Mesh(new THREE.PlaneBufferGeometry(2, 2), null);
+	        this.scene.add(this.quad);
+
+	        this.goWild = false;
+	        this.curF = 0;
+	        this.generateTrigger();
+	    };
+
+	    GlitchPass.prototype = {
+
+	        render: function render(renderer, writeBuffer, readBuffer, delta) {
+
+	            this.uniforms["tDiffuse"].value = readBuffer;
+	            this.uniforms['seed'].value = Math.random(); //default seeding
+	            this.uniforms['byp'].value = 0;
+
+	            if (this.curF % this.randX == 0 || this.goWild == true) {
+
+	                this.uniforms['amount'].value = Math.random() / 30;
+	                this.uniforms['angle'].value = THREE.Math.randFloat(-Math.PI, Math.PI);
+	                this.uniforms['seed_x'].value = THREE.Math.randFloat(-1, 1);
+	                this.uniforms['seed_y'].value = THREE.Math.randFloat(-1, 1);
+	                this.uniforms['distortion_x'].value = THREE.Math.randFloat(0, 1);
+	                this.uniforms['distortion_y'].value = THREE.Math.randFloat(0, 1);
+	                this.curF = 0;
+	                this.generateTrigger();
+	            } else if (this.curF % this.randX < this.randX / 5) {
+
+	                this.uniforms['amount'].value = Math.random() / 90;
+	                this.uniforms['angle'].value = THREE.Math.randFloat(-Math.PI, Math.PI);
+	                this.uniforms['distortion_x'].value = THREE.Math.randFloat(0, 1);
+	                this.uniforms['distortion_y'].value = THREE.Math.randFloat(0, 1);
+	                this.uniforms['seed_x'].value = THREE.Math.randFloat(-0.3, 0.3);
+	                this.uniforms['seed_y'].value = THREE.Math.randFloat(-0.3, 0.3);
+	            } else if (this.goWild == false) {
+
+	                this.uniforms['byp'].value = 1;
+	            }
+	            this.curF++;
+
+	            this.quad.material = this.material;
+	            if (this.renderToScreen) {
+
+	                renderer.render(this.scene, this.camera);
+	            } else {
+
+	                renderer.render(this.scene, this.camera, writeBuffer, false);
+	            }
+	        },
+	        generateTrigger: function generateTrigger() {
+
+	            this.randX = THREE.Math.randInt(120, 240);
+	        },
+	        generateHeightmap: function generateHeightmap(dt_size) {
+
+	            var data_arr = new Float32Array(dt_size * dt_size * 3);
+	            var length = dt_size * dt_size;
+
+	            for (var i = 0; i < length; i++) {
+
+	                var val = THREE.Math.randFloat(0, 1);
+	                data_arr[i * 3 + 0] = val;
+	                data_arr[i * 3 + 1] = val;
+	                data_arr[i * 3 + 2] = val;
+	            }
+
+	            var texture = new THREE.DataTexture(data_arr, dt_size, dt_size, THREE.RGBFormat, THREE.FloatType);
+	            texture.needsUpdate = true;
+	            return texture;
+	        }
+	    };
+
+	    return GlitchPass;
+	};
+
+	exports["default"] = _GlitchPass;
+	module.exports = exports["default"];
+
+/***/ },
+/* 217 */
 /*!********************************!*\
   !*** ./static/js/materials.js ***!
   \********************************/
@@ -57107,7 +57742,7 @@
 	module.exports = exports["default"];
 
 /***/ },
-/* 211 */
+/* 218 */
 /*!****************************!*\
   !*** ./static/js/props.js ***!
   \****************************/
@@ -57121,43 +57756,10 @@
 
 	var _engine = __webpack_require__(/*! engine */ 194);
 
-	var _constMaterial = __webpack_require__(/*! const/material */ 212);
+	var _constMaterial = __webpack_require__(/*! const/material */ 219);
 
 	var _constMaterial2 = _interopRequireDefault(_constMaterial);
 
-	var Starfield = function Starfield(num, radius, filter) {
-	    var starsGeometry = new _engine.THREE.Geometry();
-	    var starMaterial = new _engine.THREE.MeshBasicMaterial({
-	        color: 0xDDDDFF
-	    });
-	    for (var i = 0; i < num; i++) {
-	        var phi = Math.random() * 2 * Math.PI;
-	        var costheta = Math.random() * 2 - 1;
-	        var u = Math.random();
-
-	        var theta = Math.acos(costheta);
-	        // generate some more stars near the center for exaggerated parallax effect
-	        var R = radius * Math.pow(u, 0.5);
-
-	        var x = R * Math.sin(theta) * Math.cos(phi);
-	        var y = R * Math.sin(theta) * Math.sin(phi);
-	        var z = R * Math.cos(theta);
-
-	        if (filter(x, y, z, R)) continue;
-
-	        var r = 0.5 + 2 * R / radius * Math.random();
-
-	        var starGeometry = new _engine.THREE.SphereGeometry(r);
-	        var starMesh = new _engine.THREE.Mesh(starGeometry, starMaterial);
-	        starMesh.position.set(x, y, z);
-	        starMesh.updateMatrix();
-	        starsGeometry.merge(starGeometry, starMesh.matrix);
-	    }
-
-	    return new _engine.THREE.Mesh(starsGeometry, starMaterial);
-	};
-
-	exports.Starfield = Starfield;
 	var Sun = function Sun(radius) {
 	    var segments = arguments.length <= 1 || arguments[1] === undefined ? 32 : arguments[1];
 
@@ -57169,8 +57771,8 @@
 	};
 
 	exports.Sun = Sun;
-	var Grid = function Grid(worldSize, stepSize) {
-	    var grid = new _engine.THREE.GridHelper(worldSize, stepSize);
+	var Grid = function Grid(chunkSize, stepSize) {
+	    var grid = new _engine.THREE.GridHelper(chunkSize, stepSize);
 	    grid.position.set(-stepSize / 2, 0, -stepSize / 2);
 	    return grid;
 	};
@@ -57212,7 +57814,7 @@
 	exports.Axes = Axes;
 
 /***/ },
-/* 212 */
+/* 219 */
 /*!*************************************!*\
   !*** ./static/js/const/material.js ***!
   \*************************************/
@@ -57242,11 +57844,14 @@
 	    SUN: new _engine.THREE.MeshLambertMaterial({
 	        color: 0xFFAA66,
 	        side: _engine.THREE.BackSide
+	    }),
+	    STAR: new _engine.THREE.MeshBasicMaterial({
+	        color: 0xDDDDFF
 	    })
 	};
 
 /***/ },
-/* 213 */
+/* 220 */
 /*!*******************************!*\
   !*** ./static/js/util/gui.js ***!
   \*******************************/
@@ -57258,7 +57863,7 @@
 
 	exports.__esModule = true;
 
-	var _vendorDatGui = __webpack_require__(/*! vendor/dat.gui */ 214);
+	var _vendorDatGui = __webpack_require__(/*! vendor/dat.gui */ 221);
 
 	var _vendorDatGui2 = _interopRequireDefault(_vendorDatGui);
 
@@ -57284,7 +57889,7 @@
 	exports.toggleObject = toggleObject;
 
 /***/ },
-/* 214 */
+/* 221 */
 /*!*************************************!*\
   !*** ./static/js/vendor/dat.gui.js ***!
   \*************************************/
@@ -57301,7 +57906,7 @@
 	 * You may obtain a copy of the License at
 	 *
 	 * http://www.apache.org/licenses/LICENSE-2.0
-	 */ /** @namespace */'use strict';var _Object$defineProperties=__webpack_require__(/*! babel-runtime/core-js/object/define-properties */ 215)['default'];var _Object$defineProperty=__webpack_require__(/*! babel-runtime/core-js/object/define-property */ 218)['default'];var dat=dat || {}; /** @namespace */dat.gui = dat.gui || {}; /** @namespace */dat.utils = dat.utils || {}; /** @namespace */dat.controllers = dat.controllers || {}; /** @namespace */dat.dom = dat.dom || {}; /** @namespace */dat.color = dat.color || {};dat.utils.css = (function(){return {load:function load(url,doc){doc = doc || document;var link=doc.createElement('link');link.type = 'text/css';link.rel = 'stylesheet';link.href = url;doc.getElementsByTagName('head')[0].appendChild(link);},inject:function inject(css,doc){doc = doc || document;var injected=document.createElement('style');injected.type = 'text/css';injected.innerHTML = css;doc.getElementsByTagName('head')[0].appendChild(injected);}};})();dat.utils.common = (function(){var ARR_EACH=Array.prototype.forEach;var ARR_SLICE=Array.prototype.slice; /**
+	 */ /** @namespace */'use strict';var _Object$defineProperties=__webpack_require__(/*! babel-runtime/core-js/object/define-properties */ 222)['default'];var _Object$defineProperty=__webpack_require__(/*! babel-runtime/core-js/object/define-property */ 225)['default'];var dat=dat || {}; /** @namespace */dat.gui = dat.gui || {}; /** @namespace */dat.utils = dat.utils || {}; /** @namespace */dat.controllers = dat.controllers || {}; /** @namespace */dat.dom = dat.dom || {}; /** @namespace */dat.color = dat.color || {};dat.utils.css = (function(){return {load:function load(url,doc){doc = doc || document;var link=doc.createElement('link');link.type = 'text/css';link.rel = 'stylesheet';link.href = url;doc.getElementsByTagName('head')[0].appendChild(link);},inject:function inject(css,doc){doc = doc || document;var injected=document.createElement('style');injected.type = 'text/css';injected.innerHTML = css;doc.getElementsByTagName('head')[0].appendChild(injected);}};})();dat.utils.common = (function(){var ARR_EACH=Array.prototype.forEach;var ARR_SLICE=Array.prototype.slice; /**
 	   * Band-aid methods for things that should be a lot easier in JavaScript.
 	   * Implementation and structure inspired by underscore.js
 	   * http://documentcloud.github.com/underscore/
@@ -57732,28 +58337,28 @@
 	this.domElement.style.opacity = 0;this.domElement.style.webkitTransform = 'scale(1.1)';};CenteredDiv.prototype.layout = function(){this.domElement.style.left = window.innerWidth / 2 - dom.getWidth(this.domElement) / 2 + 'px';this.domElement.style.top = window.innerHeight / 2 - dom.getHeight(this.domElement) / 2 + 'px';};function lockScroll(e){console.log(e);}return CenteredDiv;})(dat.dom.dom,dat.utils.common),dat.dom.dom,dat.utils.common);module.exports = dat;
 
 /***/ },
-/* 215 */
+/* 222 */
 /*!*************************************************************!*\
   !*** ./~/babel-runtime/core-js/object/define-properties.js ***!
   \*************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = { "default": __webpack_require__(/*! core-js/library/fn/object/define-properties */ 216), __esModule: true };
+	module.exports = { "default": __webpack_require__(/*! core-js/library/fn/object/define-properties */ 223), __esModule: true };
 
 /***/ },
-/* 216 */
+/* 223 */
 /*!**************************************************************************!*\
   !*** ./~/babel-runtime/~/core-js/library/fn/object/define-properties.js ***!
   \**************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	var $ = __webpack_require__(/*! ../../modules/$ */ 217);
+	var $ = __webpack_require__(/*! ../../modules/$ */ 224);
 	module.exports = function defineProperties(T, D){
 	  return $.setDescs(T, D);
 	};
 
 /***/ },
-/* 217 */
+/* 224 */
 /*!********************************************************!*\
   !*** ./~/babel-runtime/~/core-js/library/modules/$.js ***!
   \********************************************************/
@@ -57774,28 +58379,28 @@
 	};
 
 /***/ },
-/* 218 */
+/* 225 */
 /*!***********************************************************!*\
   !*** ./~/babel-runtime/core-js/object/define-property.js ***!
   \***********************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = { "default": __webpack_require__(/*! core-js/library/fn/object/define-property */ 219), __esModule: true };
+	module.exports = { "default": __webpack_require__(/*! core-js/library/fn/object/define-property */ 226), __esModule: true };
 
 /***/ },
-/* 219 */
+/* 226 */
 /*!************************************************************************!*\
   !*** ./~/babel-runtime/~/core-js/library/fn/object/define-property.js ***!
   \************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	var $ = __webpack_require__(/*! ../../modules/$ */ 217);
+	var $ = __webpack_require__(/*! ../../modules/$ */ 224);
 	module.exports = function defineProperty(it, key, desc){
 	  return $.setDesc(it, key, desc);
 	};
 
 /***/ },
-/* 220 */
+/* 227 */
 /*!*****************************************!*\
   !*** ./static/js/procedural/terrain.js ***!
   \*****************************************/
@@ -57809,13 +58414,13 @@
 
 	var _engine = __webpack_require__(/*! engine */ 194);
 
-	var _proceduralNoise = __webpack_require__(/*! procedural/noise */ 221);
+	var _proceduralNoise = __webpack_require__(/*! procedural/noise */ 228);
 
-	var _utilNdarray = __webpack_require__(/*! util/ndarray */ 223);
+	var _utilNdarray = __webpack_require__(/*! util/ndarray */ 230);
 
 	var _utilNdarray2 = _interopRequireDefault(_utilNdarray);
 
-	var _constMaterial = __webpack_require__(/*! const/material */ 212);
+	var _constMaterial = __webpack_require__(/*! const/material */ 219);
 
 	var _constMaterial2 = _interopRequireDefault(_constMaterial);
 
@@ -58022,7 +58627,7 @@
 	module.exports = exports["default"];
 
 /***/ },
-/* 221 */
+/* 228 */
 /*!***************************************!*\
   !*** ./static/js/procedural/noise.js ***!
   \***************************************/
@@ -58032,7 +58637,7 @@
 
 	var _interopRequireDefault = __webpack_require__(/*! babel-runtime/helpers/interop-require-default */ 1)["default"];
 
-	var _noisejs = __webpack_require__(/*! noisejs */ 222);
+	var _noisejs = __webpack_require__(/*! noisejs */ 229);
 
 	var _noisejs2 = _interopRequireDefault(_noisejs);
 
@@ -58067,7 +58672,7 @@
 	};
 
 /***/ },
-/* 222 */
+/* 229 */
 /*!****************************!*\
   !*** ./~/noisejs/index.js ***!
   \****************************/
@@ -58403,7 +59008,7 @@
 
 
 /***/ },
-/* 223 */
+/* 230 */
 /*!***********************************!*\
   !*** ./static/js/util/ndarray.js ***!
   \***********************************/
@@ -58413,11 +59018,11 @@
 
 	var _interopRequireDefault = __webpack_require__(/*! babel-runtime/helpers/interop-require-default */ 1)["default"];
 
-	var _ndarray = __webpack_require__(/*! ndarray */ 224);
+	var _ndarray = __webpack_require__(/*! ndarray */ 231);
 
 	var _ndarray2 = _interopRequireDefault(_ndarray);
 
-	var _ndarrayFill = __webpack_require__(/*! ndarray-fill */ 227);
+	var _ndarrayFill = __webpack_require__(/*! ndarray-fill */ 234);
 
 	var _ndarrayFill2 = _interopRequireDefault(_ndarrayFill);
 
@@ -58432,14 +59037,14 @@
 	module.exports = { array: array, fill: fill };
 
 /***/ },
-/* 224 */
+/* 231 */
 /*!******************************!*\
   !*** ./~/ndarray/ndarray.js ***!
   \******************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	var iota = __webpack_require__(/*! iota-array */ 225)
-	var isBuffer = __webpack_require__(/*! is-buffer */ 226)
+	var iota = __webpack_require__(/*! iota-array */ 232)
+	var isBuffer = __webpack_require__(/*! is-buffer */ 233)
 
 	var hasTypedArrays  = ((typeof Float64Array) !== "undefined")
 
@@ -58784,7 +59389,7 @@
 
 
 /***/ },
-/* 225 */
+/* 232 */
 /*!****************************************!*\
   !*** ./~/ndarray/~/iota-array/iota.js ***!
   \****************************************/
@@ -58803,7 +59408,7 @@
 	module.exports = iota
 
 /***/ },
-/* 226 */
+/* 233 */
 /*!****************************************!*\
   !*** ./~/ndarray/~/is-buffer/index.js ***!
   \****************************************/
@@ -58829,7 +59434,7 @@
 
 
 /***/ },
-/* 227 */
+/* 234 */
 /*!*********************************!*\
   !*** ./~/ndarray-fill/index.js ***!
   \*********************************/
@@ -58837,7 +59442,7 @@
 
 	"use strict"
 
-	var cwise = __webpack_require__(/*! cwise */ 228)
+	var cwise = __webpack_require__(/*! cwise */ 235)
 
 	var fill = cwise({
 	  args: ["index", "array", "scalar"],
@@ -58853,7 +59458,7 @@
 
 
 /***/ },
-/* 228 */
+/* 235 */
 /*!*****************************************************!*\
   !*** ./~/ndarray-fill/~/cwise/lib/cwise-esprima.js ***!
   \*****************************************************/
@@ -58861,8 +59466,8 @@
 
 	"use strict"
 
-	var parse   = __webpack_require__(/*! cwise-parser */ 229)
-	var compile = __webpack_require__(/*! cwise-compiler */ 232)
+	var parse   = __webpack_require__(/*! cwise-parser */ 236)
+	var compile = __webpack_require__(/*! cwise-compiler */ 239)
 
 	var REQUIRED_FIELDS = [ "args", "body" ]
 	var OPTIONAL_FIELDS = [ "pre", "post", "printCode", "funcName", "blockSize" ]
@@ -58897,7 +59502,7 @@
 
 
 /***/ },
-/* 229 */
+/* 236 */
 /*!********************************************************!*\
   !*** ./~/ndarray-fill/~/cwise/~/cwise-parser/index.js ***!
   \********************************************************/
@@ -58905,8 +59510,8 @@
 
 	"use strict"
 
-	var esprima = __webpack_require__(/*! esprima */ 230)
-	var uniq = __webpack_require__(/*! uniq */ 231)
+	var esprima = __webpack_require__(/*! esprima */ 237)
+	var uniq = __webpack_require__(/*! uniq */ 238)
 
 	var PREFIX_COUNTER = 0
 
@@ -59100,7 +59705,7 @@
 	module.exports = preprocess
 
 /***/ },
-/* 230 */
+/* 237 */
 /*!********************************************************************!*\
   !*** ./~/ndarray-fill/~/cwise/~/cwise-parser/~/esprima/esprima.js ***!
   \********************************************************************/
@@ -62881,7 +63486,7 @@
 
 
 /***/ },
-/* 231 */
+/* 238 */
 /*!**************************************************************!*\
   !*** ./~/ndarray-fill/~/cwise/~/cwise-parser/~/uniq/uniq.js ***!
   \**************************************************************/
@@ -62947,7 +63552,7 @@
 
 
 /***/ },
-/* 232 */
+/* 239 */
 /*!*************************************************************!*\
   !*** ./~/ndarray-fill/~/cwise/~/cwise-compiler/compiler.js ***!
   \*************************************************************/
@@ -62955,7 +63560,7 @@
 
 	"use strict"
 
-	var createThunk = __webpack_require__(/*! ./lib/thunk.js */ 233)
+	var createThunk = __webpack_require__(/*! ./lib/thunk.js */ 240)
 
 	function Procedure() {
 	  this.argTypes = []
@@ -63065,7 +63670,7 @@
 
 
 /***/ },
-/* 233 */
+/* 240 */
 /*!**************************************************************!*\
   !*** ./~/ndarray-fill/~/cwise/~/cwise-compiler/lib/thunk.js ***!
   \**************************************************************/
@@ -63096,7 +63701,7 @@
 	//   return thunk(compile.bind1(proc))
 	// }
 
-	var compile = __webpack_require__(/*! ./compile.js */ 234)
+	var compile = __webpack_require__(/*! ./compile.js */ 241)
 
 	function createThunk(proc) {
 	  var code = ["'use strict'", "var CACHED={}"]
@@ -63160,7 +63765,7 @@
 
 
 /***/ },
-/* 234 */
+/* 241 */
 /*!****************************************************************!*\
   !*** ./~/ndarray-fill/~/cwise/~/cwise-compiler/lib/compile.js ***!
   \****************************************************************/
@@ -63168,7 +63773,7 @@
 
 	"use strict"
 
-	var uniq = __webpack_require__(/*! uniq */ 235)
+	var uniq = __webpack_require__(/*! uniq */ 242)
 
 	// This function generates very simple loops analogous to how you typically traverse arrays (the outermost loop corresponds to the slowest changing index, the innermost loop to the fastest changing index)
 	// TODO: If two arrays have the same strides (and offsets) there is potential for decreasing the number of "pointers" and related variables. The drawback is that the type signature would become more specific and that there would thus be less potential for caching, but it might still be worth it, especially when dealing with large numbers of arguments.
@@ -63523,7 +64128,7 @@
 
 
 /***/ },
-/* 235 */
+/* 242 */
 /*!****************************************************************!*\
   !*** ./~/ndarray-fill/~/cwise/~/cwise-compiler/~/uniq/uniq.js ***!
   \****************************************************************/
@@ -63589,7 +64194,7 @@
 
 
 /***/ },
-/* 236 */
+/* 243 */
 /*!***************************************!*\
   !*** ./static/js/procedural/biome.js ***!
   \***************************************/
@@ -63605,7 +64210,7 @@
 
 	var _threeJs2 = _interopRequireDefault(_threeJs);
 
-	var _proceduralNoise = __webpack_require__(/*! procedural/noise */ 221);
+	var _proceduralNoise = __webpack_require__(/*! procedural/noise */ 228);
 
 	var Biome = function Biome() {
 	    this.chunks = {};
@@ -63686,7 +64291,247 @@
 	module.exports = exports["default"];
 
 /***/ },
-/* 237 */
+/* 244 */
+/*!****************************************!*\
+  !*** ./static/js/procedural/nebula.js ***!
+  \****************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	var _Math$log2 = __webpack_require__(/*! babel-runtime/core-js/math/log2 */ 245)["default"];
+
+	exports.__esModule = true;
+
+	var _engine = __webpack_require__(/*! engine */ 194);
+
+	var _proceduralNoise = __webpack_require__(/*! procedural/noise */ 228);
+
+	function shuffle(o) {
+	    for (var j, x, i = o.length; i; j = Math.floor(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
+	    return o;
+	}
+
+	var PerlinMaterial = function PerlinMaterial(width, height, side) {
+	    var opacity = arguments.length <= 3 || arguments[3] === undefined ? 1 : arguments[3];
+
+	    var canvas = document.createElement("canvas");
+	    var context = canvas.getContext("2d");
+
+	    canvas.width = width;
+	    canvas.height = height;
+
+	    var imageData = context.createImageData(width, height);
+
+	    var offsetX = Math.random() * 100;
+	    var offsetY = Math.random() * 100;
+
+	    var rgb = [0, 1, 2];
+	    shuffle(rgb);
+
+	    var p0 = rgb[0];
+	    var cx0 = Math.random() * 0.0051;
+	    var cy0 = Math.random() * 0.0048;
+
+	    var p1 = rgb[1];
+	    var cx1 = Math.random() * 0.0024;
+	    var cy1 = Math.random() * 0.0019;
+
+	    var p2 = rgb[2];
+	    var cx2 = Math.random() * 0.038;
+	    var cy2 = Math.random() * 0.054;
+
+	    for (var i = 0; i < width; i++) {
+	        for (var j = 0; j < height; j++) {
+	            var x = i + offsetX;
+	            var y = j + offsetY;
+
+	            // set opacity
+	            var r = Math.sqrt(Math.pow((i - width / 2) / width, 2) + Math.pow((j - height / 2) / height, 2)) * Math.sqrt(2);
+	            imageData.data[3 + 4 * (i + width * j)] = 255 * opacity * Math.pow(1 - r, 3);
+
+	            imageData.data[p0 + 4 * (i + width * j)] = 2048 * Math.abs(_proceduralNoise.perlin(x * cx0, y * cy0, 3));
+	            imageData.data[p1 + 4 * (i + width * j)] = 1024 * Math.abs(_proceduralNoise.perlin(x * cx1, y * cy1, 5));
+	            imageData.data[p2 + 4 * (i + width * j)] = 256 * Math.abs(_proceduralNoise.perlin(x * cx2, y * cy2, 7));
+	        }
+	    }
+
+	    context.putImageData(imageData, 0, 0);
+
+	    var texture = new _engine.THREE.Texture(canvas);
+	    texture.needsUpdate = true;
+
+	    var material = new _engine.THREE.MeshBasicMaterial({
+	        map: texture,
+	        transparent: true,
+	        depthWrite: false
+	    });
+
+	    if (side !== undefined) {
+	        material.side = side;
+	    }
+	    return material;
+	};
+
+	var Nebula = function Nebula(scale) {
+	    var nebulas = new _engine.THREE.Object3D();
+
+	    var area = scale * scale;
+
+	    var R = 500 * Math.floor(100 * Math.random()) + 5000;
+	    var theta = 2 * Math.PI * Math.random();
+	    var phi = Math.acos(2 * Math.random() - 1);
+
+	    // add some perlin textured sphere segments at close range
+	    var nSpheres = Math.floor(Math.random() * 4) + 3;
+	    for (var i = 0; i < nSpheres; i++) {
+	        var width = Math.pow(2, Math.floor(Math.random() + _Math$log2(scale) - 1 + 0.5));
+	        var height = area / width;
+
+	        var material = PerlinMaterial(width, height, _engine.THREE.DoubleSide, Math.random() * 0.2 + 0.5);
+
+	        var phiStart = Math.random() * 2 * Math.PI;
+	        var phiLength = Math.random() * Math.PI / 3 + Math.PI / 3;
+	        var thetaStart = Math.random() * Math.PI / 2 + Math.PI / 12;
+	        var thetaLength = Math.random() * (Math.PI - thetaStart - Math.PI / 6) + Math.PI / 4;
+
+	        var segment = new _engine.THREE.Mesh(new _engine.THREE.SphereGeometry(R, 32, 32, phiStart, phiLength, thetaStart, thetaLength), material);
+	        segment.rotation.z = Math.random() * Math.PI;
+
+	        nebulas.add(segment);
+
+	        R = 500 * Math.floor(100 * Math.random()) + 5000;
+	        theta += Math.PI + Math.PI / 3 * Math.random();
+	        phi += Math.PI + Math.PI / 3 * Math.random();
+	    }
+
+	    // add some perlin textured planes really far away for dat sweet parallax
+	    R = 500 * Math.floor(100 * Math.random()) + 50000;
+	    theta = 2 * Math.PI * Math.random();
+	    phi = Math.acos(2 * Math.random() - 1);
+
+	    var nPlanes = Math.floor(Math.random() * 3) + 3;
+	    for (var i = 0; i < nPlanes; i++) {
+	        var x = R * Math.cos(theta) * Math.sin(phi);
+	        var y = R * Math.sin(theta) * Math.sin(phi);
+	        var z = R * Math.cos(phi);
+
+	        var width = Math.pow(2, Math.floor(Math.random() + _Math$log2(scale) - 1 + 0.5));
+	        var height = area / width;
+	        var material = PerlinMaterial(width, height, _engine.THREE.DoubleSide, Math.random() * 0.2 + 0.6);
+
+	        var aura = new _engine.THREE.Mesh(new _engine.THREE.PlaneGeometry(width * scale, height * scale), material);
+	        aura.position.set(x, y, z);
+	        aura.lookAt(new _engine.THREE.Vector3());
+	        aura.rotation.z = Math.random() * Math.PI * 2;
+	        nebulas.add(aura);
+
+	        R = 500 * Math.floor(100 * Math.random()) + 50000;
+	        theta += Math.PI + 0.2 * Math.random();
+	        phi += Math.PI + 0.2 * Math.random();
+	    }
+
+	    return nebulas;
+	};
+	exports.Nebula = Nebula;
+
+/***/ },
+/* 245 */
+/*!**********************************************!*\
+  !*** ./~/babel-runtime/core-js/math/log2.js ***!
+  \**********************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = { "default": __webpack_require__(/*! core-js/library/fn/math/log2 */ 246), __esModule: true };
+
+/***/ },
+/* 246 */
+/*!***********************************************************!*\
+  !*** ./~/babel-runtime/~/core-js/library/fn/math/log2.js ***!
+  \***********************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	__webpack_require__(/*! ../../modules/es6.math.log2 */ 247);
+	module.exports = __webpack_require__(/*! ../../modules/$.core */ 207).Math.log2;
+
+/***/ },
+/* 247 */
+/*!********************************************************************!*\
+  !*** ./~/babel-runtime/~/core-js/library/modules/es6.math.log2.js ***!
+  \********************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// 20.2.2.22 Math.log2(x)
+	var $def = __webpack_require__(/*! ./$.def */ 205);
+
+	$def($def.S, 'Math', {
+	  log2: function log2(x){
+	    return Math.log(x) / Math.LN2;
+	  }
+	});
+
+/***/ },
+/* 248 */
+/*!*******************************************!*\
+  !*** ./static/js/procedural/starfield.js ***!
+  \*******************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	var _interopRequireDefault = __webpack_require__(/*! babel-runtime/helpers/interop-require-default */ 1)["default"];
+
+	exports.__esModule = true;
+
+	var _engine = __webpack_require__(/*! engine */ 194);
+
+	var _constMaterial = __webpack_require__(/*! const/material */ 219);
+
+	var _constMaterial2 = _interopRequireDefault(_constMaterial);
+
+	var Starfield = function Starfield(num, radius, filter) {
+	    var starsGeometry = new _engine.THREE.Geometry();
+	    for (var i = 0; i < num; i++) {
+	        var phi = Math.random() * 2 * Math.PI;
+	        var costheta = Math.random() * 2 - 1;
+	        var u = Math.random();
+
+	        var theta = Math.acos(costheta);
+	        // generate some more stars near the center for exaggerated parallax effect
+	        var R, r;
+	        if (u < 0.2) {
+	            R = radius * Math.pow(u, 0.5);
+	            r = 0.5 + 2 * R / radius * Math.random();
+	        } else if (u < 0.5) {
+	            R = radius * 10 * u / 0.4;
+	            r = 10 + 2 * R / radius * Math.random();
+	        } else if (u < 0.95) {
+	            R = radius * 20 * u / 0.7;
+	            r = 20 + 2 * R / radius * Math.random();
+	        } else {
+	            R = radius * 20 * u / 0.95;
+	            r = 30 + 2 * R / radius * Math.random();
+	        }
+
+	        var x = R * Math.sin(theta) * Math.cos(phi);
+	        var y = R * Math.sin(theta) * Math.sin(phi);
+	        var z = R * Math.cos(theta);
+
+	        if (filter(x, y, z, R)) continue;
+
+	        var starGeometry = new _engine.THREE.SphereGeometry(r);
+	        var starMesh = new _engine.THREE.Mesh(starGeometry, _constMaterial2["default"].STAR);
+	        starMesh.position.set(x, y, z);
+	        starMesh.updateMatrix();
+	        starsGeometry.merge(starGeometry, starMesh.matrix);
+	    }
+
+	    return new _engine.THREE.Mesh(starsGeometry, _constMaterial2["default"].STAR);
+	};
+	exports.Starfield = Starfield;
+
+/***/ },
+/* 249 */
 /*!*********************************!*\
   !*** ./static/js/util/plane.js ***!
   \*********************************/
@@ -63698,9 +64543,9 @@
 
 	var _engine = __webpack_require__(/*! engine */ 194);
 
-	var _materials = __webpack_require__(/*! materials */ 210);
+	var _materials = __webpack_require__(/*! materials */ 217);
 
-	var _proceduralNoise = __webpack_require__(/*! procedural/noise */ 221);
+	var _proceduralNoise = __webpack_require__(/*! procedural/noise */ 228);
 
 	function makeTerrain(size) {
 	    var data = new Uint8Array(size * size);
@@ -63777,7 +64622,7 @@
 	module.exports = exports["default"];
 
 /***/ },
-/* 238 */
+/* 250 */
 /*!*****************************!*\
   !*** ./static/js/amoeba.js ***!
   \*****************************/
@@ -63791,7 +64636,7 @@
 
 	var _engine = __webpack_require__(/*! engine */ 194);
 
-	var _materials = __webpack_require__(/*! materials */ 210);
+	var _materials = __webpack_require__(/*! materials */ 217);
 
 	var Amoeba = (function () {
 	    function Amoeba(world, scene) {
@@ -63827,7 +64672,7 @@
 	module.exports = exports["default"];
 
 /***/ },
-/* 239 */
+/* 251 */
 /*!****************************************!*\
   !*** ./static/js/amoeba_simulation.js ***!
   \****************************************/
@@ -63843,13 +64688,13 @@
 
 	var _engine = __webpack_require__(/*! engine */ 194);
 
-	var _props = __webpack_require__(/*! props */ 211);
+	var _props = __webpack_require__(/*! props */ 218);
 
-	var _utilPlane = __webpack_require__(/*! util/plane */ 237);
+	var _utilPlane = __webpack_require__(/*! util/plane */ 249);
 
 	var _utilPlane2 = _interopRequireDefault(_utilPlane);
 
-	var _amoeba = __webpack_require__(/*! amoeba */ 238);
+	var _amoeba = __webpack_require__(/*! amoeba */ 250);
 
 	var _amoeba2 = _interopRequireDefault(_amoeba);
 
@@ -63857,7 +64702,7 @@
 	    function AmoebaSimulation(container_id) {
 	        var _this = this;
 
-	        var world_size = arguments.length <= 1 || arguments[1] === undefined ? 32 : arguments[1];
+	        var chunkSize = arguments.length <= 1 || arguments[1] === undefined ? 32 : arguments[1];
 
 	        _classCallCheck(this, AmoebaSimulation);
 
@@ -63867,7 +64712,7 @@
 	        this.aspect = this.width / this.height;
 	        this.near = 0.1;
 	        this.far = 10000;
-	        this.world_size = world_size;
+	        this.chunkSize = chunkSize;
 
 	        this.world = new _engine.CANNON.World();
 	        this.world.gravity.set(0, -9.82, 0);
@@ -63899,10 +64744,10 @@
 
 	        var pointLight = new _engine.THREE.DirectionalLight(0xFFFF00, 0.8, 100);
 	        pointLight.castShadow = true;
-	        pointLight.position.set(this.world_size / 2, 50, -this.world_size / 2);
+	        pointLight.position.set(this.chunkSize / 2, 50, -this.chunkSize / 2);
 	        this.scene.add(pointLight);
 
-	        _utilPlane2["default"](this.world_size, this.world, this.scene);
+	        _utilPlane2["default"](this.chunkSize, this.world, this.scene);
 
 	        this.amoeba = new _amoeba2["default"](this.world, this.scene);
 	        this.amoeba.body.position.set(1, 275, 0);
