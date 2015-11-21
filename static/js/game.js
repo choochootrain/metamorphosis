@@ -29,14 +29,22 @@ export default class Game {
         this.renderer.setSize(this.width, this.height);
         this.renderer.setClearColor(0x000000, 1);
 
+        this.scene = new THREE.Scene();
+
         this.camera = new THREE.PerspectiveCamera(this.view_angle, this.aspect, this.near, this.far);
         this.camera.position.y = 5;
         this.camera.position.x = -20;
 
+        this.composer = new THREE.EffectComposer(this.renderer);
+        this.composer.addPass(new THREE.RenderPass(this.scene, this.camera));
+
+        this.glitchPass = new THREE.GlitchPass();
+        this.glitchPass.renderToScreen = true;
+        this.composer.addPass(this.glitchPass);
+
         this.controls = new OrbitControls(this.camera, this.renderer.domElement);
         this.keyboard = new KeyboardState();
 
-        this.scene = new THREE.Scene();
         this.biome = new Biome();
 
         document.getElementById(container_id).appendChild(this.renderer.domElement);
@@ -188,6 +196,12 @@ export default class Game {
             this.amoeba.position.y -= 1;
         }
 
+        if (this.keyboard.pressed("g")) {
+            this.glitchPass.goWild = true;
+        } else {
+            this.glitchPass.goWild = false;
+        }
+
         this.controls.update(delta);
         var chunkX = Math.floor(this.amoeba.position.x / this.chunkSize + 0.5);
         var chunkY = Math.floor(this.amoeba.position.z / this.chunkSize + 0.5);
@@ -245,6 +259,6 @@ export default class Game {
     }
 
     render() {
-        this.renderer.render(this.scene, this.camera);
+        this.composer.render();
     }
 }
