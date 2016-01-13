@@ -41,6 +41,7 @@ export default class Game {
         this.glitchPass = new THREE.GlitchPass();
         this.glitchPass.renderToScreen = true;
         this.composer.addPass(this.glitchPass);
+        this.useComposer = false;
 
         this.controls = new OrbitControls(this.camera, this.renderer.domElement);
         this.keyboard = new KeyboardState();
@@ -197,9 +198,14 @@ export default class Game {
         }
 
         if (this.keyboard.pressed("g")) {
-            this.glitchPass.goWild = true;
+            this.useComposer = true;
+            if (this.keyboard.pressed("v")) {
+                this.glitchPass.goWild = true;
+            } else {
+                this.glitchPass.goWild = false;
+            }
         } else {
-            this.glitchPass.goWild = false;
+            this.useComposer = false;
         }
 
         this.controls.update(delta);
@@ -259,6 +265,10 @@ export default class Game {
     }
 
     render() {
-        this.composer.render();
+        if (this.useComposer) {
+            this.composer.render();
+        } else {
+            this.renderer.render(this.scene, this.camera);
+        }
     }
 }
